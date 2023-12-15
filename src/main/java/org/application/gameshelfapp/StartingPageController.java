@@ -26,7 +26,7 @@ public class StartingPageController extends Application {
 
     @FXML
     private void logIn(MouseEvent event){
-
+        System.out.println("Login executed!!");
     }
 
     @Override
