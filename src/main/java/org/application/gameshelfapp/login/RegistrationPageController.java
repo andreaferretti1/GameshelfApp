@@ -22,8 +22,8 @@ public class RegistrationPageController extends Application {
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/Starting-Page.fxml"));
             Parent root = fxmlloader.load();
 
-            Scene scene = new Scene(root, 1028, 798);
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 1440, 768);
             stage.setScene(scene);
             stage.show();
 
@@ -37,7 +37,7 @@ public class RegistrationPageController extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/Registration-Page.fxml"));
         Parent root = fxmlLoader.load();
 
-        Scene scene = new Scene(root, 1440, 1024);
+        Scene scene = new Scene(root, 1440, 768);
 
         myStage.setScene(scene);
 

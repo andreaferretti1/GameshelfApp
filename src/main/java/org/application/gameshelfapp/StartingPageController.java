@@ -19,7 +19,7 @@ public class StartingPageController extends Application {
         FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("Registration-Page.fxml"));
         Parent root = fxmlloader.load();
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1024, 1440);
+        Scene scene = new Scene(root, 1440, 768);
         stage.setScene(scene);
         stage.show();
     }
@@ -36,7 +36,7 @@ public class StartingPageController extends Application {
         Parent root = fxmlLoader.load();
 
         // Set the FXML content as the root of the scene
-        Scene scene = new Scene(root, 1080, 768);
+        Scene scene = new Scene(root, 1440, 768);
 
         // Set the scene to the stage
         stage.setScene(scene);
