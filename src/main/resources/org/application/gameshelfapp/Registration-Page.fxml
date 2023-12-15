@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1024.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gameshelfapp.RegistrationPageController">
+    <children>
+        <Region layoutY="-2.0" prefHeight="34.5" prefWidth="1440.0" style="-fx-background-color: #2e60e1;" />
+        <Region layoutY="33.0" prefHeight="994.0" prefWidth="1440.0" style="-fx-background-color: #433f3f;" />
+        <VBox alignment="CENTER" layoutX="455.0" layoutY="96.0" prefHeight="677.0" prefWidth="514.0">
+            <children>
+                <ImageView>
+                    <image>
+                        <Image url="@icons/profile_icon.png" />
+                    </image>
+                </ImageView>
+                <Label graphicTextGap="5.0" text="Register your account" textFill="#2e60e1">
+                    <font>
+                        <Font size="28.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets top="20.0" />
+                    </VBox.margin>
+                </Label>
+                <TextField promptText="Email" style="-fx-background-radius: 60; -fx-prompt-text-fill: #2e60e1; -fx-text-fill: #2e60e1;">
+                    <font>
+                        <Font name="System Italic" size="24.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="25.0" top="60.0" />
+                    </VBox.margin>
+                </TextField>
+                <TextField promptText="Username" style="-fx-background-radius: 60; -fx-prompt-text-fill: #2e60e1; -fx-text-fill: #2e60e1;">
+                    <VBox.margin>
+                        <Insets bottom="25.0" top="25.0" />
+                    </VBox.margin>
+                    <font>
+                        <Font name="System Italic" size="24.0" />
+                    </font>
+                </TextField>
+                <TextField promptText="Password" style="-fx-background-radius: 60; -fx-prompt-text-fill: #2e60e1; -fx-text-fill: #2e60e1;">
+                    <VBox.margin>
+                        <Insets bottom="25.0" top="25.0" />
+                    </VBox.margin>
+                    <font>
+                        <Font name="System Italic" size="24.0" />
+                    </font>
+                </TextField>
+                <TextField promptText="Confirm password" style="-fx-background-radius: 60; -fx-prompt-text-fill: #2e60e1; -fx-text-fill: #2e60e1;">
+                    <VBox.margin>
+                        <Insets top="25.0" />
+                    </VBox.margin>
+                    <font>
+                        <Font name="System Italic" size="24.0" />
+                    </font>
+                </TextField>
+            </children>
+        </VBox>
+        <HBox alignment="CENTER" layoutX="344.0" layoutY="755.0" prefHeight="100.0" prefWidth="746.0">
+            <children>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" stroke="BLACK" strokeType="INSIDE" width="30.0">
+                    <HBox.margin>
+                        <Insets right="5.0" />
+                    </HBox.margin>
+                </Rectangle>
+                <Label text="Customer" textFill="WHITE">
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" stroke="BLACK" strokeType="INSIDE" width="30.0">
+                    <HBox.margin>
+                        <Insets left="150.0" right="5.0" />
+                    </HBox.margin>
+                </Rectangle>
+                <Label text="Seller" textFill="WHITE">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" stroke="BLACK" strokeType="INSIDE" width="30.0">
+                    <HBox.margin>
+                        <Insets left="150.0" right="5.0" />
+                    </HBox.margin>
+                </Rectangle>
+                <Label text="Both" textFill="WHITE">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+        <Button layoutX="655.0" layoutY="891.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="130.0" style="-fx-background-radius: 60; -fx-background-color: #2e60e1;" text="Next" textFill="WHITE">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Button>
+        <ImageView layoutY="1.0">
+            <image>
+                <Image url="@icons/undo_icon.png" />
+            </image>
+        </ImageView>
+    </children>
+</AnchorPane>
