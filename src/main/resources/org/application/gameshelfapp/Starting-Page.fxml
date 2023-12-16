@@ -15,128 +15,135 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gameshelfapp.StartingPageController">
-    <children>
-      <Region prefHeight="768.0" prefWidth="1440.0" style="-fx-background-color: #433f3f;" />
-      <Region prefHeight="27.0" prefWidth="1440.0" style="-fx-background-color: #2e60e1;" />
-        <VBox prefHeight="768.0" prefWidth="1440.0">
-            <children>
-                <ImageView fitHeight="113.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true">
-                    <VBox.margin>
-                        <Insets left="653.0" top="109.0" />
-                    </VBox.margin>
-                    <image>
-                        <Image url="@icons/profile_icon.png" />
-                    </image>
-                </ImageView>
-                <Label alignment="CENTER" prefHeight="38.0" prefWidth="340.0" text="Log In to your Account" textFill="#2e60e1">
-                    <font>
-                        <Font size="21.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets left="551.0" top="15.0" />
-                    </VBox.margin>
-                </Label>
-                <TextField fx:id="usernameField" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="461.0" promptText="Username" style="-fx-background-radius: 60; -fx-prompt-text-fill: #2e60e1; -fx-text-fill: #2e60e1;">
-                    <font>
-                        <Font name="System Italic" size="21.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets left="493.0" top="24.0" />
-                    </VBox.margin>
-                </TextField>
-                <PasswordField fx:id="passwordField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="461.0" promptText="Password" style="-fx-background-radius: 60; -fx-prompt-text-fill: #2e60e1; -fx-text-fill: #2e60e1;">
-                    <font>
-                        <Font name="System Italic" size="21.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets left="493.0" top="25.0" />
-                    </VBox.margin>
-                </PasswordField>
-                <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="1440.0">
-                    <VBox.margin>
-                        <Insets top="46.0" />
-                    </VBox.margin>
-                    <children>
-                        <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#switchToRegistrationPage" prefHeight="42.0" prefWidth="132.0" style="-fx-background-color: #2e60e1; -fx-background-radius: 60;" text="Register" textAlignment="JUSTIFY" textFill="WHITE">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                            <HBox.margin>
-                                <Insets left="493.0" />
-                            </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                        </Button>
-                        <Button alignment="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#logIn" prefHeight="42.0" prefWidth="132.0" style="-fx-background-color: #2e60e1; -fx-background-radius: 60;" text="Next" textAlignment="JUSTIFY" textFill="WHITE">
-                            <HBox.margin>
-                                <Insets left="197.0" />
-                            </HBox.margin>
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                        </Button>
-                    </children>
-                </HBox>
-                <Label alignment="CENTER" prefHeight="30.0" prefWidth="312.0" text="or sign in with" textAlignment="JUSTIFY" textFill="#2e60e1">
-                    <font>
-                        <Font size="21.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets left="558.0" top="36.0" />
-                    </VBox.margin>
-                </Label>
-                <HBox prefHeight="100.0" prefWidth="1440.0">
-                    <children>
-                        <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="110.0" prefWidth="110.0" style="-fx-background-radius: 45; -fx-background-color: transparent;" text="Button" textFill="TRANSPARENT">
-                            <graphic>
-                                <ImageView fitHeight="113.0" fitWidth="150.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@icons/facebook_icon.png" />
-                                    </image>
-                                    <viewport>
-                                        <Rectangle2D />
-                                    </viewport>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                                </ImageView>
-                            </graphic>
-                            <HBox.margin>
-                                <Insets left="493.0" />
-                            </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                        </Button>
-                        <Button contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="105.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-background-radius: 45;" text="Button">
-                            <graphic>
-                                <ImageView fitHeight="113.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@icons/google_icon.png" />
-                                    </image>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                                </ImageView>
-                            </graphic>
-                            <HBox.margin>
-                                <Insets left="240.0" />
-                            </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                        </Button>
-                    </children>
-                    <VBox.margin>
-                        <Insets top="36.0" />
-                    </VBox.margin>
-                </HBox>
-            </children>
-        </VBox>
-    </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0"
+            prefWidth="1440.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.application.gameshelfapp.StartingPageController">
+    <Region prefHeight="768.0" prefWidth="1440.0" style="-fx-background-color: #433f3f;"/>
+    <Region prefHeight="27.0" prefWidth="1440.0" style="-fx-background-color: #2e60e1;"/>
+    <VBox prefHeight="768.0" prefWidth="1440.0">
+        <ImageView fitHeight="113.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true">
+            <VBox.margin>
+                <Insets left="653.0" top="109.0"/>
+            </VBox.margin>
+            <Image url="@icons/profile_icon.png"/>
+        </ImageView>
+        <Label alignment="CENTER" prefHeight="38.0" prefWidth="340.0" text="Log In to your Account"
+               textFill="#2e60e1">
+            <font>
+                <Font size="21.0"/>
+            </font>
+            <VBox.margin>
+                <Insets left="551.0" top="15.0"/>
+            </VBox.margin>
+        </Label>
+        <TextField fx:id="usernameField" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                   prefHeight="38.0" prefWidth="461.0" promptText="Username"
+                   style="-fx-background-radius: 60; -fx-prompt-text-fill: #2e60e1; -fx-text-fill: #2e60e1;">
+            <font>
+                <Font name="System Italic" size="21.0"/>
+            </font>
+            <VBox.margin>
+                <Insets left="493.0" top="24.0"/>
+            </VBox.margin>
+        </TextField>
+        <PasswordField fx:id="passwordField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                       minWidth="-Infinity" prefHeight="38.0" prefWidth="461.0" promptText="Password"
+                       style="-fx-background-radius: 60; -fx-prompt-text-fill: #2e60e1; -fx-text-fill: #2e60e1;">
+            <font>
+                <Font name="System Italic" size="21.0"/>
+            </font>
+            <VBox.margin>
+                <Insets left="493.0" top="25.0"/>
+            </VBox.margin>
+        </PasswordField>
+        <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="1440.0">
+            <VBox.margin>
+                <Insets top="46.0"/>
+            </VBox.margin>
+            <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#switchToRegistrationPage"
+                    prefHeight="42.0" prefWidth="132.0"
+                    style="-fx-background-color: #2e60e1; -fx-background-radius: 60;" text="Register"
+                    textAlignment="JUSTIFY" textFill="WHITE">
+                <font>
+                    <Font size="18.0"/>
+                </font>
+                <HBox.margin>
+                    <Insets left="493.0"/>
+                </HBox.margin>
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
+            <Button alignment="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
+                    onMouseClicked="#logIn" prefHeight="42.0" prefWidth="132.0"
+                    style="-fx-background-color: #2e60e1; -fx-background-radius: 60;" text="Next"
+                    textAlignment="JUSTIFY" textFill="WHITE">
+                <HBox.margin>
+                    <Insets left="197.0"/>
+                </HBox.margin>
+                <font>
+                    <Font size="18.0"/>
+                </font>
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
+        </HBox>
+        <Label alignment="CENTER" prefHeight="30.0" prefWidth="312.0" text="or sign in with" textAlignment="JUSTIFY"
+               textFill="#2e60e1">
+            <font>
+                <Font size="21.0"/>
+            </font>
+            <VBox.margin>
+                <Insets left="558.0" top="36.0"/>
+            </VBox.margin>
+        </Label>
+        <HBox prefHeight="100.0" prefWidth="1440.0">
+            <VBox.margin>
+                <Insets top="36.0"/>
+            </VBox.margin>
+            <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="-Infinity"
+                    maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                    prefHeight="110.0" prefWidth="110.0"
+                    style="-fx-background-radius: 45; -fx-background-color: transparent;" text="Button"
+                    textFill="TRANSPARENT">
+                <graphic>
+                    <ImageView fitHeight="113.0" fitWidth="150.0" nodeOrientation="INHERIT" pickOnBounds="true"
+                               preserveRatio="true">
+                        <viewport>
+                            <Rectangle2D/>
+                        </viewport>
+                        <cursor>
+                            <Cursor fx:constant="HAND"/>
+                        </cursor>
+                        <Image url="@icons/facebook_icon.png"/>
+                    </ImageView>
+                </graphic>
+                <HBox.margin>
+                    <Insets left="493.0"/>
+                </HBox.margin>
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
+            <Button contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity"
+                    mnemonicParsing="false" prefHeight="105.0" prefWidth="110.0"
+                    style="-fx-background-color: transparent; -fx-background-radius: 45;" text="Button">
+                <graphic>
+                    <ImageView fitHeight="113.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                        <cursor>
+                            <Cursor fx:constant="HAND"/>
+                        </cursor>
+                        <Image url="@icons/google_icon.png"/>
+                    </ImageView>
+                </graphic>
+                <HBox.margin>
+                    <Insets left="240.0"/>
+                </HBox.margin>
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
+        </HBox>
+    </VBox>
 </AnchorPane>
