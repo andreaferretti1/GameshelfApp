@@ -1,14 +1,20 @@
 package org.application.gameshelfapp.login.bean;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class RegistrationBean {
 
     private String usernameBean;
     private String emailBean;
     private String passwordBean;
+    private int checkCode;
+
 
     public RegistrationBean(String username, String email, String password){
         this.usernameBean = username;
-        this.emailBean = email;
+        try{
+        this.emailBean = email;} catch(Exception e){}
         this.passwordBean = password;
     }
 
@@ -17,7 +23,9 @@ public class RegistrationBean {
     }
 
     public void setEmailBean(String email){
-        this.emailBean = email;
+        try{
+        this.checkEmailSyntax(email);
+        this.emailBean = email;} catch(Exception e){}
     }
 
     public void setPasswordBean(String password){
@@ -34,5 +42,23 @@ public class RegistrationBean {
 
     public String getPasswordBean(){
         return this.passwordBean;
+    }
+
+    public void checkEmailSyntax(String s){
+        String syntaxRegex = "[a-zA-z0-9]+([._-][a-zA-Z0-9]+)?@gmail/.[a-z]+$";
+        Pattern p = Pattern.compile(syntaxRegex);
+        Matcher m = p.matcher(s);
+        boolean b = m.matches();
+        if(!b) {
+            //lancia eccezione
+        }
+    }
+
+    public void setCheckCode(int insertedCode){
+        this.checkCode = insertedCode;
+    }
+
+    public int getCheckCode(){
+        return this.checkCode;
     }
 }
