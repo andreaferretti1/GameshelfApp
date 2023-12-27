@@ -3,100 +3,282 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0"
-            prefWidth="1440.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
-   <Region prefHeight="768.0" prefWidth="1440.0" style="-fx-background-color: #433f3f;"/>
-   <VBox alignment="TOP_RIGHT" prefHeight="741.0" prefWidth="100.0" style="-fx-background-color: #433f3f;"
-         AnchorPane.leftAnchor="1340.0" AnchorPane.topAnchor="27.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <VBox alignment="TOP_RIGHT" prefHeight="741.0" prefWidth="100.0" style="-fx-background-color: #433f3f;" AnchorPane.leftAnchor="1340.0" AnchorPane.topAnchor="27.0">
       <effect>
-         <DropShadow/>
+         <DropShadow />
       </effect>
       <children>
-         <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity"
-                 minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0"
-                 style="-fx-background-color: transparent;" text="Button">
+         <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
             <cursor>
-               <Cursor fx:constant="HAND"/>
+               <Cursor fx:constant="HAND" />
             </cursor>
             <graphic>
                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                     <Image url="@icons/account_icon.png"/>
+                     <Image url="@icons/account_icon.png" />
                   </image>
                   <cursor>
-                     <Cursor fx:constant="HAND"/>
+                     <Cursor fx:constant="HAND" />
                   </cursor>
                </ImageView>
             </graphic>
          </Button>
-         <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" mnemonicParsing="false"
-                 prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
+         <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
             <cursor>
-               <Cursor fx:constant="HAND"/>
+               <Cursor fx:constant="HAND" />
             </cursor>
             <graphic>
                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/search_icon.png"/>
+                  <Image url="@icons/search_icon.png" />
                </ImageView>
             </graphic>
             <VBox.margin>
-               <Insets top="116.0"/>
+               <Insets top="116.0" />
             </VBox.margin>
          </Button>
-         <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" minHeight="-Infinity"
-                 mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;"
-                 text="Button">
+         <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
             <cursor>
-               <Cursor fx:constant="HAND"/>
+               <Cursor fx:constant="HAND" />
             </cursor>
             <graphic>
                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/home_icon.png"/>
+                  <Image url="@icons/home_fill_icon.png" />
                </ImageView>
             </graphic>
             <VBox.margin>
-               <Insets top="116.0"/>
+               <Insets top="116.0" />
             </VBox.margin>
          </Button>
-         <Button contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0"
-                 prefWidth="100.0" style="-fx-background-color: transparent;" textFill="WHITE">
+         <Button contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: transparent;" textFill="WHITE">
             <VBox.margin>
-               <Insets top="116.0"/>
+               <Insets top="116.0" />
             </VBox.margin>
             <graphic>
                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                     <Image url="@icons/games_icon.png"/>
+                     <Image url="@icons/games_icon.png" />
                   </image>
                </ImageView>
             </graphic>
          </Button>
-         <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" minHeight="-Infinity"
-                 mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;"
-                 text="Button">
+         <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
             <cursor>
-               <Cursor fx:constant="HAND"/>
+               <Cursor fx:constant="HAND" />
             </cursor>
             <graphic>
                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                     <Image url="@icons/settings_icon.png"/>
+                     <Image url="@icons/settings_icon.png" />
                   </image>
                </ImageView>
             </graphic>
             <VBox.margin>
-               <Insets top="116.0"/>
+               <Insets top="116.0" />
             </VBox.margin>
          </Button>
       </children>
    </VBox>
-   <Region prefHeight="27.0" prefWidth="1440.0" style="-fx-background-color: #2E60E1;"/>
+   <Region prefHeight="27.0" prefWidth="1440.0" style="-fx-background-color: #2E60E1;" />
+   <ScrollPane hbarPolicy="NEVER" prefHeight="741.0" prefWidth="1340.0" stylesheets="@icons/style.css" vbarPolicy="ALWAYS" AnchorPane.leftAnchor="-1.0" AnchorPane.topAnchor="27.0">
+      <content>
+         <VBox prefHeight="741.0" prefWidth="1340.0" style="-fx-background-color: #433f3f;">
+            <children>
+               <TextField maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="52.0" prefWidth="900.0" promptText="Search by Name" style="-fx-background-color: white; -fx-prompt-text-fill: #2E60E1; -fx-text-fill: #2E60E1; -fx-background-radius: 60;">
+                  <font>
+                     <Font name="System Italic" size="28.0" />
+                  </font>
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+                  <VBox.margin>
+                     <Insets left="220.0" top="20.0" />
+                  </VBox.margin>
+               </TextField>
+               <Label text="1: AccountName" textFill="#2e60e1" underline="true">
+                  <font>
+                     <Font name="System Bold" size="28.0" />
+                  </font>
+                  <VBox.margin>
+                     <Insets left="20.0" top="20.0" />
+                  </VBox.margin>
+               </Label>
+               <Label text="Recently Searched:" textFill="#2e60e1">
+                  <font>
+                     <Font name="System Italic" size="28.0" />
+                  </font>
+                  <VBox.margin>
+                     <Insets left="40.0" top="40.0" />
+                  </VBox.margin>
+               </Label>
+               <HBox maxWidth="-Infinity" prefHeight="390.0" prefWidth="1130.0" style="-fx-background-color: #433f3f; -fx-background-radius: 45;">
+                  <VBox.margin>
+                     <Insets left="105.0" top="20.0" />
+                  </VBox.margin>
+                  <effect>
+                     <DropShadow />
+                  </effect>
+                  <children>
+                     <Button contentDisplay="TEXT_ONLY" minHeight="-Infinity" mnemonicParsing="false" prefHeight="350.0" prefWidth="350.0" style="-fx-background-radius: 45; -fx-background-color: #2e60e1;" text="God Of war" textFill="WHITE">
+                        <HBox.margin>
+                           <Insets bottom="20.0" left="20.0" top="20.0" />
+                        </HBox.margin>
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
+                        <effect>
+                           <DropShadow blurType="ONE_PASS_BOX" height="50.0" offsetX="4.0" radius="27.0" width="60.0" />
+                        </effect>
+                        <graphic>
+                           <ImageView fitHeight="320.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true">
+                              <cursor>
+                                 <Cursor fx:constant="HAND" />
+                              </cursor>
+                           </ImageView>
+                        </graphic>
+                        <font>
+                           <Font size="28.0" />
+                        </font>
+                     </Button>
+                     <Button contentDisplay="TEXT_ONLY" layoutX="30.0" layoutY="30.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="350.0" prefWidth="350.0" style="-fx-background-radius: 45; -fx-background-color: #2e60e1;" text="Call Of Duty" textFill="WHITE">
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
+                        <effect>
+                           <DropShadow blurType="ONE_PASS_BOX" height="50.0" offsetX="4.0" radius="27.0" width="60.0" />
+                        </effect>
+                        <graphic>
+                           <ImageView fitHeight="320.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true">
+                              <cursor>
+                                 <Cursor fx:constant="HAND" />
+                              </cursor>
+                           </ImageView>
+                        </graphic>
+                        <HBox.margin>
+                           <Insets left="20.0" top="20.0" />
+                        </HBox.margin>
+                        <font>
+                           <Font size="28.0" />
+                        </font>
+                     </Button>
+                     <Button contentDisplay="TEXT_ONLY" layoutX="424.0" layoutY="10.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="350.0" prefWidth="350.0" style="-fx-background-radius: 45; -fx-background-color: #2e60e1;" text="FIfa 23" textFill="WHITE">
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
+                        <effect>
+                           <DropShadow blurType="ONE_PASS_BOX" height="50.0" offsetX="4.0" radius="27.0" width="60.0" />
+                        </effect>
+                        <graphic>
+                           <ImageView fitHeight="320.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true">
+                              <cursor>
+                                 <Cursor fx:constant="HAND" />
+                              </cursor>
+                           </ImageView>
+                        </graphic>
+                        <HBox.margin>
+                           <Insets left="20.0" top="20.0" />
+                        </HBox.margin>
+                        <font>
+                           <Font size="28.0" />
+                        </font>
+                     </Button>
+                  </children>
+               </HBox>
+               <Label text="Your Library:" textFill="#2e60e1">
+                  <VBox.margin>
+                     <Insets left="40.0" top="40.0" />
+                  </VBox.margin>
+                  <font>
+                     <Font name="System Italic" size="28.0" />
+                  </font>
+               </Label>
+               <HBox layoutX="115.0" layoutY="242.0" maxWidth="-Infinity" prefHeight="390.0" prefWidth="1130.0" style="-fx-background-color: #433f3f; -fx-background-radius: 45;">
+                  <effect>
+                     <DropShadow />
+                  </effect>
+                  <children>
+                     <Button contentDisplay="TEXT_ONLY" minHeight="-Infinity" mnemonicParsing="false" prefHeight="350.0" prefWidth="350.0" style="-fx-background-radius: 45; -fx-background-color: #2e60e1;" text="God Of war" textFill="WHITE">
+                        <HBox.margin>
+                           <Insets bottom="20.0" left="20.0" top="20.0" />
+                        </HBox.margin>
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
+                        <effect>
+                           <DropShadow blurType="ONE_PASS_BOX" height="50.0" offsetX="4.0" radius="27.0" width="60.0" />
+                        </effect>
+                        <graphic>
+                           <ImageView fitHeight="320.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true">
+                              <cursor>
+                                 <Cursor fx:constant="HAND" />
+                              </cursor>
+                           </ImageView>
+                        </graphic>
+                        <font>
+                           <Font size="28.0" />
+                        </font>
+                     </Button>
+                     <Button contentDisplay="TEXT_ONLY" layoutX="30.0" layoutY="30.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="350.0" prefWidth="350.0" style="-fx-background-radius: 45; -fx-background-color: #2e60e1;" text="Call Of Duty" textFill="WHITE">
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
+                        <effect>
+                           <DropShadow blurType="ONE_PASS_BOX" height="50.0" offsetX="4.0" radius="27.0" width="60.0" />
+                        </effect>
+                        <graphic>
+                           <ImageView fitHeight="320.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true">
+                              <cursor>
+                                 <Cursor fx:constant="HAND" />
+                              </cursor>
+                           </ImageView>
+                        </graphic>
+                        <HBox.margin>
+                           <Insets left="20.0" top="20.0" />
+                        </HBox.margin>
+                        <font>
+                           <Font size="28.0" />
+                        </font>
+                     </Button>
+                     <Button contentDisplay="TEXT_ONLY" layoutX="424.0" layoutY="10.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="350.0" prefWidth="350.0" style="-fx-background-radius: 45; -fx-background-color: #2e60e1;" text="FIfa 23" textFill="WHITE">
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
+                        <effect>
+                           <DropShadow blurType="ONE_PASS_BOX" height="50.0" offsetX="4.0" radius="27.0" width="60.0" />
+                        </effect>
+                        <graphic>
+                           <ImageView fitHeight="320.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true">
+                              <cursor>
+                                 <Cursor fx:constant="HAND" />
+                              </cursor>
+                           </ImageView>
+                        </graphic>
+                        <HBox.margin>
+                           <Insets left="20.0" top="20.0" />
+                        </HBox.margin>
+                        <font>
+                           <Font size="28.0" />
+                        </font>
+                     </Button>
+                  </children>
+                  <VBox.margin>
+                     <Insets left="105.0" top="20.0" />
+                  </VBox.margin>
+               </HBox>
+            </children>
+         </VBox>
+      </content>
+   </ScrollPane>
 </AnchorPane>
