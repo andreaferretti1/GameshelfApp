@@ -30,7 +30,7 @@ public class LogInBean {
     }
 
     public void checkEmailSyntax(String s){
-        String syntaxRegex = "[a-zA-z0-9]+([._-][a-zA-Z0-9]+)?@gmail/.[a-z]+$";
+        String syntaxRegex = "[a-zA-Z0-9]+([._-][a-zA-Z0-9]+)?@gmail/.[a-z]+$";
         Pattern p = Pattern.compile(syntaxRegex);
         Matcher m = p.matcher(s);
         boolean b = m.matches();
