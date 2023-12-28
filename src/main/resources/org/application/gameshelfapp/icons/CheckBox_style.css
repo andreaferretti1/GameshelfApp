@@ -13,19 +13,5 @@
 
 .check-box:selected .box {
 
--fx-background-color: #.check-box .box {
--fx-background-color: white;
--fx-border-radius:3px; 
-
-}
-
-.check-box:selected .mark {
-
--fx-background-color: white;
-
-}
-
-.check-box:selected .box {
-
--fx-background-color:  #2e60e1;
+-fx-background-color: #2e60e1;
 }
