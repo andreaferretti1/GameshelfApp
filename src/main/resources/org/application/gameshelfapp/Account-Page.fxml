@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Region prefHeight="768.0" prefWidth="1440.0" style="-fx-background-color: #433f3f;" />
+      <Region prefHeight="27.0" prefWidth="1440.0" style="-fx-background-color: #2e60e1;" />
+      <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="40.0" style="-fx-background-color: transparent;" text="Button" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="7.0">
+         <graphic>
+            <ImageView>
+               <image>
+                  <Image url="@icons/undo_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <VBox alignment="TOP_RIGHT" layoutX="20.0" layoutY="20.0" prefHeight="741.0" prefWidth="100.0" style="-fx-background-color: #433f3f;" AnchorPane.leftAnchor="1340.0" AnchorPane.topAnchor="27.0">
+         <children>
+            <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/account_fill_icon.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/search_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets top="116.0" />
+               </VBox.margin>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/home_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets top="116.0" />
+               </VBox.margin>
+            </Button>
+            <Button contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: transparent;" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="116.0" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/games_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/settings_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets top="116.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <effect>
+            <DropShadow height="0.0" radius="4.75" />
+         </effect>
+      </VBox>
+      <VBox prefHeight="741.0" prefWidth="1340.0" AnchorPane.topAnchor="27.0">
+         <children>
+            <Label text="AccountName" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="576.5" top="20.0" />
+               </VBox.margin>
+            </Label>
+            <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/profile_icon.png" />
+               </image>
+               <VBox.margin>
+                  <Insets left="595.0" top="40.0" />
+               </VBox.margin>
+            </ImageView>
+            <HBox prefHeight="56.0" prefWidth="1340.0">
+               <children>
+                  <Button mnemonicParsing="false" style="-fx-background-color: trasparent;" text="Modify" textFill="#2e60e1" underline="true">
+                     <font>
+                        <Font name="System Italic" size="26.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets left="470.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: trasparent;" text="Change Password" textFill="#2e60e1" underline="true">
+                     <font>
+                        <Font name="System Italic" size="26.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="150.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <Label layoutX="587.0" layoutY="30.0" text="Linked Account(s):" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="548.0" top="40.0" />
+               </VBox.margin>
+            </Label>
+            <HBox prefHeight="70.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/PSN_icon.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="327.5" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label text="Not Linked" textFill="WHITE">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="200.0" top="12.5" />
+                     </HBox.margin>
+                  </Label>
+                  <Button minHeight="-Infinity" mnemonicParsing="false" prefHeight="70.0" prefWidth="130.0" style="-fx-background-color: #2e60e1; -fx-background-radius: 45;" text="Link" textFill="WHITE">
+                     <font>
+                        <Font name="System Italic" size="30.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets left="200.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="436.0" prefHeight="70.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/Xbox_icon.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="327.5" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label text="Not Linked" textFill="WHITE">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="200.0" top="12.5" />
+                     </HBox.margin>
+                  </Label>
+                  <Button minHeight="-Infinity" mnemonicParsing="false" prefHeight="70.0" style="-fx-background-color: trasparent;" text="Link" textFill="#2e60e1" underline="true">
+                     <font>
+                        <Font name="System Italic" size="30.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets left="200.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="436.0" prefHeight="70.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/Steam_icon.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="327.5" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label text="Not Linked" textFill="WHITE">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="200.0" top="12.5" />
+                     </HBox.margin>
+                  </Label>
+                  <Button minHeight="-Infinity" mnemonicParsing="false" prefHeight="70.0" style="-fx-background-color: trasparent;" text="Link" textFill="#2e60e1" underline="true">
+                     <font>
+                        <Font name="System Italic" size="30.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets left="200.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
