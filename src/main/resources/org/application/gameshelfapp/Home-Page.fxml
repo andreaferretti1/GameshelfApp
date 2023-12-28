@@ -73,6 +73,9 @@
                   </image>
                </ImageView>
             </graphic>
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor>
          </Button>
          <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
             <cursor>
