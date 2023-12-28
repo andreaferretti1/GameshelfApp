@@ -25,7 +25,6 @@ public class InsertCodeController {
 
     @FXML
     private void verifyCode(MouseEvent event) throws IOException {
-        TextField codeField;
         String code = this.codeField.getText();
         this.userLogInBoundary.checkCode(code);
 

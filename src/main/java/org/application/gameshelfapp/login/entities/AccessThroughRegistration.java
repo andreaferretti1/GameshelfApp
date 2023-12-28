@@ -2,7 +2,6 @@ package org.application.gameshelfapp.login.entities;
 
 
 import java.security.SecureRandom;
-import java.util.Random;
 
 public class AccessThroughRegistration extends Access {
 

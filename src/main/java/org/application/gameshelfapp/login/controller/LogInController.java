@@ -7,7 +7,6 @@ import org.application.gameshelfapp.login.boundary.GoogleLogInBoundary;
 import org.application.gameshelfapp.login.boundary.UserLogInBoundary;
 import org.application.gameshelfapp.login.entities.Access;
 import org.application.gameshelfapp.login.entities.AccessFactory;
-import org.application.gameshelfapp.login.entities.AccessThroughRegistration;
 
 
 public class LogInController {
