@@ -219,7 +219,7 @@
                         <Insets left="200.0" top="12.5" />
                      </HBox.margin>
                   </Label>
-                  <Button minHeight="-Infinity" mnemonicParsing="false" prefHeight="70.0" style="-fx-background-color: trasparent;" text="Link" textFill="#2e60e1" underline="true">
+                  <Button minHeight="-Infinity" mnemonicParsing="false" prefHeight="70.0" prefWidth="130.0" style="-fx-background-color: #2e60e1; -fx-background-radius: 45;" text="Link" textFill="WHITE">
                      <font>
                         <Font name="System Italic" size="30.0" />
                      </font>
@@ -253,7 +253,7 @@
                         <Insets left="200.0" top="12.5" />
                      </HBox.margin>
                   </Label>
-                  <Button minHeight="-Infinity" mnemonicParsing="false" prefHeight="70.0" style="-fx-background-color: trasparent;" text="Link" textFill="#2e60e1" underline="true">
+                  <Button minHeight="-Infinity" mnemonicParsing="false" prefHeight="70.0" prefWidth="130.0" style="-fx-background-color: #2e60e1; -fx-background-radius: 45;" text="Link" textFill="WHITE">
                      <font>
                         <Font name="System Italic" size="30.0" />
                      </font>
