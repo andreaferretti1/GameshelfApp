@@ -1,14 +1,14 @@
 package org.application.gameshelfapp.login.entities;
 
 
-import java.util.Random;
+import java.security.SecureRandom;
 
 public class AccessThroughRegistration extends Access {
 
     private String username;
     private Gmailer checkGmail;
     private int codeGenerated;
-    private final Random random;
+    private final SecureRandom secureRandom;
 
 
     public AccessThroughRegistration(String username, String email, String password){
@@ -16,7 +16,7 @@ public class AccessThroughRegistration extends Access {
         this.email = email;
         this.password = password;
         this.encoder = new MD5Encoder(password);
-        this.random = new Random();
+        this.secureRandom = new SecureRandom();
         try {
             this.checkGmail = new Gmailer();
         } catch (Exception e){
@@ -28,7 +28,7 @@ public class AccessThroughRegistration extends Access {
     public void sendCheckEmail(){
         String emailToSend = "Dear client,\n" +
                 "your authentication code is: ";
-        this.codeGenerated = random.nextInt();
+        this.codeGenerated = this.secureRandom.nextInt();
         emailToSend += this.codeGenerated;
         try {
             checkGmail.sendMail("authentication code", emailToSend, this.email);
