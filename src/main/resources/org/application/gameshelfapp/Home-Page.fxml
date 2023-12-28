@@ -95,7 +95,7 @@
       </effect>
    </VBox>
    <Region prefHeight="27.0" prefWidth="1440.0" style="-fx-background-color: #2E60E1;" />
-   <ScrollPane hbarPolicy="NEVER" prefHeight="741.0" prefWidth="1340.0" stylesheets="@icons/style.css" vbarPolicy="ALWAYS" AnchorPane.leftAnchor="-1.0" AnchorPane.topAnchor="27.0">
+   <ScrollPane hbarPolicy="NEVER" prefHeight="741.0" prefWidth="1340.0" stylesheets="@icons/Scrollbar_style.css" AnchorPane.leftAnchor="-1.0" AnchorPane.topAnchor="27.0">
       <content>
          <VBox prefHeight="741.0" prefWidth="1340.0" style="-fx-background-color: #433f3f;">
             <children>
