@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Region prefHeight="768.0" prefWidth="1440.0" style="-fx-background-color: #433f3f;" />
+      <Region prefHeight="27.0" prefWidth="1440.0" style="-fx-background-color: #2e60e1;" />
+      <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="40.0" style="-fx-background-color: transparent;" text="Button" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="7.0">
+         <graphic>
+            <ImageView>
+               <image>
+                  <Image url="@icons/undo_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <VBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="741.0" prefWidth="100.0" style="-fx-background-color: #433f3f;" AnchorPane.leftAnchor="1340.0" AnchorPane.topAnchor="27.0">
+         <children>
+            <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/account_icon.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/search_fill_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets top="116.0" />
+               </VBox.margin>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/home_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets top="116.0" />
+               </VBox.margin>
+            </Button>
+            <Button contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: transparent;" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="116.0" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/games_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/settings_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets top="116.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <effect>
+            <DropShadow height="0.0" radius="4.75" />
+         </effect>
+      </VBox>
+      <VBox prefHeight="741.0" prefWidth="1340.0" AnchorPane.topAnchor="27.0">
+         <children>
+            <TextField maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="52.0" prefWidth="900.0" promptText="Search by Name" style="-fx-background-color: white; -fx-prompt-text-fill: #2E60E1; -fx-text-fill: #2E60E1; -fx-background-radius: 60;">
+               <font>
+                  <Font name="System Italic" size="28.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <VBox.margin>
+                  <Insets left="220.0" top="20.0" />
+               </VBox.margin>
+            </TextField>
+            <Label alignment="CENTER" text="Or search by:" textFill="#2e60e1" underline="true">
+               <font>
+                  <Font size="28.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="589.5" top="20.0" />
+               </VBox.margin>
+            </Label>
+            <Label text="Console:" textFill="WHITE">
+               <VBox.margin>
+                  <Insets left="50.0" top="40.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="40.0" prefWidth="1340.0">
+               <children>
+                  <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="PlayStation" textFill="#2e60e1">
+                     <font>
+                        <Font name="System Italic" size="28.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="200.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </CheckBox>
+                  <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="XBox" textFill="#2e60e1">
+                     <font>
+                        <Font name="System Italic" size="28.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="231.5" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </CheckBox>
+                  <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="Pc" textFill="#2e60e1">
+                     <font>
+                        <Font name="System Italic" size="28.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="200.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </CheckBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <Label layoutX="60.0" layoutY="162.0" text="Playable:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="50.0" top="40.0" />
+               </VBox.margin>
+            </Label>
+            <HBox layoutX="10.0" layoutY="222.0" prefHeight="40.0" prefWidth="1340.0">
+               <children>
+                  <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="Offline" textFill="#2e60e1">
+                     <font>
+                        <Font name="System Italic" size="28.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="200.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </CheckBox>
+                  <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="Online" textFill="#2e60e1">
+                     <font>
+                        <Font name="System Italic" size="28.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="287.5" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </CheckBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <Label layoutX="60.0" layoutY="302.0" text="Genre:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="50.0" top="40.0" />
+               </VBox.margin>
+            </Label>
+            <HBox layoutX="10.0" layoutY="222.0" prefHeight="40.0" prefWidth="1340.0">
+               <children>
+                  <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="Sport" textFill="#2e60e1">
+                     <font>
+                        <Font name="System Italic" size="28.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="200.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </CheckBox>
+                  <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="Shooting" textFill="#2e60e1">
+                     <font>
+                        <Font name="System Italic" size="28.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="306.5" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </CheckBox>
+                  <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="Adventure" textFill="#2e60e1">
+                     <font>
+                        <Font name="System Italic" size="28.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="154.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </CheckBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </HBox>
+            <Button alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" mnemonicParsing="false" prefHeight="55.0" prefWidth="130.0" style="-fx-background-color: #2e60e1; -fx-background-radius: 60;" text="Search" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <VBox.margin>
+                  <Insets left="605.0" top="100.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

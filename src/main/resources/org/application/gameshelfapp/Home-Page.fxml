@@ -17,9 +17,6 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <VBox alignment="TOP_RIGHT" prefHeight="741.0" prefWidth="100.0" style="-fx-background-color: #433f3f;" AnchorPane.leftAnchor="1340.0" AnchorPane.topAnchor="27.0">
-      <effect>
-         <DropShadow />
-      </effect>
       <children>
          <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
             <cursor>
@@ -93,6 +90,9 @@
             </VBox.margin>
          </Button>
       </children>
+      <effect>
+         <DropShadow height="0.0" radius="4.75" />
+      </effect>
    </VBox>
    <Region prefHeight="27.0" prefWidth="1440.0" style="-fx-background-color: #2E60E1;" />
    <ScrollPane hbarPolicy="NEVER" prefHeight="741.0" prefWidth="1340.0" stylesheets="@icons/style.css" vbarPolicy="ALWAYS" AnchorPane.leftAnchor="-1.0" AnchorPane.topAnchor="27.0">
@@ -176,7 +176,7 @@
                            <Font size="28.0" />
                         </font>
                      </Button>
-                     <Button contentDisplay="TEXT_ONLY" layoutX="424.0" layoutY="10.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="350.0" prefWidth="350.0" style="-fx-background-radius: 45; -fx-background-color: #2e60e1;" text="FIfa 23" textFill="WHITE">
+                     <Button contentDisplay="TEXT_ONLY" layoutX="424.0" layoutY="10.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="350.0" prefWidth="350.0" style="-fx-background-radius: 45; -fx-background-color: #2e60e1;" text="Fifa 23" textFill="WHITE">
                         <cursor>
                            <Cursor fx:constant="HAND" />
                         </cursor>
@@ -254,7 +254,7 @@
                            <Font size="28.0" />
                         </font>
                      </Button>
-                     <Button contentDisplay="TEXT_ONLY" layoutX="424.0" layoutY="10.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="350.0" prefWidth="350.0" style="-fx-background-radius: 45; -fx-background-color: #2e60e1;" text="FIfa 23" textFill="WHITE">
+                     <Button contentDisplay="TEXT_ONLY" layoutX="424.0" layoutY="10.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="350.0" prefWidth="350.0" style="-fx-background-radius: 45; -fx-background-color: #2e60e1;" text="Fifa 23" textFill="WHITE">
                         <cursor>
                            <Cursor fx:constant="HAND" />
                         </cursor>
