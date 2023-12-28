@@ -8,6 +8,7 @@ public class AccessThroughRegistration extends Access {
     private String username;
     private Gmailer checkGmail;
     private int codeGenerated;
+    private final Random random;
 
 
     public AccessThroughRegistration(String username, String email, String password){
@@ -15,6 +16,7 @@ public class AccessThroughRegistration extends Access {
         this.email = email;
         this.password = password;
         this.encoder = new MD5Encoder(password);
+        this.random = new Random();
         try {
             this.checkGmail = new Gmailer();
         } catch (Exception e){
@@ -24,7 +26,6 @@ public class AccessThroughRegistration extends Access {
     }
 
     public void sendCheckEmail(){
-        Random random = new Random();
         String emailToSend = "Dear client,\n" +
                 "your authentication code is: ";
         this.codeGenerated = random.nextInt();
