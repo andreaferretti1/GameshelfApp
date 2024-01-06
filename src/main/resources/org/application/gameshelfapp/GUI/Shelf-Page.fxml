@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1440.0" style="-fx-background-color: #433f3f;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Region prefHeight="27.0" prefWidth="1440.0" style="-fx-background-color: #2E60E1;" />
+      <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="40.0" style="-fx-background-color: transparent;" text="Button" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="7.0">
+         <graphic>
+            <ImageView>
+               <image>
+                  <Image url="@icons/undo_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <VBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="741.0" prefWidth="100.0" style="-fx-background-color: #433f3f;" AnchorPane.leftAnchor="1340.0" AnchorPane.topAnchor="27.0">
+         <children>
+            <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/account_icon.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/search_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets top="116.0" />
+               </VBox.margin>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/home_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets top="116.0" />
+               </VBox.margin>
+            </Button>
+            <Button contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: transparent;" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="116.0" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/games_fill_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/settings_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets top="116.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <effect>
+            <DropShadow height="0.0" radius="4.75" />
+         </effect>
+      </VBox>
+      <ScrollPane hbarPolicy="NEVER" prefHeight="741.0" prefWidth="1340.0" style="-fx-background-color: #433f3f;" stylesheets="@icons/Scrollbar_style.css" vbarPolicy="ALWAYS" AnchorPane.topAnchor="27.0">
+         <content>
+            <VBox prefHeight="741.0" prefWidth="1340.0" style="-fx-background-color: #433f3f;">
+               <children>
+                  <HBox prefHeight="51.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Your Shelf" textFill="#2e60e1">
+                           <font>
+                              <Font name="System Bold" size="28.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="602.0" top="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: #2E60E1; -fx-background-radius: 60;" text="Add Game" textFill="WHITE">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="430.0" top="15.5" />
+                           </HBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Label layoutX="612.0" layoutY="30.0" text="Latest Addictions:" textFill="#2e60e1">
+                     <font>
+                        <Font name="System Italic" size="26.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="50.0" top="29.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" mnemonicParsing="false" prefHeight="280.0" prefWidth="280.0" style="-fx-background-color: #2E60E1; -fx-background-radius: 45;" text="LatGame" textFill="WHITE">
+                           <font>
+                              <Font size="40.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="100.0" />
+                           </HBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <effect>
+                              <DropShadow height="13.0" offsetX="4.0" radius="8.0">
+                                 <color>
+                                    <Color opacity="0.7963526248931885" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="110.0" layoutY="10.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="280.0" prefWidth="280.0" style="-fx-background-color: #2E60E1; -fx-background-radius: 45;" text="LatGame-1" textFill="WHITE">
+                           <font>
+                              <Font size="40.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <effect>
+                              <DropShadow height="13.0" offsetX="4.0" radius="8.0">
+                                 <color>
+                                    <Color opacity="0.7963526248931885" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                           <HBox.margin>
+                              <Insets left="100.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="110.0" layoutY="10.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="280.0" prefWidth="280.0" style="-fx-background-color: #2E60E1; -fx-background-radius: 45;" text="LatGame-2" textFill="WHITE">
+                           <font>
+                              <Font size="40.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <effect>
+                              <DropShadow height="13.0" offsetX="4.0" radius="8.0">
+                                 <color>
+                                    <Color opacity="0.7963526248931885" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                           <HBox.margin>
+                              <Insets left="100.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label layoutX="60.0" layoutY="105.0" text="Full List:" textFill="#2e60e1">
+                     <font>
+                        <Font name="System Italic" size="26.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="50.0" top="40.0" />
+                     </VBox.margin>
+                  </Label>
+                  <VBox prefHeight="451.0" prefWidth="1340.0">
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Button alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" mnemonicParsing="false" prefHeight="280.0" prefWidth="280.0" style="-fx-background-color: #2E60E1; -fx-background-radius: 45;" text="GamePhoto" textFill="WHITE">
+                                 <font>
+                                    <Font size="40.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <effect>
+                                    <DropShadow height="13.0" offsetX="4.0" radius="8.0">
+                                       <color>
+                                          <Color opacity="0.7963526248931885" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                                 <HBox.margin>
+                                    <Insets left="100.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="180.0" prefWidth="600.0">
+                                 <children>
+                                    <HBox prefHeight="40.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Game Name:" textFill="#2e60e1" underline="true">
+                                             <font>
+                                                <Font size="26.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField editable="false" minHeight="-Infinity" prefHeight="40.0" style="-fx-background-color: trasparent; -fx-text-fill: #2e60e1;" text="*Name Example*">
+                                             <font>
+                                                <Font name="System Italic" size="26.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="10.0" prefHeight="40.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Filters:" textFill="#2e60e1" underline="true">
+                                             <font>
+                                                <Font size="26.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField alignment="CENTER" editable="false" minHeight="-Infinity" prefHeight="40.0" prefWidth="160.0" style="-fx-background-color: #2e60e1; -fx-text-fill: White; -fx-background-radius: 60;" text="*Playable*">
+                                             <font>
+                                                <Font name="System Italic" size="26.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <TextField alignment="CENTER" editable="false" layoutX="104.0" layoutY="10.0" minHeight="-Infinity" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: #2e60e1; -fx-text-fill: White; -fx-background-radius: 60;" text="*Genre*">
+                                             <font>
+                                                <Font name="System Italic" size="26.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="10.0" prefHeight="60.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Console:" textFill="#2e60e1" underline="true">
+                                             <font>
+                                                <Font size="26.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets top="10.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@icons/PSN_icon.png" />
+                                             </image>
+                                             <HBox.margin>
+                                                <Insets left="50.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="50.0" top="50.0" />
+                                 </HBox.margin>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

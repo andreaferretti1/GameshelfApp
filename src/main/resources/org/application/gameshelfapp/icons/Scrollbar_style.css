@@ -1,0 +1,30 @@
+/* ScrollBar Track */
+.scroll-bar:vertical .track {
+    -fx-background-color: transparent; /* Track color */
+}
+
+/* ScrollBar Thumb */
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #d9d9d9; /* Thumb color */
+}
+
+/* ScrollBar Hover */
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #a6a6a6; /* Thumb color on hover */
+}
+
+/* ScrollBar Pressed */
+.scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: #a6a6a6; /* Thumb color when pressed */
+}
+
+/* ScrollBar Increment and Decrement Buttons */
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent; /* Set buttons to transparent */
+}
+
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow {
+    -fx-background-color: transparent;
+}

@@ -1,34 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gameshelfapp.login.RegistrationPageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gameshelfapp.login.RegistrationPageController">
     <Region prefHeight="768.0" prefWidth="1440.0" style="-fx-background-color: #433f3f;" />
     <Region prefHeight="27.0" prefWidth="1440.0" style="-fx-background-color: #2e60e1;" />
+     <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#goToStartPage" prefHeight="20.0" prefWidth="40.0" style="-fx-background-color: transparent;" text="Button" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="7.0">
+         <graphic>
+             <ImageView onMouseClicked="#goToStartPage">
+                 <Image url="@icons/undo_icon.png" />
+             </ImageView>
+         </graphic>
+         <cursor>
+             <Cursor fx:constant="HAND" />
+         </cursor>
+     </Button>
     <VBox layoutX="-14.0" prefHeight="768.0" prefWidth="1440.0">
-        <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#goToStartPage" prefHeight="20.0" prefWidth="40.0" style="-fx-background-color: transparent;" text="Button">
-            <graphic>
-                <ImageView onMouseClicked="#goToStartPage">
-                    <Image url="@../icons/undo_icon.png" />
-                </ImageView>
-            </graphic>
-            <VBox.margin>
-                <Insets left="5.0" top="7.0" />
-            </VBox.margin>
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-        </Button>
         <ImageView fitWidth="133.0">
             <VBox.margin>
                 <Insets left="653.0" top="109.0" />
             </VBox.margin>
-            <Image url="@../icons/profile_icon.png" />
+            <Image url="@icons/profile_icon.png" />
         </ImageView>
         <Label alignment="CENTER" graphicTextGap="5.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="38.0" prefWidth="340.0" text="Register your account" textFill="#2e60e1">
             <font>
@@ -70,51 +74,56 @@
                 <Font name="System Italic" size="21.0" />
             </font>
         </TextField>
-        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="1440.0">
-            <VBox.margin>
-                <Insets top="29.0" />
-            </VBox.margin>
-            <CheckBox mnemonicParsing="false" prefHeight="30.0" stylesheets="@../icons/CheckBox_style.css" text="Customer" textFill="WHITE">
-                <font>
-                    <Font size="21.0" />
-                </font>
-                <cursor>
-                    <Cursor fx:constant="HAND" />
-                </cursor>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="1440.0">
+         <children>
+            <CheckBox mnemonicParsing="false" prefHeight="30.0" stylesheets="@icons/CheckBox_style.css" text="Customer" textFill="WHITE">
+               <font>
+                  <Font size="21.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <HBox.margin>
+                  <Insets left="-31.0" />
+               </HBox.margin>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="Seller" textFill="WHITE">
-                <HBox.margin>
-                    <Insets left="150.0" />
-                </HBox.margin>
-                <font>
-                    <Font size="21.0" />
-                </font>
-                <cursor>
-                    <Cursor fx:constant="HAND" />
-                </cursor>
+            <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="Seller" textFill="WHITE">
+               <HBox.margin>
+                  <Insets left="150.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="21.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="Both" textFill="WHITE">
-                <font>
-                    <Font size="21.0" />
-                </font>
-                <HBox.margin>
-                    <Insets left="150.0" />
-                </HBox.margin>
-                <cursor>
-                    <Cursor fx:constant="HAND" />
-                </cursor>
+            <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="Both" textFill="WHITE">
+               <font>
+                  <Font size="21.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="150.0" />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </CheckBox>
-        </HBox>
-        <Button mnemonicParsing="false" onMouseClicked="#register" prefHeight="55.0" prefWidth="130.0" style="-fx-background-radius: 60; -fx-background-color: #2e60e1;" text="Next" textFill="WHITE">
-            <font>
-                <Font size="24.0" />
-            </font>
-            <VBox.margin>
-                <Insets left="655.0" />
-            </VBox.margin>
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-        </Button>
+         </children>
+         <VBox.margin>
+            <Insets top="29.0" />
+         </VBox.margin>
+      </HBox>
+      <Button mnemonicParsing="false" onMouseClicked="#register" prefHeight="55.0" prefWidth="130.0" style="-fx-background-radius: 60; -fx-background-color: #2e60e1;" text="Next" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <VBox.margin>
+            <Insets left="655.0" />
+         </VBox.margin>
+      </Button>
     </VBox>
 </AnchorPane>
