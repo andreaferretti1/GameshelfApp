@@ -12,28 +12,14 @@ import java.util.Properties;
 
 public class AccessDAOCSV implements AccessDAO{
 
+    private final String filename;
     private final File fd;
 
     public AccessDAOCSV() {
-        FileInputStream propertiesReader = null;
-        String filename;
-        try {
-            propertiesReader = new FileInputStream("C:\\Users\\feran\\progetto ispw\\GameshelfApp\\src\\main\\resources\\org\\application\\gameshelfapp\\configuration\\configuration.properties");
-            Properties properties = new Properties();
-            properties.load(propertiesReader);
-            filename = properties.getProperty("CSV_ACCOUNTS");
-        } catch (IOException e) {
-            filename = "src/main/resources/org/application/gameshelfapp/persistency/accounts.csv";
-        }finally{
-            try {
-                if (propertiesReader != null) {
-                    propertiesReader.close();
-                }
-            } catch(IOException e){
-                throw new RuntimeException();
-            }        }
 
-        fd = new File(filename);
+        this.filename = "src/main/resources/org/application/gameshelfapp/persistency/accounts.csv";
+
+        this.fd = new File(filename);
     }
 
     @Override
