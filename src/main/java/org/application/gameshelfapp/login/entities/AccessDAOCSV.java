@@ -15,17 +15,23 @@ public class AccessDAOCSV implements AccessDAO{
     private final File fd;
 
     public AccessDAOCSV() {
-        FileInputStream propertiesReader;
+        FileInputStream propertiesReader = null;
         String filename;
         try {
             propertiesReader = new FileInputStream("C:\\Users\\feran\\progetto ispw\\GameshelfApp\\src\\main\\resources\\org\\application\\gameshelfapp\\configuration\\configuration.properties");
             Properties properties = new Properties();
             properties.load(propertiesReader);
             filename = properties.getProperty("CSV_ACCOUNTS");
-            propertiesReader.close();
         } catch (IOException e) {
             filename = "src/main/resources/org/application/gameshelfapp/persistency/accounts.csv";
-        }
+        }finally{
+            try {
+                if (propertiesReader != null) {
+                    propertiesReader.close();
+                }
+            } catch(IOException e){
+                throw new RuntimeException();
+            }        }
 
         fd = new File(filename);
     }
@@ -74,15 +80,17 @@ public class AccessDAOCSV implements AccessDAO{
              }
         } catch(IOException | CsvValidationException e){
             throw new PersistencyErrorException(e.getMessage());
+        } finally{
+            try {
+                if (csvReader != null) {
+                    csvReader.close();
+                }
+            } catch(IOException e){
+                throw new RuntimeException();
+            }
         }
 
-        try {
-              if (csvReader != null) {
-                  csvReader.close();
-              }
-          } catch(IOException e){
-              throw new RuntimeException();
-          }
+
 
 
         if(access == null && type == TypeOfAccess.LOGIN){
