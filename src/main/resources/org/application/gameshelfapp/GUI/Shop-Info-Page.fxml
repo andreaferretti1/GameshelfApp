@@ -24,7 +24,7 @@
          <graphic>
             <ImageView>
                <image>
-                  <Image url="@icons/undo_icon.png" />
+                  <Image url="@../icons/undo_icon.png" />
                </image>
             </ImageView>
          </graphic>
@@ -39,7 +39,7 @@
                   <Insets left="653.0" top="109.0" />
                </VBox.margin>
                <image>
-                  <Image url="@icons/store_profile.png" />
+                  <Image url="@../icons/store_profile.png" />
                </image>
             </ImageView>
             <Label alignment="CENTER" graphicTextGap="5.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="38.0" prefWidth="340.0" text="Register your shop" textFill="#2e60e1">
@@ -55,7 +55,7 @@
                   <Insets top="24.0" />
                </VBox.margin>
                <children>
-                  <CheckBox mnemonicParsing="false" prefHeight="30.0" stylesheets="@icons/CheckBox_style.css" text="Private" textFill="WHITE">
+                  <CheckBox mnemonicParsing="false" prefHeight="30.0" stylesheets="@../icons/CheckBox_style.css" text="Private" textFill="WHITE">
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -66,7 +66,7 @@
                         <Insets />
                      </HBox.margin>
                   </CheckBox>
-                  <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="Shop Manager" textFill="WHITE">
+                  <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="Shop Manager" textFill="WHITE">
                      <font>
                         <Font size="21.0" />
                      </font>
