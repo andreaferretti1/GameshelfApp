@@ -17,6 +17,7 @@ import java.io.IOException;
 public class InsertCodeController {
     private UserLogInBoundary userLogInBoundary;
 
+    @FXML
     public TextField codeField;
 
     public void setUserLogInBoundary(UserLogInBoundary boundary){
@@ -24,16 +25,24 @@ public class InsertCodeController {
     }
 
     @FXML
-    private void verifyCode(MouseEvent event) throws IOException {
+    private void verifyCode(MouseEvent event){
         String code = this.codeField.getText();
         this.userLogInBoundary.checkCode(code);
+    }
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org.application.gameshelfapp.Home-page.fxml"));
-        Parent root = fxmlLoader.load();
+    public void switchToHomePage(){
 
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1440, 768);
-        stage.setScene(scene);
-        stage.show();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/GUI/Home-Page.fxml"));
+        try {
+            Parent root = loader.load();
+
+            Stage stage = (Stage) this.codeField.getScene().getWindow();
+            Scene scene = new Scene(root, 1440, 768);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            System.exit(1);
+        }
     }
 }

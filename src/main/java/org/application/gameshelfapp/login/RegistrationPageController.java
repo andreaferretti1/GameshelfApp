@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import org.application.gameshelfapp.StartingPageController;
 import org.application.gameshelfapp.login.boundary.UserLogInBoundary;
 import org.application.gameshelfapp.login.graphiccontrollers.InsertCodeController;
 
@@ -16,23 +17,27 @@ import java.io.IOException;
 
 
 public class RegistrationPageController {
-    public TextField emailTextField, usernameTextField, passwordTextField, confirmPasswordTextField;
+
+    @FXML
+    private TextField emailTextField, usernameTextField, passwordTextField, confirmPasswordTextField;
     private UserLogInBoundary userBoundary;
 
 
     public void setUserLogInBoundary(UserLogInBoundary b){
         this.userBoundary = b;
     }
+
     @FXML
     private void register(MouseEvent event) throws IOException{
 
         this.userBoundary.register(this.emailTextField.getText(), this.usernameTextField.getText(), this.passwordTextField.getText());
 
-        FXMLLoader fxmlLoad = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/Insert-code.fxml"));
+        FXMLLoader fxmlLoad = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/GUI/Insert-code.fxml"));
         Parent root = fxmlLoad.load();
 
         InsertCodeController controller = fxmlLoad.getController();
         controller.setUserLogInBoundary(this.userBoundary);
+        this.userBoundary.setInsertCodeController(controller);
 
         Scene scene = new Scene(root, 1440, 768);
 
@@ -44,19 +49,14 @@ public class RegistrationPageController {
     }
 
     @FXML
-    public void verifyCode(MouseEvent event){
-
-
-    }
-
-
-
-    @FXML
     private void goToStartPage(MouseEvent event) {
 
         try {
-            FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/Starting-Page.fxml"));
+            FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/GUI/Starting-Page.fxml"));
             Parent root = fxmlloader.load();
+
+            StartingPageController controller = fxmlloader.getController();
+            this.userBoundary.setStartingPageController(controller);
 
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 1440, 768);
@@ -64,7 +64,7 @@ public class RegistrationPageController {
             stage.show();
 
         } catch (IOException e){
-            System.out.println("Couldn't load Starting page...");
+            System.exit(1);
         }
     }
 

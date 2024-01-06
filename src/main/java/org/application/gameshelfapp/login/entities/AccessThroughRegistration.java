@@ -1,11 +1,13 @@
 package org.application.gameshelfapp.login.entities;
 
 
+import javafx.scene.control.CheckBox;
+import org.application.gameshelfapp.login.exception.CheckFailedException;
+
 import java.security.SecureRandom;
 
 public class AccessThroughRegistration extends Access {
 
-    private String username;
     private Gmailer checkGmail;
     private int codeGenerated;
     private final SecureRandom secureRandom;
@@ -29,6 +31,7 @@ public class AccessThroughRegistration extends Access {
         String emailToSend = "Dear client,\n" +
                 "your authentication code is: ";
         this.codeGenerated = this.secureRandom.nextInt();
+        Math.abs(this.codeGenerated);
         emailToSend += this.codeGenerated;
         try {
             checkGmail.sendMail("authentication code", emailToSend, this.email);
@@ -38,9 +41,9 @@ public class AccessThroughRegistration extends Access {
     }
 
     @Override
-    public void checkCorrectness(int insertedCode){
+    public void checkCorrectness(TypeOfAccess type, int insertedCode, String s) throws CheckFailedException {
         if(this.codeGenerated != insertedCode){
-                //lancia eccezione
+                throw new CheckFailedException("Code is incorrect");
             }
     }
 }

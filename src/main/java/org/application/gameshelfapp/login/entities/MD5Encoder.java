@@ -2,6 +2,7 @@ package org.application.gameshelfapp.login.entities;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.MessageDigest;
+import java.util.Arrays;
 
 public class MD5Encoder implements Encoder{
 
@@ -34,7 +35,8 @@ public class MD5Encoder implements Encoder{
     }
 
     @Override
-    public void setPasswordToCrypt(String password){
-        this.passwordToCrypt = password;
+    public void removePasswordToCrypt(){
+        Arrays.fill(this.passwordToCrypt.toCharArray(), '\0');
+        this.passwordToCrypt = null;
     }
 }

@@ -5,8 +5,10 @@ import org.application.gameshelfapp.login.bean.RegistrationBean;
 import org.application.gameshelfapp.login.boundary.FacebookLogInBoundary;
 import org.application.gameshelfapp.login.boundary.GoogleLogInBoundary;
 import org.application.gameshelfapp.login.boundary.UserLogInBoundary;
-import org.application.gameshelfapp.login.entities.Access;
-import org.application.gameshelfapp.login.entities.AccessFactory;
+import org.application.gameshelfapp.login.entities.*;
+import org.application.gameshelfapp.login.exception.CheckFailedException;
+import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.login.exception.PersistencyAccountException;
 
 
 public class LogInController {
@@ -16,10 +18,12 @@ public class LogInController {
     private GoogleLogInBoundary googleBoundary;
     private final AccessFactory factory;
     private Access access;
+    private AccessDAO accessDAO;
 
     public LogInController(UserLogInBoundary userLogInBoundary){
         this.logInBoundary = userLogInBoundary;
         factory = new AccessFactory();
+        this.accessDAO = new AccessDAOCSV(); //TODO meccanismo di creazione dei dao
     }
 
 
@@ -43,19 +47,39 @@ public class LogInController {
     public void logIn(LogInBean logBean){
         String logEmail = logBean.getEmailBean();
         String logPassword = logBean.getPasswordBean();
-        access = factory.createAccess(0, null, logEmail, logPassword);
-        access.checkCorrectness(0);
+
+        access = factory.createAccess(TypeOfAccess.LOGIN, null, logEmail, logPassword);
+        try {
+
+            Access accessRetrieved = this.accessDAO.retrieveAccountByEmail(TypeOfAccess.LOGIN, this.access.getEmail());
+            access.checkCorrectness(TypeOfAccess.LOGIN, -1, accessRetrieved.getEncodedPassword());
+            this.logInBoundary.goToHomePage(TypeOfAccess.LOGIN);
+
+        } catch(PersistencyErrorException e){
+
+        } catch(PersistencyAccountException e){
+
+        } catch (CheckFailedException e) {
+            //Di' alla boundary di mostrare il pannello di errore delle credenziali inserite
+        }
+
+
     }
 
     public void registration(RegistrationBean regBean){
         String regUsername = regBean.getUsernameBean();
         String regEmail = regBean.getEmailBean();
         String regPassword = regBean.getPasswordBean();
-        access = factory.createAccess(1, regUsername, regEmail, regPassword);
+        access = factory.createAccess(TypeOfAccess.REGISTRATION, regUsername, regEmail, regPassword);
+        //manda mail
     }
 
     public void checkCode(RegistrationBean regBean){
-        this.access.checkCorrectness(regBean.getCheckCode());
+        try {
+            this.access.checkCorrectness(TypeOfAccess.REGISTRATION, regBean.getCheckCode(), null);
+        } catch (CheckFailedException e) {
+            //Di' alla boundary di mostrare il pannello di errore
+        }
     }
 
     public void registrationWithGoogle(){

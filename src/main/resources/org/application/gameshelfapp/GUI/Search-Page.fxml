@@ -24,7 +24,7 @@
          <graphic>
             <ImageView>
                <image>
-                  <Image url="@icons/undo_icon.png" />
+                  <Image url="@../icons/undo_icon.png" />
                </image>
             </ImageView>
          </graphic>
@@ -41,7 +41,7 @@
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons/account_icon.png" />
+                        <Image url="@../icons/account_icon.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -56,7 +56,7 @@
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons/search_fill_icon.png" />
+                        <Image url="@../icons/search_fill_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -71,7 +71,7 @@
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons/home_icon.png" />
+                        <Image url="@../icons/home_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -86,7 +86,7 @@
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons/games_icon.png" />
+                        <Image url="@../icons/games_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -101,7 +101,7 @@
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons/settings_icon.png" />
+                        <Image url="@../icons/settings_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -145,7 +145,7 @@
             </Label>
             <HBox prefHeight="40.0" prefWidth="1340.0">
                <children>
-                  <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="PlayStation" textFill="#2e60e1">
+                  <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="PlayStation" textFill="#2e60e1">
                      <font>
                         <Font name="System Italic" size="28.0" />
                      </font>
@@ -156,7 +156,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </CheckBox>
-                  <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="XBox" textFill="#2e60e1">
+                  <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="XBox" textFill="#2e60e1">
                      <font>
                         <Font name="System Italic" size="28.0" />
                      </font>
@@ -167,7 +167,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </CheckBox>
-                  <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="Pc" textFill="#2e60e1">
+                  <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="Pc" textFill="#2e60e1">
                      <font>
                         <Font name="System Italic" size="28.0" />
                      </font>
@@ -193,7 +193,7 @@
             </Label>
             <HBox layoutX="10.0" layoutY="222.0" prefHeight="40.0" prefWidth="1340.0">
                <children>
-                  <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="Offline" textFill="#2e60e1">
+                  <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="Offline" textFill="#2e60e1">
                      <font>
                         <Font name="System Italic" size="28.0" />
                      </font>
@@ -204,7 +204,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </CheckBox>
-                  <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="Online" textFill="#2e60e1">
+                  <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="Online" textFill="#2e60e1">
                      <font>
                         <Font name="System Italic" size="28.0" />
                      </font>
@@ -230,7 +230,7 @@
             </Label>
             <HBox layoutX="10.0" layoutY="222.0" prefHeight="40.0" prefWidth="1340.0">
                <children>
-                  <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="Sport" textFill="#2e60e1">
+                  <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="Sport" textFill="#2e60e1">
                      <font>
                         <Font name="System Italic" size="28.0" />
                      </font>
@@ -241,7 +241,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </CheckBox>
-                  <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="Shooting" textFill="#2e60e1">
+                  <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="Shooting" textFill="#2e60e1">
                      <font>
                         <Font name="System Italic" size="28.0" />
                      </font>
@@ -252,7 +252,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </CheckBox>
-                  <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="Adventure" textFill="#2e60e1">
+                  <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="Adventure" textFill="#2e60e1">
                      <font>
                         <Font name="System Italic" size="28.0" />
                      </font>

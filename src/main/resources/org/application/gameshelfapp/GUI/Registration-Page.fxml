@@ -14,7 +14,7 @@
         <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#goToStartPage" prefHeight="20.0" prefWidth="40.0" style="-fx-background-color: transparent;" text="Button">
             <graphic>
                 <ImageView onMouseClicked="#goToStartPage">
-                    <Image url="@icons/undo_icon.png" />
+                    <Image url="@../icons/undo_icon.png" />
                 </ImageView>
             </graphic>
             <VBox.margin>
@@ -28,7 +28,7 @@
             <VBox.margin>
                 <Insets left="653.0" top="109.0" />
             </VBox.margin>
-            <Image url="@icons/profile_icon.png" />
+            <Image url="@../icons/profile_icon.png" />
         </ImageView>
         <Label alignment="CENTER" graphicTextGap="5.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="38.0" prefWidth="340.0" text="Register your account" textFill="#2e60e1">
             <font>
@@ -74,7 +74,7 @@
             <VBox.margin>
                 <Insets top="29.0" />
             </VBox.margin>
-            <CheckBox mnemonicParsing="false" prefHeight="30.0" stylesheets="@icons/CheckBox_style.css" text="Customer" textFill="WHITE">
+            <CheckBox mnemonicParsing="false" prefHeight="30.0" stylesheets="@../icons/CheckBox_style.css" text="Customer" textFill="WHITE">
                 <font>
                     <Font size="21.0" />
                 </font>
@@ -82,7 +82,7 @@
                     <Cursor fx:constant="HAND" />
                 </cursor>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="Seller" textFill="WHITE">
+            <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="Seller" textFill="WHITE">
                 <HBox.margin>
                     <Insets left="150.0" />
                 </HBox.margin>
@@ -93,7 +93,7 @@
                     <Cursor fx:constant="HAND" />
                 </cursor>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" stylesheets="@icons/CheckBox_style.css" text="Both" textFill="WHITE">
+            <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="Both" textFill="WHITE">
                 <font>
                     <Font size="21.0" />
                 </font>

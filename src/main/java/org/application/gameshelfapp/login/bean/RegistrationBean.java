@@ -11,10 +11,11 @@ public class RegistrationBean {
     private int checkCode;
 
 
-    public RegistrationBean(String username, String email, String password){
+    public RegistrationBean(String username, String email, String password) {
         this.usernameBean = username;
         try{
-        this.emailBean = email;} catch(Exception e){}
+            this.emailBean = email;
+        } catch(Exception e){}
         this.passwordBean = password;
     }
 
@@ -22,10 +23,11 @@ public class RegistrationBean {
         this.usernameBean = username;
     }
 
-    public void setEmailBean(String email){
-        try{
+    public void setEmailBean(String email) throws Exception{
+
         this.checkEmailSyntax(email);
-        this.emailBean = email;} catch(Exception e){}
+        this.emailBean = email;
+
     }
 
     public void setPasswordBean(String password){
@@ -44,13 +46,13 @@ public class RegistrationBean {
         return this.passwordBean;
     }
 
-    public void checkEmailSyntax(String s){
+    public void checkEmailSyntax(String s) throws Exception{
         String syntaxRegex = "[a-zA-Z0-9]+([._-][a-zA-Z0-9]+)?@gmail/.[a-z]+$";
         Pattern p = Pattern.compile(syntaxRegex);
         Matcher m = p.matcher(s);
         boolean b = m.matches();
         if(!b) {
-            //lancia eccezione
+            throw new Exception("Invalid email address");
         }
     }
 

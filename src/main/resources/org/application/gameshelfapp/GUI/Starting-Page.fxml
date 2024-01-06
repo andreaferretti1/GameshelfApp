@@ -25,7 +25,7 @@
             <VBox.margin>
                 <Insets left="653.0" top="109.0"/>
             </VBox.margin>
-            <Image url="@icons/profile_icon.png"/>
+            <Image url="@../icons/profile_icon.png"/>
         </ImageView>
         <Label alignment="CENTER" prefHeight="38.0" prefWidth="340.0" text="Log In to your Account"
                textFill="#2e60e1">
@@ -116,7 +116,7 @@
                         <cursor>
                             <Cursor fx:constant="HAND"/>
                         </cursor>
-                        <Image url="@icons/facebook_icon.png"/>
+                        <Image url="@../icons/facebook_icon.png"/>
                     </ImageView>
                 </graphic>
                 <HBox.margin>
@@ -134,7 +134,7 @@
                         <cursor>
                             <Cursor fx:constant="HAND"/>
                         </cursor>
-                        <Image url="@icons/google_icon.png"/>
+                        <Image url="@../icons/google_icon.png"/>
                     </ImageView>
                 </graphic>
                 <HBox.margin>

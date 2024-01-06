@@ -22,7 +22,7 @@
          <graphic>
             <ImageView>
                <image>
-                  <Image url="@icons/undo_icon.png" />
+                  <Image url="@../icons/undo_icon.png" />
                </image>
             </ImageView>
          </graphic>
@@ -39,7 +39,7 @@
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons/account_fill_icon.png" />
+                        <Image url="@../icons/account_fill_icon.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -54,7 +54,7 @@
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons/search_icon.png" />
+                        <Image url="@../icons/search_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -69,7 +69,7 @@
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons/home_icon.png" />
+                        <Image url="@../icons/home_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -84,7 +84,7 @@
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons/games_icon.png" />
+                        <Image url="@../icons/games_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -99,7 +99,7 @@
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons/settings_icon.png" />
+                        <Image url="@../icons/settings_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -124,7 +124,7 @@
             </Label>
             <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@icons/profile_icon.png" />
+                  <Image url="@../icons/profile_icon.png" />
                </image>
                <VBox.margin>
                   <Insets left="595.0" top="40.0" />
@@ -171,7 +171,7 @@
                <children>
                   <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons/PSN_icon.png" />
+                        <Image url="@../icons/PSN_icon.png" />
                      </image>
                      <HBox.margin>
                         <Insets left="327.5" />
@@ -205,7 +205,7 @@
                <children>
                   <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons/Xbox_icon.png" />
+                        <Image url="@../icons/Xbox_icon.png" />
                      </image>
                      <HBox.margin>
                         <Insets left="327.5" />
@@ -239,7 +239,7 @@
                <children>
                   <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons/Steam_icon.png" />
+                        <Image url="@../icons/Steam_icon.png" />
                      </image>
                      <HBox.margin>
                         <Insets left="327.5" />

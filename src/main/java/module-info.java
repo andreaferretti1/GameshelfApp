@@ -10,6 +10,7 @@ module org.application.gameshelfapp {
     requires com.google.api.services.gmail;
     requires mail;
     requires org.apache.commons.codec;
+    requires com.opencsv;
 
 
     opens org.application.gameshelfapp to javafx.fxml;
