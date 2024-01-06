@@ -7,7 +7,6 @@ import org.application.gameshelfapp.login.exception.PersistencyAccountException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
 import java.io.*;
-import java.util.Properties;
 
 
 public class AccessDAOCSV implements AccessDAO{
@@ -23,24 +22,24 @@ public class AccessDAOCSV implements AccessDAO{
     }
 
     @Override
-    public void saveAccount(TypeOfAccess type, Access access) throws Exception {
+    public void saveAccount(TypeOfAccess type, Access access) throws PersistencyAccountException, IOException {
             String username = access.getUsername();
             String email = access.getEmail();
             String password = null;
 
-            String[] record = new String[3];
+            String[] instance = new String[3];
 
             CSVWriter csvWriter = null;
 
-            record[0] = username;
-            record[1] = email;
-            record[2] = password;
+            instance[0] = username;
+            instance[1] = email;
+            instance[2] = password;
 
             try{
                 csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(this.fd)));
-                csvWriter.writeNext(record);
+                csvWriter.writeNext(instance);
             } catch(IOException e){
-                throw new Exception("Couldn't save account");
+                throw new PersistencyAccountException("Couldn't save account");
             }finally {
                 if (csvWriter != null) {
                     csvWriter.close();
@@ -50,29 +49,25 @@ public class AccessDAOCSV implements AccessDAO{
     }
 
     @Override
-    public Access retrieveAccountByEmail(TypeOfAccess type, String email) throws PersistencyErrorException, PersistencyAccountException {
-        String[] record;
+    public Access retrieveAccountByEmail(TypeOfAccess type, String email) throws IOException, PersistencyErrorException, PersistencyAccountException {
+        String[] instance;
         CSVReader csvReader = null;
         Access access = null;
 
         try {
              csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)));
-             while((record = csvReader.readNext()) != null){
-                    if(record[1].equals(email)){
-                        String username = record[0];
-                        String password = record[3];
+             while((instance = csvReader.readNext()) != null){
+                    if(instance[1].equals(email)){
+                        String username = instance[0];
+                        String password = instance[3];
                         access = AccessFactory.createAccess(type, username, email, password);
                     }
              }
         } catch(IOException | CsvValidationException e){
             throw new PersistencyErrorException(e.getMessage());
         } finally{
-            try {
-                if (csvReader != null) {
-                    csvReader.close();
-                }
-            } catch(IOException e){
-                throw new RuntimeException();
+            if (csvReader != null) {
+                csvReader.close();
             }
         }
 

@@ -19,7 +19,13 @@ import java.io.IOException;
 public class RegistrationPageController {
 
     @FXML
-    private TextField emailTextField, usernameTextField, passwordTextField, confirmPasswordTextField;
+    private TextField emailTextField;
+    @FXML
+    private TextField usernameTextField;
+    @FXML
+    private TextField passwordTextField;
+    @FXML
+    private TextField confirmPasswordTextField;
     private UserLogInBoundary userBoundary;
 
 

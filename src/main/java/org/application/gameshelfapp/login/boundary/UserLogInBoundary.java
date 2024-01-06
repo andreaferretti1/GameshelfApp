@@ -63,8 +63,8 @@ public class UserLogInBoundary {
             case TypeOfAccess.LOGIN:
                 this.startingPageController.switchToHomePage();
 
-
-
+            case TypeOfAccess.REGISTRATION:
+                this.insertCodeController.switchToHomePage();
 
         }
     }
