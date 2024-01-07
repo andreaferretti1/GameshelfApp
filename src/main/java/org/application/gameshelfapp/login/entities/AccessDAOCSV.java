@@ -22,7 +22,7 @@ public class AccessDAOCSV implements AccessDAO{
     }
 
     @Override
-    public void saveAccount(TypeOfAccess type, Access access) throws PersistencyAccountException, IOException {
+    public synchronized void saveAccount(TypeOfAccess type, Access access) throws PersistencyAccountException, IOException {
             String username = access.getUsername();
             String email = access.getEmail();
             String password = null;
@@ -70,9 +70,6 @@ public class AccessDAOCSV implements AccessDAO{
                 csvReader.close();
             }
         }
-
-
-
 
         if(access == null && type == TypeOfAccess.LOGIN){
             throw new PersistencyAccountException("There isn't such account");

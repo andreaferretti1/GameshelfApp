@@ -65,6 +65,12 @@ public class StartingPageController extends Application {
             System.exit(1);
         }
     }
+
+    public void displayErrorWindow(String s){
+        //TODO crea GUI errore
+    }
+
+
     @Override
     public void start(Stage stage) throws Exception {
 

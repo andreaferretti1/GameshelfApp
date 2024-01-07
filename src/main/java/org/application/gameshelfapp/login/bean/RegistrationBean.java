@@ -1,5 +1,7 @@
 package org.application.gameshelfapp.login.bean;
 
+import org.application.gameshelfapp.login.exception.SyntaxErrorEcxeption;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,8 +16,11 @@ public class RegistrationBean {
     public RegistrationBean(String username, String email, String password) {
         this.usernameBean = username;
         try{
+            this.checkEmailSyntax(email);
             this.emailBean = email;
-        } catch(Exception e){}
+        } catch(SyntaxErrorEcxeption e){
+            //mostra pannello di blocco
+        }
         this.passwordBean = password;
     }
 
@@ -46,13 +51,13 @@ public class RegistrationBean {
         return this.passwordBean;
     }
 
-    public void checkEmailSyntax(String s) throws Exception{
+    private void checkEmailSyntax(String s) throws SyntaxErrorEcxeption{
         String syntaxRegex = "[a-zA-Z0-9]+([._-][a-zA-Z0-9]+)?@gmail/.[a-z]+$";
         Pattern p = Pattern.compile(syntaxRegex);
         Matcher m = p.matcher(s);
         boolean b = m.matches();
         if(!b) {
-            throw new Exception("Invalid email address");
+            throw new SyntaxErrorEcxeption("Invalid email address");
         }
     }
 

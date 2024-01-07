@@ -6,7 +6,13 @@ import org.application.gameshelfapp.login.bean.LogInBean;
 import org.application.gameshelfapp.login.bean.RegistrationBean;
 import org.application.gameshelfapp.login.controller.LogInController;
 import org.application.gameshelfapp.login.entities.TypeOfAccess;
+import org.application.gameshelfapp.login.exception.CheckFailedException;
+import org.application.gameshelfapp.login.exception.PersistencyAccountException;
+import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.login.exception.SyntaxErrorEcxeption;
 import org.application.gameshelfapp.login.graphiccontrollers.InsertCodeController;
+
+import java.io.IOException;
 
 public class UserLogInBoundary {
 
@@ -38,13 +44,28 @@ public class UserLogInBoundary {
     }
 
     public void log(String email, String password){
-        this.logBean = new LogInBean(email, password);
-        controller.logIn(logBean);
+        try {
+            this.logBean = new LogInBean(email, password);
+            this.controller.logIn(logBean);
+            this.startingPageController.switchToHomePage();
+        } catch (SyntaxErrorEcxeption | PersistencyErrorException | PersistencyAccountException | CheckFailedException e) {
+            this.startingPageController.displayErrorWindow(e.getMessage());
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
     }
 
-    public void register(String username, String email, String password){
+    public void register(String username, String email, String password) {
         this.regBean = new RegistrationBean(username, email, password);
-        controller.registration(this.regBean);
+        try {
+            this.controller.registration(this.regBean);
+            this.registrationPageController.switchToInsertCodeScene();
+        } catch (PersistencyErrorException | PersistencyAccountException e) {
+            this.registrationPageController.displayErrorWindow(e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void checkCode(String code){
@@ -52,8 +73,8 @@ public class UserLogInBoundary {
             int insertedCode = Integer.parseInt(code);
             this.regBean.setCheckCode(insertedCode);
             this.controller.checkCode(this.regBean);
-        } catch(NumberFormatException e){
-
+        } catch(NumberFormatException | CheckFailedException e){
+            this.insertCodeController.displayErrorWindow(e.getMessage());
         }
     }
 

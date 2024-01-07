@@ -44,44 +44,31 @@ public class LogInController {
         this.facebookBoundary = new FacebookLogInBoundary();
         this.facebookBoundary.log();
     }
-    public void logIn(LogInBean logBean){
+
+    public void logIn(LogInBean logBean) throws PersistencyErrorException, PersistencyAccountException, CheckFailedException, IOException{
         String logEmail = logBean.getEmailBean();
         String logPassword = logBean.getPasswordBean();
 
         access = AccessFactory.createAccess(TypeOfAccess.LOGIN, null, logEmail, logPassword);
-        try {
 
-            Access accessRetrieved = this.accessDAO.retrieveAccountByEmail(TypeOfAccess.LOGIN, this.access.getEmail());
-            access.checkCorrectness(TypeOfAccess.LOGIN, -1, accessRetrieved.getEncodedPassword());
-            this.logInBoundary.goToHomePage(TypeOfAccess.LOGIN);
-
-        } catch(PersistencyErrorException e){
-
-        } catch(PersistencyAccountException e){
-
-        } catch (CheckFailedException e) {
-            //Di' alla boundary di mostrare il pannello di errore delle credenziali inserite
-        } catch(IOException e){
-
-        }
+        Access accessRetrieved = this.accessDAO.retrieveAccountByEmail(TypeOfAccess.LOGIN, this.access.getEmail());
+        access.checkCorrectness(TypeOfAccess.LOGIN, -1, accessRetrieved.getEncodedPassword());
+        this.logInBoundary.goToHomePage(TypeOfAccess.LOGIN);
 
 
     }
 
-    public void registration(RegistrationBean regBean){
+    public void registration(RegistrationBean regBean) throws PersistencyErrorException, PersistencyAccountException, IOException{
         String regUsername = regBean.getUsernameBean();
         String regEmail = regBean.getEmailBean();
         String regPassword = regBean.getPasswordBean();
+        this.accessDAO.retrieveAccountByEmail(TypeOfAccess.REGISTRATION, regEmail);
         access = AccessFactory.createAccess(TypeOfAccess.REGISTRATION, regUsername, regEmail, regPassword);
         //manda mail
     }
 
-    public void checkCode(RegistrationBean regBean){
-        try {
-            this.access.checkCorrectness(TypeOfAccess.REGISTRATION, regBean.getCheckCode(), null);
-        } catch (CheckFailedException e) {
-            //Di' alla boundary di mostrare il pannello di errore
-        }
+    public void checkCode(RegistrationBean regBean) throws CheckFailedException{
+        this.access.checkCorrectness(TypeOfAccess.REGISTRATION, regBean.getCheckCode(), null);
     }
 
     public void registrationWithGoogle(){

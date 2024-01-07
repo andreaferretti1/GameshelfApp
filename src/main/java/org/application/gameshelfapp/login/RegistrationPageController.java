@@ -33,13 +33,14 @@ public class RegistrationPageController {
         this.userBoundary = b;
     }
 
-    @FXML
-    private void register(MouseEvent event) throws IOException{
-
-        this.userBoundary.register(this.emailTextField.getText(), this.usernameTextField.getText(), this.passwordTextField.getText());
-
+    public void switchToInsertCodeScene(){
         FXMLLoader fxmlLoad = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/GUI/Insert-code.fxml"));
-        Parent root = fxmlLoad.load();
+        Parent root = null;
+        try {
+            root = fxmlLoad.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         InsertCodeController controller = fxmlLoad.getController();
         controller.setUserLogInBoundary(this.userBoundary);
@@ -47,11 +48,22 @@ public class RegistrationPageController {
 
         Scene scene = new Scene(root, 1440, 768);
 
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) this.emailTextField.getScene().getWindow();
 
         stage.setScene(scene);
 
         stage.show();
+    }
+
+    public void displayErrorWindow(String s){
+
+    }
+
+    @FXML
+    private void register(MouseEvent event) throws IOException{
+
+        this.userBoundary.register(this.emailTextField.getText(), this.usernameTextField.getText(), this.passwordTextField.getText());
+
     }
 
     @FXML
@@ -73,7 +85,4 @@ public class RegistrationPageController {
             System.exit(1);
         }
     }
-
-
-
 }

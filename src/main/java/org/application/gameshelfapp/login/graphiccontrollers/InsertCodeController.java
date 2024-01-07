@@ -45,4 +45,8 @@ public class InsertCodeController {
             System.exit(1);
         }
     }
+
+    public void displayErrorWindow(String s){
+
+    }
 }
