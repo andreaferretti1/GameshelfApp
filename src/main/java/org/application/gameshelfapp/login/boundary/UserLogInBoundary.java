@@ -83,9 +83,11 @@ public class UserLogInBoundary {
         switch(type){
             case TypeOfAccess.LOGIN:
                 this.startingPageController.switchToHomePage();
+                break;
 
             case TypeOfAccess.REGISTRATION:
                 this.insertCodeController.switchToHomePage();
+                break;
 
         }
     }

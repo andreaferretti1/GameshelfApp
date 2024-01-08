@@ -4,19 +4,19 @@ import java.security.NoSuchAlgorithmException;
 import java.security.MessageDigest;
 import java.util.Arrays;
 
-public class MD5Encoder implements Encoder{
+public class SHA256Encoder implements Encoder{
 
     private String passwordToCrypt;
     private String encryptedPassword;
 
-    public MD5Encoder(String password){
+    public SHA256Encoder(String password){
         this.passwordToCrypt = password;
     }
 
     @Override
     public void cryptPassword(){
         try{
-            MessageDigest m = MessageDigest.getInstance("MD5");
+            MessageDigest m = MessageDigest.getInstance("SHA-256");
             m.update(passwordToCrypt.getBytes());
             byte[] bytes = m.digest();
             StringBuilder s = new StringBuilder();
@@ -25,7 +25,7 @@ public class MD5Encoder implements Encoder{
             }
             this.encryptedPassword = s.toString();
         } catch(NoSuchAlgorithmException e){
-            //lancia eccezione al chiamante
+            System.exit(1);
         }
     }
 

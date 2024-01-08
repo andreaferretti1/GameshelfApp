@@ -9,7 +9,7 @@ public class AccessThroughLogIn extends Access {
     public AccessThroughLogIn(String email, String password){
         this.email = email;
         this.password = password;
-        this.encoder = new MD5Encoder(password);
+        this.encoder = new SHA256Encoder(password);
     }
 
 

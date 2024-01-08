@@ -1,7 +1,6 @@
 package org.application.gameshelfapp.login.entities;
 
 
-import javafx.scene.control.CheckBox;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 
 import java.security.SecureRandom;
@@ -17,7 +16,7 @@ public class AccessThroughRegistration extends Access {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.encoder = new MD5Encoder(password);
+        this.encoder = new SHA256Encoder(password);
         this.secureRandom = new SecureRandom();
         try {
             this.checkGmail = new Gmailer();
