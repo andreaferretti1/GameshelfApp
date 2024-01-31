@@ -22,21 +22,21 @@ public class CatalogueDAOCSV implements CatalogueDAO {
 
     @Override
     public void addVideogame(String username, Videogame game, int numberOfCopies) throws PersistencyErrorException, IOException {
-        String[] record = new String[3];
+        String[] myRecord = new String[3];
         String gameName = game.getName();
-        record[CatalogueAttributes.USERNAME.ordinal()] = username;
-        record[CatalogueAttributes.GAMENAME.ordinal()] = gameName;
-        record[CatalogueAttributes.COPIES.ordinal()] = game.getOwnerCopies().toString();
+        myRecord[CatalogueAttributes.USERNAME.ordinal()] = username;
+        myRecord[CatalogueAttributes.GAMENAME.ordinal()] = gameName;
+        myRecord[CatalogueAttributes.COPIES.ordinal()] = game.getOwnerCopies().toString();
         File tempFile = File.createTempFile("catalogue", "csv");
 
         try (CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(tempFile)));
             CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)))){
-            while((record = csvReader.readNext()) != null){
-                if(record[CatalogueAttributes.GAMENAME.ordinal()].equals(gameName)){
-                    int newNumberOfCopies = numberOfCopies + Integer.parseInt(record[CatalogueAttributes.COPIES.ordinal()]);
-                    record[CatalogueAttributes.COPIES.ordinal()] = String.valueOf(newNumberOfCopies);
+            while((myRecord = csvReader.readNext()) != null){
+                if(myRecord[CatalogueAttributes.GAMENAME.ordinal()].equals(gameName)){
+                    int newNumberOfCopies = numberOfCopies + Integer.parseInt(myRecord[CatalogueAttributes.COPIES.ordinal()]);
+                    myRecord[CatalogueAttributes.COPIES.ordinal()] = String.valueOf(newNumberOfCopies);
                 }
-                csvWriter.writeNext(record);
+                csvWriter.writeNext(myRecord);
             }
 
             csvWriter.flush();
@@ -49,22 +49,22 @@ public class CatalogueDAOCSV implements CatalogueDAO {
 
     @Override
     public void removeVideogame(String username, Videogame game, int quantity) throws PersistencyErrorException, IOException {
-        String[] record;
+        String[] myRecord;
         File tempFile = File.createTempFile("catalogue", "csv");;
 
         try (CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)));
              CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(tempFile)));){
 
-            while ((record = csvReader.readNext()) != null) {
+            while ((myRecord = csvReader.readNext()) != null) {
 
-                if (record[CatalogueAttributes.GAMENAME.ordinal()].equals(game.getName())) {
-                    int quantitiesInCatalogue = Integer.parseInt(record[2]);
+                if (myRecord[CatalogueAttributes.GAMENAME.ordinal()].equals(game.getName())) {
+                    int quantitiesInCatalogue = Integer.parseInt(myRecord[2]);
                     int difference = quantitiesInCatalogue - quantity;
                     if (difference > 0) {
-                        record[CatalogueAttributes.COPIES.ordinal()] = String.valueOf(difference);
+                        myRecord[CatalogueAttributes.COPIES.ordinal()] = String.valueOf(difference);
                     }
                 }
-                csvWriter.writeNext(record);
+                csvWriter.writeNext(myRecord);
             }
             csvWriter.flush();
             Files.move(tempFile.toPath(), this.fd.toPath(), REPLACE_EXISTING);

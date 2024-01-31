@@ -24,7 +24,7 @@ public class ItemDAOCSV implements ItemDAO {
     @Override
     public ArrayList<Videogame> getVideogamesForSale(Filters filters) throws PersistencyErrorException, NoGamesFoundException {
          ArrayList<Videogame> gamesFound = new ArrayList<Videogame>();
-         String[] record = null;
+         String[] myRecord = null;
 
          String gameName = filters.getName();
          String console = filters.getConsole();
@@ -33,17 +33,17 @@ public class ItemDAOCSV implements ItemDAO {
 
 
          try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)));){
-            while((record = csvReader.readNext()) != null){
+            while((myRecord = csvReader.readNext()) != null){
                 if(gameName.equals("all")){
-                    if(record[VideogamesOnSaleAttributes.CONSOLE.ordinal()].equals(console) && record[VideogamesOnSaleAttributes.ONLINE.ordinal()].equals(online) && record[VideogamesOnSaleAttributes.CATEGORY.ordinal()].equals(category)){
-                        Videogame game = new Videogame(record[VideogamesOnSaleAttributes.GAMENAME.ordinal()], record[VideogamesOnSaleAttributes.GAMEID.ordinal()], null);
-                        game.createOwnSeller(record[VideogamesOnSaleAttributes.USERNAME.ordinal()], record[VideogamesOnSaleAttributes.EMAIL.ordinal()], Integer.parseInt(record[VideogamesOnSaleAttributes.COPIES.ordinal()]), record[VideogamesOnSaleAttributes.DESCRIPTION.ordinal()], Float.parseFloat(record[VideogamesOnSaleAttributes.PRICE.ordinal()]));
+                    if(myRecord[VideogamesOnSaleAttributes.CONSOLE.ordinal()].equals(console) && myRecord[VideogamesOnSaleAttributes.ONLINE.ordinal()].equals(online) && myRecord[VideogamesOnSaleAttributes.CATEGORY.ordinal()].equals(category)){
+                        Videogame game = new Videogame(myRecord[VideogamesOnSaleAttributes.GAMENAME.ordinal()], myRecord[VideogamesOnSaleAttributes.GAMEID.ordinal()], null);
+                        game.createOwnSeller(myRecord[VideogamesOnSaleAttributes.USERNAME.ordinal()], myRecord[VideogamesOnSaleAttributes.EMAIL.ordinal()], Integer.parseInt(myRecord[VideogamesOnSaleAttributes.COPIES.ordinal()]), myRecord[VideogamesOnSaleAttributes.DESCRIPTION.ordinal()], Float.parseFloat(myRecord[VideogamesOnSaleAttributes.PRICE.ordinal()]));
                         gamesFound.add(game);
                     }
                 }
                 else{
-                    if(record[VideogamesOnSaleAttributes.GAMENAME.ordinal()].equals(gameName) && record[VideogamesOnSaleAttributes.CONSOLE.ordinal()].equals(console) && record[VideogamesOnSaleAttributes.ONLINE.ordinal()].equals(online) && record[VideogamesOnSaleAttributes.CATEGORY.ordinal()].equals(category)){
-                        Videogame game = new Videogame(gameName, record[VideogamesOnSaleAttributes.GAMEID.ordinal()], null);game.createOwnSeller(record[VideogamesOnSaleAttributes.USERNAME.ordinal()], record[VideogamesOnSaleAttributes.EMAIL.ordinal()], Integer.parseInt(record[VideogamesOnSaleAttributes.COPIES.ordinal()]), record[VideogamesOnSaleAttributes.DESCRIPTION.ordinal()], Float.parseFloat(record[VideogamesOnSaleAttributes.PRICE.ordinal()]));
+                    if(myRecord[VideogamesOnSaleAttributes.GAMENAME.ordinal()].equals(gameName) && myRecord[VideogamesOnSaleAttributes.CONSOLE.ordinal()].equals(console) && myRecord[VideogamesOnSaleAttributes.ONLINE.ordinal()].equals(online) && myRecord[VideogamesOnSaleAttributes.CATEGORY.ordinal()].equals(category)){
+                        Videogame game = new Videogame(gameName, myRecord[VideogamesOnSaleAttributes.GAMEID.ordinal()], null);game.createOwnSeller(myRecord[VideogamesOnSaleAttributes.USERNAME.ordinal()], myRecord[VideogamesOnSaleAttributes.EMAIL.ordinal()], Integer.parseInt(myRecord[VideogamesOnSaleAttributes.COPIES.ordinal()]), myRecord[VideogamesOnSaleAttributes.DESCRIPTION.ordinal()], Float.parseFloat(myRecord[VideogamesOnSaleAttributes.PRICE.ordinal()]));
                         gamesFound.add(game);
                     }
                 }
@@ -59,7 +59,7 @@ public class ItemDAOCSV implements ItemDAO {
 
     @Override
     public void addGameForSale(Videogame game, Filters filters) throws PersistencyErrorException{
-        String[] record = null;
+        String[] myRecord = null;
         String[] gameToSave = new String[10];
         gameToSave[VideogamesOnSaleAttributes.GAMEID.ordinal()] = game.getId();
         gameToSave[VideogamesOnSaleAttributes.USERNAME.ordinal()] = game.getOwnerName();
@@ -81,13 +81,13 @@ public class ItemDAOCSV implements ItemDAO {
         }
         try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)));
             CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(tempFile)))){
-            while((record = csvReader.readNext()) != null){
-                if(gameToSave[VideogamesOnSaleAttributes.USERNAME.ordinal()].equals(record[VideogamesOnSaleAttributes.USERNAME.ordinal()])  &&  gameToSave[VideogamesOnSaleAttributes.GAMENAME.ordinal()].equals(record[VideogamesOnSaleAttributes.GAMENAME.ordinal()])){
-                    int totalCopiesOnSale = Integer.parseInt(gameToSave[VideogamesOnSaleAttributes.COPIES.ordinal()]) + Integer.parseInt(record[VideogamesOnSaleAttributes.COPIES.ordinal()]);
+            while((myRecord = csvReader.readNext()) != null){
+                if(gameToSave[VideogamesOnSaleAttributes.USERNAME.ordinal()].equals(myRecord[VideogamesOnSaleAttributes.USERNAME.ordinal()])  &&  gameToSave[VideogamesOnSaleAttributes.GAMENAME.ordinal()].equals(myRecord[VideogamesOnSaleAttributes.GAMENAME.ordinal()])){
+                    int totalCopiesOnSale = Integer.parseInt(gameToSave[VideogamesOnSaleAttributes.COPIES.ordinal()]) + Integer.parseInt(myRecord[VideogamesOnSaleAttributes.COPIES.ordinal()]);
                     gameToSave[VideogamesOnSaleAttributes.COPIES.ordinal()] = String.valueOf(totalCopiesOnSale);
                     csvWriter.writeNext(gameToSave);
                 }
-                else csvWriter.writeNext(record);
+                else csvWriter.writeNext(myRecord);
             }
 
             Files.move(tempFile.toPath(), this.fd.toPath(), REPLACE_EXISTING);
@@ -164,12 +164,12 @@ public class ItemDAOCSV implements ItemDAO {
     @Override
     public ArrayList<Videogame> getSales(String sellerName) throws PersistencyErrorException{
         ArrayList<Videogame> gamesSold = new ArrayList<Videogame>();
-        String[] record = null;
+        String[] myRecord = null;
 
         try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)))){
-            while((record = csvReader.readNext()) != null){
-                if(record[VideogamesSoldAttributes.SELLERUSERNAME.ordinal()].equals(sellerName)){
-                    Videogame game = getVideogameSold(record);
+            while((myRecord = csvReader.readNext()) != null){
+                if(myRecord[VideogamesSoldAttributes.SELLERUSERNAME.ordinal()].equals(sellerName)){
+                    Videogame game = getVideogameSold(myRecord);
                     gamesSold.add(game);
                 }
             }
@@ -179,13 +179,13 @@ public class ItemDAOCSV implements ItemDAO {
         }
     }
 
-    private static Videogame getVideogameSold(String[] record) {
-        String gameName = record[VideogamesSoldAttributes.GAMENAME.ordinal()];
-        String gameId = record[VideogamesSoldAttributes.GAMEID.ordinal()];
-        String customerName = record[VideogamesSoldAttributes.CUSTOMERUSERNAME.ordinal()];
-        String customerAddress = record[VideogamesSoldAttributes.CUSTOMERADDRESS.ordinal()];
-        String customerEmail = record[VideogamesSoldAttributes.CUSTOMEREMAIL.ordinal()];
-        int copiesBought = Integer.parseInt(record[VideogamesOnSaleAttributes.COPIES.ordinal()]);
+    private static Videogame getVideogameSold(String[] myRecord) {
+        String gameName = myRecord[VideogamesSoldAttributes.GAMENAME.ordinal()];
+        String gameId = myRecord[VideogamesSoldAttributes.GAMEID.ordinal()];
+        String customerName = myRecord[VideogamesSoldAttributes.CUSTOMERUSERNAME.ordinal()];
+        String customerAddress = myRecord[VideogamesSoldAttributes.CUSTOMERADDRESS.ordinal()];
+        String customerEmail = myRecord[VideogamesSoldAttributes.CUSTOMEREMAIL.ordinal()];
+        int copiesBought = Integer.parseInt(myRecord[VideogamesOnSaleAttributes.COPIES.ordinal()]);
         Videogame game = new Videogame(gameName, gameId, null);
         game.createOwnCustomer(customerName, customerEmail, copiesBought, customerAddress);
         return game;

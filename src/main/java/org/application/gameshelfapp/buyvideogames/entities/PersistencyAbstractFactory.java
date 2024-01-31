@@ -8,17 +8,17 @@ import java.util.Properties;
 
 public abstract class PersistencyAbstractFactory {
 
-        private static final String csv = "CSV";
-        private static final String jdbc = "JDBC";
+        private static final String CSV = "CSV";
+        private static final String JDBC = "JDBC";
 
         public PersistencyAbstractFactory getFactory(){
 
-            try{
+            try(FileInputStream in = new FileInputStream("/src/main/resources/org/application/gameshelfapp/configuration/configuration.properties")){
             Properties properties = new Properties();
 
-            properties.load(new FileInputStream("/src/main/resources/org/application/gameshelfapp/configuration/configuration.properties"));
+            properties.load(in);
             String s = properties.getProperty("PERSISTENCE");
-            if(s.equals(jdbc)){
+            if(s.equals(JDBC)){
                 return new JDBCFactory();
             }
             return new CSVFactory();
