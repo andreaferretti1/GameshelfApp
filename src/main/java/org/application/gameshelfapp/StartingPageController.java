@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.application.gameshelfapp.login.RegistrationPageController;
 import org.application.gameshelfapp.login.boundary.UserLogInBoundary;
+import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 
 import java.io.IOException;
 
@@ -24,6 +25,8 @@ public class StartingPageController extends Application {
     @FXML
     private TextField usernameField;
     private UserLogInBoundary userBoundary;
+
+    private ErrorPageController errorPageController;
 
 
     private void setUserBoundary(UserLogInBoundary boundary){
@@ -67,7 +70,22 @@ public class StartingPageController extends Application {
     }
 
     public void displayErrorWindow(String s){
-        //TODO crea GUI errore
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/GUI/Error-Page.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root, 480, 256);
+            stage.setScene(scene);
+            stage.show();
+
+            this.errorPageController = loader.getController();
+            this.errorPageController.showErrorMessage(s);
+
+        } catch(IOException e){
+            System.exit(1);
+        }
     }
 
 

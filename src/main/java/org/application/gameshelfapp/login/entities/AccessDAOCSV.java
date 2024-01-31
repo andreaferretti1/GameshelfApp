@@ -3,7 +3,7 @@ package org.application.gameshelfapp.login.entities;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
-import org.application.gameshelfapp.login.exception.PersistencyAccountException;
+import org.application.gameshelfapp.buyvideogames.entities.User;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
 import java.io.*;
@@ -22,61 +22,50 @@ public class AccessDAOCSV implements AccessDAO{
     }
 
     @Override
-    public synchronized void saveAccount(TypeOfAccess type, Access access) throws PersistencyAccountException, IOException {
-            String username = access.getUsername();
-            String email = access.getEmail();
-            String password = null;
+    public synchronized void saveAccount(AccessThroughRegistration regAccess) throws PersistencyErrorException {
+            String username = regAccess.getUsername();
+            String email = regAccess.getEmail();
+            String password = regAccess.getEncodedPassword();
 
-            String[] instance = new String[3];
+            String[] instance = new String[4];
 
-            CSVWriter csvWriter = null;
 
-            instance[0] = username;
-            instance[1] = email;
-            instance[2] = password;
+            instance[AccountAttributes.USERNAME.ordinal()] = username;
+            instance[AccountAttributes.EMAIL.ordinal()] = email;
+            instance[AccountAttributes.PASSWORD.ordinal()] = password;
+            instance[AccountAttributes.TYPEOFUSER.ordinal()] = regAccess.getTypeOfUser();
 
-            try{
-                csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(this.fd)));
+            try(CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(this.fd, true)));){
                 csvWriter.writeNext(instance);
             } catch(IOException e){
-                throw new PersistencyAccountException("Couldn't save account");
-            }finally {
-                if (csvWriter != null) {
-                    csvWriter.close();
-                }
+                throw new PersistencyErrorException("Couldn't save account");
             }
-
     }
 
-    @Override
-    public Access retrieveAccountByEmail(TypeOfAccess type, String email) throws IOException, PersistencyErrorException, PersistencyAccountException {
-        String[] instance;
-        CSVReader csvReader = null;
-        Access access = null;
 
-        try {
-             csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)));
+
+    @Override
+    public Access retrieveAccount(Access access) throws PersistencyErrorException{
+        String[] instance;
+        Access user = null;
+
+        String username = access.getUsername();
+        String email = access.getEmail();
+
+        try (CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)));){
              while((instance = csvReader.readNext()) != null){
-                    if(instance[1].equals(email)){
-                        String username = instance[0];
-                        String password = instance[3];
-                        access = AccessFactory.createAccess(type, username, email, password);
+                    if(instance[AccountAttributes.EMAIL.ordinal()].equals(email) || instance[AccountAttributes.PASSWORD.ordinal()].equals(username)){
+                        user = new Access(instance[AccountAttributes.USERNAME.ordinal()], instance[AccountAttributes.EMAIL.ordinal()], null, instance[AccountAttributes.TYPEOFUSER.ordinal()]);
+                        user.setEncodedPassword(instance[AccountAttributes.PASSWORD.ordinal()0]);
                     }
              }
         } catch(IOException | CsvValidationException e){
             throw new PersistencyErrorException(e.getMessage());
-        } finally{
-            if (csvReader != null) {
-                csvReader.close();
-            }
         }
-
-        if(access == null && type == TypeOfAccess.LOGIN){
-            throw new PersistencyAccountException("There isn't such account");
-        } else if(access != null && type == TypeOfAccess.REGISTRATION){
-            throw new PersistencyAccountException("Account already exists");
-        }
-        return access;
+        return user;
     }
 
+    private enum AccountAttributes{
+        USERNAME, EMAIL, PASSWORD, TYPEOFUSER;
+    }
 }

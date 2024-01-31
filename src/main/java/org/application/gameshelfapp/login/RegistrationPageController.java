@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import org.application.gameshelfapp.StartingPageController;
 import org.application.gameshelfapp.login.boundary.UserLogInBoundary;
+import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 import org.application.gameshelfapp.login.graphiccontrollers.InsertCodeController;
 
 
@@ -27,6 +28,7 @@ public class RegistrationPageController {
     @FXML
     private TextField confirmPasswordTextField;
     private UserLogInBoundary userBoundary;
+    private ErrorPageController errorPageController;
 
 
     public void setUserLogInBoundary(UserLogInBoundary b){
@@ -39,7 +41,7 @@ public class RegistrationPageController {
         try {
             root = fxmlLoad.load();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.exit(1);
         }
 
         InsertCodeController controller = fxmlLoad.getController();
@@ -57,6 +59,23 @@ public class RegistrationPageController {
 
     public void displayErrorWindow(String s){
 
+        try {
+            FXMLLoader loader;
+            loader = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/GUI/Error-Page.fxml"));
+            Parent root;
+            root = loader.load();
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root, 480, 256);
+            stage.setScene(scene);
+            stage.show();
+
+            this.errorPageController = loader.getController();
+            this.errorPageController.showErrorMessage(s);
+
+        } catch(IOException e){
+            System.exit(1);
+        }
     }
 
     @FXML

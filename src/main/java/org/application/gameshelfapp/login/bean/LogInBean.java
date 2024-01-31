@@ -6,10 +6,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LogInBean {
+
+    private String usernameBean;
     private String emailBean;
     private String passwordBean;
 
-    public LogInBean(String email, String password) throws SyntaxErrorEcxeption{
+    public LogInBean(String username, String email, String password) throws SyntaxErrorEcxeption{
+
+        this.usernameBean = username;
         this.checkEmailSyntax(email);
         this.emailBean = email;
         this.passwordBean = password;
@@ -30,6 +34,10 @@ public class LogInBean {
 
     public String getPasswordBean(){
         return this.passwordBean;
+    }
+
+    public String getUsernameBean(){
+        return this.usernameBean;
     }
 
     private void checkEmailSyntax(String s) throws SyntaxErrorEcxeption{

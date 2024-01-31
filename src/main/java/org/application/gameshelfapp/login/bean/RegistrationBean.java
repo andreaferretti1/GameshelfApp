@@ -10,17 +10,18 @@ public class RegistrationBean {
     private String usernameBean;
     private String emailBean;
     private String passwordBean;
+    private String typeOfUser;
     private int checkCode;
 
 
-    public RegistrationBean(String username, String email, String password) {
+    public RegistrationBean(String username, String email, String password,String typeOfUser) throws SyntaxErrorEcxeption{
         this.usernameBean = username;
-        try{
-            this.checkEmailSyntax(email);
-            this.emailBean = email;
-        } catch(SyntaxErrorEcxeption e){
-            //mostra pannello di blocco
-        }
+
+        this.checkEmailSyntax(email);
+        this.emailBean = email;
+
+        this.typeOfUser = typeOfUser;
+
         this.passwordBean = password;
     }
 
@@ -28,7 +29,7 @@ public class RegistrationBean {
         this.usernameBean = username;
     }
 
-    public void setEmailBean(String email) throws Exception{
+    public void setEmailBean(String email) throws SyntaxErrorEcxeption{
 
         this.checkEmailSyntax(email);
         this.emailBean = email;
@@ -57,7 +58,7 @@ public class RegistrationBean {
         Matcher m = p.matcher(s);
         boolean b = m.matches();
         if(!b) {
-            throw new SyntaxErrorEcxeption("Invalid email address");
+            throw new SyntaxErrorEcxeption("Invalid syntax of email address");
         }
     }
 
@@ -67,5 +68,9 @@ public class RegistrationBean {
 
     public int getCheckCode(){
         return this.checkCode;
+    }
+
+    public String getTypeOfUser() {
+        return this.typeOfUser;
     }
 }

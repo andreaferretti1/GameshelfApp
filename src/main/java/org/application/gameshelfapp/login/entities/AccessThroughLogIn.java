@@ -2,25 +2,20 @@ package org.application.gameshelfapp.login.entities;
 
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 
-import java.util.Arrays;
-
 public class AccessThroughLogIn extends Access {
 
-    public AccessThroughLogIn(String email, String password){
-        this.email = email;
-        this.password = password;
-        this.encoder = new SHA256Encoder(password);
+
+
+    public AccessThroughLogIn(String username, String email, String password, String typeOfUser){
+        super(username, email, password, typeOfUser);
     }
 
 
-    @Override
-    public void checkCorrectness(TypeOfAccess type, int i, String passwordToCheck) throws CheckFailedException {
 
-        this.encoder.cryptPassword();
-        this.encodedPassword = encoder.getEncryptedPassword();
-        Arrays.fill(this.password.toCharArray(), '\0');
-        if(!(this.encodedPassword.equals(passwordToCheck))){
-                throw new CheckFailedException("Either password or email are incorrect");
+    public void checkAccount(Access user) throws CheckFailedException {
+
+        if(user == null || !this.encodedPassword.equals(user.getEncodedPassword())){
+            throw new CheckFailedException("Credentials are not correct");
         }
 
     }

@@ -1,48 +1,46 @@
 package org.application.gameshelfapp.login.entities;
 
 
+import org.application.gameshelfapp.buyvideogames.entities.User;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
+import org.application.gameshelfapp.login.exception.PersistencyAccountException;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 
 public class AccessThroughRegistration extends Access {
 
-    private Gmailer checkGmail;
     private int codeGenerated;
-    private final SecureRandom secureRandom;
 
 
-    public AccessThroughRegistration(String username, String email, String password){
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.encoder = new SHA256Encoder(password);
-        this.secureRandom = new SecureRandom();
-        try {
-            this.checkGmail = new Gmailer();
-        } catch (Exception e){
-            System.exit(1);
-        }
-        this.sendCheckEmail();
+
+    public AccessThroughRegistration(String username, String email, String password, String typeOfUser){
+        super(username, email, password, typeOfUser);
     }
 
-    public void sendCheckEmail(){
-        String emailToSend = "Dear client,\n" +
-                "your authentication code is: ";
-        this.codeGenerated = this.secureRandom.nextInt();
-        Math.abs(this.codeGenerated);
-        emailToSend += this.codeGenerated;
-        try {
-            checkGmail.sendMail("authentication code", emailToSend, this.email);
-        } catch(Exception e){
-            System.exit(1);
-        }
+    public String getMessageToSend(){
+        SecureRandom secureRandom = new SecureRandom();
+        this.codeGenerated = secureRandom.nextInt(10^6);
+        this.codeGenerated = Math.abs(this.codeGenerated);
+        return "Your code is" + this.codeGenerated;
     }
 
-    @Override
-    public void checkCorrectness(TypeOfAccess type, int insertedCode, String s) throws CheckFailedException {
+    public void checkCode(int insertedCode) throws CheckFailedException {
         if(this.codeGenerated != insertedCode){
                 throw new CheckFailedException("Code is incorrect");
             }
     }
+
+    public void checkAccount(Access access) throws CheckFailedException{
+        String username = access.getUsername();
+        String email = access.getEmail();
+
+        if(this.username.equals(username)){
+            throw new CheckFailedException("Username already used");
+        }
+        else if(this.email.equals(email)){
+            throw new CheckFailedException("Email already used");
+        }
+    }
+
 }
