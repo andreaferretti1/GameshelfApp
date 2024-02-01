@@ -17,8 +17,8 @@ import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
 import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BuyGamesController {
     private  CustomerBoundary customerBoundary;
@@ -28,7 +28,7 @@ public class BuyGamesController {
     private GoogleBoundary googleBoundary;
     private final User user;
     private ShoppingCart shoppingCart = null;
-    private ArrayList<Videogame> gameList;
+    private List<Videogame> gameList;
 
     private PersistencyAbstractFactory factory;
 
@@ -44,7 +44,7 @@ public class BuyGamesController {
         }
     }
 
-    public ArrayList<VideogameBean> searchVideogame(FiltersBean filtersBean) throws PersistencyErrorException, NoGamesFoundException{
+    public List<VideogameBean> searchVideogame(FiltersBean filtersBean) throws PersistencyErrorException, NoGamesFoundException{
 
         Filters filters = new Filters(filtersBean.getName(), filtersBean.getConsole(), filtersBean.getOnline(), filtersBean.getCategory());
 
@@ -55,7 +55,7 @@ public class BuyGamesController {
             Filters newFilters = new Filters("all", filters.getConsole(), filters.getOnline(), filters.getCategory());
             itemDao.getVideogamesForSale(newFilters);
         }
-        ArrayList<VideogameBean> gameBeans = new ArrayList<VideogameBean>();
+        List<VideogameBean> gameBeans = new ArrayList<VideogameBean>();
 
         for(Videogame videogame: this.gameList){
             String name = videogame.getName();
@@ -100,8 +100,8 @@ public class BuyGamesController {
 
         this.googleBoundary = new GoogleBoundary();
 
-        ArrayList<Videogame> videogamesToBuy = this.shoppingCart.listVideogames();
-        ArrayList<Integer> quantitiesToBuy = this.shoppingCart.listQuantities();
+        List<Videogame> videogamesToBuy = this.shoppingCart.listVideogames();
+        List<Integer> quantitiesToBuy = this.shoppingCart.listQuantities();
         ItemDAO itemDAO = this.factory.createItemDAO();
 
         for(int i = 0; i<videogamesToBuy.size(); i++){

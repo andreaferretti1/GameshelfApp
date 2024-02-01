@@ -1,11 +1,11 @@
 package org.application.gameshelfapp.buyvideogames.entities;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ItemDAOJDBC implements ItemDAO {
 
     @Override
-    public ArrayList<Videogame> getVideogamesForSale(Filters filters) {
+    public List<Videogame> getVideogamesForSale(Filters filters) {
         return null;
     }
 
@@ -25,7 +25,7 @@ public class ItemDAOJDBC implements ItemDAO {
     }
 
     @Override
-    public ArrayList<Videogame> getSales(String sellerName) {
+    public List<Videogame> getSales(String sellerName) {
         return null;
     }
 }

@@ -10,6 +10,7 @@ import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
@@ -22,8 +23,8 @@ public class ItemDAOCSV implements ItemDAO {
 
 
     @Override
-    public ArrayList<Videogame> getVideogamesForSale(Filters filters) throws PersistencyErrorException, NoGamesFoundException {
-         ArrayList<Videogame> gamesFound = new ArrayList<Videogame>();
+    public List<Videogame> getVideogamesForSale(Filters filters) throws PersistencyErrorException, NoGamesFoundException {
+         List<Videogame> gamesFound = new ArrayList<Videogame>();
          String[] myRecord = null;
 
          String gameName = filters.getName();
@@ -162,8 +163,8 @@ public class ItemDAOCSV implements ItemDAO {
     }
 
     @Override
-    public ArrayList<Videogame> getSales(String sellerName) throws PersistencyErrorException{
-        ArrayList<Videogame> gamesSold = new ArrayList<Videogame>();
+    public List<Videogame> getSales(String sellerName) throws PersistencyErrorException{
+        List<Videogame> gamesSold = new ArrayList<Videogame>();
         String[] myRecord = null;
 
         try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)))){

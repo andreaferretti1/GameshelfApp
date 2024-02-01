@@ -1,6 +1,5 @@
 package org.application.gameshelfapp.buyvideogames.entities;
 
-import java.util.List;
 
 public class CatalogueDAOJDBC implements CatalogueDAO {
 

@@ -5,8 +5,8 @@ import java.util.List;
 
 public class ShoppingCartBean {
 
-    private ArrayList<VideogameBean> items;
-    private ArrayList<Integer> quantities;
+    private List<VideogameBean> items;
+    private List<Integer> quantities;
     private float totalCost;
 
     public ShoppingCartBean(ArrayList<VideogameBean> items,  ArrayList<Integer> quantities , float cost){
@@ -27,11 +27,11 @@ public class ShoppingCartBean {
         this.totalCost = totalCost;
     }
 
-    public ArrayList<VideogameBean> getItems() {
+    public List<VideogameBean> getItems() {
         return this.items;
     }
 
-    public ArrayList<Integer> getQuantities() {
+    public List<Integer> getQuantities() {
         return this.quantities;
     }
 

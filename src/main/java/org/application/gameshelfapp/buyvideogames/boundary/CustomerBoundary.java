@@ -5,12 +5,13 @@ import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.controller.BuyGamesController;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerBoundary {
 
     private final BuyGamesController buyGamesController;
-    private ArrayList<SellerBean> sellers;
-    private ArrayList<VideogameBean> games;
+    private List<SellerBean> sellers;
+    private List<VideogameBean> games;
 
     public CustomerBoundary(BuyGamesController controller){
         this.buyGamesController = controller;

@@ -3,11 +3,12 @@ package org.application.gameshelfapp.buyvideogames.entities;
 import org.application.gameshelfapp.buyvideogames.exception.CopiesException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ShoppingCart {
 
-    private ArrayList<Videogame> videogames;
-    private ArrayList<Integer> quantities;
+    private List<Videogame> videogames;
+    private List<Integer> quantities;
     private float totalCost;
 
     public ShoppingCart(){
@@ -44,26 +45,26 @@ public class ShoppingCart {
 
             Videogame temp = this.videogames.get(i);
             if(id.equals(temp.getId())){
-                int copiesInChart = this.quantities.get(i);
-                    if(copiesInChart - quantity == 0){
+                int copiesInCart = this.quantities.get(i);
+                    if(copiesInCart - quantity == 0){
                         this.videogames.remove(temp);
                         this.quantities.remove(i);
                     }
-                    else this.quantities.add(i, copiesInChart - quantity);
+                    else this.quantities.add(i, copiesInCart - quantity);
             }
         }
         this.calculateTotalCost();
     }
 
-    public void removeFromChart(Videogame game, int quantity) throws  CopiesException{
+    public void removeFromCart(Videogame game, int quantity) throws  CopiesException{
         String id = game.getId();
 
         for(int i = 0; i < this.videogames.size(); i++){
             Videogame temp = this.videogames.get(i);
             if(id.equals(temp.getId())){
-                int copiesInChart = this.quantities.get(i);
-                int difference = copiesInChart - quantity;
-                if(difference < 0) throw new CopiesException("You are trying to remove more copies than the ones present in the chart");
+                int copiesInCart = this.quantities.get(i);
+                int difference = copiesInCart - quantity;
+                if(difference < 0) throw new CopiesException("You are trying to remove more copies than the ones present in the cart");
                 else if(difference == 0) {
                     this.videogames.remove(temp);
                     this.quantities.remove(i);
@@ -78,7 +79,7 @@ public class ShoppingCart {
 
 
 
-    public ArrayList<Videogame> listVideogames(){
+    public List<Videogame> listVideogames(){
         return this.videogames;
     }
 
@@ -96,7 +97,7 @@ public class ShoppingCart {
         return this.totalCost;
     }
 
-    public ArrayList<Integer> listQuantities(){
+    public List<Integer> listQuantities(){
         return this.quantities;
     }
 
