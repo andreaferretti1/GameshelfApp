@@ -3,6 +3,7 @@ package org.application.gameshelfapp.buyvideogames.entities;
 import org.application.gameshelfapp.buyvideogames.exception.CopiesException;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ShoppingCart {
@@ -38,43 +39,42 @@ public class ShoppingCart {
 
 
 
-    public void markAsPayed(Videogame game, int quantity){
+    public void markAsPayed(Videogame game){
         String id = game.getId();
+        Iterator<Videogame> iterator = this.videogames.iterator();
 
-        for(int i = 0; i<this.videogames.size(); i++){
+        while(iterator.hasNext()){
 
-            Videogame temp = this.videogames.get(i);
+            Videogame temp = iterator.next();
             if(id.equals(temp.getId())){
-                int copiesInCart = this.quantities.get(i);
-                    if(copiesInCart - quantity == 0){
-                        this.videogames.remove(temp);
-                        this.quantities.remove(i);
-                    }
-                    else this.quantities.add(i, copiesInCart - quantity);
+                this.quantities.set(this.videogames.indexOf(temp), 0);
+                iterator.remove();
+                break;
             }
         }
-        this.calculateTotalCost();
+        this.quantities.removeIf(quantity -> quantity == 0);
     }
 
     public void removeFromCart(Videogame game, int quantity) throws  CopiesException{
         String id = game.getId();
+        Iterator<Videogame> iterator = this.videogames.iterator();
 
-        for(int i = 0; i < this.videogames.size(); i++){
-            Videogame temp = this.videogames.get(i);
+        while (iterator.hasNext()){
+            Videogame temp = iterator.next();
             if(id.equals(temp.getId())){
-                int copiesInCart = this.quantities.get(i);
+                int copiesInCart = this.quantities.get(this.videogames.indexOf(temp));
                 int difference = copiesInCart - quantity;
                 if(difference < 0) throw new CopiesException("You are trying to remove more copies than the ones present in the cart");
-                else if(difference == 0) {
+                this.quantities.set(this.videogames.indexOf(temp), difference);
+                if(difference == 0) {
                     this.videogames.remove(temp);
-                    this.quantities.remove(i);
-                }else{
-                    this.quantities.add(i, difference);
                 }
-                int ownerCopies = quantity + game.getOwnerCopies();
-                game.setOwnerCopies(ownerCopies);
             }
         }
+        int ownerCopies = quantity + game.getOwnerCopies();
+        game.setOwnerCopies(ownerCopies);
+        this.quantities.removeIf(copies -> copies == 0);
+        this.calculateTotalCost();
     }
 
 

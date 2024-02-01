@@ -115,7 +115,7 @@ public class BuyGamesController {
                 itemDAO.removeGameForSale(temp);
                 String messageToSend = this.user.getUsername() + "bought" + quantity + "of" + temp.getName() + temp.getId() + "for" + amountToPay + ". His email address is" + this.user.getEmail();
                 this.googleBoundary.sendMail("Videogame bought", messageToSend, temp.getOwnerEmail());
-                this.shoppingCart.markAsPayed(temp, quantity);
+                this.shoppingCart.markAsPayed(temp);
             }catch(GmailException e){
 
             } catch (PersistencyErrorException e) {

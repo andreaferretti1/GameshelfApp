@@ -56,7 +56,7 @@ public class AccessDAOCSV implements AccessDAO{
              while((instance = csvReader.readNext()) != null){
                     if(instance[AccountAttributes.EMAIL.ordinal()].equals(email) || instance[AccountAttributes.PASSWORD.ordinal()].equals(username)){
                         user = new Access(instance[AccountAttributes.USERNAME.ordinal()], instance[AccountAttributes.EMAIL.ordinal()], null, instance[AccountAttributes.TYPEOFUSER.ordinal()]);
-                        user.setEncodedPassword(instance[AccountAttributes.PASSWORD.ordinal()0]);
+                        user.setEncodedPassword(instance[AccountAttributes.PASSWORD.ordinal()]);
                     }
              }
         } catch(IOException | CsvValidationException e){

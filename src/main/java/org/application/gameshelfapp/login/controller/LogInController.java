@@ -44,8 +44,8 @@ public class LogInController {
          this.logAccess.encodePassword();
 
 
-         Access user = this.accessDAO.retrieveAccount(logAccess);
-         this.logAccess.checkAccount(user);
+         Access access = this.accessDAO.retrieveAccount(logAccess);
+         this.logAccess.checkAccount(access);
 
     }
 
