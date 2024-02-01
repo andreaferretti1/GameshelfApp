@@ -1,12 +1,8 @@
 package org.application.gameshelfapp.login.entities;
 
 
-import org.application.gameshelfapp.buyvideogames.entities.User;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
-import org.application.gameshelfapp.login.exception.PersistencyAccountException;
-
 import java.security.SecureRandom;
-import java.util.ArrayList;
 
 public class AccessThroughRegistration extends Access {
 

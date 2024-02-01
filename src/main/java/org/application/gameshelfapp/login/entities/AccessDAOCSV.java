@@ -3,7 +3,6 @@ package org.application.gameshelfapp.login.entities;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
-import org.application.gameshelfapp.buyvideogames.entities.User;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
 import java.io.*;

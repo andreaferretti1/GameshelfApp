@@ -1,6 +1,5 @@
 package org.application.gameshelfapp.login.entities;
 
-import org.application.gameshelfapp.login.exception.CheckFailedException;
 
 import java.util.Arrays;
 
@@ -14,6 +13,7 @@ public class Access {
     protected Encoder encoder;
 
     protected Access(String username, String email, String password, String typeOfUser){
+        this.username = username;
         this.email = email;
         this.password = password;
         this.typeOfUser = typeOfUser;

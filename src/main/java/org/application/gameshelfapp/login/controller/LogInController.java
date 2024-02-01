@@ -13,7 +13,6 @@ import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.PersistencyAccountException;
 
-import java.io.IOException;
 
 
 public class LogInController {
@@ -34,7 +33,7 @@ public class LogInController {
     }
 
 
-    public void logIn(LogInBean logBean) throws PersistencyErrorException, PersistencyAccountException, CheckFailedException{
+    public void logIn(LogInBean logBean) throws PersistencyErrorException, CheckFailedException{
 
         String logUsername = logBean.getUsernameBean();
         String logEmail = logBean.getEmailBean();
