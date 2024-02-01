@@ -129,9 +129,9 @@ public class BuyGamesController {
         this.shoppingCart = null;
     }
 
-    public ArrayList<VideogameBean> getSales() throws PersistencyErrorException{
+    public List<VideogameBean> getSales() throws PersistencyErrorException{
 
-        ArrayList<VideogameBean> videogameBeans = new ArrayList<VideogameBean>();
+        List<VideogameBean> videogameBeans = new ArrayList<VideogameBean>();
         ItemDAO itemDAO = this.factory.createItemDAO();
         this.gameList = itemDAO.getSales(this.user.getUsername());
 

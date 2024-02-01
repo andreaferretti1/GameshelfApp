@@ -4,7 +4,6 @@ import org.application.gameshelfapp.buyvideogames.bean.SellerBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.controller.BuyGamesController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerBoundary {
@@ -17,11 +16,11 @@ public class CustomerBoundary {
         this.buyGamesController = controller;
     }
 
-    public void setSellers(ArrayList<SellerBean> sellerBeans){
+    public void setSellers(List<SellerBean> sellerBeans){
         this.sellers = sellerBeans;
     }
 
-    public void setGames(ArrayList<VideogameBean> videogameBeans){
+    public void setGames(List<VideogameBean> videogameBeans){
         this.games = videogameBeans;
     }
 }
