@@ -11,7 +11,6 @@ import org.application.gameshelfapp.login.entities.*;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
-import org.application.gameshelfapp.login.exception.PersistencyAccountException;
 
 
 
