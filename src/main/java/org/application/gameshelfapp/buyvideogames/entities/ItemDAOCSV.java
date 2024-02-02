@@ -8,18 +8,25 @@ import org.application.gameshelfapp.buyvideogames.exception.NoGamesFoundExceptio
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
 import java.io.*;
+import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class ItemDAOCSV implements ItemDAO {
 
+    private static final String TEMP_FIlE = "temp_sale.csv";
     private String filename;
     private File fd;
-    private Lock lock;
+    private final Lock lock;
+
+    public ItemDAOCSV(){
+        this.lock = new ReentrantLock();
+    }
 
 
     @Override
@@ -73,15 +80,20 @@ public class ItemDAOCSV implements ItemDAO {
         gameToSave[VideogamesOnSaleAttributes.COPIES.ordinal()] = game.getOwnerCopies().toString();
         gameToSave[VideogamesOnSaleAttributes.PRICE.ordinal()] = String.valueOf(game.getOwnerPrice());
 
-        File tempFile = null;
+        File tempFile = new File(TEMP_FIlE);
+
         this.lock.lock();
-        try{
-            tempFile = File.createTempFile("sale", "csv");
-        }catch(IOException e){
-            throw new PersistencyErrorException("Couldn't save videogames for sale");
-        }
+
         try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)));
-            CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(tempFile)))){
+            CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(tempFile)));
+            FileChannel channel = new FileOutputStream(tempFile).getChannel()){
+
+            if(!tempFile.exists()) {
+                boolean created = tempFile.createNewFile();
+                if(!created) throw new PersistencyErrorException("Couldn't insert videogame for sale");
+            }
+            channel.truncate(0);
+
             while((myRecord = csvReader.readNext()) != null){
                 if(gameToSave[VideogamesOnSaleAttributes.USERNAME.ordinal()].equals(myRecord[VideogamesOnSaleAttributes.USERNAME.ordinal()])  &&  gameToSave[VideogamesOnSaleAttributes.GAMENAME.ordinal()].equals(myRecord[VideogamesOnSaleAttributes.GAMENAME.ordinal()])){
                     int totalCopiesOnSale = Integer.parseInt(gameToSave[VideogamesOnSaleAttributes.COPIES.ordinal()]) + Integer.parseInt(myRecord[VideogamesOnSaleAttributes.COPIES.ordinal()]);
@@ -92,7 +104,7 @@ public class ItemDAOCSV implements ItemDAO {
             }
 
             Files.move(tempFile.toPath(), this.fd.toPath(), REPLACE_EXISTING);
-            tempFile.delete();
+
 
         }catch(IOException | CsvValidationException e){
             throw new PersistencyErrorException("Couldn't save videogame in the sale catalogue");
@@ -109,17 +121,19 @@ public class ItemDAOCSV implements ItemDAO {
         String gameName = game.getName();
         String sellerName = game.getOwnerName();
         int copies = game.getOwnerCopies();
-        File tempFile = null;
+        File tempFile = new File(TEMP_FIlE);
 
         this.lock.lock();
-        try{
-            tempFile = File.createTempFile("removeSale", "csv");
-        }catch(IOException e){
-            throw new PersistencyErrorException("Couldn't remove videogame for sale");
-        }
+
 
         try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)));
-            CSVWriter csvWriter= new CSVWriter(new BufferedWriter(new FileWriter(tempFile)));){
+            CSVWriter csvWriter= new CSVWriter(new BufferedWriter(new FileWriter(tempFile)));
+            FileChannel channel = new FileOutputStream(tempFile).getChannel()){
+            if(!tempFile.exists()) {
+                boolean created = tempFile.createNewFile();
+                if(!created) throw new PersistencyErrorException("Couldn't remove game for sale");
+            }
+
             while((gameToDelete = csvReader.readNext()) != null){
                 if(gameToDelete[VideogamesOnSaleAttributes.GAMENAME.ordinal()].equals(gameName) && gameToDelete[VideogamesOnSaleAttributes.USERNAME.ordinal()].equals(sellerName)){
                     int difference = Integer.parseInt(gameToDelete[VideogamesOnSaleAttributes.COPIES.ordinal()]) - copies;

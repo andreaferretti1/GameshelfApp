@@ -15,6 +15,8 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class CatalogueDAOCSV implements CatalogueDAO {
 
+    private static final String TEMP_FILE = "temp_catalogue.csv";
+    private static final String SAVE_ERROR = "Couldn't save videogame";
     private final String filename;
     private final File fd;
     private final Lock lock;
@@ -26,26 +28,27 @@ public class CatalogueDAOCSV implements CatalogueDAO {
     }
 
     @Override
-    public void addVideogame(String username, Videogame game, int numberOfCopies) throws PersistencyErrorException, IOException {
+    public void addVideogame(String username, Videogame game, int numberOfCopies) throws PersistencyErrorException {
         String[] myRecord = new String[3];
         String gameName = game.getName();
         myRecord[CatalogueAttributes.USERNAME.ordinal()] = username;
         myRecord[CatalogueAttributes.GAMENAME.ordinal()] = gameName;
         myRecord[CatalogueAttributes.COPIES.ordinal()] = game.getOwnerCopies().toString();
-        File tempFile = new File("temp_catalogue.csv");
+        File tempFile = new File(TEMP_FILE);
 
-        if(!tempFile.exists()) {
-            boolean created = tempFile.createNewFile();
-            if(!created) throw new PersistencyErrorException("Couldn't save game");
-        }
 
         this.lock.lock();
 
         try (CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(tempFile)));
              CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)));
-             FileChannel channel = new FileOutputStream(tempFile).getChannel()){
+             FileChannel channel = new FileOutputStream(new File(TEMP_FILE)).getChannel()){
 
+            if(!tempFile.exists()) {
+                boolean created = tempFile.createNewFile();
+                if(!created) throw new PersistencyErrorException(SAVE_ERROR);
+            }
             channel.truncate(0);
+
             while((myRecord = csvReader.readNext()) != null){
                 if(myRecord[CatalogueAttributes.GAMENAME.ordinal()].equals(gameName)){
                     int newNumberOfCopies = numberOfCopies + Integer.parseInt(myRecord[CatalogueAttributes.COPIES.ordinal()]);
@@ -57,25 +60,26 @@ public class CatalogueDAOCSV implements CatalogueDAO {
             csvWriter.flush();
             Files.move(tempFile.toPath(), this.fd.toPath(), REPLACE_EXISTING);
         } catch (IOException | CsvValidationException e) {
-            throw new PersistencyErrorException("Couldn't save game");
+            throw new PersistencyErrorException(SAVE_ERROR);
         }finally{this.lock.unlock();}
     }
 
     @Override
-    public void removeVideogame(String username, Videogame game, int quantity) throws PersistencyErrorException, IOException {
+    public void removeVideogame(String username, Videogame game, int quantity) throws PersistencyErrorException {
         String[] myRecord;
-        File tempFile = new File("temp_catalogue");
-        if(!tempFile.exists()) {
-            boolean created = tempFile.createNewFile();
-            if(!created) throw new PersistencyErrorException("Couldn't save game");
-        }
+        File tempFile = new File(TEMP_FILE);
 
         this.lock.lock();
         try (CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)));
              CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(tempFile)));
              FileChannel channel = new FileOutputStream(tempFile).getChannel()){
 
+            if(!tempFile.exists()) {
+                boolean created = tempFile.createNewFile();
+                if(!created) throw new PersistencyErrorException(SAVE_ERROR);
+            }
             channel.truncate(0);
+
             while ((myRecord = csvReader.readNext()) != null) {
 
                 if (myRecord[CatalogueAttributes.GAMENAME.ordinal()].equals(game.getName())) {
