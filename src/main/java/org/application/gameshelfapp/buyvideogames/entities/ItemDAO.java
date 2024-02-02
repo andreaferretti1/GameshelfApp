@@ -12,7 +12,7 @@ public interface ItemDAO {
      List<Videogame> getVideogamesForSale(Filters filters) throws PersistencyErrorException, NoGamesFoundException;
      void addGameForSale(Videogame game, Filters filters) throws PersistencyErrorException;
      void removeGameForSale(Videogame game) throws PersistencyErrorException, GameSoldOutException;
-     void saveSale(User user, Videogame game, int copies) throws PersistencyErrorException;
+     void saveSale(User user, Videogame game, int copies, String address) throws PersistencyErrorException;
      List<Videogame> getSales(String sellerName) throws PersistencyErrorException;
 
 }

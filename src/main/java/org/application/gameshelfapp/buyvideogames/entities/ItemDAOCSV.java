@@ -158,11 +158,11 @@ public class ItemDAOCSV implements ItemDAO {
     }
 
     @Override
-    public void saveSale(User user, Videogame game, int copies) throws PersistencyErrorException{
+    public void saveSale(User user, Videogame game, int copies, String address) throws PersistencyErrorException{
         String[] gameSold = new String[7];
         gameSold[VideogamesSoldAttributes.CUSTOMERUSERNAME.ordinal()] = user.getUsername();
         gameSold[VideogamesSoldAttributes.SELLERUSERNAME.ordinal()] = game.getOwnerName();
-        gameSold[VideogamesSoldAttributes.CUSTOMERADDRESS.ordinal()] = user.getAddress();
+        gameSold[VideogamesSoldAttributes.CUSTOMERADDRESS.ordinal()] = address;
         gameSold[VideogamesSoldAttributes.CUSTOMEREMAIL.ordinal()] = user.getEmail();
         gameSold[VideogamesSoldAttributes.GAMENAME.ordinal()] = game.getOwnerName();
         gameSold[VideogamesSoldAttributes.GAMEID.ordinal()] = game.getId();

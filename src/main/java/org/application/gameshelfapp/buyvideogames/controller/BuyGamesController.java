@@ -1,5 +1,6 @@
 package org.application.gameshelfapp.buyvideogames.controller;
 
+import org.application.gameshelfapp.buyvideogames.bean.CredentialsBean;
 import org.application.gameshelfapp.buyvideogames.bean.FiltersBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.bean.SellerBean;
@@ -27,8 +28,10 @@ public class BuyGamesController {
     private Braintree braintree;
     private GoogleBoundary googleBoundary;
     private final User user;
-    private ShoppingCart shoppingCart = null;
+    private ShoppingCart shoppingCart;
     private List<Videogame> gameList;
+
+    private Credentials credentials;
 
     private PersistencyAbstractFactory factory;
 
@@ -90,9 +93,8 @@ public class BuyGamesController {
         }
     }
 
-    public void insertCredentials(String address, String paymentKey){
-        this.user.setAddress(address);
-        this.user.setPaymentKey(paymentKey);
+    public void insertCredentials(CredentialsBean credentialsBean){
+        this.credentials = new Credentials(credentialsBean.getTypeOfPaymentBean(), credentialsBean.getPaymentKeyBean(), credentialsBean.getAddressBean());
     }
 
     public void sendMoney() throws RefundException, GameSoldOutException, GmailException {
@@ -110,8 +112,8 @@ public class BuyGamesController {
                 Videogame temp = videogamesToBuy.get(i);
                 int quantity = quantitiesToBuy.get(i);
                 float amountToPay = temp.getOwnerPrice() * quantity;
-                this.braintree.pay(amountToPay, this.user.getPaymentKey());
-                itemDAO.saveSale(this.user, temp, quantity);
+                this.braintree.pay(amountToPay, this.credentials.getPaymentKey());
+                itemDAO.saveSale(this.user, temp, quantity, this.credentials.getAddress());
                 itemDAO.removeGameForSale(temp);
                 String messageToSend = this.user.getUsername() + "bought" + quantity + "of" + temp.getName() + temp.getId() + "for" + amountToPay + ". His email address is" + this.user.getEmail();
                 this.googleBoundary.sendMail("Videogame bought", messageToSend, temp.getOwnerEmail());

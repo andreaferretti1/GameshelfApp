@@ -20,7 +20,7 @@ public class ItemDAOJDBC implements ItemDAO {
     }
 
     @Override
-    public void saveSale(User user, Videogame game, int copies) {
+    public void saveSale(User user, Videogame game, int copies, String address) {
 
     }
 
