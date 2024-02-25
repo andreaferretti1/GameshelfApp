@@ -137,59 +137,64 @@ public class ShoppingCartPageController implements Initializable{
           return new SimpleStringProperty(Float.toString(totalPrice) + "€");
         });
 
-        delete.setCellFactory((param) -> new TableCell<VideogameBean, VideogameBean>(){
-            private final Button deleteButton = new Button("delete");
+        delete.setCellFactory(param -> new CustomTableCellButton(gamesToShow));
 
-            {
-                deleteButton.setPrefWidth(117);
-                deleteButton.setStyle("-fx-text-fill: white; -fx-background-color: #2E60E1; -fx-background-radius: 60");
-
-                deleteButton.setOnMouseClicked(event -> {
-                    TableRow<VideogameBean> row = getTableRow();
-                    ObservableList<Node> cells = row.getChildrenUnmodifiable();
-                    VideogameBean gameInRow = row.getItem();
-                    TextField copies = (TextField) cells.get(5);
-
-                    try {
-                        ShoppingCartPageController.this.customerBoundary.removeCopiesFromCart(gameInRow.getId(), copies.getText());
-                        gamesToShow.setAll(ShoppingCartPageController.this.customerBoundary.getShoppingCartBean().getItems());
-                    } catch (SyntaxErrorException | CopiesException e) {
-                        ErrorPageController.displayErrorWindow(e.getMessage());
-                    }
-                });
-            }
-
-
-            @Override
-            protected void updateItem(VideogameBean gameBean, boolean empty){
-                super.updateItem(gameBean, empty);
-                if(empty){
-                    setGraphic(null);
-                } else{
-                    setGraphic(deleteButton);
-                }
-            }
-        });
-
-        copiesToDelete.setCellFactory(param -> new TableCell<VideogameBean, VideogameBean>(){
-            private final TextField text = new TextField();
-
-            {
-                text.setPromptText("Copies to delete");
-                text.setPrefWidth(112);
-                text.setStyle("-fx-background-radius: 60; -fx-prompt-text-fill: #2E60E1");
-            }
-
-            @Override
-            protected void updateItem(VideogameBean gameBean, boolean empty){
-                super.updateItem(gameBean, empty);
-                if(empty){
-                    setGraphic(null);
-                } else{
-                    setGraphic(text);
-                }
-            }
-        });
+        copiesToDelete.setCellFactory(param -> new CustomTableCellTextField());
         cart.setItems(gamesToShow);
     }
+
+
+    private class CustomTableCellButton extends TableCell<VideogameBean, VideogameBean>{
+        private final Button deleteButton;
+        private CustomTableCellButton(ObservableList<VideogameBean> gamesToShow){
+            deleteButton = new Button("delete");
+            deleteButton.setPrefWidth(117);
+            deleteButton.setStyle("-fx-text-fill: white; -fx-background-color: #2E60E1; -fx-background-radius: 60");
+
+            deleteButton.setOnMouseClicked(event -> {
+                TableRow<VideogameBean> row = getTableRow();
+                ObservableList<Node> cells = row.getChildrenUnmodifiable();
+                VideogameBean gameInRow = row.getItem();
+                TextField copiesToRemove = (TextField) cells.get(5);
+
+                try {
+                    ShoppingCartPageController.this.customerBoundary.removeCopiesFromCart(gameInRow.getId(), copiesToRemove.getText());
+                    gamesToShow.setAll(ShoppingCartPageController.this.customerBoundary.getShoppingCartBean().getItems());
+                } catch (SyntaxErrorException | CopiesException e) {
+                    ErrorPageController.displayErrorWindow(e.getMessage());
+                }
+            });
+        }
+
+        @Override
+        protected void updateItem(VideogameBean gameBean, boolean empty){
+            super.updateItem(gameBean, empty);
+            if(empty){
+                setGraphic(null);
+            } else{
+                setGraphic(deleteButton);
+            }
+        }
+    }
+
+    private class CustomTableCellTextField extends TableCell<VideogameBean, VideogameBean>{
+        private final TextField text;
+        private CustomTableCellTextField(){
+            text = new TextField();
+            text.setPromptText("Copies to delete");
+            text.setPrefWidth(112);
+            text.setStyle("-fx-background-radius: 60; -fx-prompt-text-fill: #2E60E1");
+        }
+
+        @Override
+        protected void updateItem(VideogameBean gameBean, boolean empty){
+            super.updateItem(gameBean, empty);
+            if(empty){
+                setGraphic(null);
+            } else{
+                setGraphic(text);
+            }
+        }
+    }
+
 }
