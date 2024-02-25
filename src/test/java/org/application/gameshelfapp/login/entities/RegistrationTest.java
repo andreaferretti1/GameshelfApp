@@ -19,10 +19,10 @@ import static org.junit.jupiter.api.Assertions.*;
     password: "ciao"
     type of user: "customer"
  */
-public class RegistrationTest {
+class RegistrationTest {
 
     @Test
-    public void registrationTestSuccess(){
+    void registrationTestSuccess(){
         try{
             UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
             userLogInBoundary.register("andrea", "fer.andrea35@gmail.com", "ciao", "customer");

@@ -17,11 +17,11 @@ import static org.junit.jupiter.api.Assertions.*;
     email: "fer.andrea35@gmail.com"
     password: "ciao"
  */
-public class LogInTest {
+ class LogInTest {
 
 
     @Test
-    public void logInWithCorrectCredentials(){
+    void logInWithCorrectCredentials(){
 
         try {
             UserLogInBoundary boundary = new UserLogInBoundary();
@@ -34,7 +34,7 @@ public class LogInTest {
 
 
     @Test
-    public void logInWithIncorrectPassword(){
+    void logInWithIncorrectPassword(){
 
 
         UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
@@ -43,13 +43,13 @@ public class LogInTest {
     }
 
     @Test
-    public void logInWithIncorrectEmail(){
+    void logInWithIncorrectEmail(){
         UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
         assertThrows(CheckFailedException.class, () -> userLogInBoundary.log("aaaa.fdfdf@gmail.com", "ciao"));
     }
 
     @Test
-    public void logInWrongEmailSyntax(){
+    void logInWrongEmailSyntax(){
 
         UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
         assertThrows(SyntaxErrorException.class, () -> userLogInBoundary.log("email@examplecom", null));
