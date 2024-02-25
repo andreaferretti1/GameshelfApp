@@ -15,12 +15,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gameshelfapp.buyvideogames.graphicControllers.SearchPageController">
    <children>
       <Region prefHeight="768.0" prefWidth="1440.0" style="-fx-background-color: #433f3f;" />
       <Region prefHeight="27.0" prefWidth="1440.0" style="-fx-background-color: #2e60e1;" />
-      <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="40.0" style="-fx-background-color: transparent;" text="Button" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="7.0">
+      <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#goToHomePage" prefHeight="20.0" prefWidth="40.0" style="-fx-background-color: transparent;" text="Button" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="7.0">
          <graphic>
             <ImageView>
                <image>
@@ -34,21 +33,6 @@
       </Button>
       <VBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="741.0" prefWidth="100.0" style="-fx-background-color: #433f3f;" AnchorPane.leftAnchor="1340.0" AnchorPane.topAnchor="27.0">
          <children>
-            <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../icons/account_icon.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
-               </graphic>
-            </Button>
             <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -64,7 +48,7 @@
                   <Insets top="116.0" />
                </VBox.margin>
             </Button>
-            <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
+            <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#goToHomePage" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -79,35 +63,20 @@
                   <Insets top="116.0" />
                </VBox.margin>
             </Button>
-            <Button contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: transparent;" textFill="WHITE">
+            <Button contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#seeCart" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: transparent;" textFill="WHITE">
                <VBox.margin>
                   <Insets top="116.0" />
                </VBox.margin>
-               <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../icons/games_icon.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
                <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="50.0" fitWidth="50.0">
                      <image>
-                        <Image url="@../icons/settings_icon.png" />
+                        <Image url="@../icons/shopping_cart_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
-               <VBox.margin>
-                  <Insets top="116.0" />
-               </VBox.margin>
             </Button>
          </children>
          <effect>
@@ -116,7 +85,7 @@
       </VBox>
       <VBox prefHeight="741.0" prefWidth="1340.0" AnchorPane.topAnchor="27.0">
          <children>
-            <TextField maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="52.0" prefWidth="900.0" promptText="Search by Name" style="-fx-background-color: white; -fx-prompt-text-fill: #2E60E1; -fx-text-fill: #2E60E1; -fx-background-radius: 60;">
+            <TextField fx:id="nameField" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="52.0" prefWidth="900.0" promptText="Search by Name" style="-fx-background-color: white; -fx-prompt-text-fill: #2E60E1; -fx-text-fill: #2E60E1; -fx-background-radius: 60;">
                <font>
                   <Font name="System Italic" size="28.0" />
                </font>
@@ -127,7 +96,7 @@
                   <Insets left="220.0" top="20.0" />
                </VBox.margin>
             </TextField>
-            <Label alignment="CENTER" text="Or search by:" textFill="#2e60e1" underline="true">
+            <Label alignment="CENTER" text="Apply these filters:" textFill="#2e60e1" underline="true">
                <font>
                   <Font size="28.0" />
                </font>
@@ -145,7 +114,7 @@
             </Label>
             <HBox prefHeight="40.0" prefWidth="1340.0">
                <children>
-                  <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="PlayStation" textFill="#2e60e1">
+                  <CheckBox fx:id="cbPlay" mnemonicParsing="false" onMouseClicked="#consoleSelected" stylesheets="@../icons/CheckBox_style.css" text="PlayStation" textFill="#2e60e1">
                      <font>
                         <Font name="System Italic" size="28.0" />
                      </font>
@@ -156,7 +125,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </CheckBox>
-                  <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="XBox" textFill="#2e60e1">
+                  <CheckBox fx:id="cbXbox" mnemonicParsing="false" onMouseClicked="#consoleSelected" stylesheets="@../icons/CheckBox_style.css" text="XBox" textFill="#2e60e1">
                      <font>
                         <Font name="System Italic" size="28.0" />
                      </font>
@@ -167,7 +136,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </CheckBox>
-                  <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="Pc" textFill="#2e60e1">
+                  <CheckBox fx:id="cbPc" mnemonicParsing="false" onMouseClicked="#consoleSelected" stylesheets="@../icons/CheckBox_style.css" text="Pc" textFill="#2e60e1">
                      <font>
                         <Font name="System Italic" size="28.0" />
                      </font>
@@ -193,7 +162,7 @@
             </Label>
             <HBox layoutX="10.0" layoutY="222.0" prefHeight="40.0" prefWidth="1340.0">
                <children>
-                  <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="Offline" textFill="#2e60e1">
+                  <CheckBox fx:id="cbOn" mnemonicParsing="false" onMouseClicked="#playableSelected" stylesheets="@../icons/CheckBox_style.css" text="Offline" textFill="#2e60e1">
                      <font>
                         <Font name="System Italic" size="28.0" />
                      </font>
@@ -204,7 +173,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </CheckBox>
-                  <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="Online" textFill="#2e60e1">
+                  <CheckBox fx:id="cbOff" mnemonicParsing="false" onMouseClicked="#playableSelected" stylesheets="@../icons/CheckBox_style.css" text="Online" textFill="#2e60e1">
                      <font>
                         <Font name="System Italic" size="28.0" />
                      </font>
@@ -230,7 +199,7 @@
             </Label>
             <HBox layoutX="10.0" layoutY="222.0" prefHeight="40.0" prefWidth="1340.0">
                <children>
-                  <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="Sport" textFill="#2e60e1">
+                  <CheckBox fx:id="cbSport" mnemonicParsing="false" onMouseClicked="#genreSelected" stylesheets="@../icons/CheckBox_style.css" text="Sport" textFill="#2e60e1">
                      <font>
                         <Font name="System Italic" size="28.0" />
                      </font>
@@ -241,7 +210,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </CheckBox>
-                  <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="Shooting" textFill="#2e60e1">
+                  <CheckBox fx:id="cbShoot" mnemonicParsing="false" onMouseClicked="#genreSelected" stylesheets="@../icons/CheckBox_style.css" text="Shooting" textFill="#2e60e1">
                      <font>
                         <Font name="System Italic" size="28.0" />
                      </font>
@@ -252,7 +221,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </CheckBox>
-                  <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="Adventure" textFill="#2e60e1">
+                  <CheckBox fx:id="cbAdv" mnemonicParsing="false" onMouseClicked="#genreSelected" stylesheets="@../icons/CheckBox_style.css" text="Adventure" textFill="#2e60e1">
                      <font>
                         <Font name="System Italic" size="28.0" />
                      </font>
@@ -271,7 +240,7 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </HBox>
-            <Button alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" mnemonicParsing="false" prefHeight="55.0" prefWidth="130.0" style="-fx-background-color: #2e60e1; -fx-background-radius: 60;" text="Search" textFill="WHITE">
+            <Button alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#searchVideogame" prefHeight="55.0" prefWidth="130.0" style="-fx-background-color: #2e60e1; -fx-background-radius: 60;" text="Search" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>

@@ -41,16 +41,15 @@ public class GoogleBoundary {
         }
         GsonFactory jsonFactory = GsonFactory.getDefaultInstance();
         this.service = new Gmail.Builder(httpTransport, jsonFactory, getCredentials(httpTransport, jsonFactory))
-                .setApplicationName("gmail")
+                .setApplicationName("Gameshelfapp")
                 .build();
     }
 
-    private static Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory)
-             throws GmailException{
+    private static Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory) throws GmailException{
         // Load client secrets.
-        InputStream in = GoogleBoundary.class.getResourceAsStream("C:/Users/feran/Documents/progetto ispw/client_secret_826106998115-ekbvnc0f0n2cglg5tc5fn8tcmrkal4qv.apps.googleusercontent.com.json");
+        InputStream in = GoogleBoundary.class.getResourceAsStream("/client_secret_862393017889-3e1kmgmdq3jmgltkc0rg0g4svvsl7lej.apps.googleusercontent.com.json");
         if (in == null) {
-            throw new GmailException("Resource not found: " + "client_secret_826106998115-ekbvnc0f0n2cglg5tc5fn8tcmrkal4qv.apps.googleusercontent.com.json");
+            throw new GmailException("Resource not found: " + "client_secret_862393017889-3e1kmgmdq3jmgltkc0rg0g4svvsl7lej.apps.googleusercontent.com.json");
         }
 
         try {
@@ -89,9 +88,9 @@ public class GoogleBoundary {
             message.setRaw(encodedEmail);
             message = this.service.users().messages().send("me", message).execute();
         } catch (MessagingException | IOException e) {
-            throw new GmailException("Could't send mail");
+            throw new GmailException("Couldn't send mail");
         }
 
-
     }
+
 }

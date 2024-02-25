@@ -24,6 +24,7 @@ public class SHA256Encoder implements Encoder{
                 s.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
             }
             this.encryptedPassword = s.toString();
+            this.removePasswordToCrypt();
         } catch(NoSuchAlgorithmException e){
             System.exit(1);
         }

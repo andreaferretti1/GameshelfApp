@@ -3,7 +3,6 @@ package org.application.gameshelfapp;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
@@ -12,7 +11,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.application.gameshelfapp.login.RegistrationPageController;
 import org.application.gameshelfapp.login.boundary.UserLogInBoundary;
+import org.application.gameshelfapp.login.exception.CheckFailedException;
+import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
+import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
 
 import java.io.IOException;
 
@@ -23,83 +26,54 @@ public class StartingPageController extends Application {
     private PasswordField passwordField;
 
     @FXML
-    private TextField usernameField;
+    private TextField emailField;
+
     private UserLogInBoundary userBoundary;
 
     private ErrorPageController errorPageController;
 
+    private Stage stage;
 
-    private void setUserBoundary(UserLogInBoundary boundary){
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public void setUserBoundary(UserLogInBoundary boundary){
         this.userBoundary = boundary;
     }
 
     @FXML
-    private void switchToRegistrationPage(MouseEvent event) throws IOException {
-        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/GUI/Registration-Page.fxml"));
-        Parent root = fxmlloader.load();
-
-        RegistrationPageController regController = fxmlloader.getController();
-        regController.setUserLogInBoundary(this.userBoundary);
-        this.userBoundary.setRegistrationPageController(regController);
-
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1440, 768);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    private void logIn(MouseEvent event) {
-         this.userBoundary.log(this.passwordField.getText(), this.usernameField.getText());
-    }
-
-    public void switchToHomePage() {
-
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/GUI/Home-page.fxml"));
-            Parent root = null;
-            root = fxmlLoader.load();
-
-            Stage stage = (Stage) this.usernameField.getScene().getWindow();
-            Scene scene = new Scene(root, 1440, 768);
-            stage.setScene(scene);
-            stage.show();
+    private void switchToRegistrationPage(MouseEvent event) {
+        try{
+           RegistrationPageController.start(this.stage, this.userBoundary);
         } catch (IOException e) {
             System.exit(1);
         }
     }
 
-    public void displayErrorWindow(String s){
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/GUI/Error-Page.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = new Stage();
-            Scene scene = new Scene(root, 480, 256);
-            stage.setScene(scene);
-            stage.show();
-
-            this.errorPageController = loader.getController();
-            this.errorPageController.showErrorMessage(s);
-
+    @FXML
+    private void logIn(MouseEvent event) {
+        try{
+            this.userBoundary.log(this.emailField.getText(), this.passwordField.getText());
+            HomePageController.start(this.stage, this.userBoundary.getUserBean());
+        }  catch (SyntaxErrorException | PersistencyErrorException | CheckFailedException e) {
+            ErrorPageController.displayErrorWindow(e.getMessage());
         } catch(IOException e){
             System.exit(1);
         }
     }
 
-
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) throws IOException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/GUI/Starting-Page.fxml"));
         Parent root = fxmlLoader.load();
 
         StartingPageController startingPageController = fxmlLoader.getController();
-        startingPageController.setUserBoundary(new UserLogInBoundary(startingPageController));
+        startingPageController.setUserBoundary(new UserLogInBoundary());
+        startingPageController.setStage(stage);
 
         Scene scene = new Scene(root, 1440, 768);
-
         stage.setScene(scene);
 
         stage.setTitle("GameShelf");

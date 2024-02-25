@@ -11,6 +11,7 @@ module org.application.gameshelfapp {
     requires mail;
     requires org.apache.commons.codec;
     requires com.opencsv;
+    requires jdk.httpserver;
 
 
     opens org.application.gameshelfapp to javafx.fxml;
@@ -19,4 +20,6 @@ module org.application.gameshelfapp {
     opens org.application.gameshelfapp.login to javafx.fxml;
     exports org.application.gameshelfapp.login.graphiccontrollers;
     opens org.application.gameshelfapp.login.graphiccontrollers to javafx.fxml;
+    exports org.application.gameshelfapp.buyvideogames.graphicControllers;
+    opens org.application.gameshelfapp.buyvideogames.graphicControllers to javafx.fxml;
 }

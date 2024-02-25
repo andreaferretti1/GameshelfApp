@@ -8,10 +8,10 @@ public class ShoppingCartBean {
     private List<Integer> quantities;
     private float totalCost;
 
-    public ShoppingCartBean(List<VideogameBean> items,  List<Integer> quantities , float cost){
+    public ShoppingCartBean(List<VideogameBean> items,  List<Integer> quantities){
         this.items = items;
         this.quantities = quantities;
-        this.totalCost = cost;
+        this.totalCost = 0F;
     }
 
     public void setItems(List<VideogameBean> items) {
@@ -37,4 +37,6 @@ public class ShoppingCartBean {
     public float getTotalCost() {
         return this.totalCost;
     }
+
+
 }

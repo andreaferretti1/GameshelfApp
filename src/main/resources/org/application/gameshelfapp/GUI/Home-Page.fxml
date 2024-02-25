@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gameshelfapp.login.graphiccontrollers.HomePageController">
    <VBox alignment="TOP_RIGHT" prefHeight="741.0" prefWidth="100.0" style="-fx-background-color: #433f3f;" AnchorPane.leftAnchor="1340.0" AnchorPane.topAnchor="27.0">
       <children>
          <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
@@ -33,7 +33,7 @@
                </ImageView>
             </graphic>
          </Button>
-         <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
+         <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#goToSearchPage" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
             <cursor>
                <Cursor fx:constant="HAND" />
             </cursor>
@@ -95,7 +95,7 @@
       </effect>
    </VBox>
    <Region prefHeight="27.0" prefWidth="1440.0" style="-fx-background-color: #2E60E1;" />
-   <ScrollPane hbarPolicy="NEVER" prefHeight="741.0" prefWidth="1340.0" stylesheets="@/org/application/gameshelfapp/icons/Scrollbar_style.css" AnchorPane.leftAnchor="-1.0" AnchorPane.topAnchor="27.0">
+   <ScrollPane hbarPolicy="NEVER" prefHeight="741.0" prefWidth="1340.0" stylesheets="/org/application/gameshelfapp/icons/Scrollbar_style.css" AnchorPane.leftAnchor="-1.0" AnchorPane.topAnchor="27.0">
       <content>
          <VBox prefHeight="741.0" prefWidth="1340.0" style="-fx-background-color: #433f3f;">
             <children>

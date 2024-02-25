@@ -11,7 +11,7 @@ public abstract class PersistencyAbstractFactory {
         private static final String CSV = "CSV";
         private static final String JDBC = "JDBC";
 
-        public PersistencyAbstractFactory getFactory(){
+        public static PersistencyAbstractFactory getFactory(){
 
             try(FileInputStream in = new FileInputStream("/src/main/resources/org/application/gameshelfapp/configuration/configuration.properties")){
             Properties properties = new Properties();

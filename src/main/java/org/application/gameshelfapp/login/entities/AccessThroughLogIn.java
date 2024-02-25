@@ -6,8 +6,8 @@ public class AccessThroughLogIn extends Access {
 
 
 
-    public AccessThroughLogIn(String username, String email, String password, String typeOfUser){
-        super(username, email, password, typeOfUser);
+    public AccessThroughLogIn(String email, String password, String typeOfUser){
+        super(null, email, password, typeOfUser);
     }
 
 

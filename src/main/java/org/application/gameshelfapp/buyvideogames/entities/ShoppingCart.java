@@ -20,6 +20,7 @@ public class ShoppingCart {
 
     public void addGame(Videogame game, int quantity) throws CopiesException{
         String id = game.getId();
+        if(quantity <= 0) throw new CopiesException("You should select one or more copies");
 
         for(int i = 0; i<this.videogames.size(); i++){
 
@@ -55,8 +56,8 @@ public class ShoppingCart {
         this.quantities.removeIf(quantity -> quantity == 0);
     }
 
-    public void removeFromCart(Videogame game, int quantity) throws  CopiesException{
-        String id = game.getId();
+    public void removeFromCart(String id, int quantity) throws CopiesException{
+
         Iterator<Videogame> iterator = this.videogames.iterator();
 
         while (iterator.hasNext()){
@@ -69,10 +70,10 @@ public class ShoppingCart {
                 if(difference == 0) {
                     this.videogames.remove(temp);
                 }
+                int ownerCopies = quantity + temp.getOwnerCopies();
+                temp.setOwnerCopies(ownerCopies);
             }
         }
-        int ownerCopies = quantity + game.getOwnerCopies();
-        game.setOwnerCopies(ownerCopies);
         this.quantities.removeIf(copies -> copies == 0);
         this.calculateTotalCost();
     }

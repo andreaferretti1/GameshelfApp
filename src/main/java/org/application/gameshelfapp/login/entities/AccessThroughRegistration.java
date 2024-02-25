@@ -16,9 +16,9 @@ public class AccessThroughRegistration extends Access {
 
     public String getMessageToSend(){
         SecureRandom secureRandom = new SecureRandom();
-        this.codeGenerated = secureRandom.nextInt(10^6);
+        this.codeGenerated = secureRandom.nextInt(1000000);
         this.codeGenerated = Math.abs(this.codeGenerated);
-        return "Your code is" + this.codeGenerated;
+        return "Your code is " + this.codeGenerated;
     }
 
     public void checkCode(int insertedCode) throws CheckFailedException {
@@ -28,6 +28,9 @@ public class AccessThroughRegistration extends Access {
     }
 
     public void checkAccount(Access access) throws CheckFailedException{
+
+        if (access == null) return;
+
         String username = access.getUsername();
         String email = access.getEmail();
 

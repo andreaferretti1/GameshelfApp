@@ -3,13 +3,18 @@ package org.application.gameshelfapp.login;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import org.application.gameshelfapp.StartingPageController;
 import org.application.gameshelfapp.login.boundary.UserLogInBoundary;
+import org.application.gameshelfapp.login.exception.CheckFailedException;
+import org.application.gameshelfapp.login.exception.GmailException;
+import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 import org.application.gameshelfapp.login.graphiccontrollers.InsertCodeController;
 
@@ -27,81 +32,73 @@ public class RegistrationPageController {
     private TextField passwordTextField;
     @FXML
     private TextField confirmPasswordTextField;
+    @FXML
+    private RadioButton customerButton;
+    @FXML
+    private RadioButton sellerButton;
+    @FXML
+    private RadioButton bothButton;
+    @FXML
+    private ToggleGroup typeOfUser;
     private UserLogInBoundary userBoundary;
-    private ErrorPageController errorPageController;
+    private Stage stage;
 
-
+    public void setStage(Stage stage){
+        this.stage = stage;
+    }
     public void setUserLogInBoundary(UserLogInBoundary b){
         this.userBoundary = b;
     }
 
     public void switchToInsertCodeScene(){
-        FXMLLoader fxmlLoad = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/GUI/Insert-code.fxml"));
-        Parent root = null;
-        try {
-            root = fxmlLoad.load();
-        } catch (IOException e) {
-            System.exit(1);
-        }
 
-        InsertCodeController controller = fxmlLoad.getController();
-        controller.setUserLogInBoundary(this.userBoundary);
-        this.userBoundary.setInsertCodeController(controller);
-
-        Scene scene = new Scene(root, 1440, 768);
-
-        Stage stage = (Stage) this.emailTextField.getScene().getWindow();
-
-        stage.setScene(scene);
-
-        stage.show();
-    }
-
-    public void displayErrorWindow(String s){
-
-        try {
-            FXMLLoader loader;
-            loader = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/GUI/Error-Page.fxml"));
-            Parent root;
-            root = loader.load();
-
-            Stage stage = new Stage();
-            Scene scene = new Scene(root, 480, 256);
-            stage.setScene(scene);
-            stage.show();
-
-            this.errorPageController = loader.getController();
-            this.errorPageController.showErrorMessage(s);
-
-        } catch(IOException e){
+        try{
+           InsertCodeController.start(this.stage, this.userBoundary);
+        }catch (IOException e) {
             System.exit(1);
         }
     }
-
     @FXML
-    private void register(MouseEvent event) throws IOException{
+    private void register(MouseEvent event) {
 
-        this.userBoundary.register(this.emailTextField.getText(), this.usernameTextField.getText(), this.passwordTextField.getText());
+        String typeOfUser = null;
+        if(this.customerButton.isSelected()) typeOfUser = "customer";
+        else if(this.sellerButton.isSelected()) typeOfUser = "seller";
+        else if(this.bothButton.isSelected()) typeOfUser = "both";
 
+        if(typeOfUser == null)  ErrorPageController.displayErrorWindow("You should choose your role");
+        try{
+            this.userBoundary.register(this.usernameTextField.getText(), this.emailTextField.getText(), this.passwordTextField.getText(), typeOfUser);
+        } catch (PersistencyErrorException | CheckFailedException | SyntaxErrorException | GmailException e){
+            ErrorPageController.displayErrorWindow(e.getMessage());;
+        }
+        this.switchToInsertCodeScene();
     }
 
     @FXML
     private void goToStartPage(MouseEvent event) {
 
         try {
-            FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/GUI/Starting-Page.fxml"));
-            Parent root = fxmlloader.load();
-
-            StartingPageController controller = fxmlloader.getController();
-            this.userBoundary.setStartingPageController(controller);
-
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 1440, 768);
-            stage.setScene(scene);
-            stage.show();
-
+            StartingPageController startingPageController = new StartingPageController();
+            startingPageController.setUserBoundary(this.userBoundary);
+            startingPageController.start(this.stage);
         } catch (IOException e){
             System.exit(1);
         }
     }
+
+
+    public static void start(Stage myStage, UserLogInBoundary boundary) throws IOException{
+
+        FXMLLoader fxmlLoader = new FXMLLoader(RegistrationPageController.class.getResource("/org/application/gameshelfapp/GUI/Registration-Page.fxml"));
+        Parent root = fxmlLoader.load();
+
+        RegistrationPageController controller = fxmlLoader.getController();
+        controller.setUserLogInBoundary(boundary);
+        controller.setStage(myStage);
+        Scene scene = new Scene(root, 1440, 768);
+        myStage.setScene(scene);
+        myStage.show();
+    }
+
 }

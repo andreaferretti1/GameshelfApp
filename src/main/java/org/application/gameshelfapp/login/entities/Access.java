@@ -41,7 +41,7 @@ public class Access {
 
     public void encodePassword(){
         this.encoder.cryptPassword();
-        this.encodedPassword = this.getEncodedPassword();
+        this.encodedPassword = this.encoder.getEncryptedPassword();
         Arrays.fill(this.password.toCharArray(), '\0');
         this.password = null;
     }

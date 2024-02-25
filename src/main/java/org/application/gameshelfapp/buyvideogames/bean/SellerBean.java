@@ -4,12 +4,14 @@ public class SellerBean {
      private final String name;
      private final String email;
      private final int numberOfCopies;
+     private float price;
      private final String description;
 
-     public SellerBean(String name, String email, int copies, String description){
+     public SellerBean(String name, String email, int copies, float price, String description){
          this.name = name;
          this.email = email;
          this.numberOfCopies = copies;
+         this.price = price;
          this.description = description;
      }
 
@@ -28,4 +30,7 @@ public class SellerBean {
          return this.description;
     }
 
+    public float getPrice() {
+        return this.price;
+    }
 }

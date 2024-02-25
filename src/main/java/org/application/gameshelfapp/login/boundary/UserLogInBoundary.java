@@ -1,87 +1,48 @@
 package org.application.gameshelfapp.login.boundary;
 
-import org.application.gameshelfapp.StartingPageController;
-import org.application.gameshelfapp.login.RegistrationPageController;
 import org.application.gameshelfapp.login.bean.LogInBean;
 import org.application.gameshelfapp.login.bean.RegistrationBean;
+import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.controller.LogInController;
-import org.application.gameshelfapp.login.entities.TypeOfAccess;
-import org.application.gameshelfapp.login.exception.*;
-import org.application.gameshelfapp.login.graphiccontrollers.InsertCodeController;
-
-import java.io.IOException;
+import org.application.gameshelfapp.login.exception.CheckFailedException;
+import org.application.gameshelfapp.login.exception.GmailException;
+import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 
 public class UserLogInBoundary {
 
     private LogInBean logBean = null;
     private RegistrationBean regBean = null;
-
+    private UserBean usrBean = null;
     private final LogInController controller;
 
-    private StartingPageController startingPageController;
-    private RegistrationPageController registrationPageController;
-    private InsertCodeController insertCodeController;
-
-
-    public UserLogInBoundary(StartingPageController controller){
-        this.controller = new LogInController(this);
-        this.startingPageController = controller;
+    public UserLogInBoundary(){
+        this.controller = new LogInController();
     }
 
-    public void setStartingPageController(StartingPageController controller){
-        this.startingPageController = controller;
+    public void log(String email, String password) throws SyntaxErrorException, PersistencyErrorException, CheckFailedException {
+        this.logBean = new LogInBean(email, password);
+        this.controller.logIn(logBean);
+        this.usrBean = this.controller.getUser();
     }
 
-    public void setRegistrationPageController(RegistrationPageController controller){
-        this.registrationPageController = controller;
+    public void register(String username, String email, String password, String typeOfUser) throws SyntaxErrorException, PersistencyErrorException, CheckFailedException, GmailException {
+
+        this.regBean = new RegistrationBean(username, email, password, typeOfUser);
+        this.controller.registration(this.regBean);
+
     }
 
-    public void setInsertCodeController(InsertCodeController controller){
-        this.insertCodeController = controller;
+    public void checkCode(String code) throws NumberFormatException, CheckFailedException, PersistencyErrorException{
+
+        int insertedCode = Integer.parseInt(code);
+        this.regBean.setCheckCode(insertedCode);
+        this.controller.checkCode(this.regBean);
+        this.usrBean = this.controller.getUser();
     }
 
-    public void log(String username, String email, String password){
-        try {
-            this.logBean = new LogInBean(username, email, password);
-            this.controller.logIn(logBean);
-            this.startingPageController.switchToHomePage();
-        } catch (SyntaxErrorEcxeption | PersistencyErrorException | PersistencyAccountException | CheckFailedException e) {
-            this.startingPageController.displayErrorWindow(e.getMessage());
-        }
-    }
-
-    public void register(String username, String email, String password, String typeOfUser) {
-        try {
-            this.regBean = new RegistrationBean(username, email, password, typeOfUser);
-            this.controller.registration(this.regBean);
-            this.registrationPageController.switchToInsertCodeScene();
-        } catch (PersistencyErrorException | CheckFailedException | SyntaxErrorEcxeption | GmailException e) {
-            this.registrationPageController.displayErrorWindow(e.getMessage());
-        }
-    }
-
-    public void checkCode(String code) {
-        try{
-            int insertedCode = Integer.parseInt(code);
-            this.regBean.setCheckCode(insertedCode);
-            this.controller.checkCode(this.regBean);
-        } catch(NumberFormatException | CheckFailedException | PersistencyErrorException e){
-            this.insertCodeController.displayErrorWindow(e.getMessage());
-        }
-    }
-
-    public void goToHomePage(TypeOfAccess type){
-
-        switch(type){
-            case TypeOfAccess.LOGIN:
-                this.startingPageController.switchToHomePage();
-                break;
-
-            case TypeOfAccess.REGISTRATION:
-                this.insertCodeController.switchToHomePage();
-                break;
-
-        }
+    public UserBean getUserBean(){
+        return this.usrBean;
     }
 
 }

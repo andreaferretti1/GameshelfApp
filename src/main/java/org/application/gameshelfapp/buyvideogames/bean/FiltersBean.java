@@ -1,28 +1,21 @@
 package org.application.gameshelfapp.buyvideogames.bean;
 
+import org.application.gameshelfapp.buyvideogames.exception.FiltersException;
+
 public class FiltersBean {
 
-    private  String name;
-    private  String console;
-    private  String online;
-    private  String category;
+    private  final String name;
+    private  final String console;
+    private  final String online;
+    private  final String category;
 
-    public void setName(String name) {
+    public FiltersBean(String name, String console, String online, String category) throws FiltersException {
+        if(name.isEmpty() || console == null || online == null || category == null) throw new FiltersException("You should insert all the filters");
         this.name = name;
-    }
-
-    public void setConsole(String console) {
         this.console = console;
-    }
-
-    public void setOnline(String online) {
         this.online = online;
-    }
-
-    public void setCategory(String category) {
         this.category = category;
     }
-
     public String getName() {
         return this.name;
     }
