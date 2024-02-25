@@ -147,17 +147,15 @@ public class ShoppingCartPageController implements Initializable{
 
                 deleteButton.setOnMouseClicked(event -> {
                     TableRow<VideogameBean> row = getTableRow();
-                    if(row != null){
-                        ObservableList<Node> cells = row.getChildrenUnmodifiable();
-                        VideogameBean gameInRow = row.getItem();
-                        TextField copies = (TextField) cells.get(5);
+                    ObservableList<Node> cells = row.getChildrenUnmodifiable();
+                    VideogameBean gameInRow = row.getItem();
+                    TextField copies = (TextField) cells.get(5);
 
-                        try {
-                            ShoppingCartPageController.this.customerBoundary.removeCopiesFromCart(gameInRow.getId(), copies.getText());
-                            gamesToShow.setAll(ShoppingCartPageController.this.customerBoundary.getShoppingCartBean().getItems());
-                        } catch (SyntaxErrorException | CopiesException e) {
-                            ErrorPageController.displayErrorWindow(e.getMessage());
-                        }
+                    try {
+                        ShoppingCartPageController.this.customerBoundary.removeCopiesFromCart(gameInRow.getId(), copies.getText());
+                        gamesToShow.setAll(ShoppingCartPageController.this.customerBoundary.getShoppingCartBean().getItems());
+                    } catch (SyntaxErrorException | CopiesException e) {
+                        ErrorPageController.displayErrorWindow(e.getMessage());
                     }
                 });
             }

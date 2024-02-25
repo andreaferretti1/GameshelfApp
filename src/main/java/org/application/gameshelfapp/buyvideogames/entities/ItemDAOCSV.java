@@ -19,7 +19,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class ItemDAOCSV implements ItemDAO {
 
-    private static final String TEMP_FIlE = "temp_sale.csv";
+    private static final String TEMP_FILE = "temp_sale.csv";
     private String filename;
     private File fd;
     private final Lock lock;
@@ -80,7 +80,7 @@ public class ItemDAOCSV implements ItemDAO {
         gameToSave[VideogamesOnSaleAttributes.COPIES.ordinal()] = game.getOwnerCopies().toString();
         gameToSave[VideogamesOnSaleAttributes.PRICE.ordinal()] = String.valueOf(game.getOwnerPrice());
 
-        File tempFile = new File(TEMP_FIlE);
+        File tempFile = new File(TEMP_FILE);
 
         this.lock.lock();
 
@@ -121,7 +121,7 @@ public class ItemDAOCSV implements ItemDAO {
         String gameName = game.getName();
         String sellerName = game.getOwnerName();
         int copies = game.getOwnerCopies();
-        File tempFile = new File(TEMP_FIlE);
+        File tempFile = new File(TEMP_FILE);
 
         this.lock.lock();
 
