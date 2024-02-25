@@ -40,7 +40,7 @@ public class BuyGamesController {
 
     public List<VideogameBean> searchVideogame(FiltersBean filtersBean) throws PersistencyErrorException, NoGamesFoundException{
 
-        Filters filters = new Filters(filtersBean.getName(), filtersBean.getConsole(), filtersBean.getOnline(), filtersBean.getCategory());
+        Filters filters = new Filters(filtersBean.getNameBean(), filtersBean.getConsoleBean(), filtersBean.getOnlineBean(), filtersBean.getCategoryBean());
 
         ItemDAO itemDao = this.factory.createItemDAO();
         try {

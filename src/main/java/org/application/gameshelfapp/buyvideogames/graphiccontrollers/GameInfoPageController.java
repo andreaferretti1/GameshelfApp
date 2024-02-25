@@ -11,7 +11,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.application.gameshelfapp.buyvideogames.bean.FiltersBean;
-import org.application.gameshelfapp.buyvideogames.bean.SellerBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
 import org.application.gameshelfapp.buyvideogames.exception.CopiesException;
@@ -102,9 +101,9 @@ public class GameInfoPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.console.setText(this.filters.getConsole());
-        this.online.setText(this.filters.getOnline());
-        this.category.setText(this.filters.getCategory());
+        this.console.setText(this.filters.getConsoleBean());
+        this.online.setText(this.filters.getOnlineBean());
+        this.category.setText(this.filters.getCategoryBean());
 
         this.gameName.setText(this.gameBean.getName());
         this.sellerName.setText(this.gameBean.getSellerBean().getName());
