@@ -90,30 +90,24 @@ public class GamesFoundPageController implements Initializable {
         gameName.setCellValueFactory(new PropertyValueFactory<VideogameBean, String>("name"));
         gameCost.setCellValueFactory(cellData -> new SimpleStringProperty(Float.toString(cellData.getValue().getSellerBean().getPrice())));
 
-        seeGame.setCellFactory(param -> new TableCell<VideogameBean, String>(){
-            private final Button button = new Button("See description");
-            {
-                button.setPrefWidth(134);
-                button.setStyle("-fx-background-color:  #2E60E1; -fx-text-fill: white; -fx-background-radius: 60");
-                button.setOnMouseClicked(event -> {
-                    try {
-                        GameInfoPageController.seeVideogame(GamesFoundPageController.this.stage, GamesFoundPageController.this.customerBoundary, gamesList.get(getIndex()));
-                    } catch (IOException e) {
-                        ErrorPageController.displayErrorWindow("Couldn't access to videogame information");
-                    }
-                });
-            }
-
-            @Override
-            protected void updateItem(String s, boolean empty) {
-                super.updateItem(s, empty);
-                if(empty){
-                    setGraphic(null);
-                } else{
-                    setGraphic(button);
-                }
-            }
-        });
+        seeGame.setCellFactory( param -> new CustomTableCellButton(gamesToShow));
         gamesFound.setItems(gamesToShow);
+    }
+
+    private class CustomTableCellButton extends TableCell<VideogameBean, String>{
+        private final Button button;
+
+        private CustomTableCellButton(ObservableList<VideogameBean> gamesToShow){
+            button = new Button("See description");
+            button.setPrefWidth(134);
+            button.setStyle("-fx-background-color:  #2E60E1; -fx-text-fill: white; -fx-background-radius: 60");
+            button.setOnMouseClicked(event -> {
+                try {
+                    GameInfoPageController.seeVideogame(GamesFoundPageController.this.stage, GamesFoundPageController.this.customerBoundary, gamesToShow.get(getIndex()));
+                } catch (IOException e) {
+                    ErrorPageController.displayErrorWindow("Couldn't access to videogame information");
+                }
+            });
+        }
     }
 }
