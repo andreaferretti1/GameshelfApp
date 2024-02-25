@@ -1,4 +1,4 @@
-package org.application.gameshelfapp.buyvideogames.graphicControllers;
+package org.application.gameshelfapp.buyvideogames.graphiccontrollers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

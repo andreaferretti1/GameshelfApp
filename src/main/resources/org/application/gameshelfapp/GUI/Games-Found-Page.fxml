@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gameshelfapp.buyvideogames.graphicControllers.GamesFoundPageController">
+<AnchorPane prefHeight="768.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gameshelfapp.buyvideogames.graphiccontrollers.GamesFoundPageController">
    <children>
       <Region prefHeight="27.0" prefWidth="1440.0" style="-fx-background-color: #2E60E1;" />
       <Region layoutY="27.0" prefHeight="741.0" prefWidth="1440.0" style="-fx-background-color: #433f3f;" />

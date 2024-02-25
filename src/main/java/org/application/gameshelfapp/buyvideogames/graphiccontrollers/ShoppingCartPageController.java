@@ -1,4 +1,4 @@
-package org.application.gameshelfapp.buyvideogames.graphicControllers;
+package org.application.gameshelfapp.buyvideogames.graphiccontrollers;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -49,7 +49,6 @@ public class ShoppingCartPageController implements Initializable{
     private TableColumn<VideogameBean, VideogameBean> delete;
     @FXML
     private Label totalCost;
-
 
 
     public void setFormerPage(String page){
@@ -133,9 +132,9 @@ public class ShoppingCartPageController implements Initializable{
         copies.setCellValueFactory(cellData -> new SimpleStringProperty(Integer.toString(quantities.get(gamesInCart.indexOf(cellData.getValue())))));
 
         price.setCellValueFactory(cellData -> {
-          int copies = quantities.get(gamesInCart.indexOf(cellData.getValue()));
-          float totalPrice = cellData.getValue().getSellerBean().getPrice() * copies;
-          return new SimpleStringProperty(Float.toString(totalPrice));
+          int copiesinCart = quantities.get(gamesInCart.indexOf(cellData.getValue()));
+          float totalPrice = cellData.getValue().getSellerBean().getPrice() * copiesinCart;
+          return new SimpleStringProperty(Float.toString(totalPrice) + "€");
         });
 
         delete.setCellFactory((param) -> new TableCell<VideogameBean, VideogameBean>(){

@@ -1,4 +1,4 @@
-package org.application.gameshelfapp.buyvideogames.graphicControllers;
+package org.application.gameshelfapp.buyvideogames.graphiccontrollers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,7 +51,6 @@ public class GameInfoPageController implements Initializable {
     private Stage stage;
     private CustomerBoundary customerBoundary;
     private VideogameBean gameBean;
-    private SellerBean sellerInformation;
     private FiltersBean filters;
 
     private void setGameBean(VideogameBean gameBean){
@@ -59,10 +58,6 @@ public class GameInfoPageController implements Initializable {
     }
     private void setFilters(FiltersBean filters) {
         this.filters = filters;
-    }
-
-    private void setSellerInformation(SellerBean sellerInformation) {
-        this.sellerInformation = sellerInformation;
     }
 
     private void setStage(Stage stage) {

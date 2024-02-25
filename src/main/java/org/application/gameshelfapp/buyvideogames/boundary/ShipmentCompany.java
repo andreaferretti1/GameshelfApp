@@ -1,7 +1,7 @@
 package org.application.gameshelfapp.buyvideogames.boundary;
 
 public class ShipmentCompany {
-    public void confirmDelivery(String address){
-        return;
+    public String confirmDelivery(String address){
+        return "Confermata la consegna all'indirizzo: " + address;
     }
 }

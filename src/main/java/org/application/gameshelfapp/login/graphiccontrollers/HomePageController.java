@@ -7,9 +7,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
-import org.application.gameshelfapp.buyvideogames.graphicControllers.SearchPageController;
+import org.application.gameshelfapp.buyvideogames.graphiccontrollers.SearchPageController;
 import org.application.gameshelfapp.login.bean.UserBean;
-import org.application.gameshelfapp.login.boundary.UserLogInBoundary;
 
 
 import java.io.IOException;

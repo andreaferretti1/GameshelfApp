@@ -61,16 +61,16 @@ public class RegistrationPageController {
     @FXML
     private void register(MouseEvent event) {
 
-        String typeOfUser = null;
-        if(this.customerButton.isSelected()) typeOfUser = "customer";
-        else if(this.sellerButton.isSelected()) typeOfUser = "seller";
-        else if(this.bothButton.isSelected()) typeOfUser = "both";
+        String userType = null;
+        if(this.customerButton.isSelected()) userType = "customer";
+        else if(this.sellerButton.isSelected()) userType = "seller";
+        else if(this.bothButton.isSelected()) userType = "both";
 
-        if(typeOfUser == null)  ErrorPageController.displayErrorWindow("You should choose your role");
+        if(userType == null)  ErrorPageController.displayErrorWindow("You should choose your role");
         try{
-            this.userBoundary.register(this.usernameTextField.getText(), this.emailTextField.getText(), this.passwordTextField.getText(), typeOfUser);
+            this.userBoundary.register(this.usernameTextField.getText(), this.emailTextField.getText(), this.passwordTextField.getText(), userType);
         } catch (PersistencyErrorException | CheckFailedException | SyntaxErrorException | GmailException e){
-            ErrorPageController.displayErrorWindow(e.getMessage());;
+            ErrorPageController.displayErrorWindow(e.getMessage());
         }
         this.switchToInsertCodeScene();
     }

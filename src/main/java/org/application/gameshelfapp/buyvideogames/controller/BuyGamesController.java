@@ -5,7 +5,6 @@ import org.application.gameshelfapp.buyvideogames.bean.FiltersBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.bean.SellerBean;
 import org.application.gameshelfapp.buyvideogames.boundary.Braintree;
-import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
 import org.application.gameshelfapp.buyvideogames.boundary.SellerBoundary;
 import org.application.gameshelfapp.buyvideogames.boundary.ShipmentCompany;
 import org.application.gameshelfapp.buyvideogames.entities.*;

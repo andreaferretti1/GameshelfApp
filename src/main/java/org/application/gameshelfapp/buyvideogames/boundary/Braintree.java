@@ -7,7 +7,7 @@ public class Braintree {
     private String transactionId;
     public void pay(float money, String userkey){
         SecureRandom random = new SecureRandom();
-        this.transactionId = String.valueOf(random.nextInt());
+        this.transactionId = userkey + String.valueOf(random.nextInt((int) money));
     }
 
     public void refund(){

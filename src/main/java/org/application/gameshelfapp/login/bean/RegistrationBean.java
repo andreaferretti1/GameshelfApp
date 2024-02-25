@@ -2,8 +2,6 @@ package org.application.gameshelfapp.login.bean;
 
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class RegistrationBean extends AccessBean{
 
