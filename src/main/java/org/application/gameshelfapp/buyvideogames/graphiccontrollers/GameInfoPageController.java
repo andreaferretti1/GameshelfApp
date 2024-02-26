@@ -106,9 +106,9 @@ public class GameInfoPageController implements Initializable {
         this.category.setText(this.filters.getCategoryBean());
 
         this.gameName.setText(this.gameBean.getName());
-        this.sellerName.setText(this.gameBean.getSellerBean().getName());
-        this.sellerEmail.setText(this.gameBean.getSellerBean().getEmail());
-        this.description.setText(this.gameBean.getSellerBean().getDescription());
+        this.sellerName.setText(this.gameBean.getOwnerBean().getNameBean());
+        this.sellerEmail.setText(this.gameBean.getOwnerBean().getEmailBean());
+        this.description.setText(this.gameBean.getOwnerBean().getSpecificAttributeBean());
 
     }
 }

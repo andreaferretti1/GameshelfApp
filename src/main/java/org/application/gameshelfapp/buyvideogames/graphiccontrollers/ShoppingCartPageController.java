@@ -125,15 +125,15 @@ public class ShoppingCartPageController implements Initializable{
 
         gameName.setCellValueFactory(new PropertyValueFactory<VideogameBean, String>("name"));
 
-        sellerName.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getSellerBean().getPrice())));
+        sellerName.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getOwnerBean().getPriceBean())));
 
-        sellerEmail.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSellerBean().getEmail()));
+        sellerEmail.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOwnerBean().getEmailBean()));
 
         copies.setCellValueFactory(cellData -> new SimpleStringProperty(Integer.toString(quantities.get(gamesInCart.indexOf(cellData.getValue())))));
 
         price.setCellValueFactory(cellData -> {
           int copiesinCart = quantities.get(gamesInCart.indexOf(cellData.getValue()));
-          float totalPrice = cellData.getValue().getSellerBean().getPrice() * copiesinCart;
+          float totalPrice = cellData.getValue().getOwnerBean().getPriceBean() * copiesinCart;
           return new SimpleStringProperty(Float.toString(totalPrice) + "€");
         });
 

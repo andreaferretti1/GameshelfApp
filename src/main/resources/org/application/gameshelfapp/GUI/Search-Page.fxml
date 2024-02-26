@@ -31,7 +31,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <VBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="741.0" prefWidth="100.0" style="-fx-background-color: #433f3f;" AnchorPane.leftAnchor="1340.0" AnchorPane.topAnchor="27.0">
+      <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="741.0" prefWidth="100.0" style="-fx-background-color: #433f3f;" AnchorPane.leftAnchor="1340.0" AnchorPane.topAnchor="27.0">
          <children>
             <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
                <cursor>
@@ -45,7 +45,7 @@
                   </ImageView>
                </graphic>
                <VBox.margin>
-                  <Insets top="116.0" />
+                  <Insets />
                </VBox.margin>
             </Button>
             <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#goToHomePage" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">

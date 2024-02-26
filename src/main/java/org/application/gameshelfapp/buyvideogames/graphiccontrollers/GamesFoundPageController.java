@@ -88,7 +88,7 @@ public class GamesFoundPageController implements Initializable {
         ObservableList<VideogameBean> gamesToShow = FXCollections.observableList(gamesList);
 
         gameName.setCellValueFactory(new PropertyValueFactory<VideogameBean, String>("name"));
-        gameCost.setCellValueFactory(cellData -> new SimpleStringProperty(Float.toString(cellData.getValue().getSellerBean().getPrice())));
+        gameCost.setCellValueFactory(cellData -> new SimpleStringProperty(Float.toString(cellData.getValue().getOwnerBean().getPriceBean())));
 
         seeGame.setCellFactory( param -> new CustomTableCellButton(gamesToShow));
         gamesFound.setItems(gamesToShow);

@@ -3,7 +3,7 @@ package org.application.gameshelfapp.buyvideogames.bean;
 public class VideogameBean {
     private String name;
     private String id;
-    private SellerBean sellerBean;
+    private OwnerBean ownerBean;
 
     public VideogameBean(String name, String id){
         this.name = name;
@@ -21,11 +21,11 @@ public class VideogameBean {
         return this.id;
     }
 
-    public void setSellerBean(SellerBean sellerBean) {
-        this.sellerBean = sellerBean;
+    public void setOwnerBean(OwnerBean ownerBean) {
+        this.ownerBean = ownerBean;
     }
 
-    public SellerBean getSellerBean() {
-        return this.sellerBean;
+    public OwnerBean getOwnerBean() {
+        return this.ownerBean;
     }
 }

@@ -55,7 +55,7 @@ public class BuyGamesController {
             String name = videogame.getName();
             String id = videogame.getId();
             VideogameBean gameBean = new VideogameBean(name, id);
-            gameBean.setSellerBean(new SellerBean(videogame.getOwnerName(), videogame.getOwnerEmail(), videogame.getOwnerCopies(), videogame.getOwnerPrice(), videogame.getSellerDescription()));
+            gameBean.setOwnerBean(new SellerBean(videogame.getOwnerName(), videogame.getOwnerEmail(), videogame.getOwnerCopies(), videogame.getOwnerPrice(), videogame.getSellerDescription()));
         }
         return gameBeans;
     }
