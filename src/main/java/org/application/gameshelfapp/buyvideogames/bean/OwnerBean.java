@@ -7,7 +7,7 @@ public abstract class OwnerBean {
     protected int numberOfCopiesBean;
     protected final float priceBean;
 
-    public OwnerBean(String nameBean, String emailBean, int numberOfCopiesBean, float priceBean){
+    protected OwnerBean(String nameBean, String emailBean, int numberOfCopiesBean, float priceBean){
         this.nameBean = nameBean;
         this.emailBean = emailBean;
         this.numberOfCopiesBean = numberOfCopiesBean;
