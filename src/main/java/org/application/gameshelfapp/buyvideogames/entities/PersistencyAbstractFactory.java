@@ -1,6 +1,7 @@
 package org.application.gameshelfapp.buyvideogames.entities;
 
 import org.application.gameshelfapp.login.entities.AccessDAO;
+import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -27,7 +28,7 @@ public abstract class PersistencyAbstractFactory {
             }
         }
 
-        public abstract ItemDAO createItemDAO();
-        public abstract CatalogueDAO createCatalogueDAO();
-        public abstract AccessDAO createAccessDAO();
+        public abstract ItemDAO createItemDAO() throws PersistencyErrorException;
+        public abstract CatalogueDAO createCatalogueDAO() throws PersistencyErrorException;
+        public abstract AccessDAO createAccessDAO() throws PersistencyErrorException;
 }

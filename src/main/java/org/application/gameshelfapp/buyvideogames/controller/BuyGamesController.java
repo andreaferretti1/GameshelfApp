@@ -76,7 +76,7 @@ public class BuyGamesController {
         this.credentials = new Credentials(credentialsBean.getTypeOfPaymentBean(), credentialsBean.getPaymentKeyBean(), credentialsBean.getAddressBean());
     }
 
-    public void sendMoney() throws RefundException, GameSoldOutException, GmailException {
+    public void sendMoney() throws RefundException, GameSoldOutException, GmailException, PersistencyErrorException {
         Braintree braintree = new Braintree();
 
         GoogleBoundary googleBoundary = new GoogleBoundary();
@@ -134,10 +134,10 @@ public class BuyGamesController {
         }
 
         assert gameToSend != null;
-        CatalogueDAO catalogueDAO = this.factory.createCatalogueDAO();
-        ItemDAO itemDAO = this.factory.createItemDAO();
 
         try{
+            CatalogueDAO catalogueDAO = this.factory.createCatalogueDAO();
+            ItemDAO itemDAO = this.factory.createItemDAO();
             catalogueDAO.addVideogame(gameToSend.getOwnerName(), gameToSend, gameToSend.getOwnerCopies());
             itemDAO.updateSale(id);
             shipmentCompany.confirmDelivery(gameToSend.getCustomerAddress());

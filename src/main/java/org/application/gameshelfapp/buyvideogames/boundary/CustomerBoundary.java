@@ -55,12 +55,12 @@ public class CustomerBoundary {
     }
 
 
-    public void insertCredentials(String typeOfCard, String paymentKey, String address) throws RefundException, GameSoldOutException, GmailException, SyntaxErrorException {
+    public void insertCredentials(String typeOfCard, String paymentKey, String address) throws RefundException, GameSoldOutException, GmailException, SyntaxErrorException, PersistencyErrorException {
         this.buyGamesController.insertCredentials(new CredentialsBean(typeOfCard, paymentKey, address));
         this.pay();
     }
 
-    private void pay() throws RefundException, GameSoldOutException, GmailException {
+    private void pay() throws RefundException, GameSoldOutException, GmailException, PersistencyErrorException {
         this.buyGamesController.sendMoney();
     }
 

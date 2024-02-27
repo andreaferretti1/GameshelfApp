@@ -64,7 +64,7 @@ public class StartingPageController extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, PersistencyErrorException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/GUI/Starting-Page.fxml"));
         Parent root = fxmlLoader.load();

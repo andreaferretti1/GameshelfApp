@@ -10,6 +10,7 @@ import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.exception.GmailException;
+import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 
@@ -36,7 +37,7 @@ public class CredentialsPageController {
     private void insertCredentials(){
         try {
             this.customerBoundary.insertCredentials(typeOfCard.getText(), paymentKey.getText(), address.getText());
-        } catch (SyntaxErrorException | RefundException | GameSoldOutException | GmailException e) {
+        } catch (SyntaxErrorException | RefundException | GameSoldOutException | GmailException | PersistencyErrorException e) {
             ErrorPageController.displayErrorWindow(e.getMessage());
         }
     }

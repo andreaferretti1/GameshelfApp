@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
     @Test
-    void logInWithIncorrectPassword(){
+    void logInWithIncorrectPassword() throws PersistencyErrorException {
 
 
         UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
@@ -43,13 +43,13 @@ import static org.junit.jupiter.api.Assertions.*;
     }
 
     @Test
-    void logInWithIncorrectEmail(){
+    void logInWithIncorrectEmail() throws PersistencyErrorException {
         UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
         assertThrows(CheckFailedException.class, () -> userLogInBoundary.log("aaaa.fdfdf@gmail.com", "ciao"));
     }
 
     @Test
-    void logInWrongEmailSyntax(){
+    void logInWrongEmailSyntax() throws PersistencyErrorException {
 
         UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
         assertThrows(SyntaxErrorException.class, () -> userLogInBoundary.log("email@examplecom", null));

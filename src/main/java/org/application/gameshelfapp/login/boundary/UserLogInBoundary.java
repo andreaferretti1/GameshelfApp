@@ -16,7 +16,7 @@ public class UserLogInBoundary {
     private UserBean usrBean = null;
     private final LogInController controller;
 
-    public UserLogInBoundary(){
+    public UserLogInBoundary() throws PersistencyErrorException{
         this.controller = new LogInController();
     }
 

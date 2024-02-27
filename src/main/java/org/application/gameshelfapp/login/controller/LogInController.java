@@ -21,7 +21,7 @@ public class LogInController {
     PersistencyAbstractFactory factory;
     private AccessDAO accessDAO;
 
-    public LogInController(){
+    public LogInController() throws PersistencyErrorException{
 
         this.factory = PersistencyAbstractFactory.getFactory();
         this.accessDAO = this.factory.createAccessDAO();

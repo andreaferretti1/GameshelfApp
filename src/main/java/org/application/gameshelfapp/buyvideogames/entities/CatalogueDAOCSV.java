@@ -8,6 +8,7 @@ import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
+import java.util.Properties;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -17,14 +18,21 @@ public class CatalogueDAOCSV implements CatalogueDAO {
 
     private static final String TEMP_FILE = "temp_catalogue.csv";
     private static final String SAVE_ERROR = "Couldn't save videogame";
-    private final String filename;
-    private final File fd;
+    private final File fdCatalogue;
     private final Lock lock;
 
-    public CatalogueDAOCSV() {
-        this.filename = "src/main/resources/org/application/gameshelfapp/persistency/catalogue.csv";
-        this.fd = new File(this.filename);
-        this.lock = new ReentrantLock();
+    public CatalogueDAOCSV() throws PersistencyErrorException{
+        try(FileInputStream in = new FileInputStream("/src/main/resources/org/application/gameshelfapp/configuration/configuration.properties")){
+            Properties properties = new Properties();
+
+            properties.load(in);
+            String s = properties.getProperty("CSV_CATALOGUE");
+
+            this.fdCatalogue = new File(s);
+            this.lock = new ReentrantLock();
+        } catch(IOException e){
+            throw new PersistencyErrorException("Couldn't access to catalogue");
+        }
     }
 
     @Override
@@ -40,7 +48,7 @@ public class CatalogueDAOCSV implements CatalogueDAO {
         this.lock.lock();
 
         try (CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(tempFile)));
-             CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)));
+             CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fdCatalogue)));
              FileChannel channel = new FileOutputStream(new File(TEMP_FILE)).getChannel()){
 
             if(!tempFile.exists()) {
@@ -58,7 +66,7 @@ public class CatalogueDAOCSV implements CatalogueDAO {
             }
 
             csvWriter.flush();
-            Files.move(tempFile.toPath(), this.fd.toPath(), REPLACE_EXISTING);
+            Files.move(tempFile.toPath(), this.fdCatalogue.toPath(), REPLACE_EXISTING);
         } catch (IOException | CsvValidationException e) {
             throw new PersistencyErrorException(SAVE_ERROR);
         }finally{this.lock.unlock();}
@@ -70,7 +78,7 @@ public class CatalogueDAOCSV implements CatalogueDAO {
         File tempFile = new File(TEMP_FILE);
 
         this.lock.lock();
-        try (CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)));
+        try (CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fdCatalogue)));
              CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(tempFile)));
              FileChannel channel = new FileOutputStream(tempFile).getChannel()){
 
@@ -92,7 +100,7 @@ public class CatalogueDAOCSV implements CatalogueDAO {
                 csvWriter.writeNext(myRecord);
             }
             csvWriter.flush();
-            Files.move(tempFile.toPath(), this.fd.toPath(), REPLACE_EXISTING);
+            Files.move(tempFile.toPath(), this.fdCatalogue.toPath(), REPLACE_EXISTING);
         } catch (IOException e) {
             throw new PersistencyErrorException("Couldn't remove videogame from catalogue");
         } catch (CsvValidationException e) {

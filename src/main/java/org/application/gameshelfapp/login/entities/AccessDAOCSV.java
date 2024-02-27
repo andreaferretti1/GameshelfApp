@@ -6,6 +6,7 @@ import com.opencsv.exceptions.CsvValidationException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
 import java.io.*;
+import java.util.Properties;
 
 
 public class AccessDAOCSV implements AccessDAO{
@@ -13,11 +14,20 @@ public class AccessDAOCSV implements AccessDAO{
     private final String filename;
     private final File fd;
 
-    public AccessDAOCSV() {
+    public AccessDAOCSV() throws PersistencyErrorException{
 
-        this.filename = "src/main/resources/org/application/gameshelfapp/persistency/accounts.csv";
+        try(FileInputStream in = new FileInputStream("/src/main/resources/org/application/gameshelfapp/configuration/configuration.properties")){
+            Properties properties = new Properties();
 
-        this.fd = new File(filename);
+            properties.load(in);
+            String s = properties.getProperty("CSV_ACCOUNTS");
+
+            this.filename = s;
+
+            this.fd = new File(this.filename);
+        } catch(IOException e){
+            throw new PersistencyErrorException("Couldn't access to accounts");
+        }
     }
 
     @Override
