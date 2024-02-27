@@ -10,6 +10,7 @@ import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -31,6 +32,7 @@ public class ItemDAOCSV implements ItemDAO {
 
     @Override
     public List<Videogame> getVideogamesForSale(Filters filters) throws PersistencyErrorException, NoGamesFoundException {
+         this.fd = new File("/org/application/gameshelfapp/persistency/videogames_on_sale.csv");
          List<Videogame> gamesFound = new ArrayList<Videogame>();
          String[] myRecord = null;
 
@@ -67,6 +69,7 @@ public class ItemDAOCSV implements ItemDAO {
 
     @Override
     public void addGameForSale(Videogame game, Filters filters) throws PersistencyErrorException{
+        this.fd = new File("/org/application/gameshelfapp/persistency/videogames_on_sale.csv");
         String[] myRecord = null;
         String[] gameToSave = new String[10];
         gameToSave[VideogamesOnSaleAttributes.GAMEID.ordinal()] = game.getId();
@@ -115,7 +118,7 @@ public class ItemDAOCSV implements ItemDAO {
 
     @Override
     public void removeGameForSale(Videogame game) throws PersistencyErrorException, GameSoldOutException {
-
+        this.fd = new File("/org/application/gameshelfapp/persistency/videogames_on_sale.csv");
         boolean removed = false;
         String[] gameToDelete = null;
         String gameName = game.getName();
@@ -127,8 +130,7 @@ public class ItemDAOCSV implements ItemDAO {
 
 
         try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)));
-            CSVWriter csvWriter= new CSVWriter(new BufferedWriter(new FileWriter(tempFile)));
-            FileChannel channel = new FileOutputStream(tempFile).getChannel()){
+            CSVWriter csvWriter= new CSVWriter(new BufferedWriter(new FileWriter(tempFile)));){
             if(!tempFile.exists()) {
                 boolean created = tempFile.createNewFile();
                 if(!created) throw new PersistencyErrorException("Couldn't remove game for sale");
@@ -139,17 +141,19 @@ public class ItemDAOCSV implements ItemDAO {
                     int difference = Integer.parseInt(gameToDelete[VideogamesOnSaleAttributes.COPIES.ordinal()]) - copies;
                     if(difference > 0){
                         gameToDelete[VideogamesOnSaleAttributes.COPIES.ordinal()] = String.valueOf(difference);
-                        csvWriter.writeNext(gameToDelete);
                     }
                     removed = true;
                 }
+                csvWriter.writeNext(gameToDelete);
             }
+            Files.move(tempFile.toPath(), this.fd.toPath(), REPLACE_EXISTING);
 
         }catch(IOException | CsvValidationException e){
             throw new PersistencyErrorException("Couldn't remove videogame for sale");
         }finally{
             this.lock.unlock();
         }
+
 
         if(!removed){
             throw new GameSoldOutException("Videogame is sold out");
@@ -158,8 +162,9 @@ public class ItemDAOCSV implements ItemDAO {
     }
 
     @Override
-    public void saveSale(User user, Videogame game, int copies, String address) throws PersistencyErrorException{
-        String[] gameSold = new String[7];
+    public void saveSale(User user, Videogame game, int copies, float price, String address) throws PersistencyErrorException{
+        this.fd = new File("/org/application/gameshelfapp/persistency/videogames_sold.csv");
+        String[] gameSold = new String[9];
         gameSold[VideogamesSoldAttributes.CUSTOMERUSERNAME.ordinal()] = user.getUsername();
         gameSold[VideogamesSoldAttributes.SELLERUSERNAME.ordinal()] = game.getOwnerName();
         gameSold[VideogamesSoldAttributes.CUSTOMERADDRESS.ordinal()] = address;
@@ -167,24 +172,50 @@ public class ItemDAOCSV implements ItemDAO {
         gameSold[VideogamesSoldAttributes.GAMENAME.ordinal()] = game.getOwnerName();
         gameSold[VideogamesSoldAttributes.GAMEID.ordinal()] = game.getId();
         gameSold[VideogamesSoldAttributes.COPIES.ordinal()] = String.valueOf(copies);
+        gameSold[VideogamesSoldAttributes.PRICE.ordinal()] = String.valueOf(price);
+        gameSold[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()] = "to confirm";
 
         try(CSVWriter cvsWriter = new CSVWriter(new BufferedWriter(new FileWriter(this.fd, true)))){
             cvsWriter.writeNext(gameSold);
         }catch(IOException e){
             throw new PersistencyErrorException("Couldn't save sale");
         }
+    }
 
+    @Override
+    public void updateSale(String id) throws PersistencyErrorException {
+        this.fd = new File("/org/application/gameshelfapp/persistency/videogames_sold.csv");
+        File tempFile = new File(TEMP_FILE);
+        this.lock.lock();
+
+        try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)));
+            CSVWriter csvWriter= new CSVWriter(new BufferedWriter(new FileWriter(tempFile)));
+            ){
+            String[] record;
+            while((record = csvReader.readNext()) != null){
+                if(record[VideogamesSoldAttributes.GAMEID.ordinal()].equals(id)){
+                    record[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()] = "confirmed";
+                }
+
+                csvWriter.writeNext(record);
+            }
+            Files.move(tempFile.toPath(), this.fd.toPath(), REPLACE_EXISTING);
+
+        } catch(IOException | CsvValidationException e){
+            throw new PersistencyErrorException("Couldn't confirm delivery");
+        }
     }
 
     @Override
     public List<Videogame> getSales(String sellerName) throws PersistencyErrorException{
+        this.fd = new File("/org/application/gameshelfapp/persistency/videogames_sold.csv");
         List<Videogame> gamesSold = new ArrayList<Videogame>();
         String[] myRecord = null;
 
         try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)))){
             while((myRecord = csvReader.readNext()) != null){
-                if(myRecord[VideogamesSoldAttributes.SELLERUSERNAME.ordinal()].equals(sellerName)){
-                    Videogame game = getVideogameSold(myRecord);
+                if(myRecord[VideogamesSoldAttributes.SELLERUSERNAME.ordinal()].equals(sellerName) && myRecord[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()].equals("to confirm")){
+                    Videogame game = this.getVideogameSold(myRecord);
                     gamesSold.add(game);
                 }
             }
@@ -194,7 +225,7 @@ public class ItemDAOCSV implements ItemDAO {
         }
     }
 
-    private static Videogame getVideogameSold(String[] myRecord) {
+    private Videogame getVideogameSold(String[] myRecord) {
         String gameName = myRecord[VideogamesSoldAttributes.GAMENAME.ordinal()];
         String gameId = myRecord[VideogamesSoldAttributes.GAMEID.ordinal()];
         String customerName = myRecord[VideogamesSoldAttributes.CUSTOMERUSERNAME.ordinal()];
@@ -212,6 +243,6 @@ public class ItemDAOCSV implements ItemDAO {
     }
 
     private enum VideogamesSoldAttributes{
-        SELLERUSERNAME, CUSTOMERUSERNAME, CUSTOMERADDRESS, CUSTOMEREMAIL, GAMEID, GAMENAME, COPIES
+        SELLERUSERNAME, CUSTOMERUSERNAME, CUSTOMERADDRESS, CUSTOMEREMAIL, GAMEID, GAMENAME, COPIES, PRICE, STATE_OF_DELIVERY;
     }
 }

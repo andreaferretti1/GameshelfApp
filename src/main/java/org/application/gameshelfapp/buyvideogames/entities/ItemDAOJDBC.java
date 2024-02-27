@@ -1,5 +1,7 @@
 package org.application.gameshelfapp.buyvideogames.entities;
 
+import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+
 import java.util.List;
 
 public class ItemDAOJDBC implements ItemDAO {
@@ -20,7 +22,12 @@ public class ItemDAOJDBC implements ItemDAO {
     }
 
     @Override
-    public void saveSale(User user, Videogame game, int copies, String address) {
+    public void saveSale(User user, Videogame game, int copies, float price, String address) {
+
+    }
+
+    @Override
+    public void updateSale(String id) throws PersistencyErrorException {
 
     }
 

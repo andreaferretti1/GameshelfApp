@@ -92,7 +92,7 @@ public class BuyGamesController {
                 int quantity = quantitiesToBuy.get(i);
                 float amountToPay = temp.getOwnerPrice() * quantity;
                 braintree.pay(amountToPay, this.credentials.getPaymentKey());
-                itemDAO.saveSale(this.user, temp, quantity, this.credentials.getAddress());
+                itemDAO.saveSale(this.user, temp, quantity, amountToPay, this.credentials.getAddress());
                 itemDAO.removeGameForSale(temp);
                 String messageToSend = this.user.getUsername() + "bought" + quantity + "of" + temp.getName() + temp.getId() + "for" + amountToPay + ". His email address is" + this.user.getEmail();
                 googleBoundary.sendMail("Videogame bought", messageToSend, temp.getOwnerEmail());
@@ -135,9 +135,11 @@ public class BuyGamesController {
 
         assert gameToSend != null;
         CatalogueDAO catalogueDAO = this.factory.createCatalogueDAO();
+        ItemDAO itemDAO = this.factory.createItemDAO();
 
         try{
             catalogueDAO.addVideogame(gameToSend.getOwnerName(), gameToSend, gameToSend.getOwnerCopies());
+            itemDAO.updateSale(id);
             shipmentCompany.confirmDelivery(gameToSend.getCustomerAddress());
 
             String message = this.user.getUsername() + "has confirmed delivery of" + gameToSend.getOwnerName();
