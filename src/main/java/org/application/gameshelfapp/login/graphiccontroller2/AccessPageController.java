@@ -123,6 +123,7 @@ public class AccessPageController extends Application implements Initializable {
         ShoppingCartBean cartBean = this.customerBoundary.getShoppingCartBean();
         for(VideogameBean game: cartBean.getItems()){
             String lineToShow = game.getId() + " " + game.getName() + " " + game.getOwnerBean().getNameBean() + " " + game.getOwnerBean().getEmailBean() + " " + game.getOwnerBean().getNumberOfCopiesBean() + " " + game.getOwnerBean().getPriceBean() * game.getOwnerBean().getNumberOfCopiesBean() + "\n";
+            textArea.appendText(lineToShow);
         }
         textArea.appendText("Total price: " + cartBean.getTotalCost());
     }
