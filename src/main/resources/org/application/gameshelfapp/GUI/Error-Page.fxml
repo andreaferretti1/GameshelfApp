@@ -21,9 +21,9 @@
                   <Insets bottom="30.0" />
                </VBox.margin>
             </ImageView>
-            <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="JUSTIFY" textFill="#2e60e1">
+            <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="480.0" textFill="WHITE">
                <font>
-                  <Font size="21.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
          </children>

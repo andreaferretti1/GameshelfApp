@@ -28,7 +28,7 @@ public class ItemDAOCSV implements ItemDAO {
     public ItemDAOCSV() throws PersistencyErrorException{
         this.lock = new ReentrantLock();
 
-        try(FileInputStream in = new FileInputStream("/src/main/resources/org/application/gameshelfapp/configuration/configuration.properties")) {
+        try(FileInputStream in = new FileInputStream("src/main/resources/org/application/gameshelfapp/configuration/configuration.properties")) {
             Properties properties = new Properties();
 
             properties.load(in);
@@ -200,13 +200,13 @@ public class ItemDAOCSV implements ItemDAO {
         try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fdGamesSold)));
             CSVWriter csvWriter= new CSVWriter(new BufferedWriter(new FileWriter(tempFile)));
             ){
-            String[] record;
-            while((record = csvReader.readNext()) != null){
-                if(record[VideogamesSoldAttributes.GAMEID.ordinal()].equals(id)){
-                    record[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()] = "confirmed";
+            String[] myRecord;
+            while((myRecord = csvReader.readNext()) != null){
+                if(myRecord[VideogamesSoldAttributes.GAMEID.ordinal()].equals(id)){
+                    myRecord[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()] = "confirmed";
                 }
 
-                csvWriter.writeNext(record);
+                csvWriter.writeNext(myRecord);
             }
             Files.move(tempFile.toPath(), this.fdGamesSold.toPath(), REPLACE_EXISTING);
 

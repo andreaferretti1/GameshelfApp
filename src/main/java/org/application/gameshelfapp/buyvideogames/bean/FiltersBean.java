@@ -10,7 +10,9 @@ public class FiltersBean {
     private  final String categoryBean;
 
     public FiltersBean(String name, String console, String online, String category) throws FiltersException {
-        if(name.isEmpty() || console == null || online == null || category == null) throw new FiltersException("You should insert all the filters");
+        if(!console.equals("PlayStation") && !console.equals("XBox") && !console.equals("Pc")) throw new FiltersException("You should type Playstation, Xbox or Pc for console");
+        if(!online.equals("Online") && !online.equals("Offline")) throw new FiltersException("You should type Online or Offline");
+        if(!category.equals("Sport") && !category.equals("Shooting") && !category.equals("Adventure")) throw new FiltersException("You should specify whether videogame genre is Sport, Shooting or Adventure");
         this.nameBean = name;
         this.consoleBean = console;
         this.onlineBean = online;

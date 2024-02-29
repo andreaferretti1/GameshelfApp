@@ -22,4 +22,6 @@ module org.application.gameshelfapp {
     opens org.application.gameshelfapp.login.graphiccontrollers to javafx.fxml;
     exports org.application.gameshelfapp.buyvideogames.graphiccontrollers;
     opens org.application.gameshelfapp.buyvideogames.graphiccontrollers to javafx.fxml;
+    exports org.application.gameshelfapp.login.graphiccontroller2;
+    opens org.application.gameshelfapp.login.graphiccontroller2 to javafx.fxml;
 }

@@ -27,8 +27,9 @@ public class SellerBoundary {
         return this.games;
     }
 
-    public void getGamesToSend() throws PersistencyErrorException {
+    public List<VideogameBean> getGamesToSend() throws PersistencyErrorException {
         games = this.buyGamesController.getSales();
+        return games;
     }
 
     public void sendGame(VideogameBean gameBean) throws ConfirmDeliveryException, GmailException {

@@ -82,7 +82,7 @@ public class RegistrationPageController {
             StartingPageController startingPageController = new StartingPageController();
             startingPageController.setUserBoundary(this.userBoundary);
             startingPageController.start(this.stage);
-        } catch (IOException e){
+        } catch (IOException | PersistencyErrorException e){
             System.exit(1);
         }
     }

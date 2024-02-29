@@ -16,7 +16,7 @@ public class AccessDAOCSV implements AccessDAO{
 
     public AccessDAOCSV() throws PersistencyErrorException{
 
-        try(FileInputStream in = new FileInputStream("/src/main/resources/org/application/gameshelfapp/configuration/configuration.properties")){
+        try(FileInputStream in = new FileInputStream("src/main/resources/org/application/gameshelfapp/configuration/configuration.properties")){
             Properties properties = new Properties();
 
             properties.load(in);

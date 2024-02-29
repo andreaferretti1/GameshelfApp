@@ -82,8 +82,7 @@ public class SalePageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         try {
-            this.sellerBoundary.getGamesToSend();
-            ObservableList<VideogameBean> gamesSold = FXCollections.observableList(this.sellerBoundary.getGames());
+            ObservableList<VideogameBean> gamesSold = FXCollections.observableList(this.sellerBoundary.getGamesToSend());
 
             gameName.setCellValueFactory(new PropertyValueFactory<VideogameBean, String>("name"));
             customerName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOwnerBean().getNameBean()));
