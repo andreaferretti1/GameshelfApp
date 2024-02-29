@@ -103,7 +103,7 @@ public class AccessPageController extends Application implements Initializable {
 
     private void showVideogames(List<VideogameBean> videogames){
         for(VideogameBean game: videogames){
-            String lineToShow = game.getId() + " " + game.getName() + " " + Float.toString(game.getOwnerBean().getPriceBean()) + "€\n";
+            String lineToShow = game.getId() + " " + game.getName() + " " + game.getOwnerBean().getPriceBean() + "€\n";
             textArea.appendText(lineToShow);
         }
     }
@@ -114,18 +114,17 @@ public class AccessPageController extends Application implements Initializable {
         OwnerBean seller = this.gameSelected.getOwnerBean();
         String textToShow = this.gameSelected.getName() + "\n" +
                 "Filters: " + filters.getConsoleBean() + " " + filters.getOnlineBean() + " " + filters.getCategoryBean() + "\n"
-                + "Price per copy: " + String.valueOf(seller.getPriceBean())+ "€ " + "Copies: " + seller.getNumberOfCopiesBean() + "\n"
+                + "Price per copy: " + seller.getPriceBean() + "€ " + "Copies: " + seller.getNumberOfCopiesBean() + "\n"
                 + seller.getSpecificAttributeBean() + "\n";
         textArea.appendText(textToShow);
     }
 
     private void showShoppingCart(){
         ShoppingCartBean cartBean = this.customerBoundary.getShoppingCartBean();
-        String lineToShow;
         for(VideogameBean game: cartBean.getItems()){
-            lineToShow = game.getId() + " " + game.getName() + " " + game.getOwnerBean().getNameBean() + " " + game.getOwnerBean().getEmailBean() + " " + String.valueOf(game.getOwnerBean().getNumberOfCopiesBean()) + " " + String.valueOf(game.getOwnerBean().getPriceBean() * game.getOwnerBean().getNumberOfCopiesBean()) + "\n";
+            String lineToShow = game.getId() + " " + game.getName() + " " + game.getOwnerBean().getNameBean() + " " + game.getOwnerBean().getEmailBean() + " " + game.getOwnerBean().getNumberOfCopiesBean() + " " + game.getOwnerBean().getPriceBean() * game.getOwnerBean().getNumberOfCopiesBean() + "\n";
         }
-        textArea.appendText("Total price: " + String.valueOf(cartBean.getTotalCost()));
+        textArea.appendText("Total price: " + cartBean.getTotalCost());
     }
 
     private void showSales(List<VideogameBean> gamesSold){
