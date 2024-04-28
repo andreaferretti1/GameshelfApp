@@ -46,7 +46,7 @@ public class SaleDAOCSV implements SaleDAO{
         gameSold[VideogamesSoldAttributes.GAMENAME.ordinal()] = sale.getObjectName();
         gameSold[VideogamesSoldAttributes.COPIES.ordinal()] = String.valueOf(sale.getCopies());
         gameSold[VideogamesSoldAttributes.PRICE.ordinal()] = String.valueOf(sale.getPrice());
-        gameSold[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()] = Sale.TO_CONFIRM;
+        gameSold[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()] = Sale.toConfirm;
         gameSold[VideogamesSoldAttributes.CUSTOMERADDRESS.ordinal()] = sale.getAddress();
         gameSold[VideogamesSoldAttributes.CUSTOMEREMAIL.ordinal()] = sale.getEmail();
 
@@ -64,7 +64,8 @@ public class SaleDAOCSV implements SaleDAO{
 
         try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)))){
             while((myRecord = csvReader.readNext()) != null){
-                Sale sale = new Sale(Integer.parseInt(myRecord[VideogamesSoldAttributes.GAMEID.ordinal()]), Integer.parseInt(myRecord[VideogamesSoldAttributes.COPIES.ordinal()]), Float.parseFloat(myRecord[VideogamesSoldAttributes.PRICE.ordinal()]), myRecord[VideogamesSoldAttributes.GAMENAME.ordinal()], myRecord[VideogamesSoldAttributes.CUSTOMEREMAIL.ordinal()], myRecord[VideogamesSoldAttributes.CUSTOMERADDRESS.ordinal()], myRecord[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()], myRecord[VideogamesSoldAttributes.PLATFORM.ordinal()]);
+                Sale sale = new Sale(Integer.parseInt(myRecord[VideogamesSoldAttributes.COPIES.ordinal()]), Float.parseFloat(myRecord[VideogamesSoldAttributes.PRICE.ordinal()]), myRecord[VideogamesSoldAttributes.GAMENAME.ordinal()], myRecord[VideogamesSoldAttributes.CUSTOMEREMAIL.ordinal()], myRecord[VideogamesSoldAttributes.CUSTOMERADDRESS.ordinal()], myRecord[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()], myRecord[VideogamesSoldAttributes.PLATFORM.ordinal()]);
+                sale.setId(Integer.parseInt(myRecord[VideogamesSoldAttributes.GAMEID.ordinal()]));
                 sales.add(sale);
             }
         }catch(IOException | CsvValidationException e){
@@ -84,7 +85,7 @@ public class SaleDAOCSV implements SaleDAO{
             String[] myRecord;
             while((myRecord = csvReader.readNext()) != null){
                 if(myRecord[VideogamesSoldAttributes.GAMEID.ordinal()].equals(String.valueOf(sale.getId()))){
-                    myRecord[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()] = Sale.CONFIRMED;
+                    myRecord[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()] = Sale.confirmed;
                 }
                 csvWriter.writeNext(myRecord);
             }

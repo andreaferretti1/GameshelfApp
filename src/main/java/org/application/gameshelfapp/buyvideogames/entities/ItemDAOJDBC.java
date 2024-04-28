@@ -65,7 +65,7 @@ public class ItemDAOJDBC implements ItemDAO {
             rs.close();
             if(copies < game.getCopies()) throw new GameSoldOutException("Game is sold out");
             copies = copies - game.getCopies();
-            query = "UPDATE ObjectOnSale SET Copies = " + String.valueOf(copies) + "WHERE Name = " + game.getName() + "AND Platform = " + filters.getPlatform() + ";";
+            query = "UPDATE ObjectOnSale SET Copies = " + copies + "WHERE Name = " + game.getName() + "AND Platform = " + filters.getPlatform() + ";";
             stmt.execute(query);
         } catch(SQLException e){
             throw new PersistencyErrorException("Couldn't remove game for sale");

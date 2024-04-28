@@ -27,7 +27,8 @@ public class SaleDAOJDBC implements SaleDAO{
              stmt.execute(query);
              rs = stmt.getResultSet();
              while(rs.next()){
-                 Sale sale = new Sale(rs.getInt("Id"), rs.getInt("Copies"), rs.getFloat("Price"), rs.getString("GameName"), rs.getString("UserEmail"), rs.getString("UserAddress"), rs.getString("State"), rs.getString("Platform"));
+                 Sale sale = new Sale(rs.getInt("Copies"), rs.getFloat("Price"), rs.getString("GameName"), rs.getString("UserEmail"), rs.getString("UserAddress"), rs.getString("State"), rs.getString("Platform"));
+                 sale.setId(rs.getInt("Id"));
                  sales.add(sale);
              }
              rs.close();
