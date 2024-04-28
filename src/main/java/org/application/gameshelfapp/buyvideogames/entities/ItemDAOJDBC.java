@@ -12,13 +12,10 @@ public class ItemDAOJDBC implements ItemDAO {
 
     @Override
     public List<Videogame> getVideogamesForSale(Filters filters) throws PersistencyErrorException, NoGamesFoundException {
-        Connection conn = null;
-        Statement stmt = null;
         String query = null;
         List<Videogame> videogamesFound = new ArrayList<Videogame>();
-        try{
-            conn = SingletonConnectionPool.getInstance().getConnection();
-            stmt = conn.createStatement();
+        try(Connection conn = SingletonConnectionPool.getInstance().getConnection();
+            Statement stmt = conn.createStatement()){
             if (filters.getName().equals("*")) {
                 query = "SELECT * FROM ObjectOnSale WHERE Type = " + filters.getCategory() + "AND Platform = " + filters.getPlatform() + " AND Copies > 0;";
             } else {
@@ -30,7 +27,7 @@ public class ItemDAOJDBC implements ItemDAO {
                 Videogame game = new Videogame(rs.getString("Name"), rs.getInt("Copies"), rs.getFloat("Price"), rs.getString("Description"));
                 videogamesFound.add(game);
             }
-            conn.close();
+            rs.close();
         } catch(SQLException e){
             throw new PersistencyErrorException("Couldn't find videogames");
         }
@@ -39,16 +36,15 @@ public class ItemDAOJDBC implements ItemDAO {
 
     @Override
     public void addGameForSale(Videogame game, Filters filters) throws PersistencyErrorException{
-            Connection conn = null;
-            Statement stmt = null;
-            try{
-                conn = SingletonConnectionPool.getInstance().getConnection();
-                stmt = conn.createStatement();
+
+            try(Connection conn = SingletonConnectionPool.getInstance().getConnection();
+                Statement stmt = conn.createStatement()){
+
                 String query = String.format("INSERT INTO ObjectOnSale (Name, Platform, Price, Description, Copies) VALUES (%s, %s, %f, %s, %d) ON DUPLICATE KEY UPDATE Copies = Copies + %d, Price = %f;", game.getName(), filters.getPlatform(), game.getPrice(), game.getDescription(), game.getCopies(),game.getCopies(), game.getPrice());
                 stmt.execute(query);
                 query =String.format( "INSERT IGNORE INTO Filtered (Name, Platform, Type) VALUES (%s, %s, %s);", game.getName(), filters.getPlatform(), filters.getCategory());
                 stmt.execute(query);
-                conn.close();
+
             } catch(SQLException e){
                 throw new PersistencyErrorException("Couldn't add videogame on sale");
             }
@@ -56,12 +52,9 @@ public class ItemDAOJDBC implements ItemDAO {
 
     @Override
     public void removeGameForSale(Videogame game, Filters filters) throws PersistencyErrorException, GameSoldOutException{
-        Connection conn = null;
-        Statement stmt = null;
         ResultSet rs = null;
-        try{
-            conn = SingletonConnectionPool.getInstance().getConnection();
-            stmt = conn.createStatement();
+        try(Connection conn = SingletonConnectionPool.getInstance().getConnection();
+            Statement stmt = conn.createStatement()){
             String query = "SELECT Copies FROM ObjectOnSale WHERE Name = " + game.getName() + "AND Platform = " + filters.getPlatform() + ";";
             stmt.execute(query);
             rs = stmt.getResultSet();
@@ -69,11 +62,11 @@ public class ItemDAOJDBC implements ItemDAO {
             while(rs.next()){
                 copies = rs.getInt("Copies");
             }
+            rs.close();
             if(copies < game.getCopies()) throw new GameSoldOutException("Game is sold out");
             copies = copies - game.getCopies();
             query = "UPDATE ObjectOnSale SET Copies = " + String.valueOf(copies) + "WHERE Name = " + game.getName() + "AND Platform = " + filters.getPlatform() + ";";
             stmt.execute(query);
-            conn.close();
         } catch(SQLException e){
             throw new PersistencyErrorException("Couldn't remove game for sale");
         }

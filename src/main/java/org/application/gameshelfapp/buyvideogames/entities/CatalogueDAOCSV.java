@@ -41,7 +41,7 @@ public class CatalogueDAOCSV implements CatalogueDAO {
         String gameName = game.getName();
         myRecord[CatalogueAttributes.USERNAME.ordinal()] = email;
         myRecord[CatalogueAttributes.GAMENAME.ordinal()] = gameName;
-        myRecord[CatalogueAttributes.COPIES.ordinal()] = String.valueOf(game.getOwner().getNumberOfCopies());
+        myRecord[CatalogueAttributes.COPIES.ordinal()] = String.valueOf(game.getCopies());
         File tempFile = new File(TEMP_FILE);
 
 
