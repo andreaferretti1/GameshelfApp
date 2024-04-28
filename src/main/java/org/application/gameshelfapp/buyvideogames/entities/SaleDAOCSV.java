@@ -18,13 +18,13 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 public class SaleDAOCSV implements SaleDAO{
 
     private Lock lock;
-    public static String TEMP_FILE = "items_sold.csv";
+    public static final String TEMP_FILE = "items_sold.csv";
     private final File fd;
     private long id;
     public SaleDAOCSV() throws PersistencyErrorException{
         this.lock = new ReentrantLock();
         this.id = this.getId();
-        try(FileInputStream in = new FileInputStream("src/main/resources/org/application/gameshelfapp/configuration/configuration.properties")) {
+        try(FileInputStream in = new FileInputStream(CSVFactory.PROPERTIES)) {
             Properties properties = new Properties();
 
             properties.load(in);
@@ -46,7 +46,7 @@ public class SaleDAOCSV implements SaleDAO{
         gameSold[VideogamesSoldAttributes.GAMENAME.ordinal()] = sale.getObjectName();
         gameSold[VideogamesSoldAttributes.COPIES.ordinal()] = String.valueOf(sale.getCopies());
         gameSold[VideogamesSoldAttributes.PRICE.ordinal()] = String.valueOf(sale.getPrice());
-        gameSold[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()] = Sale.toConfirm;
+        gameSold[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()] = Sale.TO_CONFIRM;
         gameSold[VideogamesSoldAttributes.CUSTOMERADDRESS.ordinal()] = sale.getAddress();
         gameSold[VideogamesSoldAttributes.CUSTOMEREMAIL.ordinal()] = sale.getEmail();
 
@@ -85,7 +85,7 @@ public class SaleDAOCSV implements SaleDAO{
             String[] myRecord;
             while((myRecord = csvReader.readNext()) != null){
                 if(myRecord[VideogamesSoldAttributes.GAMEID.ordinal()].equals(String.valueOf(sale.getId()))){
-                    myRecord[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()] = Sale.confirmed;
+                    myRecord[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()] = Sale.CONFIRMED;
                 }
                 csvWriter.writeNext(myRecord);
             }
@@ -96,7 +96,7 @@ public class SaleDAOCSV implements SaleDAO{
     }
 
     private long getId() throws PersistencyErrorException{
-        try(FileInputStream in = new FileInputStream("src/main/resources/org/application/gameshelfapp/configuration/configuration.properties")){
+        try(FileInputStream in = new FileInputStream(CSVFactory.PROPERTIES)){
             Properties properties = new Properties();
             properties.load(in);
             return Long.parseLong(properties.getProperty("ID"));
@@ -106,7 +106,7 @@ public class SaleDAOCSV implements SaleDAO{
     }
 
     private void saveId() throws PersistencyErrorException{
-        try(FileInputStream in = new FileInputStream("src/main/resources/org/application/gameshelfapp/configuration/configuration.properties")){
+        try(FileInputStream in = new FileInputStream(CSVFactory.PROPERTIES)){
             Properties properties = new Properties();
             properties.load(in);
             properties.setProperty("ID", Long.toString(this.id));

@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class SingletonConnectionPool {
 
-    public static SingletonConnectionPool instance = null;
+    private static SingletonConnectionPool instance = null;
 
     protected SingletonConnectionPool(){}
 

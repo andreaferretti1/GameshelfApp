@@ -27,7 +27,7 @@ public class ItemDAOCSV implements ItemDAO {
     public ItemDAOCSV() throws PersistencyErrorException{
         this.lock = new ReentrantLock();
 
-        try(FileInputStream in = new FileInputStream("src/main/resources/org/application/gameshelfapp/configuration/configuration.properties")) {
+        try(FileInputStream in = new FileInputStream(CSVFactory.PROPERTIES)) {
             Properties properties = new Properties();
 
             properties.load(in);

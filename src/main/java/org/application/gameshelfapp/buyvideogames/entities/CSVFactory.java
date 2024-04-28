@@ -6,6 +6,7 @@ import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
 public class CSVFactory extends PersistencyAbstractFactory{
 
+    public static final String PROPERTIES = "src/main/resources/org/application/gameshelfapp/configuration/configuration.properties";
     @Override
     public ItemDAO createItemDAO() throws PersistencyErrorException{
         return new ItemDAOCSV();

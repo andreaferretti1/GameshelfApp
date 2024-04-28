@@ -10,8 +10,8 @@ public class Sale {
     private String state;
     private String platform;
 
-    public static final String toConfirm = "To confirm";
-    public static final String confirmed = "Confirmed";
+    public static final String TO_CONFIRM = "To confirm";
+    public static final String CONFIRMED = "Confirmed";
     public Sale(int copies, float price, String objectName, String email, String address, String state, String platform) {
         this.copies = copies;
         this.price = price;

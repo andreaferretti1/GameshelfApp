@@ -3,6 +3,7 @@ package org.application.gameshelfapp.login.entities;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
+import org.application.gameshelfapp.buyvideogames.entities.CSVFactory;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
 import java.io.*;
@@ -15,7 +16,7 @@ public class AccessDAOCSV implements AccessDAO{
 
     public AccessDAOCSV() throws PersistencyErrorException{
 
-        try(FileInputStream in = new FileInputStream("src/main/resources/org/application/gameshelfapp/configuration/configuration.properties")){
+        try(FileInputStream in = new FileInputStream(CSVFactory.PROPERTIES)){
             Properties properties = new Properties();
 
             properties.load(in);
