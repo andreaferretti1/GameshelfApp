@@ -8,8 +8,6 @@ public class AccessThroughRegistration extends Access {
 
     private int codeGenerated;
 
-
-
     public AccessThroughRegistration(String username, String email, String password, String typeOfUser){
         super(username, email, password, typeOfUser);
     }
@@ -29,7 +27,7 @@ public class AccessThroughRegistration extends Access {
 
     public void checkAccount(Access access) throws CheckFailedException{
 
-        if (access == null) return;
+        if(access == null) return;
 
         String username = access.getUsername();
         String email = access.getEmail();
@@ -42,4 +40,7 @@ public class AccessThroughRegistration extends Access {
         }
     }
 
+    public int getCodeGenerated(){
+        return this.codeGenerated;
+    }
 }

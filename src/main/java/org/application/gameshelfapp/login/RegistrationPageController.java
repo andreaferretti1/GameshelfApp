@@ -11,10 +11,7 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import org.application.gameshelfapp.StartingPageController;
 import org.application.gameshelfapp.login.boundary.UserLogInBoundary;
-import org.application.gameshelfapp.login.exception.CheckFailedException;
-import org.application.gameshelfapp.login.exception.GmailException;
-import org.application.gameshelfapp.login.exception.PersistencyErrorException;
-import org.application.gameshelfapp.login.exception.SyntaxErrorException;
+import org.application.gameshelfapp.login.exception.*;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 import org.application.gameshelfapp.login.graphiccontrollers.InsertCodeController;
 
@@ -69,7 +66,8 @@ public class RegistrationPageController {
         if(userType == null)  ErrorPageController.displayErrorWindow("You should choose your role");
         try{
             this.userBoundary.register(this.usernameTextField.getText(), this.emailTextField.getText(), this.passwordTextField.getText(), userType);
-        } catch (PersistencyErrorException | CheckFailedException | SyntaxErrorException | GmailException e){
+        } catch (PersistencyErrorException | CheckFailedException | SyntaxErrorException | GmailException |
+                 NullPasswordException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
         }
         this.switchToInsertCodeScene();

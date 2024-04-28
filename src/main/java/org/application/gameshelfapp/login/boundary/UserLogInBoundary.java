@@ -4,10 +4,7 @@ import org.application.gameshelfapp.login.bean.LogInBean;
 import org.application.gameshelfapp.login.bean.RegistrationBean;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.controller.LogInController;
-import org.application.gameshelfapp.login.exception.CheckFailedException;
-import org.application.gameshelfapp.login.exception.GmailException;
-import org.application.gameshelfapp.login.exception.PersistencyErrorException;
-import org.application.gameshelfapp.login.exception.SyntaxErrorException;
+import org.application.gameshelfapp.login.exception.*;
 
 public class UserLogInBoundary {
 
@@ -20,15 +17,21 @@ public class UserLogInBoundary {
         this.controller = new LogInController();
     }
 
-    public void log(String email, String password) throws SyntaxErrorException, PersistencyErrorException, CheckFailedException {
-        this.logBean = new LogInBean(email, password);
+    public void log(String email, String password) throws SyntaxErrorException, PersistencyErrorException, CheckFailedException, NullPasswordException {
+        this.logBean = new LogInBean();
+        this.logBean.setEmailBean(email);
+        this.logBean.setPasswordBean(password);
         this.controller.logIn(logBean);
         this.usrBean = this.controller.getUser();
     }
 
-    public void register(String username, String email, String password, String typeOfUser) throws SyntaxErrorException, PersistencyErrorException, CheckFailedException, GmailException {
+    public void register(String username, String email, String password, String typeOfUser) throws SyntaxErrorException, PersistencyErrorException, CheckFailedException, GmailException, NullPasswordException {
 
-        this.regBean = new RegistrationBean(username, email, password, typeOfUser);
+        this.regBean = new RegistrationBean();
+        this.regBean.setUsernameBean(username);
+        this.regBean.setEmailBean(email);
+        this.regBean.setPasswordBean(password);
+        this.regBean.setTypeOfUser(typeOfUser);
         this.controller.registration(this.regBean);
 
     }
@@ -43,6 +46,10 @@ public class UserLogInBoundary {
 
     public UserBean getUserBean(){
         return this.usrBean;
+    }
+
+    public LogInController getController(){
+        return this.controller;
     }
 
 }

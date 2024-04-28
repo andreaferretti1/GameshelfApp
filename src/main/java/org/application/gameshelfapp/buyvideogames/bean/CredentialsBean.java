@@ -4,20 +4,22 @@ import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 
 public class CredentialsBean {
 
-    private final String typeOfPaymentBean;
-    private final String paymentKeyBean;
-    private final String addressBean;
-
-    public CredentialsBean(String typeOfPaymentBean, String paymentKeyBean, String address) throws SyntaxErrorException{
-
-        this.checkSyntax(typeOfPaymentBean, paymentKeyBean, address);
+    private String typeOfPaymentBean;
+    private String paymentKeyBean;
+    private String addressBean;
+    public void setTypeOfPaymentBean(String typeOfPaymentBean) throws SyntaxErrorException{
+        if(typeOfPaymentBean == null || typeOfPaymentBean.isEmpty()) throw new SyntaxErrorException("Insert type of payment");
         this.typeOfPaymentBean = typeOfPaymentBean;
-        this.paymentKeyBean = paymentKeyBean;
-        this.addressBean = address;
     }
 
-    private void checkSyntax(String typeOfPaymentBean, String paymentKeyBean, String addressBean) throws SyntaxErrorException {
-        if(typeOfPaymentBean.isEmpty() || paymentKeyBean.isEmpty() || addressBean.isEmpty()) throw new SyntaxErrorException("Please fill all the fields");
+    public void setPaymentKeyBean(String paymentKeyBean) throws SyntaxErrorException{
+        if(paymentKeyBean == null || paymentKeyBean.isEmpty()) throw new SyntaxErrorException("Insert payment key");
+        this.paymentKeyBean = paymentKeyBean;
+    }
+
+    public void setAddressBean(String addressBean) throws SyntaxErrorException{
+        if(addressBean == null || addressBean.isEmpty()) throw new SyntaxErrorException("Insert delivery address");
+        this.addressBean = addressBean;
     }
     public String getTypeOfPaymentBean() {
         return this.typeOfPaymentBean;

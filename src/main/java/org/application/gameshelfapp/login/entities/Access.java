@@ -1,6 +1,8 @@
 package org.application.gameshelfapp.login.entities;
 
 
+import org.application.gameshelfapp.login.exception.NullPasswordException;
+
 import java.util.Arrays;
 
 public class Access {
@@ -31,6 +33,10 @@ public class Access {
         this.encodedPassword = encodedPassword;
     }
 
+    public String getPassword(){
+        return this.password;
+    }
+
 
     public String getEncodedPassword(){
         return this.encodedPassword;
@@ -39,7 +45,7 @@ public class Access {
         return this.username;
     }
 
-    public void encodePassword(){
+    public void encodePassword() throws NullPasswordException {
         this.encoder.cryptPassword();
         this.encodedPassword = this.encoder.getEncryptedPassword();
         Arrays.fill(this.password.toCharArray(), '\0');

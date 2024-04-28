@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1440.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gameshelfapp.login.graphiccontroller2.AccessPageController">
+<AnchorPane prefHeight="768.0" prefWidth="1440.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gameshelfapp.login.graphiccontroller2.TerminalController">
    <children>
       <Region prefHeight="743.0" prefWidth="1440.0" style="-fx-background-color: #222222;" />
       <TextArea fx:id="textArea" editable="false" prefHeight="743.0" prefWidth="1440.0" style="-fx-background-color: #222222; -fx-control-inner-background: #222222; -fx-text-fill: white;">

@@ -3,54 +3,37 @@ package org.application.gameshelfapp.buyvideogames.entities;
 public class Videogame {
 
     private String name;
-    private String id;
-
-    Owner owner;
-    public Videogame(String name, String id, Owner owner){
+    private int copies;
+    private float price;
+    private String description;
+    public Videogame(String name, int copies, float price, String description){
         this.name = name;
-        this.id = id;
-        this.owner = owner;
+        this.copies = copies;
+        this.price = price;
+        this.description = description;
     }
-
+    public void setName(String name) {
+        this.name = name;
+    }
     public String getName() {
-        return name;
+        return this.name;
     }
-
-    public String getId(){
-        return this.id;
+    public int getCopies() {
+        return this.copies;
     }
-
-    public void createOwnSeller(String name, String email, int numberOfCopies, String description, float price){
-        this.owner = new Seller(name, email, numberOfCopies, description, price);
+    public void setCopies(int copies) {
+        this.copies = copies;
     }
-
-    public void createOwnCustomer(String name, String email, int numberOfCopies, String address){
-        this.owner = new Customer(name, email, numberOfCopies, address);
+    public float getPrice() {
+        return this.price;
     }
-
-    public String getOwnerName(){
-        return this.owner.getName();
+    public void setPrice(float price) {
+        this.price = price;
     }
-
-    public String getOwnerEmail(){
-       return this.owner.getEmail();
+    public String getDescription() {
+        return this.description;
     }
-
-    public Integer getOwnerCopies(){
-        return this.owner.getNumberOfCopies();
-    }
-    public void setOwnerCopies(int quantity){this.owner.setNumberOfCopies(quantity);}
-
-    public String getSellerDescription(){
-        return this.owner.getSpecificAttribute();
-    }
-
-
-    public float getOwnerPrice(){
-        return this.owner.getPrice();
-    }
-
-    public String getCustomerAddress(){
-        return this.owner.getSpecificAttribute();
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

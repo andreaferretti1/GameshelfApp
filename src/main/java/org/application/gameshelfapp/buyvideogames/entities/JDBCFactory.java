@@ -2,6 +2,7 @@ package org.application.gameshelfapp.buyvideogames.entities;
 
 import org.application.gameshelfapp.login.entities.AccessDAO;
 import org.application.gameshelfapp.login.entities.AccessDAOJDBC;
+import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
 public class JDBCFactory extends PersistencyAbstractFactory{
 
@@ -16,5 +17,10 @@ public class JDBCFactory extends PersistencyAbstractFactory{
     @Override
     public AccessDAO createAccessDAO(){
         return new AccessDAOJDBC();
+    }
+
+    @Override
+    public SaleDAO createSaleDAO() throws PersistencyErrorException {
+        return new SaleDAOJDBC();
     }
 }

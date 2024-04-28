@@ -1,5 +1,7 @@
 package org.application.gameshelfapp.login.entities;
 
+import org.application.gameshelfapp.login.exception.NullPasswordException;
+
 import java.security.NoSuchAlgorithmException;
 import java.security.MessageDigest;
 import java.util.Arrays;
@@ -14,7 +16,8 @@ public class SHA256Encoder implements Encoder{
     }
 
     @Override
-    public void cryptPassword(){
+    public void cryptPassword() throws NullPasswordException {
+        if(this.passwordToCrypt == null) throw new NullPasswordException("You should enter a password");
         try{
             MessageDigest m = MessageDigest.getInstance("SHA-256");
             m.update(passwordToCrypt.getBytes());
@@ -33,6 +36,10 @@ public class SHA256Encoder implements Encoder{
     @Override
     public String getEncryptedPassword(){
         return this.encryptedPassword;
+    }
+
+    public String getPasswordToCrypt(){
+        return this.passwordToCrypt;
     }
 
     @Override

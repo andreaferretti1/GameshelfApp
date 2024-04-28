@@ -31,4 +31,5 @@ public abstract class PersistencyAbstractFactory {
         public abstract ItemDAO createItemDAO() throws PersistencyErrorException;
         public abstract CatalogueDAO createCatalogueDAO() throws PersistencyErrorException;
         public abstract AccessDAO createAccessDAO() throws PersistencyErrorException;
+        public abstract SaleDAO createSaleDAO() throws PersistencyErrorException;
 }

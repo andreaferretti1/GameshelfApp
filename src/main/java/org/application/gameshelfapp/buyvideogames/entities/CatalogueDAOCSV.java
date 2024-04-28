@@ -36,12 +36,12 @@ public class CatalogueDAOCSV implements CatalogueDAO {
     }
 
     @Override
-    public void addVideogame(String username, Videogame game, int numberOfCopies) throws PersistencyErrorException {
+    public void addVideogame(String email, Videogame game, int numberOfCopies) throws PersistencyErrorException {
         String[] myRecord = new String[3];
         String gameName = game.getName();
-        myRecord[CatalogueAttributes.USERNAME.ordinal()] = username;
+        myRecord[CatalogueAttributes.USERNAME.ordinal()] = email;
         myRecord[CatalogueAttributes.GAMENAME.ordinal()] = gameName;
-        myRecord[CatalogueAttributes.COPIES.ordinal()] = game.getOwnerCopies().toString();
+        myRecord[CatalogueAttributes.COPIES.ordinal()] = String.valueOf(game.getOwner().getNumberOfCopies());
         File tempFile = new File(TEMP_FILE);
 
 
@@ -73,7 +73,7 @@ public class CatalogueDAOCSV implements CatalogueDAO {
     }
 
     @Override
-    public void removeVideogame(String username, Videogame game, int quantity) throws PersistencyErrorException {
+    public void removeVideogame(String username, Videogame game, int quantity) throws PersistencyErrorException {  //quantity rappresenta il numero di copie del videogioco possedute dal proprietario. Se è 0, allora rimuovo il videogioco
         String[] myRecord;
         File tempFile = new File(TEMP_FILE);
 
@@ -91,11 +91,9 @@ public class CatalogueDAOCSV implements CatalogueDAO {
             while ((myRecord = csvReader.readNext()) != null) {
 
                 if (myRecord[CatalogueAttributes.GAMENAME.ordinal()].equals(game.getName())) {
-                    int quantitiesInCatalogue = Integer.parseInt(myRecord[2]);
-                    int difference = quantitiesInCatalogue - quantity;
-                    if (difference > 0) {
-                        myRecord[CatalogueAttributes.COPIES.ordinal()] = String.valueOf(difference);
-                    }
+                    if (quantity > 0) {
+                        myRecord[CatalogueAttributes.COPIES.ordinal()] = String.valueOf(quantity);
+                    } else continue;
                 }
                 csvWriter.writeNext(myRecord);
             }

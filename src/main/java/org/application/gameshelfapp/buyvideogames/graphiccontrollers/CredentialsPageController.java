@@ -36,7 +36,7 @@ public class CredentialsPageController {
     @FXML
     private void insertCredentials(){
         try {
-            this.customerBoundary.insertCredentials(typeOfCard.getText(), paymentKey.getText(), address.getText());
+            this.customerBoundary.insertCredentialsAndPay(typeOfCard.getText(), paymentKey.getText(), address.getText());
         } catch (SyntaxErrorException | RefundException | GameSoldOutException | GmailException | PersistencyErrorException e) {
             ErrorPageController.displayErrorWindow(e.getMessage());
         }

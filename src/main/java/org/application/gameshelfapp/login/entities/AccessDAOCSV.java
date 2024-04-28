@@ -11,7 +11,6 @@ import java.util.Properties;
 
 public class AccessDAOCSV implements AccessDAO{
 
-    private final String filename;
     private final File fd;
 
     public AccessDAOCSV() throws PersistencyErrorException{
@@ -21,10 +20,7 @@ public class AccessDAOCSV implements AccessDAO{
 
             properties.load(in);
             String s = properties.getProperty("CSV_ACCOUNTS");
-
-            this.filename = s;
-
-            this.fd = new File(this.filename);
+            this.fd = new File(s);
         } catch(IOException e){
             throw new PersistencyErrorException("Couldn't access to accounts");
         }
@@ -52,7 +48,6 @@ public class AccessDAOCSV implements AccessDAO{
     }
 
 
-
     @Override
     public Access retrieveAccount(Access access) throws PersistencyErrorException{
         String[] instance;
@@ -63,13 +58,13 @@ public class AccessDAOCSV implements AccessDAO{
 
         try (CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)));){
              while((instance = csvReader.readNext()) != null){
-                    if(instance[AccountAttributes.EMAIL.ordinal()].equals(email) || instance[AccountAttributes.PASSWORD.ordinal()].equals(username)){
+                    if(instance[AccountAttributes.EMAIL.ordinal()].equals(email) || instance[AccountAttributes.USERNAME.ordinal()].equals(username)){
                         user = new Access(instance[AccountAttributes.USERNAME.ordinal()], instance[AccountAttributes.EMAIL.ordinal()], null, instance[AccountAttributes.TYPEOFUSER.ordinal()]);
                         user.setEncodedPassword(instance[AccountAttributes.PASSWORD.ordinal()]);
                     }
              }
         } catch(IOException | CsvValidationException e){
-            throw new PersistencyErrorException(e.getMessage());
+            throw new PersistencyErrorException("Couldn't retrieve account");
         }
         return user;
     }

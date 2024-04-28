@@ -19,4 +19,9 @@ public class CSVFactory extends PersistencyAbstractFactory{
     public AccessDAO createAccessDAO() throws PersistencyErrorException {
         return new AccessDAOCSV();
     }
+
+    @Override
+    public SaleDAO createSaleDAO() throws PersistencyErrorException {
+        return new SaleDAOCSV();
+    }
 }

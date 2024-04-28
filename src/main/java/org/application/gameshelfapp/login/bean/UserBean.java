@@ -2,13 +2,18 @@ package org.application.gameshelfapp.login.bean;
 
 public class UserBean {
 
-    private final String username;
-    private final String email;
-    private final String typeOfUser;
-
-    public UserBean(String username, String email, String typeOfUser){
+    private String username;
+    private String email;
+    private String typeOfUser;
+    public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setTypeOfUser(String typeOfUser) {
         this.typeOfUser = typeOfUser;
     }
 

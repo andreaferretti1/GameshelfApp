@@ -1,6 +1,7 @@
 package org.application.gameshelfapp.buyvideogames.boundary;
 
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
+import org.application.gameshelfapp.buyvideogames.bean.VideogamesFoundBean;
 import org.application.gameshelfapp.buyvideogames.controller.BuyGamesController;
 import org.application.gameshelfapp.buyvideogames.exception.ConfirmDeliveryException;
 import org.application.gameshelfapp.login.bean.UserBean;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class SellerBoundary {
 
-    List<VideogameBean> games;
+    private VideogamesFoundBean videogamesFoundBean;
     private final BuyGamesController buyGamesController;
     private final UserBean userBean;
     public SellerBoundary(BuyGamesController controller, UserBean userBean ){
@@ -23,13 +24,12 @@ public class SellerBoundary {
         return this.userBean;
     }
 
-    public List<VideogameBean> getGames() {
-        return this.games;
+    public VideogamesFoundBean getVideogamesFoundBean() {
+        return this.videogamesFoundBean;
     }
 
-    public List<VideogameBean> getGamesToSend() throws PersistencyErrorException {
-        games = this.buyGamesController.getSales();
-        return games;
+    public void getGamesToSend() throws PersistencyErrorException {
+        this.videogamesFoundBean = this.buyGamesController.getSales();
     }
 
     public void sendGame(VideogameBean gameBean) throws ConfirmDeliveryException, GmailException {

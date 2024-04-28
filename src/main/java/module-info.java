@@ -12,6 +12,7 @@ module org.application.gameshelfapp {
     requires org.apache.commons.codec;
     requires com.opencsv;
     requires jdk.httpserver;
+    requires java.sql;
 
 
     opens org.application.gameshelfapp to javafx.fxml;
