@@ -1,7 +1,6 @@
 package org.application.gameshelfapp.buyvideogames.entities;
 
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
-import org.application.gameshelfapp.buyvideogames.exception.NoGamesFoundException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
 import java.util.ArrayList;
@@ -11,12 +10,12 @@ import java.sql.*;
 public class ItemDAOJDBC implements ItemDAO {
 
     @Override
-    public List<Videogame> getVideogamesForSale(Filters filters) throws PersistencyErrorException, NoGamesFoundException {
+    public List<Videogame> getVideogamesForSale(Filters filters) throws PersistencyErrorException{
         String query = null;
         List<Videogame> videogamesFound = new ArrayList<Videogame>();
         try(Connection conn = SingletonConnectionPool.getInstance().getConnection();
             Statement stmt = conn.createStatement()){
-            if (filters.getName().equals("*")) {
+            if (filters.getName() == null) {
                 query = "SELECT * FROM ObjectOnSale WHERE Type = " + filters.getCategory() + "AND Platform = " + filters.getPlatform() + " AND Copies > 0;";
             } else {
                 query = "SELECT * FROM ObjectOnSale WHERE Type = " + filters.getCategory() + "AND Platform = " + filters.getPlatform() + "AND Name = " + filters.getName() + "AND Copies > 0;";

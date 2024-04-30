@@ -1,11 +1,7 @@
 package org.application.gameshelfapp.buyvideogames.controller;
 
-import org.application.gameshelfapp.buyvideogames.bean.CredentialsBean;
-import org.application.gameshelfapp.buyvideogames.bean.FiltersBean;
-import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
-import org.application.gameshelfapp.buyvideogames.bean.SellerBean;
+import org.application.gameshelfapp.buyvideogames.bean.*;
 import org.application.gameshelfapp.buyvideogames.boundary.Braintree;
-import org.application.gameshelfapp.buyvideogames.boundary.SellerBoundary;
 import org.application.gameshelfapp.buyvideogames.boundary.ShipmentCompany;
 import org.application.gameshelfapp.buyvideogames.entities.*;
 import org.application.gameshelfapp.buyvideogames.exception.*;
@@ -14,91 +10,47 @@ import org.application.gameshelfapp.login.boundary.GoogleBoundary;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 public class BuyGamesController {
-    private final User user;
-    private ShoppingCart shoppingCart;
-    private List<Videogame> gameList;
-
-    private Credentials credentials;
-
-    private PersistencyAbstractFactory factory;
-
-    public BuyGamesController(UserBean userBean){
-        this.user = new User(userBean.getUsername(), userBean.getEmail(), userBean.getTypeOfUser());
-        if(user.getTypeOfUser().equals("customer")){
-            this.shoppingCart = new ShoppingCart();
-        }
-        else{
-            new SellerBoundary(this, userBean);
-        }
-
+    public BuyGamesController(){
     }
 
-    public List<VideogameBean> searchVideogame(FiltersBean filtersBean) throws PersistencyErrorException, NoGamesFoundException{
+    public VideogamesFoundBean searchVideogame(FiltersBean filtersBean) throws PersistencyErrorException{
 
-        Filters filters = new Filters(filtersBean.getNameBean(), filtersBean.getConsoleBean(), filtersBean.getOnlineBean(), filtersBean.getCategoryBean());
+        Filters filters = new Filters(filtersBean.getNameBean(), filtersBean.getConsoleBean(), filtersBean.getCategoryBean());
 
-        ItemDAO itemDao = this.factory.createItemDAO();
-        try {
-            this.gameList = itemDao.getVideogamesForSale(filters);
-        } catch (NoGamesFoundException e) {
-            Filters newFilters = new Filters("all", filters.getConsole(), filters.getOnline(), filters.getCategory());
-            itemDao.getVideogamesForSale(newFilters);
-        }
-        List<VideogameBean> gameBeans = new ArrayList<VideogameBean>();
+        ItemDAO itemDao = PersistencyAbstractFactory.getFactory().createItemDAO();
+        VideogamesFound gamesFound = new VideogamesFound();
+        VideogamesFoundBean gamesFoundBean = new VideogamesFoundBean();
 
-        for(Videogame videogame: this.gameList){
-            String name = videogame.getName();
-            String id = videogame.getId();
-            VideogameBean gameBean = new VideogameBean(name, id);
-            gameBean.setOwnerBean(new SellerBean(videogame.getOwnerName(), videogame.getOwnerEmail(), videogame.getOwnerCopies(), videogame.getOwnerPrice(), videogame.getSellerDescription()));
-        }
-        return gameBeans;
+        gamesFound.setGamesFound(itemDao.getVideogamesForSale(filters));
+        gamesFoundBean.setVideogamesFound(gamesFound);
+        return gamesFoundBean;
     }
 
-    public void addToCart(String id, int quantity) throws CopiesException {
-        for(Videogame game: this.gameList){
-            if(id.equals(game.getId())){
-                this.shoppingCart.addGame(game, quantity);
-            }
-        }
-    }
-
-    public void removeFromCart(String id, int quantity) throws CopiesException{
-        this.shoppingCart.removeFromCart(id, quantity);
-    }
-
-    public void insertCredentials(CredentialsBean credentialsBean){
-        this.credentials = new Credentials(credentialsBean.getTypeOfPaymentBean(), credentialsBean.getPaymentKeyBean(), credentialsBean.getAddressBean());
-    }
-
-    public void sendMoney() throws RefundException, GameSoldOutException, GmailException, PersistencyErrorException {
+    public void sendMoney(CredentialsBean credentialsBean, VideogameBean videogameBean, UserBean userBean, FiltersBean filtersBean) throws RefundException, GameSoldOutException, GmailException, PersistencyErrorException{
         Braintree braintree = new Braintree();
-
         GoogleBoundary googleBoundary = new GoogleBoundary();
 
-        List<Videogame> videogamesToBuy = this.shoppingCart.listVideogames();
-        List<Integer> quantitiesToBuy = this.shoppingCart.listQuantities();
-        ItemDAO itemDAO = this.factory.createItemDAO();
+        PersistencyAbstractFactory factory = PersistencyAbstractFactory.getFactory();
+        ItemDAO itemDAO = factory.createItemDAO();
+        SaleDAO saleDAO = factory.createSaleDAO();
+        CatalogueDAO catalogueDAO = factory.createCatalogueDAO();
 
-        for(int i = 0; i<videogamesToBuy.size(); i++){
-
+        Videogame game = new Videogame(videogameBean.getName(), videogameBean.getCopiesBean(), videogameBean.getPriceBean(), videogameBean.getDescriptionBean());
+        Filters filters = new Filters(null, filtersBean.getConsoleBean(), null);
+        Sale sale = new Sale();
             try{
-                Videogame temp = videogamesToBuy.get(i);
-                int quantity = quantitiesToBuy.get(i);
-                float amountToPay = temp.getOwnerPrice() * quantity;
-                braintree.pay(amountToPay, this.credentials.getPaymentKey());
-                itemDAO.saveSale(this.user, temp, quantity, amountToPay, this.credentials.getAddress());
-                itemDAO.removeGameForSale(temp);
-                String messageToSend = this.user.getUsername() + "bought" + quantity + "of" + temp.getName() + temp.getId() + "for" + amountToPay + ". His email address is" + this.user.getEmail();
-                googleBoundary.sendMail("Videogame bought", messageToSend, temp.getOwnerEmail());
-                this.shoppingCart.markAsPayed(temp);
+                int quantity = game.getCopies();
+                float amountToPay = game.getPrice() * quantity;
+                braintree.pay(amountToPay, credentialsBean.getPaymentKeyBean(), credentialsBean.getTypeOfPaymentBean());
+                itemDAO.removeGameForSale(game, filters);
+                catalogueDAO.addVideogame(userBean.getUsername(), game, game.getCopies());
+                String messageToSend = userBean.getUsername() + "bought" + quantity + "of" + game.getName() + "for" + amountToPay;
+                googleBoundary.sendMail("Videogame bought", messageToSend, /*TODO metti email del negozio*/);
+                saleDAO.saveSale(sale);
             }catch(GmailException e){
-
+                itemDAO.addGameForSale(game, filters);
+                braintree.refund();
             } catch (PersistencyErrorException e){
                 braintree.refund();
                 throw new RefundException("Transaction has been refunded due to problems");
@@ -106,48 +58,36 @@ public class BuyGamesController {
                 braintree.refund();
                 throw  new GameSoldOutException(e.getMessage());
             }
-        }
-        this.shoppingCart = null;
     }
 
-    public List<VideogameBean> getSales() throws PersistencyErrorException{
+    public VideogamesFoundBean getSales() throws PersistencyErrorException{
 
-        List<VideogameBean> videogameBeans = new ArrayList<VideogameBean>();
-        ItemDAO itemDAO = this.factory.createItemDAO();
-        this.gameList = itemDAO.getSales(this.user.getUsername());
+        SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
+        saleDAO.getSales();
 
-        for(Videogame game: this.gameList){
-            String name = game.getName();
-            String id = game.getId();
-            videogameBeans.add(new VideogameBean(name, id));
-        }
         return videogameBeans;
     }
 
-    public void confirmDelivery(String id) throws GmailException, ConfirmDeliveryException{
+    public void confirmDelivery(SaleBean saleBean) throws GmailException, ConfirmDeliveryException{
         ShipmentCompany shipmentCompany = new ShipmentCompany();
         GoogleBoundary googleBoundary = new GoogleBoundary();
         Videogame gameToSend = null;
-
-        for(Videogame game: this.gameList){
-            if(id.equals(game.getId())) gameToSend = game;
-        }
-
-        assert gameToSend != null;
+        Sale sale;
 
         try{
-            CatalogueDAO catalogueDAO = this.factory.createCatalogueDAO();
-            ItemDAO itemDAO = this.factory.createItemDAO();
-            catalogueDAO.addVideogame(gameToSend.getOwnerName(), gameToSend, gameToSend.getOwnerCopies());
-            itemDAO.updateSale(id);
-            shipmentCompany.confirmDelivery(gameToSend.getCustomerAddress());
+            PersistencyAbstractFactory factory = PersistencyAbstractFactory.getFactory();
+            CatalogueDAO catalogueDAO = factory.createCatalogueDAO();
+            SaleDAO saleDAO = factory.createSaleDAO();
+            catalogueDAO.addVideogame();
+            saleDAO.updateSale(sale);
+            shipmentCompany.confirmDelivery(sale.getAddress());
 
-            String message = this.user.getUsername() + "has confirmed delivery of" + gameToSend.getOwnerName();
-            googleBoundary.sendMail("delivery confirmed", message, gameToSend.getOwnerEmail());
+            String message = "Your order has been confirmed.";
+            googleBoundary.sendMail("delivery CONFIRMED", message, sale.getEmail());
 
-        } catch (PersistencyErrorException | IOException e) {
-            throw new ConfirmDeliveryException("Couldn't confirm deivery. Try later");
+        } catch (PersistencyErrorException e) {
+            throw new ConfirmDeliveryException("Couldn't confirm delivery. Try later");
         }
-
     }
-}
+ }
+

@@ -8,8 +8,6 @@ import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 
-
-
 public class CustomerBoundary {
 
     private final BuyGamesController buyGamesController;
@@ -33,7 +31,7 @@ public class CustomerBoundary {
     public FiltersBean getFiltersBean() {
         return this.filtersBean;
     }
-    public void insertFilters(String name, String console, String category) throws FiltersException, PersistencyErrorException, NoGamesFoundException {
+    public void insertFilters(String name, String console, String category) throws FiltersException, PersistencyErrorException{
         this.filtersBean = new FiltersBean();
         this.filtersBean.setNameBean(name);
         this.filtersBean.setConsoleBean(console);
@@ -46,7 +44,7 @@ public class CustomerBoundary {
         credentialsBean.setTypeOfPaymentBean(typeOfCard);
         credentialsBean.setPaymentKeyBean(paymentKey);
         credentialsBean.setAddressBean(address);
-        this.buyGamesController.sendMoney(credentialsBean, videogameBean, this.userBean);
+        this.buyGamesController.sendMoney(credentialsBean, videogameBean, this.userBean, this.filtersBean);
     }
 
 }

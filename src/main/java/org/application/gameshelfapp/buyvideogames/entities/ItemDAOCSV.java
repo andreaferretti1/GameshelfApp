@@ -4,7 +4,6 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
-import org.application.gameshelfapp.buyvideogames.exception.NoGamesFoundException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
 import java.io.*;
@@ -12,7 +11,6 @@ import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -24,24 +22,13 @@ public class ItemDAOCSV implements ItemDAO {
     private File fdGamesForSale;
     private final Lock lock;
 
-    public ItemDAOCSV() throws PersistencyErrorException{
+    public ItemDAOCSV(File fd){
         this.lock = new ReentrantLock();
-
-        try(FileInputStream in = new FileInputStream(CSVFactory.PROPERTIES)) {
-            Properties properties = new Properties();
-
-            properties.load(in);
-            String s = properties.getProperty("CSV_GAMES_ON_SALE");
-
-            this.fdGamesForSale = new File(s);
-
-        } catch(IOException e){
-            throw new PersistencyErrorException("Couldn't access to games");
-        }
+        this.fdGamesForSale = fd;
     }
 
     @Override
-    public List<Videogame> getVideogamesForSale(Filters filters) throws PersistencyErrorException, NoGamesFoundException {
+    public List<Videogame> getVideogamesForSale(Filters filters) throws PersistencyErrorException{
 
          List<Videogame> gamesFound = new ArrayList<Videogame>();
          String[] myRecord = null;
@@ -52,7 +39,7 @@ public class ItemDAOCSV implements ItemDAO {
 
          try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fdGamesForSale)));){
             while((myRecord = csvReader.readNext()) != null){
-                if(gameName.equals("*")){
+                if(gameName == null){
                     if(myRecord[VideogamesOnSaleAttributes.CONSOLE.ordinal()].equals(console) && myRecord[VideogamesOnSaleAttributes.CATEGORY.ordinal()].equals(category) && Integer.parseInt(myRecord[VideogamesOnSaleAttributes.COPIES.ordinal()]) > 0){
                         Videogame game = new Videogame(myRecord[VideogamesOnSaleAttributes.GAMENAME.ordinal()], Integer.parseInt(myRecord[VideogamesOnSaleAttributes.COPIES.ordinal()]), Float.parseFloat(myRecord[VideogamesOnSaleAttributes.PRICE.ordinal()]), myRecord[VideogamesOnSaleAttributes.DESCRIPTION.ordinal()]);
                         gamesFound.add(game);
@@ -65,8 +52,6 @@ public class ItemDAOCSV implements ItemDAO {
                     }
                 }
             }
-
-            if(gamesFound.isEmpty()) throw new NoGamesFoundException("No games found");
          } catch (IOException | CsvValidationException e) {
              throw new PersistencyErrorException("couldn't retrieve videogames");
          }

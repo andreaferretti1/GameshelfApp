@@ -14,17 +14,9 @@ public class AccessDAOCSV implements AccessDAO{
 
     private final File fd;
 
-    public AccessDAOCSV() throws PersistencyErrorException{
+    public AccessDAOCSV(File fd){
+        this.fd = fd;
 
-        try(FileInputStream in = new FileInputStream(CSVFactory.PROPERTIES)){
-            Properties properties = new Properties();
-
-            properties.load(in);
-            String s = properties.getProperty("CSV_ACCOUNTS");
-            this.fd = new File(s);
-        } catch(IOException e){
-            throw new PersistencyErrorException("Couldn't access to accounts");
-        }
     }
 
     @Override
@@ -34,7 +26,6 @@ public class AccessDAOCSV implements AccessDAO{
             String password = regAccess.getEncodedPassword();
 
             String[] instance = new String[4];
-
 
             instance[AccountAttributes.USERNAME.ordinal()] = username;
             instance[AccountAttributes.EMAIL.ordinal()] = email;

@@ -21,20 +21,10 @@ public class SaleDAOCSV implements SaleDAO{
     public static final String TEMP_FILE = "items_sold.csv";
     private final File fd;
     private long id;
-    public SaleDAOCSV() throws PersistencyErrorException{
+    public SaleDAOCSV(File fd) throws PersistencyErrorException{
         this.lock = new ReentrantLock();
         this.id = this.getId();
-        try(FileInputStream in = new FileInputStream(CSVFactory.PROPERTIES)) {
-            Properties properties = new Properties();
-
-            properties.load(in);
-            String s = properties.getProperty("CSV_GAMES_SOLD");
-
-            this.fd = new File(s);
-
-        } catch(IOException e){
-            throw new PersistencyErrorException("Couldn't access to games");
-        }
+        this.fd = fd;
     }
     @Override
     public void saveSale(Sale sale) throws PersistencyErrorException {

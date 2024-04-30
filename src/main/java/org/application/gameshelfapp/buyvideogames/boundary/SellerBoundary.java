@@ -8,8 +8,6 @@ import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
-import java.util.List;
-
 public class SellerBoundary {
 
     private VideogamesFoundBean videogamesFoundBean;

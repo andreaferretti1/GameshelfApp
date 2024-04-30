@@ -21,18 +21,9 @@ public class CatalogueDAOCSV implements CatalogueDAO {
     private final File fdCatalogue;
     private final Lock lock;
 
-    public CatalogueDAOCSV() throws PersistencyErrorException{
-        try(FileInputStream in = new FileInputStream(CSVFactory.PROPERTIES)){
-            Properties properties = new Properties();
-
-            properties.load(in);
-            String s = properties.getProperty("CSV_CATALOGUE");
-
-            this.fdCatalogue = new File(s);
-            this.lock = new ReentrantLock();
-        } catch(IOException e){
-            throw new PersistencyErrorException("Couldn't access to catalogue");
-        }
+    public CatalogueDAOCSV(File fd){
+        this.lock = new ReentrantLock();
+        this.fdCatalogue = fd;
     }
 
     @Override
