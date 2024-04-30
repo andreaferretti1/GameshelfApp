@@ -8,7 +8,6 @@ import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
-import java.util.Properties;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
