@@ -3,11 +3,9 @@ package org.application.gameshelfapp.login.entities;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
-import org.application.gameshelfapp.buyvideogames.entities.CSVFactory;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
 import java.io.*;
-import java.util.Properties;
 
 
 public class AccessDAOCSV implements AccessDAO{

@@ -13,9 +13,6 @@ import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.model.Message;
 
-
-
-
 import java.io.*;
 import java.security.GeneralSecurityException;
 import java.util.Properties;
@@ -30,7 +27,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.application.gameshelfapp.login.exception.GmailException;
 
 public class GoogleBoundary {
-
     private final Gmail service;
     public GoogleBoundary() throws GmailException {
         final NetHttpTransport httpTransport;
@@ -68,7 +64,6 @@ public class GoogleBoundary {
 
     public void sendMail(String subject, String messageToSend, String toEmailAddress) throws GmailException{
 
-
         Properties props = new Properties();
         Session session = Session.getDefaultInstance(props, null);
         MimeMessage email = new MimeMessage(session);
@@ -90,6 +85,5 @@ public class GoogleBoundary {
         } catch (MessagingException | IOException e) {
             throw new GmailException("Couldn't send mail");
         }
-
     }
 }

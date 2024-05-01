@@ -7,10 +7,8 @@ import org.application.gameshelfapp.login.controller.LogInController;
 import org.application.gameshelfapp.login.exception.*;
 
 public class UserLogInBoundary {
-
-    private LogInBean logBean = null;
-    private RegistrationBean regBean = null;
-    private UserBean usrBean = null;
+    private RegistrationBean regBean;
+    private UserBean userBean;
     private final LogInController controller;
 
     public UserLogInBoundary() throws PersistencyErrorException{
@@ -18,34 +16,31 @@ public class UserLogInBoundary {
     }
 
     public void log(String email, String password) throws SyntaxErrorException, PersistencyErrorException, CheckFailedException, NullPasswordException {
-        this.logBean = new LogInBean();
-        this.logBean.setEmailBean(email);
-        this.logBean.setPasswordBean(password);
-        this.controller.logIn(logBean);
-        this.usrBean = this.controller.getUser();
+        LogInBean logBean = new LogInBean();
+        logBean.setEmailBean(email);
+        logBean.setPasswordBean(password);
+        this.userBean = this.controller.logIn(logBean);
+        this.userBean.getDataFromModel();
     }
 
     public void register(String username, String email, String password, String typeOfUser) throws SyntaxErrorException, PersistencyErrorException, CheckFailedException, GmailException, NullPasswordException {
-
         this.regBean = new RegistrationBean();
         this.regBean.setUsernameBean(username);
         this.regBean.setEmailBean(email);
         this.regBean.setPasswordBean(password);
         this.regBean.setTypeOfUser(typeOfUser);
         this.controller.registration(this.regBean);
-
     }
 
     public void checkCode(String code) throws NumberFormatException, CheckFailedException, PersistencyErrorException{
-
         int insertedCode = Integer.parseInt(code);
         this.regBean.setCheckCode(insertedCode);
-        this.controller.checkCode(this.regBean);
-        this.usrBean = this.controller.getUser();
+        this.userBean = this.controller.checkCode(this.regBean);
+        this.userBean.getDataFromModel();
     }
 
     public UserBean getUserBean(){
-        return this.usrBean;
+        return this.userBean;
     }
 
     public LogInController getController(){

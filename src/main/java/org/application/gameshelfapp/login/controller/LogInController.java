@@ -9,65 +9,46 @@ import org.application.gameshelfapp.login.boundary.GoogleBoundary;
 import org.application.gameshelfapp.login.entities.*;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.GmailException;
+import org.application.gameshelfapp.login.exception.NullPasswordException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
-
-
 public class LogInController {
-
-    private User user;
     private AccessThroughRegistration regAccess;
-    private AccessThroughLogIn logAccess;
-    PersistencyAbstractFactory factory;
-    private AccessDAO accessDAO;
-
-    public LogInController() throws PersistencyErrorException{
-
-        this.factory = PersistencyAbstractFactory.getFactory();
-        this.accessDAO = this.factory.createAccessDAO();
-    }
-
-
-    public void logIn(LogInBean logBean) throws PersistencyErrorException, CheckFailedException{
-
+    public UserBean logIn(LogInBean logBean) throws PersistencyErrorException, CheckFailedException, NullPasswordException {
 
         String logEmail = logBean.getEmailBean();
         String logPassword = logBean.getPasswordBean();
 
-        this.logAccess = new AccessThroughLogIn(logEmail, logPassword, null);
-        this.logAccess.encodePassword();
+        AccessThroughLogIn logAccess = new AccessThroughLogIn(logEmail, logPassword, null);
+        logAccess.encodePassword();
 
-
-        Access access = this.accessDAO.retrieveAccount(logAccess);
-        this.logAccess.checkAccount(access);
-        this.user = new User(access.getUsername(), access.getEmail(), access.getTypeOfUser());
-
+        AccessDAO accessDAO = PersistencyAbstractFactory.getFactory().createAccessDAO();
+        Access access = accessDAO.retrieveAccount(logAccess);
+        logAccess.checkAccount(access);
+        User user = new User(access.getUsername(), access.getEmail(), access.getTypeOfUser());
+        UserBean userBean = new UserBean();
+        userBean.setUser(user);
+        return userBean;
     }
 
-    public void registration(RegistrationBean regBean) throws PersistencyErrorException, CheckFailedException, GmailException {
-
-        String regUsername = regBean.getUsernameBean();
-        String regEmail = regBean.getEmailBean();
-        String regPassword = regBean.getPasswordBean();
-        String typeOfUser = regBean.getTypeOfUser();
-        this.regAccess = new AccessThroughRegistration(regUsername, regEmail, regPassword, typeOfUser);
+    public void registration(RegistrationBean regBean) throws PersistencyErrorException, CheckFailedException, GmailException, NullPasswordException {
+        this.regAccess = new AccessThroughRegistration(regBean.getUsernameBean(), regBean.getEmailBean(), regBean.getPasswordBean(), regBean.getTypeOfUser());
         this.regAccess.encodePassword();
-        Access account = this.accessDAO.retrieveAccount(regAccess);
+        AccessDAO accessDAO = PersistencyAbstractFactory.getFactory().createAccessDAO();
+        Access account = accessDAO.retrieveAccount(this.regAccess);
         this.regAccess.checkAccount(account);
         String messageToSend = this.regAccess.getMessageToSend();
         GoogleBoundary googleBoundary = new GoogleBoundary();
-        googleBoundary.sendMail("check email", messageToSend, regEmail);
+        googleBoundary.sendMail("check email", messageToSend, regAccess.getEmail());
     }
 
-    public void checkCode(RegistrationBean regBean) throws CheckFailedException, PersistencyErrorException{
+    public UserBean checkCode(RegistrationBean regBean) throws CheckFailedException, PersistencyErrorException{
         this.regAccess.checkCode(regBean.getCheckCode());
-        this.accessDAO.saveAccount(this.regAccess);
-        this.user = new User(regAccess.getUsername(), regAccess.getEmail(), regAccess.getTypeOfUser());
+        AccessDAO accessDAO = PersistencyAbstractFactory.getFactory().createAccessDAO();
+        accessDAO.saveAccount(this.regAccess);
+        User user = new User(regAccess.getUsername(), regAccess.getEmail(), regAccess.getTypeOfUser());
+        UserBean userBean = new UserBean();
+        userBean.setUser(user);
+        return userBean;
     }
-
-    public UserBean getUser(){
-        return new UserBean(this.user.getUsername(), this.user.getEmail(), this.user.getTypeOfUser());
-    }
-
-
 }
