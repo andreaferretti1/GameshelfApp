@@ -24,7 +24,8 @@ public class VideogamesFoundBean {
         List<Videogame> gamesFound = videogamesFound.getGamesFound();
         for(Videogame game: gamesFound){
             VideogameBean gameBean = new VideogameBean();
-            gameBean.getVideogameFromModel(game);
+            gameBean.setVideogame(game);
+            gameBean.getVideogameFromModel();
             this.gamesFoundBean.add(gameBean);
         }
     }

@@ -7,11 +7,11 @@ import java.sql.*;
 public class CatalogueDAOJDBC implements CatalogueDAO {
 
     @Override
-    public void addVideogame(String email, Videogame game, int numberOfCopies) throws PersistencyErrorException{
+    public void addVideogame(String email, Videogame game) throws PersistencyErrorException{
         try(Connection conn = SingletonConnectionPool.getInstance().getConnection();
             Statement stmt = conn.createStatement()){
 
-            String query = String.format("INSERT INTO Catalogue (Name, Email, Copies) VALUES (%s, %s, %d) ON DUPLICATE KEY UPDATE Copies = Copies + %d;", game.getName(), email, numberOfCopies, numberOfCopies);
+            String query = String.format("INSERT INTO Catalogue (Name, Email, Copies) VALUES (%s, %s, %d) ON DUPLICATE KEY UPDATE Copies = Copies + %d;", game.getName(), email, game.getCopies(), game.getCopies());
             stmt.execute(query);
         } catch (SQLException e){
             throw new PersistencyErrorException("Couldn't add videogame to your catalogue.");
@@ -20,14 +20,20 @@ public class CatalogueDAOJDBC implements CatalogueDAO {
     }
 
     @Override
-    public void removeVideogame(String email, Videogame item, int quantity) throws PersistencyErrorException{
+    public void removeVideogame(String email, Videogame game) throws PersistencyErrorException{
         String query = null;
         try(Connection conn = SingletonConnectionPool.getInstance().getConnection();
             Statement stmt = conn.createStatement();){
+            int quantity;
+            query = "SELECT Copies FROM CATALOGUE WHERE Name = " + game.getName() + "AND Email = " + email + ";";
+            stmt.execute(query);
+            ResultSet rs = stmt.getResultSet();
+            quantity = rs.getInt("Copies");
+            rs.close();
             if(quantity == 0){
-                query = "DELETE FROM Catalogue WHERE Name = " + item.getName() + "AND Email = " + email + ";";
+                query = "DELETE FROM Catalogue WHERE Name = " + game.getName() + "AND Email = " + email + ";";
             } else{
-                query = "UPDATE Catalogue SET Copies = " + quantity + "WHERE Name = " + item.getName() + "AND Email = " + email + ";";
+                query = "UPDATE Catalogue SET Copies = " + quantity + "WHERE Name = " + game.getName() + "AND Email = " + email + ";";
             }
             stmt.execute(query);
         }catch(SQLException e){

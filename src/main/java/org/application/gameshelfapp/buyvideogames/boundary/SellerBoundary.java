@@ -1,16 +1,17 @@
 package org.application.gameshelfapp.buyvideogames.boundary;
 
-import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
-import org.application.gameshelfapp.buyvideogames.bean.VideogamesFoundBean;
+import org.application.gameshelfapp.buyvideogames.bean.SaleBean;
 import org.application.gameshelfapp.buyvideogames.controller.BuyGamesController;
 import org.application.gameshelfapp.buyvideogames.exception.ConfirmDeliveryException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
+import java.util.List;
+
 public class SellerBoundary {
 
-    private VideogamesFoundBean videogamesFoundBean;
+    private List<SaleBean> salesBean;
     private final BuyGamesController buyGamesController;
     private final UserBean userBean;
     public SellerBoundary(BuyGamesController controller, UserBean userBean ){
@@ -22,15 +23,15 @@ public class SellerBoundary {
         return this.userBean;
     }
 
-    public VideogamesFoundBean getVideogamesFoundBean() {
-        return this.videogamesFoundBean;
+    public List<SaleBean> getSalesBean() {
+        return this.salesBean;
     }
 
     public void getGamesToSend() throws PersistencyErrorException {
-        this.videogamesFoundBean = this.buyGamesController.getSales();
+        this.salesBean = this.buyGamesController.getSales();
     }
 
-    public void sendGame(VideogameBean gameBean) throws ConfirmDeliveryException, GmailException {
-        this.buyGamesController.confirmDelivery(gameBean.getId());
+    public void sendGame(int index) throws ConfirmDeliveryException, GmailException{
+        this.buyGamesController.confirmDelivery(this.salesBean.get(index));
     }
 }

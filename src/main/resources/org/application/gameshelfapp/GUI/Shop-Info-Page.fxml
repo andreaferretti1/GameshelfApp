@@ -55,7 +55,7 @@
                   <Insets top="24.0" />
                </VBox.margin>
                <children>
-                  <CheckBox mnemonicParsing="false" prefHeight="30.0" stylesheets="@../icons/CheckBox_style.css" text="Private" textFill="WHITE">
+                  <CheckBox mnemonicParsing="false" prefHeight="30.0" text="Private" textFill="WHITE">
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -66,7 +66,7 @@
                         <Insets />
                      </HBox.margin>
                   </CheckBox>
-                  <CheckBox mnemonicParsing="false" stylesheets="@../icons/CheckBox_style.css" text="Shop Manager" textFill="WHITE">
+                  <CheckBox mnemonicParsing="false" text="Shop Manager" textFill="WHITE">
                      <font>
                         <Font size="21.0" />
                      </font>

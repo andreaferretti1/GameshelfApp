@@ -6,13 +6,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 public class ErrorPageController{
-
     @FXML
     private Label errorLabel;
-
     public static void displayErrorWindow(String s){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ErrorPageController.class.getResource("/org/application/gameshelfapp/GUI/Error-Page.fxml"));

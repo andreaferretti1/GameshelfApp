@@ -13,7 +13,7 @@ module org.application.gameshelfapp {
     requires com.opencsv;
     requires jdk.httpserver;
     requires java.sql;
-
+    requires com.google.gson;
 
     opens org.application.gameshelfapp to javafx.fxml;
     exports org.application.gameshelfapp;

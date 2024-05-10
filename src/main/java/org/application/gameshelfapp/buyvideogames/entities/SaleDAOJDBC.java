@@ -10,7 +10,7 @@ public class SaleDAOJDBC implements SaleDAO{
     public void saveSale(Sale sale) throws PersistencyErrorException {
         try(Connection conn = SingletonConnectionPool.getInstance().getConnection();
             Statement stmt = conn.createStatement()){
-            String query = String.format("INSERT INTO Sale (Copies, Price, GameName, Platform, UserEmail, UserAddress) VALUES ('%d', '%f', '%s', '%s', '%s', '%s');", sale.getCopies(), sale.getPrice(), sale.getObjectName(), sale.getPlatform(), sale.getEmail(), sale.getAddress());
+            String query = String.format("INSERT INTO Sale (Copies, Price, GameName, Platform, UserEmail, UserAddress) VALUES ('%d', '%f', '%s', '%s', '%s', '%s');", sale.getVideogameSold().getCopies(), sale.getVideogameSold().getPrice(), sale.getVideogameSold().getName(), sale.getPlatform(), sale.getEmail(), sale.getAddress());
             stmt.execute(query);
         } catch(SQLException e){
             throw new PersistencyErrorException("Couldn't save sale");
@@ -27,6 +27,7 @@ public class SaleDAOJDBC implements SaleDAO{
              stmt.execute(query);
              rs = stmt.getResultSet();
              while(rs.next()){
+                 //TODO guarda query
                  Sale sale = new Sale(rs.getInt("Copies"), rs.getFloat("Price"), rs.getString("GameName"), rs.getString("UserEmail"), rs.getString("UserAddress"), rs.getString("State"), rs.getString("Platform"));
                  sale.setId(rs.getInt("Id"));
                  sales.add(sale);
@@ -41,8 +42,9 @@ public class SaleDAOJDBC implements SaleDAO{
     @Override
     public void updateSale(Sale sale) throws PersistencyErrorException {
         try(Connection conn = SingletonConnectionPool.getInstance().getConnection();
-         Statement stmt = conn.createStatement()){
+            Statement stmt = conn.createStatement()){
             String query = "UPDATE Sale SET State = Confirmed WHERE Id = " + sale.getId() + ";";
+            stmt.execute(query);
         } catch(SQLException e){
             throw new PersistencyErrorException("Couldn't update sale.");
         }

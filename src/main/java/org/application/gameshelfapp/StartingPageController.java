@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import org.application.gameshelfapp.login.RegistrationPageController;
 import org.application.gameshelfapp.login.boundary.UserLogInBoundary;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
+import org.application.gameshelfapp.login.exception.NullPasswordException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
@@ -30,22 +31,17 @@ public class StartingPageController extends Application {
 
     private UserLogInBoundary userBoundary;
 
-    private ErrorPageController errorPageController;
-
-    private Stage stage;
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
     public void setUserBoundary(UserLogInBoundary boundary){
         this.userBoundary = boundary;
     }
 
+    private Stage getCurrentStage(){
+        return (Stage) emailField.getScene().getWindow();
+    }
     @FXML
     private void switchToRegistrationPage(MouseEvent event) {
         try{
-           RegistrationPageController.start(this.stage, this.userBoundary);
+           RegistrationPageController.start(this.getCurrentStage() , this.userBoundary);
         } catch (IOException e) {
             System.exit(1);
         }
@@ -55,8 +51,8 @@ public class StartingPageController extends Application {
     private void logIn(MouseEvent event) {
         try{
             this.userBoundary.log(this.emailField.getText(), this.passwordField.getText());
-            HomePageController.start(this.stage, this.userBoundary.getUserBean());
-        }  catch (SyntaxErrorException | PersistencyErrorException | CheckFailedException e) {
+            HomePageController.start(this.getCurrentStage(), this.userBoundary.getUserBean());
+        }  catch (SyntaxErrorException | PersistencyErrorException | CheckFailedException | NullPasswordException e) {
             ErrorPageController.displayErrorWindow(e.getMessage());
         } catch(IOException e){
             System.exit(1);
@@ -71,7 +67,6 @@ public class StartingPageController extends Application {
 
         StartingPageController startingPageController = fxmlLoader.getController();
         startingPageController.setUserBoundary(new UserLogInBoundary());
-        startingPageController.setStage(stage);
 
         Scene scene = new Scene(root, 1440, 768);
         stage.setScene(scene);

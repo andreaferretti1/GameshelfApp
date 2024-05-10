@@ -12,19 +12,21 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.model.Message;
+import org.apache.commons.codec.binary.Base64;
+import org.application.gameshelfapp.login.exception.GmailException;
 
-import java.io.*;
-import java.security.GeneralSecurityException;
-import java.util.Properties;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Paths;
+import java.security.GeneralSecurityException;
+import java.util.Properties;
 import java.util.Set;
-import org.apache.commons.codec.binary.Base64;
-import org.application.gameshelfapp.login.exception.GmailException;
 
 public class GoogleBoundary {
     private final Gmail service;

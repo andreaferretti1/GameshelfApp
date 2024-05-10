@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
+import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
@@ -26,6 +27,10 @@ public class CredentialsPageController {
     private TextField paymentKey;
     @FXML
     private TextField address;
+    @FXML
+    private TextField regionField;
+    @FXML
+    private TextField countryField;
 
 
 
@@ -36,8 +41,8 @@ public class CredentialsPageController {
     @FXML
     private void insertCredentials(){
         try {
-            this.customerBoundary.insertCredentialsAndPay(typeOfCard.getText(), paymentKey.getText(), address.getText());
-        } catch (SyntaxErrorException | RefundException | GameSoldOutException | GmailException | PersistencyErrorException e) {
+            this.customerBoundary.insertCredentialsAndPay(typeOfCard.getText(), paymentKey.getText(), address.getText(), regionField.getText(), countryField.getText());
+        } catch (SyntaxErrorException | RefundException | GameSoldOutException | GmailException | PersistencyErrorException | InvalidAddressException e) {
             ErrorPageController.displayErrorWindow(e.getMessage());
         }
     }

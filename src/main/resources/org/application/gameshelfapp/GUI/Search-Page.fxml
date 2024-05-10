@@ -3,8 +3,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -85,172 +87,59 @@
       </VBox>
       <VBox prefHeight="741.0" prefWidth="1340.0" AnchorPane.topAnchor="27.0">
          <children>
-            <TextField fx:id="nameField" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="52.0" prefWidth="900.0" promptText="Search by Name" style="-fx-background-color: white; -fx-prompt-text-fill: #2E60E1; -fx-text-fill: #2E60E1; -fx-background-radius: 60;">
-               <font>
-                  <Font name="System Italic" size="28.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <VBox.margin>
-                  <Insets left="220.0" top="20.0" />
-               </VBox.margin>
-            </TextField>
-            <Label alignment="CENTER" text="Apply these filters:" textFill="#2e60e1" underline="true">
-               <font>
-                  <Font size="28.0" />
-               </font>
-               <VBox.margin>
-                  <Insets left="589.5" top="20.0" />
-               </VBox.margin>
-            </Label>
-            <Label text="Console:" textFill="WHITE">
-               <VBox.margin>
-                  <Insets left="50.0" top="40.0" />
-               </VBox.margin>
-               <font>
-                  <Font name="System Bold" size="28.0" />
-               </font>
-            </Label>
             <HBox prefHeight="40.0" prefWidth="1340.0">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
                <children>
-                  <CheckBox fx:id="cbPlay" mnemonicParsing="false" onMouseClicked="#consoleSelected" stylesheets="@../icons/CheckBox_style.css" text="PlayStation" textFill="#2e60e1">
+                  <TextField fx:id="nameField" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="555.0" promptText="Search by Name" style="-fx-background-color: white; -fx-prompt-text-fill: #2E60E1; -fx-text-fill: #2E60E1; -fx-background-radius: 60;">
                      <font>
-                        <Font name="System Italic" size="28.0" />
+                        <Font name="System Italic" size="14.0" />
                      </font>
-                     <HBox.margin>
-                        <Insets left="200.0" />
-                     </HBox.margin>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
-                  </CheckBox>
-                  <CheckBox fx:id="cbXbox" mnemonicParsing="false" onMouseClicked="#consoleSelected" stylesheets="@../icons/CheckBox_style.css" text="XBox" textFill="#2e60e1">
-                     <font>
-                        <Font name="System Italic" size="28.0" />
-                     </font>
                      <HBox.margin>
-                        <Insets left="231.5" />
+                        <Insets left="5.0" />
                      </HBox.margin>
+                  </TextField>
+                  <ChoiceBox fx:id="categoryChoiceBox" minHeight="25.0" prefHeight="10.0" prefWidth="150.0" style="-fx-background-color: #ffffff; -fx-text-fill: #2e60e1;">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets left="80.0" />
+                     </HBox.margin>
+                  </ChoiceBox>
+                  <ChoiceBox fx:id="platformChoiceBox" minHeight="25.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #ffffff; -fx-text-fill: #2e60e1;">
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin>
+                  </ChoiceBox>
+                  <Button alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#searchVideogame" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2e60e1; -fx-background-radius: 60;" text="Search" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
-                  </CheckBox>
-                  <CheckBox fx:id="cbPc" mnemonicParsing="false" onMouseClicked="#consoleSelected" stylesheets="@../icons/CheckBox_style.css" text="Pc" textFill="#2e60e1">
-                     <font>
-                        <Font name="System Italic" size="28.0" />
-                     </font>
                      <HBox.margin>
-                        <Insets left="200.0" />
+                        <Insets left="240.0" />
                      </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </CheckBox>
+                  </Button>
                </children>
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
             </HBox>
-            <Label layoutX="60.0" layoutY="162.0" text="Playable:" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="28.0" />
-               </font>
-               <VBox.margin>
-                  <Insets left="50.0" top="40.0" />
-               </VBox.margin>
-            </Label>
-            <HBox layoutX="10.0" layoutY="222.0" prefHeight="40.0" prefWidth="1340.0">
-               <children>
-                  <CheckBox fx:id="cbOn" mnemonicParsing="false" onMouseClicked="#playableSelected" stylesheets="@../icons/CheckBox_style.css" text="Offline" textFill="#2e60e1">
-                     <font>
-                        <Font name="System Italic" size="28.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="200.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </CheckBox>
-                  <CheckBox fx:id="cbOff" mnemonicParsing="false" onMouseClicked="#playableSelected" stylesheets="@../icons/CheckBox_style.css" text="Online" textFill="#2e60e1">
-                     <font>
-                        <Font name="System Italic" size="28.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="287.5" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </CheckBox>
-               </children>
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </HBox>
-            <Label layoutX="60.0" layoutY="302.0" text="Genre:" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="28.0" />
-               </font>
-               <VBox.margin>
-                  <Insets left="50.0" top="40.0" />
-               </VBox.margin>
-            </Label>
-            <HBox layoutX="10.0" layoutY="222.0" prefHeight="40.0" prefWidth="1340.0">
-               <children>
-                  <CheckBox fx:id="cbSport" mnemonicParsing="false" onMouseClicked="#genreSelected" stylesheets="@../icons/CheckBox_style.css" text="Sport" textFill="#2e60e1">
-                     <font>
-                        <Font name="System Italic" size="28.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="200.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </CheckBox>
-                  <CheckBox fx:id="cbShoot" mnemonicParsing="false" onMouseClicked="#genreSelected" stylesheets="@../icons/CheckBox_style.css" text="Shooting" textFill="#2e60e1">
-                     <font>
-                        <Font name="System Italic" size="28.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="306.5" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </CheckBox>
-                  <CheckBox fx:id="cbAdv" mnemonicParsing="false" onMouseClicked="#genreSelected" stylesheets="@../icons/CheckBox_style.css" text="Adventure" textFill="#2e60e1">
-                     <font>
-                        <Font name="System Italic" size="28.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="154.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </CheckBox>
-               </children>
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
-            </HBox>
-            <Button alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#searchVideogame" prefHeight="55.0" prefWidth="130.0" style="-fx-background-color: #2e60e1; -fx-background-radius: 60;" text="Search" textFill="WHITE">
-               <font>
-                  <Font size="24.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <VBox.margin>
-                  <Insets left="605.0" top="100.0" />
-               </VBox.margin>
-            </Button>
+            <ScrollPane hbarPolicy="NEVER" prefHeight="701.0" prefWidth="1340.0" style="-fx-background-color: #433f3f;">
+               <content>
+                  <TableView fx:id="gamesFound" prefHeight="696.0" prefWidth="1337.0" style="-fx-background-color: #433f3f;">
+                    <columns>
+                      <TableColumn fx:id="gameName" prefWidth="560.0" style="-fx-background-color: #433f3f; -fx-border-color: #433f3f; -fx-text-fill: white;" />
+                      <TableColumn fx:id="gameCost" prefWidth="630.0" style="-fx-background-color: #433f3f; -fx-border-color: #433f3f; -fx-text-fill: white;" />
+                        <TableColumn fx:id="seeGame" prefWidth="134.0" style="-fx-background-color: #433f3f; -fx-border-color: #433f3f; -fx-text-fill: white;" />
+                    </columns>
+                  </TableView>
+               </content>
+            </ScrollPane>
          </children>
       </VBox>
    </children>

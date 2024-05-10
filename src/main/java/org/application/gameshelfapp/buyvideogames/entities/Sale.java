@@ -2,9 +2,7 @@ package org.application.gameshelfapp.buyvideogames.entities;
 
 public class Sale {
     private int id;
-    private int copies;
-    private float price;
-    private String objectName;
+    private Videogame gameSold;
     private String email;
     private String address;
     private String state;
@@ -12,10 +10,8 @@ public class Sale {
 
     public static final String TO_CONFIRM = "To confirm";
     public static final String CONFIRMED = "Confirmed";
-    public Sale(int copies, float price, String objectName, String email, String address, String state, String platform) {
-        this.copies = copies;
-        this.price = price;
-        this.objectName = objectName;
+    public Sale(Videogame game, String email, String address, String state, String platform) {
+        this.gameSold = game;
         this.email = email;
         this.address = address;
         this.state = state;
@@ -27,17 +23,11 @@ public class Sale {
     public void setId(int id) {
         this.id = id;
     }
-    public int getCopies() {
-        return this.copies;
+    public Videogame getVideogameSold(){
+        return this.gameSold;
     }
-    public void setCopies(int copies) {
-        this.copies = copies;
-    }
-    public String getObjectName() {
-        return this.objectName;
-    }
-    public void setObjectName(String objectName) {
-        this.objectName = objectName;
+    public void setGameSold(Videogame game){
+        this.gameSold = game;
     }
     public String getAddress() {
         return this.address;
@@ -56,12 +46,6 @@ public class Sale {
     }
     public void setPlatform(String platform) {
         this.platform = platform;
-    }
-    public float getPrice() {
-        return this.price;
-    }
-    public void setPrice(float price) {
-        this.price = price;
     }
     public String getEmail() {
         return this.email;

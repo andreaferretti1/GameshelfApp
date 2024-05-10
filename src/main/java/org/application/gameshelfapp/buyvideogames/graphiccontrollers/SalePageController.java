@@ -1,6 +1,5 @@
 package org.application.gameshelfapp.buyvideogames.graphiccontrollers;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -8,40 +7,29 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
+import javafx.util.Callback;
+import org.application.gameshelfapp.buyvideogames.bean.SaleBean;
 import org.application.gameshelfapp.buyvideogames.boundary.SellerBoundary;
 import org.application.gameshelfapp.buyvideogames.exception.ConfirmDeliveryException;
 import org.application.gameshelfapp.login.exception.GmailException;
-import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class SalePageController implements Initializable {
 
     @FXML
-    private TableView<VideogameBean> gamesToSend;
-    @FXML
-    private TableColumn<VideogameBean, String> gameName;
-    @FXML
-    private TableColumn<VideogameBean, String> customerName;
-    @FXML
-    private TableColumn<VideogameBean, String> customerEmail;
-    @FXML
-    private TableColumn<VideogameBean, String> customerAddress;
-    @FXML
-    private TableColumn<VideogameBean, String> copiesToSend;
-    @FXML
-    private TableColumn <VideogameBean, String> priceSold;
-    @FXML
-    private TableColumn<VideogameBean, VideogameBean> sendButton;
-
+    private ListView<VBox> gamesSold;
     private SellerBoundary sellerBoundary;
     private Stage stage;
 
@@ -61,8 +49,6 @@ public class SalePageController implements Initializable {
             System.exit(1);
         }
     }
-
-
     public void start(Stage myStage, SellerBoundary boundary) throws IOException{
 
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/org/application/gameshelfapp/GUI/Sale-Page.fxml"));
@@ -76,57 +62,58 @@ public class SalePageController implements Initializable {
         myStage.setScene(scene);
         myStage.show();
     }
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ObservableList<VBox> objects = FXCollections.observableArrayList();
+        gamesSold.setCellFactory(new Callback<ListView<VBox>, ListCell<VBox>>() {
+            @Override
+            public ListCell<VBox> call(ListView<VBox> hBoxListView) {
+                return new MyCell();
+            }
+        });
+        List<SaleBean> gamesSoldBean = this.sellerBoundary.getSalesBean();
+        for(SaleBean saleBean : gamesSoldBean){
+            saleBean.getInformationFromModel();
+            objects.add(this.createVBox(saleBean));
+        }
+        gamesSold.setItems(objects);
+
+    }
+    private VBox createVBox(SaleBean saleBean){
 
         try {
-            ObservableList<VideogameBean> gamesSold = FXCollections.observableList(this.sellerBoundary.getGamesToSend());
-
-            gameName.setCellValueFactory(new PropertyValueFactory<VideogameBean, String>("name"));
-            customerName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOwnerBean().getNameBean()));
-            customerEmail.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOwnerBean().getEmailBean()));
-            customerAddress.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOwnerBean().getSpecificAttributeBean()));
-            copiesToSend.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getOwnerBean().getNumberOfCopiesBean())));
-            priceSold.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getOwnerBean().getPriceBean())));
-            sendButton.setCellFactory(cellData -> new CustomTableCellButton(gamesSold));
-
-            gamesToSend.setItems(gamesSold);
-        } catch (PersistencyErrorException e) {
-            ErrorPageController.displayErrorWindow(e.getMessage());
-        }
-    }
-
-    private class CustomTableCellButton extends TableCell<VideogameBean, VideogameBean>{
-
-        private final Button sendButton;
-
-        public CustomTableCellButton(ObservableList<VideogameBean> games){
-            sendButton = new Button("send");
-            sendButton.setStyle("-fx-background-color: #2E60E1; -fx-background-radius: 60; -fx-text-fill: white");
-            sendButton.setPrefWidth(193);
-
-            sendButton.setOnMouseClicked(event -> {
-                TableRow<VideogameBean> row = getTableRow();
-                VideogameBean gameBean = row.getItem();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("vbox-salePage.fxml"));
+            VBox vBox = fxmlLoader.load();
+            ((Label) fxmlLoader.getNamespace().get("gameName")).setText(saleBean.getGameSoldBean().getName());
+            ((Label) fxmlLoader.getNamespace().get("gamePlatform")).setText(saleBean.getPlatformBean());
+            ((Label) fxmlLoader.getNamespace().get("copies")).setText(String.valueOf(saleBean.getGameSoldBean().getCopiesBean()));
+            ((Label) fxmlLoader.getNamespace().get("name")).setText();
+            ((Label) fxmlLoader.getNamespace().get("address")).setText(saleBean.getAddressBean());
+            ((Label) fxmlLoader.getNamespace().get("email")).setText(saleBean.getEmailBean());
+            ((Button) fxmlLoader.getNamespace().get("button")).setOnMouseClicked(event -> {
                 try {
-                    SalePageController.this.sellerBoundary.sendGame(gameBean);
-                    games.remove(gameBean);
-                } catch (ConfirmDeliveryException | GmailException e) {
+                    this.sellerBoundary.sendGame(gamesSold.getSelectionModel().getSelectedIndex());
+                } catch(ConfirmDeliveryException | GmailException e){
                     ErrorPageController.displayErrorWindow(e.getMessage());
                 }
             });
+            return vBox;
+        } catch(IOException e){
+            ErrorPageController.displayErrorWindow("Couldn't show sales");
         }
+        return null;
+    }
+}
+class MyCell extends ListCell<VBox>{
+    @Override
+    protected void updateItem(VBox vBox, boolean b) {
+        super.updateItem(vBox, b);
 
-        @Override
-        protected void updateItem(VideogameBean videogameBean, boolean empty) {
-            super.updateItem(videogameBean, empty);
-            if(empty){
-                setGraphic(null);
-            } else{
-                setGraphic(sendButton);
-            }
+        if(vBox == null || b){
+            setGraphic(null);
+        }
+        if(vBox != null){
+            setGraphic(vBox);
         }
     }
 }

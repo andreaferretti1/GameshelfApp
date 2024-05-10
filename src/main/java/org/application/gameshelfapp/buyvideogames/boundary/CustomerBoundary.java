@@ -13,7 +13,7 @@ public class CustomerBoundary {
     private final BuyGamesController buyGamesController;
     private VideogamesFoundBean videogamesFoundBean;
     private FiltersBean filtersBean;
-
+    private VideogameBean gameToBuy;
     private final UserBean userBean;
 
     public CustomerBoundary(UserBean userBean){
@@ -31,6 +31,10 @@ public class CustomerBoundary {
     public FiltersBean getFiltersBean() {
         return this.filtersBean;
     }
+    public void setGameToBuy(VideogameBean gameToBuy) {
+        this.gameToBuy = gameToBuy;
+    }
+
     public void insertFilters(String name, String console, String category) throws FiltersException, PersistencyErrorException{
         this.filtersBean = new FiltersBean();
         this.filtersBean.setNameBean(name);
@@ -39,12 +43,12 @@ public class CustomerBoundary {
         this.videogamesFoundBean = this.buyGamesController.searchVideogame(filtersBean);
     }
 
-    public void insertCredentialsAndPay(String typeOfCard, String paymentKey, String address, VideogameBean videogameBean) throws RefundException, GameSoldOutException, GmailException, SyntaxErrorException, PersistencyErrorException {
+    public void insertCredentialsAndPay(String typeOfCard, String paymentKey, String street, String region, String country) throws RefundException, GameSoldOutException, GmailException, SyntaxErrorException, PersistencyErrorException, InvalidAddressException{
         CredentialsBean credentialsBean = new CredentialsBean();
         credentialsBean.setTypeOfPaymentBean(typeOfCard);
         credentialsBean.setPaymentKeyBean(paymentKey);
-        credentialsBean.setAddressBean(address);
-        this.buyGamesController.sendMoney(credentialsBean, videogameBean, this.userBean, this.filtersBean);
+        credentialsBean.setAddressBean(street, region, country);
+        this.buyGamesController.sendMoney(credentialsBean, this.gameToBuy, this.userBean, this.filtersBean);
     }
 
 }

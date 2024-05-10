@@ -35,6 +35,8 @@ public class GamesFoundPageController implements Initializable {
     private CustomerBoundary customerBoundary;
     private Stage stage;
 
+
+    //TODO vedi se SearchPageController funziona e togli questo controller e il relativo file fxml
     public void setStage(Stage stage) {
         this.stage = stage;
     }
@@ -44,7 +46,6 @@ public class GamesFoundPageController implements Initializable {
     }
 
     public static void start(Stage myStage, CustomerBoundary boundary) throws IOException{
-
         FXMLLoader fxmlLoader = new FXMLLoader(GamesFoundPageController.class.getResource("/org/application/gameshelfapp/GUI/Games-Found-Page.fxml"));
         Parent root = fxmlLoader.load();
 
@@ -73,28 +74,19 @@ public class GamesFoundPageController implements Initializable {
             System.exit(1);
         }
     }
-
-    @FXML
-    private void goToShoppingCart(){
-        try{
-            ShoppingCartPageController.start(this.stage, this.customerBoundary, "GamesFoundPage");
-        } catch(IOException e){
-            ErrorPageController.displayErrorWindow(e.getMessage());
-        }
-    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        List<VideogameBean> gamesList = this.customerBoundary.getGamesFound();
+        List<VideogameBean> gamesList = this.customerBoundary.getGamesFound().getGamesFoundBean();
         ObservableList<VideogameBean> gamesToShow = FXCollections.observableList(gamesList);
 
         gameName.setCellValueFactory(new PropertyValueFactory<VideogameBean, String>("name"));
-        gameCost.setCellValueFactory(cellData -> new SimpleStringProperty(Float.toString(cellData.getValue().getOwnerBean().getPriceBean()) + "€"));
+        gameCost.setCellValueFactory(cellData -> new SimpleStringProperty(Float.toString(cellData.getValue().getPriceBean()) + "€"));
 
         seeGame.setCellFactory( param -> new CustomTableCellButton(gamesToShow));
         gamesFound.setItems(gamesToShow);
     }
 
-    private class CustomTableCellButton extends TableCell<VideogameBean, String>{
+    class CustomTableCellButton extends TableCell<VideogameBean, String>{
         private final Button button;
 
         private CustomTableCellButton(ObservableList<VideogameBean> gamesToShow){

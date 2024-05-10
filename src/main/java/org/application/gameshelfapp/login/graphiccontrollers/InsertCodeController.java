@@ -10,20 +10,15 @@ import javafx.stage.Stage;
 import org.application.gameshelfapp.login.boundary.UserLogInBoundary;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
-
 import java.io.IOException;
-
-
-
 public class InsertCodeController  {
     private UserLogInBoundary userLogInBoundary;
 
     @FXML
     public TextField codeField;
-    private Stage stage;
 
-    public void setStage(Stage stage){
-        this.stage = stage;
+    private Stage getStage(){
+        return (Stage) codeField.getScene().getWindow();
     }
 
     public void setUserLogInBoundary(UserLogInBoundary boundary){
@@ -35,13 +30,12 @@ public class InsertCodeController  {
         String code = this.codeField.getText();
         try{
             this.userLogInBoundary.checkCode(code);
-            HomePageController.start(this.stage, this.userLogInBoundary.getUserBean());
+            HomePageController.start(this.getStage(), this.userLogInBoundary.getUserBean());
         } catch(NumberFormatException | CheckFailedException | PersistencyErrorException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
         } catch(IOException e){
             System.exit(1);
         }
-
     }
 
     public static void start(Stage myStage, UserLogInBoundary boundary) throws IOException{
@@ -49,7 +43,6 @@ public class InsertCodeController  {
         Parent root = fxmlLoader.load();
         InsertCodeController controller = fxmlLoader.getController();
         controller.setUserLogInBoundary(boundary);
-        controller.setStage(myStage);
         Scene scene = new Scene(root, 1440, 768);
         myStage.setScene(scene);
         myStage.setTitle("Gameshelf");

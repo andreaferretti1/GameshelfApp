@@ -26,7 +26,7 @@ public class CatalogueDAOCSV implements CatalogueDAO {
     }
 
     @Override
-    public void addVideogame(String email, Videogame game, int numberOfCopies) throws PersistencyErrorException {
+    public void addVideogame(String email, Videogame game) throws PersistencyErrorException {
         String[] myRecord = new String[3];
         String gameName = game.getName();
         myRecord[CatalogueAttributes.USERNAME.ordinal()] = email;
@@ -49,7 +49,7 @@ public class CatalogueDAOCSV implements CatalogueDAO {
 
             while((myRecord = csvReader.readNext()) != null){
                 if(myRecord[CatalogueAttributes.GAMENAME.ordinal()].equals(gameName)){
-                    int newNumberOfCopies = numberOfCopies + Integer.parseInt(myRecord[CatalogueAttributes.COPIES.ordinal()]);
+                    int newNumberOfCopies = game.getCopies() + Integer.parseInt(myRecord[CatalogueAttributes.COPIES.ordinal()]);
                     myRecord[CatalogueAttributes.COPIES.ordinal()] = String.valueOf(newNumberOfCopies);
                 }
                 csvWriter.writeNext(myRecord);
@@ -63,7 +63,7 @@ public class CatalogueDAOCSV implements CatalogueDAO {
     }
 
     @Override
-    public void removeVideogame(String username, Videogame game, int quantity) throws PersistencyErrorException {  //quantity rappresenta il numero di copie del videogioco possedute dal proprietario. Se è 0, allora rimuovo il videogioco
+    public void removeVideogame(String username, Videogame game) throws PersistencyErrorException {  //quantity rappresenta il numero di copie del videogioco possedute dal proprietario. Se è 0, allora rimuovo il videogioco
         String[] myRecord;
         File tempFile = new File(TEMP_FILE);
 
@@ -81,12 +81,14 @@ public class CatalogueDAOCSV implements CatalogueDAO {
             while ((myRecord = csvReader.readNext()) != null) {
 
                 if (myRecord[CatalogueAttributes.GAMENAME.ordinal()].equals(game.getName())) {
+                    int quantity = Integer.parseInt(myRecord[CatalogueAttributes.COPIES.ordinal()]);
                     if (quantity > 0) {
                         myRecord[CatalogueAttributes.COPIES.ordinal()] = String.valueOf(quantity);
                     } else continue;
                 }
                 csvWriter.writeNext(myRecord);
             }
+
             csvWriter.flush();
             Files.move(tempFile.toPath(), this.fdCatalogue.toPath(), REPLACE_EXISTING);
         } catch (IOException e) {
@@ -97,9 +99,7 @@ public class CatalogueDAOCSV implements CatalogueDAO {
             this.lock.unlock();
         }
     }
-
-
-   private enum CatalogueAttributes{
+    private enum CatalogueAttributes{
         USERNAME, GAMENAME, COPIES;
    }
 }

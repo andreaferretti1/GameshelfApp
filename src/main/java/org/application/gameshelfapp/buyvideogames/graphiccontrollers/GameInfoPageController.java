@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 import org.application.gameshelfapp.buyvideogames.bean.FiltersBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
-import org.application.gameshelfapp.buyvideogames.exception.CopiesException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 
 import java.io.IOException;
@@ -24,25 +23,18 @@ public class GameInfoPageController implements Initializable {
 
     @FXML
     private Label category;
-
     @FXML
     private Label console;
-
     @FXML
     private Text description;
-
     @FXML
     private Label gameName;
-
     @FXML
     private Label online;
-
     @FXML
     private Label price;
-
     @FXML
     private Label sellerEmail;
-
     @FXML
     private Label sellerName;
     @FXML
@@ -75,15 +67,21 @@ public class GameInfoPageController implements Initializable {
             System.exit(1);
         }
     }
+
     @FXML
-    private void addGameToCart(MouseEvent event) {
+    private void buy(){
+        VideogameBean videogameBean = new VideogameBean();
+        videogameBean.setName(this.gameName.getText());
+        videogameBean.setCopiesBean(Integer.parseInt(this.copiesSelected.getText()));
+        videogameBean.setPriceBean(Float.parseFloat(this.price.getText()));
+        videogameBean.setDescriptionBean(this.description.getText());
+        this.customerBoundary.setGameToBuy(videogameBean);
         try{
-            this.customerBoundary.addGameToCart(this.gameBean, this.copiesSelected.getText());
-        } catch(CopiesException e){
-            ErrorPageController.displayErrorWindow(e.getMessage());
+            CredentialsPageController.start(this.stage, this.customerBoundary);
+        } catch(IOException e){
+            ErrorPageController.displayErrorWindow("Couldn't buy videogame");
         }
     }
-
     public static void seeVideogame(Stage stage, CustomerBoundary boundary, VideogameBean gameBean) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GameInfoPageController.class.getResource("/org/application/gameshelfapp/GUI/Game-Info-Page.fxml"));
         Parent root = fxmlLoader.load();
@@ -98,17 +96,12 @@ public class GameInfoPageController implements Initializable {
         stage.show();
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.console.setText(this.filters.getConsoleBean());
-        this.online.setText(this.filters.getOnlineBean());
         this.category.setText(this.filters.getCategoryBean());
 
         this.gameName.setText(this.gameBean.getName());
-        this.sellerName.setText(this.gameBean.getOwnerBean().getNameBean());
-        this.sellerEmail.setText(this.gameBean.getOwnerBean().getEmailBean());
-        this.description.setText(this.gameBean.getOwnerBean().getSpecificAttributeBean());
-
+        this.description.setText(this.gameBean.getDescriptionBean());
     }
 }

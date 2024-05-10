@@ -113,7 +113,7 @@
             <DropShadow height="0.0" radius="4.75" />
          </effect>
       </VBox>
-      <ScrollPane hbarPolicy="NEVER" prefHeight="741.0" prefWidth="1340.0" style="-fx-background-color: #433f3f;" stylesheets="@../icons/Scrollbar_style.css" vbarPolicy="ALWAYS" AnchorPane.topAnchor="27.0">
+      <ScrollPane hbarPolicy="NEVER" prefHeight="741.0" prefWidth="1340.0" style="-fx-background-color: #433f3f;" vbarPolicy="ALWAYS" AnchorPane.topAnchor="27.0">
          <content>
             <VBox prefHeight="741.0" prefWidth="1340.0" style="-fx-background-color: #433f3f;">
                <children>

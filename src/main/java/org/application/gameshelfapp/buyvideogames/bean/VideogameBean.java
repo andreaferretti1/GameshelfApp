@@ -7,7 +7,7 @@ public class VideogameBean {
     private int copiesBean;
     private float priceBean;
     private String descriptionBean;
-
+    private Videogame game;
     public void setName(String name) {
         this.name = name;
     }
@@ -32,7 +32,13 @@ public class VideogameBean {
     public void setDescriptionBean(String descriptionBean) {
         this.descriptionBean = descriptionBean;
     }
-    public void getVideogameFromModel(Videogame game){
+    public Videogame getVideogame(){
+        return this.game;
+    }
+    public void setVideogame(Videogame game){
+        this.game = game;
+    }
+    public void getVideogameFromModel(){
         this.name = game.getName();
         this.copiesBean = game.getCopies();
         this.priceBean = game.getPrice();

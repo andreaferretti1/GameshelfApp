@@ -15,10 +15,7 @@ import org.application.gameshelfapp.login.exception.*;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 import org.application.gameshelfapp.login.graphiccontrollers.InsertCodeController;
 
-
 import java.io.IOException;
-
-
 public class RegistrationPageController {
 
     @FXML
@@ -38,23 +35,15 @@ public class RegistrationPageController {
     @FXML
     private ToggleGroup typeOfUser;
     private UserLogInBoundary userBoundary;
-    private Stage stage;
 
-    public void setStage(Stage stage){
-        this.stage = stage;
-    }
     public void setUserLogInBoundary(UserLogInBoundary b){
         this.userBoundary = b;
     }
 
-    public void switchToInsertCodeScene(){
-
-        try{
-           InsertCodeController.start(this.stage, this.userBoundary);
-        }catch (IOException e) {
-            System.exit(1);
-        }
+    private Stage getStage(){
+        return (Stage) emailTextField.getScene().getWindow();
     }
+
     @FXML
     private void register(MouseEvent event) {
 
@@ -75,28 +64,30 @@ public class RegistrationPageController {
 
     @FXML
     private void goToStartPage(MouseEvent event) {
-
         try {
             StartingPageController startingPageController = new StartingPageController();
             startingPageController.setUserBoundary(this.userBoundary);
-            startingPageController.start(this.stage);
+            startingPageController.start(this.getStage());
         } catch (IOException | PersistencyErrorException e){
             System.exit(1);
         }
     }
+    public void switchToInsertCodeScene(){
 
-
+        try{
+            InsertCodeController.start(this.getStage(), this.userBoundary);
+        }catch (IOException e) {
+            System.exit(1);
+        }
+    }
     public static void start(Stage myStage, UserLogInBoundary boundary) throws IOException{
-
         FXMLLoader fxmlLoader = new FXMLLoader(RegistrationPageController.class.getResource("/org/application/gameshelfapp/GUI/Registration-Page.fxml"));
         Parent root = fxmlLoader.load();
 
         RegistrationPageController controller = fxmlLoader.getController();
         controller.setUserLogInBoundary(boundary);
-        controller.setStage(myStage);
         Scene scene = new Scene(root, 1440, 768);
         myStage.setScene(scene);
         myStage.show();
     }
-
 }

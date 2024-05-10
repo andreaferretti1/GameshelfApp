@@ -17,9 +17,11 @@ public class CredentialsBean {
         this.paymentKeyBean = paymentKeyBean;
     }
 
-    public void setAddressBean(String addressBean) throws SyntaxErrorException{
-        if(addressBean == null || addressBean.isEmpty()) throw new SyntaxErrorException("Insert delivery address");
-        this.addressBean = addressBean;
+    public void setAddressBean(String streetBean, String regionBean, String countryBean) throws SyntaxErrorException{
+        if(streetBean == null || streetBean.isEmpty()) throw new SyntaxErrorException("Insert delivery address");
+        else if(regionBean == null || regionBean.isEmpty()) throw new SyntaxErrorException("Insert region");
+        else if (countryBean == null || countryBean.isEmpty()) throw new SyntaxErrorException("Insert country");
+        this.addressBean = streetBean + "," + regionBean + "," + countryBean;
     }
     public String getTypeOfPaymentBean() {
         return this.typeOfPaymentBean;

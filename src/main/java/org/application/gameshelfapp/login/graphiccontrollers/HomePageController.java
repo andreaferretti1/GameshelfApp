@@ -9,8 +9,6 @@ import javafx.fxml.FXMLLoader;
 import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
 import org.application.gameshelfapp.buyvideogames.graphiccontrollers.SearchPageController;
 import org.application.gameshelfapp.login.bean.UserBean;
-
-
 import java.io.IOException;
 
 public class HomePageController {
