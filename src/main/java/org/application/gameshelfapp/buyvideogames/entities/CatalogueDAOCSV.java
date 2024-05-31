@@ -8,6 +8,8 @@ import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -23,6 +25,24 @@ public class CatalogueDAOCSV implements CatalogueDAO {
     public CatalogueDAOCSV(File fd){
         this.lock = new ReentrantLock();
         this.fdCatalogue = fd;
+    }
+
+    @Override
+    public List<Videogame> getCatalogue(String email) throws PersistencyErrorException {
+        List<Videogame> catalogue = new ArrayList<Videogame>();
+        String[] tuple = new String[3];
+
+        try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fdCatalogue)))){
+            while((tuple = csvReader.readNext()) != null){
+                if(tuple[CatalogueAttributes.EMAIL.ordinal()].equals(email)){
+                    Videogame game = new Videogame(tuple[CatalogueAttributes.GAMENAME.ordinal()], Integer.parseInt(tuple[CatalogueAttributes.COPIES.ordinal()]), 0, null);
+                    catalogue.add(game);
+                }
+            }
+        } catch(IOException | CsvValidationException e){
+            throw new PersistencyErrorException("Couldn't get catalogue");
+        }
+        return catalogue;
     }
 
     @Override

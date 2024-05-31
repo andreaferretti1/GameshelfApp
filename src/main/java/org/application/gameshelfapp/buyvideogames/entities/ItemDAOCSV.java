@@ -115,7 +115,7 @@ public class ItemDAOCSV implements ItemDAO {
         this.lock.lock();
 
         try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fdGamesForSale)));
-            CSVWriter csvWriter= new CSVWriter(new BufferedWriter(new FileWriter(tempFile)));){
+            CSVWriter csvWriter= new CSVWriter(new BufferedWriter(new FileWriter(tempFile)))){
 
             if(!tempFile.exists()) {
                 boolean created = tempFile.createNewFile();
