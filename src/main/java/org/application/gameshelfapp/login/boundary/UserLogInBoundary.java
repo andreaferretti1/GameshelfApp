@@ -23,12 +23,11 @@ public class UserLogInBoundary {
         this.userBean.getDataFromModel();
     }
 
-    public void register(String username, String email, String password, String typeOfUser) throws SyntaxErrorException, PersistencyErrorException, CheckFailedException, GmailException, NullPasswordException {
+    public void register(String username, String email, String password) throws SyntaxErrorException, PersistencyErrorException, CheckFailedException, GmailException, NullPasswordException {
         this.regBean = new RegistrationBean();
         this.regBean.setUsernameBean(username);
         this.regBean.setEmailBean(email);
         this.regBean.setPasswordBean(password);
-        this.regBean.setTypeOfUser(typeOfUser);
         this.controller.registration(this.regBean);
     }
 

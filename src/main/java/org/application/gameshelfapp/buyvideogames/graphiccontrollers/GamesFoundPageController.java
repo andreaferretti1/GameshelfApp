@@ -76,7 +76,7 @@ public class GamesFoundPageController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        List<VideogameBean> gamesList = this.customerBoundary.getGamesFound().getGamesFoundBean();
+        List<VideogameBean> gamesList = this.customerBoundary.getVideogamesFoundBean().getVideoamesFoundBean();
         ObservableList<VideogameBean> gamesToShow = FXCollections.observableList(gamesList);
 
         gameName.setCellValueFactory(new PropertyValueFactory<VideogameBean, String>("name"));

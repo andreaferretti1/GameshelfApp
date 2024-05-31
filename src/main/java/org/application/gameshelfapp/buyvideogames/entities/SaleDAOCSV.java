@@ -36,7 +36,7 @@ public class SaleDAOCSV implements SaleDAO{
         gameSold[VideogamesSoldAttributes.GAMENAME.ordinal()] = sale.getVideogameSold().getName();
         gameSold[VideogamesSoldAttributes.COPIES.ordinal()] = String.valueOf(sale.getVideogameSold().getCopies());
         gameSold[VideogamesSoldAttributes.PRICE.ordinal()] = String.valueOf(sale.getVideogameSold().getPrice());
-        gameSold[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()] = Sale.TO_CONFIRM;
+        gameSold[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()] = sale.getState();
         gameSold[VideogamesSoldAttributes.CUSTOMERADDRESS.ordinal()] = sale.getAddress();
         gameSold[VideogamesSoldAttributes.CUSTOMEREMAIL.ordinal()] = sale.getEmail();
 

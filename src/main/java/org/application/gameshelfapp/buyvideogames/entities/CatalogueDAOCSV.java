@@ -29,11 +29,10 @@ public class CatalogueDAOCSV implements CatalogueDAO {
     public void addVideogame(String email, Videogame game) throws PersistencyErrorException {
         String[] myRecord = new String[3];
         String gameName = game.getName();
-        myRecord[CatalogueAttributes.USERNAME.ordinal()] = email;
+        myRecord[CatalogueAttributes.EMAIL.ordinal()] = email;
         myRecord[CatalogueAttributes.GAMENAME.ordinal()] = gameName;
         myRecord[CatalogueAttributes.COPIES.ordinal()] = String.valueOf(game.getCopies());
         File tempFile = new File(TEMP_FILE);
-
 
         this.lock.lock();
 
@@ -63,7 +62,7 @@ public class CatalogueDAOCSV implements CatalogueDAO {
     }
 
     @Override
-    public void removeVideogame(String username, Videogame game) throws PersistencyErrorException {  //quantity rappresenta il numero di copie del videogioco possedute dal proprietario. Se è 0, allora rimuovo il videogioco
+    public void removeVideogame(String email, Videogame game) throws PersistencyErrorException {  //quantity rappresenta il numero di copie del videogioco possedute dal proprietario. Se è 0, allora rimuovo il videogioco
         String[] myRecord;
         File tempFile = new File(TEMP_FILE);
 
@@ -100,6 +99,6 @@ public class CatalogueDAOCSV implements CatalogueDAO {
         }
     }
     private enum CatalogueAttributes{
-        USERNAME, GAMENAME, COPIES;
+        EMAIL, GAMENAME, COPIES;
    }
 }

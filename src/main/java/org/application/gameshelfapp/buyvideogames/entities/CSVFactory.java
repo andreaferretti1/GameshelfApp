@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 public class CSVFactory extends PersistencyAbstractFactory{
 
@@ -40,7 +39,7 @@ public class CSVFactory extends PersistencyAbstractFactory{
             String s = properties.getProperty(key);
             return new File(s);
         } catch(IOException e){
-            throw new PersistencyErrorException("Couldn't access to catalogue");
+            throw new PersistencyErrorException("There was an error");
         }
     }
 }

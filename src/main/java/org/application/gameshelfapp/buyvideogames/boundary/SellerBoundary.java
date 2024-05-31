@@ -14,8 +14,8 @@ public class SellerBoundary {
     private List<SaleBean> salesBean;
     private final BuyGamesController buyGamesController;
     private final UserBean userBean;
-    public SellerBoundary(BuyGamesController controller, UserBean userBean ){
-        this.buyGamesController = controller;
+    public SellerBoundary(UserBean userBean ){
+        this.buyGamesController = new BuyGamesController();
         this.userBean = userBean;
     }
 
@@ -27,6 +27,9 @@ public class SellerBoundary {
         return this.salesBean;
     }
 
+    public void setSalesBean(List<SaleBean> salesBean) {
+        this.salesBean = salesBean;
+    }
     public void getGamesToSend() throws PersistencyErrorException {
         this.salesBean = this.buyGamesController.getSales();
     }

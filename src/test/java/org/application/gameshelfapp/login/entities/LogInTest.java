@@ -3,6 +3,7 @@ package org.application.gameshelfapp.login.entities;
 
 import org.application.gameshelfapp.login.boundary.UserLogInBoundary;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
+import org.application.gameshelfapp.login.exception.NullPasswordException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 
@@ -27,19 +28,15 @@ import static org.junit.jupiter.api.Assertions.*;
             UserLogInBoundary boundary = new UserLogInBoundary();
             boundary.log("fer.andrea35@gmail.com", "ciao");
             assertNotNull(boundary.getUserBean());
-        } catch (PersistencyErrorException | CheckFailedException | SyntaxErrorException e) {
+        } catch (PersistencyErrorException | CheckFailedException | SyntaxErrorException | NullPasswordException e) {
             fail("é stata lanciata una eccezione con il seguente messaggio: " + e.getMessage());
         }
     }
 
-
     @Test
     void logInWithIncorrectPassword() throws PersistencyErrorException {
-
-
         UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
         assertThrows(CheckFailedException.class, () -> userLogInBoundary.log("fer.andrea35@gmail.com", "abab"));
-
     }
 
     @Test
@@ -50,8 +47,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
     @Test
     void logInWrongEmailSyntax() throws PersistencyErrorException {
-
         UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
         assertThrows(SyntaxErrorException.class, () -> userLogInBoundary.log("email@examplecom", null));
+    }
+
+    @Test
+    void nullPasswordException() throws PersistencyErrorException{
+        UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
+        assertThrows(NullPasswordException.class, () -> userLogInBoundary.log("fer.andrea35@gmail.com", null));
     }
 }

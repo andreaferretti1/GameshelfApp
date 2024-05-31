@@ -11,14 +11,19 @@ public class VideogamesFoundBean {
     private List<VideogameBean> gamesFoundBean;
     private VideogamesFound videogamesFound;
 
-    public List<VideogameBean> getGamesFoundBean(){
+    public List<VideogameBean> getVideoamesFoundBean(){
         return this.gamesFoundBean;
+    }
+    public void setGamesFoundBean(List<VideogameBean> gamesFoundBean){
+        this.gamesFoundBean = gamesFoundBean;
     }
 
     public void setVideogamesFound(VideogamesFound videogamesFound) {
         this.videogamesFound = videogamesFound;
     }
-
+    public VideogamesFound getVideogamesFound(){
+        return this.videogamesFound;
+    }
     public void getInformationFromModel(){
         this.gamesFoundBean = new ArrayList<VideogameBean>();
         List<Videogame> gamesFound = videogamesFound.getGamesFound();

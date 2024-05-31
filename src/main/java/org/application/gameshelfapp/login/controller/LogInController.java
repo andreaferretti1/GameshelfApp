@@ -14,6 +14,12 @@ import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
 public class LogInController {
     private AccessThroughRegistration regAccess;
+    public void setRegAccess(AccessThroughRegistration regAccess){
+        this.regAccess = regAccess;
+    }
+    public AccessThroughRegistration getRegAccess(){
+        return this.regAccess;
+    }
     public UserBean logIn(LogInBean logBean) throws PersistencyErrorException, CheckFailedException, NullPasswordException {
 
         String logEmail = logBean.getEmailBean();
@@ -32,7 +38,7 @@ public class LogInController {
     }
 
     public void registration(RegistrationBean regBean) throws PersistencyErrorException, CheckFailedException, GmailException, NullPasswordException {
-        this.regAccess = new AccessThroughRegistration(regBean.getUsernameBean(), regBean.getEmailBean(), regBean.getPasswordBean(), regBean.getTypeOfUser());
+        this.regAccess = new AccessThroughRegistration(regBean.getUsernameBean(), regBean.getEmailBean(), regBean.getPasswordBean(), "Customer");
         this.regAccess.encodePassword();
         AccessDAO accessDAO = PersistencyAbstractFactory.getFactory().createAccessDAO();
         Access account = accessDAO.retrieveAccount(this.regAccess);

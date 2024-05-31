@@ -17,7 +17,6 @@ public class JDBCFactory extends PersistencyAbstractFactory{
     public AccessDAO createAccessDAO(){
         return new AccessDAOJDBC();
     }
-
     @Override
     public SaleDAO createSaleDAO(){
         return new SaleDAOJDBC();

@@ -77,6 +77,5 @@ public class SaleBean {
         this.addressBean = this.sale.getAddress();
         this.platformBean = this.sale.getPlatform();
         this.stateBean = this.sale.getState();
-
     }
 }

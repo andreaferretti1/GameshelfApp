@@ -16,9 +16,9 @@ public class ItemDAOJDBC implements ItemDAO {
         try(Connection conn = SingletonConnectionPool.getInstance().getConnection();
             Statement stmt = conn.createStatement()){
             if (filters.getName() == null) {
-                query = "SELECT * FROM ObjectOnSale WHERE Type = " + filters.getCategory() + "AND Platform = " + filters.getPlatform() + " AND Copies > 0;";
+                query = "SELECT * FROM ObjectOnSale WHERE Type = " + filters.getCategory() + "AND Platform = " + filters.getConsole() + " AND Copies > 0;";
             } else {
-                query = "SELECT * FROM ObjectOnSale WHERE Type = " + filters.getCategory() + "AND Platform = " + filters.getPlatform() + "AND Name = " + filters.getName() + "AND Copies > 0;";
+                query = "SELECT * FROM ObjectOnSale WHERE Type = " + filters.getCategory() + "AND Platform = " + filters.getConsole() + "AND Name = " + filters.getName() + "AND Copies > 0;";
             }
             stmt.execute(query);
             ResultSet rs = stmt.getResultSet();
@@ -39,9 +39,9 @@ public class ItemDAOJDBC implements ItemDAO {
             try(Connection conn = SingletonConnectionPool.getInstance().getConnection();
                 Statement stmt = conn.createStatement()){
 
-                String query = String.format("INSERT INTO ObjectOnSale (Name, Platform, Price, Description, Copies) VALUES (%s, %s, %f, %s, %d) ON DUPLICATE KEY UPDATE Copies = Copies + %d, Price = %f;", game.getName(), filters.getPlatform(), game.getPrice(), game.getDescription(), game.getCopies(),game.getCopies(), game.getPrice());
+                String query = String.format("INSERT INTO ObjectOnSale (Name, Platform, Price, Description, Copies) VALUES (%s, %s, %f, %s, %d) ON DUPLICATE KEY UPDATE Copies = Copies + %d, Price = %f;", game.getName(), filters.getConsole(), game.getPrice(), game.getDescription(), game.getCopies(),game.getCopies(), game.getPrice());
                 stmt.execute(query);
-                query =String.format( "INSERT IGNORE INTO Filtered (Name, Platform, Type) VALUES (%s, %s, %s);", game.getName(), filters.getPlatform(), filters.getCategory());
+                query =String.format( "INSERT IGNORE INTO Filtered (Name, Platform, Type) VALUES (%s, %s, %s);", game.getName(), filters.getConsole(), filters.getCategory());
                 stmt.execute(query);
 
             } catch(SQLException e){
@@ -54,7 +54,7 @@ public class ItemDAOJDBC implements ItemDAO {
         ResultSet rs = null;
         try(Connection conn = SingletonConnectionPool.getInstance().getConnection();
             Statement stmt = conn.createStatement()){
-            String query = "SELECT Copies FROM ObjectOnSale WHERE Name = " + game.getName() + "AND Platform = " + filters.getPlatform() + ";";
+            String query = "SELECT Copies FROM ObjectOnSale WHERE Name = " + game.getName() + "AND Platform = " + filters.getConsole() + ";";
             stmt.execute(query);
             rs = stmt.getResultSet();
             int copies = 0;
@@ -64,7 +64,7 @@ public class ItemDAOJDBC implements ItemDAO {
             rs.close();
             if(copies < game.getCopies()) throw new GameSoldOutException("Game is sold out");
             copies = copies - game.getCopies();
-            query = "UPDATE ObjectOnSale SET Copies = " + copies + "WHERE Name = " + game.getName() + "AND Platform = " + filters.getPlatform() + ";";
+            query = "UPDATE ObjectOnSale SET Copies = " + copies + "WHERE Name = " + game.getName() + "AND Platform = " + filters.getConsole() + ";";
             stmt.execute(query);
         } catch(SQLException e){
             throw new PersistencyErrorException("Couldn't remove game for sale");

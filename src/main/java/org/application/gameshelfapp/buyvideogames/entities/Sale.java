@@ -26,7 +26,7 @@ public class Sale {
     public Videogame getVideogameSold(){
         return this.gameSold;
     }
-    public void setGameSold(Videogame game){
+    public void setVideogameSold(Videogame game){
         this.gameSold = game;
     }
     public String getAddress() {

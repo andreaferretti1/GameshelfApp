@@ -1,19 +1,27 @@
 package org.application.gameshelfapp.buyvideogames.boundary;
 
-import org.application.gameshelfapp.buyvideogames.bean.*;
+import org.application.gameshelfapp.buyvideogames.bean.CredentialsBean;
+import org.application.gameshelfapp.buyvideogames.bean.FiltersBean;
+import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
+import org.application.gameshelfapp.buyvideogames.bean.VideogamesFoundBean;
 import org.application.gameshelfapp.buyvideogames.controller.BuyGamesController;
-import org.application.gameshelfapp.buyvideogames.exception.*;
+import org.application.gameshelfapp.buyvideogames.exception.FiltersException;
+import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
+import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
+import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.bean.UserBean;
-import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 
 public class CustomerBoundary {
 
+    public BuyGamesController getBuyGamesController() {
+        return this.buyGamesController;
+    }
+
     private final BuyGamesController buyGamesController;
     private VideogamesFoundBean videogamesFoundBean;
     private FiltersBean filtersBean;
-    private VideogameBean gameToBuy;
     private final UserBean userBean;
 
     public CustomerBoundary(UserBean userBean){
@@ -21,20 +29,21 @@ public class CustomerBoundary {
         this.buyGamesController = new BuyGamesController();
     }
 
-    public VideogamesFoundBean getGamesFound() {
-        return this.videogamesFoundBean;
-    }
-
     public UserBean getUserBean(){
         return this.userBean;
+    }
+    public void setVideogamesFoundBean(VideogamesFoundBean videogamesFoundBean) {
+        this.videogamesFoundBean = videogamesFoundBean;
+    }
+    public VideogamesFoundBean getVideogamesFoundBean() {
+        return this.videogamesFoundBean;
+    }
+    public void setFiltersBean(FiltersBean filtersBean) {
+        this.filtersBean = filtersBean;
     }
     public FiltersBean getFiltersBean() {
         return this.filtersBean;
     }
-    public void setGameToBuy(VideogameBean gameToBuy) {
-        this.gameToBuy = gameToBuy;
-    }
-
     public void insertFilters(String name, String console, String category) throws FiltersException, PersistencyErrorException{
         this.filtersBean = new FiltersBean();
         this.filtersBean.setNameBean(name);
@@ -43,12 +52,11 @@ public class CustomerBoundary {
         this.videogamesFoundBean = this.buyGamesController.searchVideogame(filtersBean);
     }
 
-    public void insertCredentialsAndPay(String typeOfCard, String paymentKey, String street, String region, String country) throws RefundException, GameSoldOutException, GmailException, SyntaxErrorException, PersistencyErrorException, InvalidAddressException{
+    public void insertCredentialsAndPay(String typeOfCard, String paymentKey, String street, String region, String country, VideogameBean gameToBuy) throws RefundException, GameSoldOutException, SyntaxErrorException, PersistencyErrorException, InvalidAddressException{
         CredentialsBean credentialsBean = new CredentialsBean();
         credentialsBean.setTypeOfPaymentBean(typeOfCard);
         credentialsBean.setPaymentKeyBean(paymentKey);
         credentialsBean.setAddressBean(street, region, country);
-        this.buyGamesController.sendMoney(credentialsBean, this.gameToBuy, this.userBean, this.filtersBean);
+        this.buyGamesController.sendMoney(credentialsBean, gameToBuy, this.userBean, this.filtersBean);
     }
-
 }

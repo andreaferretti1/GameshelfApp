@@ -2,9 +2,9 @@ package org.application.gameshelfapp.buyvideogames.entities;
 
 public class User {
 
-    private final String username;
-    private final String email;
-    private final String typeOfUser;
+    private String username;
+    private String email;
+    private String typeOfUser;
 
     public User(String username, String email, String typeOfUser){
         this.username = username;
@@ -22,5 +22,17 @@ public class User {
 
     public String getTypeOfUser() {
         return typeOfUser;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setTypeOfUser(String typeOfUser) {
+        this.typeOfUser = typeOfUser;
     }
 }

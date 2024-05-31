@@ -62,8 +62,8 @@ public class SearchPageController implements Initializable{
         } catch(FiltersException | PersistencyErrorException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
         }
-        this.customerBoundary.getGamesFound().getInformationFromModel();
-        List<VideogameBean> gamesList = this.customerBoundary.getGamesFound().getGamesFoundBean();
+        this.customerBoundary.getVideogamesFoundBean().getInformationFromModel();
+        List<VideogameBean> gamesList = this.customerBoundary.getVideogamesFoundBean().getVideoamesFoundBean();
         ObservableList<VideogameBean> gamesToShow = FXCollections.observableList(gamesList);
 
         this.gameName.setCellValueFactory(new PropertyValueFactory<VideogameBean, String>("name"));

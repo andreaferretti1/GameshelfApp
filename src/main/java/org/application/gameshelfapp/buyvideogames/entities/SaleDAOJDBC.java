@@ -28,7 +28,8 @@ public class SaleDAOJDBC implements SaleDAO{
              rs = stmt.getResultSet();
              while(rs.next()){
                  //TODO guarda query
-                 Sale sale = new Sale(rs.getInt("Copies"), rs.getFloat("Price"), rs.getString("GameName"), rs.getString("UserEmail"), rs.getString("UserAddress"), rs.getString("State"), rs.getString("Platform"));
+                 Videogame videogame = new Videogame(rs.getString("GameName"), rs.getInt("Copies"), rs.getFloat("Price"), null);
+                 Sale sale = new Sale(videogame, rs.getString("UserEmail"), rs.getString("UserAddress"), rs.getString("State"), rs.getString("Platform"));
                  sale.setId(rs.getInt("Id"));
                  sales.add(sale);
              }

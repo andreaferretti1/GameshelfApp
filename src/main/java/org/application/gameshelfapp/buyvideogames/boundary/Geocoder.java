@@ -10,12 +10,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 public class Geocoder {
-    public String getURL(String address){
+    private String getURL(String address){
         return String.format("https://geocode.maps.co/search?q=%s&api_key=6637ee4ba2422085994104svn291950", address);
     }
 
     public void checkAddress(String address) throws InvalidAddressException, IOException{
-        String addressToCheck = this.getURL("via Ancona,Ciampino,Italia");
+        String addressToCheck = this.getURL(address);
         URL url = new URL(addressToCheck);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");

@@ -32,9 +32,8 @@ public class BuyGamesController {
         return gamesFoundBean;
     }
 
-    public void sendMoney(CredentialsBean credentialsBean, VideogameBean videogameBean, UserBean userBean, FiltersBean filtersBean) throws RefundException, GameSoldOutException, GmailException, PersistencyErrorException, InvalidAddressException {
+    public void sendMoney(CredentialsBean credentialsBean, VideogameBean videogameBean, UserBean userBean, FiltersBean filtersBean) throws RefundException, GameSoldOutException, PersistencyErrorException, InvalidAddressException {
         Braintree braintree = new Braintree();
-        GoogleBoundary googleBoundary = new GoogleBoundary();
         Geocoder geocoder = new Geocoder();
 
         PersistencyAbstractFactory factory = PersistencyAbstractFactory.getFactory();
@@ -50,25 +49,26 @@ public class BuyGamesController {
                 float amountToPay = game.getPrice() * quantity;
                 braintree.pay(amountToPay, credentialsBean.getPaymentKeyBean(), credentialsBean.getTypeOfPaymentBean());
                 itemDAO.removeGameForSale(game, filters);
+                GoogleBoundary googleBoundary = new GoogleBoundary();
                 String messageToSend = userBean.getUsername() + "bought" + quantity + "of" + game.getName() + "for" + amountToPay;
                 googleBoundary.sendMail("Videogame bought", messageToSend, "gameshelfApp2024@gmail.com");
                 saleDAO.saveSale(sale);
             }catch(GmailException e){
                 itemDAO.addGameForSale(game, filters);
                 braintree.refund();
+                throw new RefundException("Transaction has been refunded.");
             } catch (PersistencyErrorException e){
                 braintree.refund();
                 throw new RefundException("Transaction has been refunded due to problems");
             } catch(GameSoldOutException e){
                 braintree.refund();
-                throw  new GameSoldOutException(e.getMessage());
+                throw new GameSoldOutException(e.getMessage());
             } catch(IOException e){
                 throw new RefundException("Couldn't buy videogame");
             }
     }
 
     public List<SaleBean> getSales() throws PersistencyErrorException{
-
         SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
         List<Sale> sales = saleDAO.getSales();
         List<SaleBean> salesBean = new ArrayList<SaleBean>();

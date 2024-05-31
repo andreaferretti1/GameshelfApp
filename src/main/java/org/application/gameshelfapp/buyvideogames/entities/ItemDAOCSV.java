@@ -34,7 +34,7 @@ public class ItemDAOCSV implements ItemDAO {
          String[] myRecord = null;
 
          String gameName = filters.getName();
-         String console = filters.getPlatform();
+         String console = filters.getConsole();
          String category = filters.getCategory();
 
          try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fdGamesForSale)));){
@@ -55,7 +55,6 @@ public class ItemDAOCSV implements ItemDAO {
          } catch (IOException | CsvValidationException e) {
              throw new PersistencyErrorException("couldn't retrieve videogames");
          }
-
         return gamesFound;
     }
 
@@ -64,7 +63,7 @@ public class ItemDAOCSV implements ItemDAO {
         String[] myRecord = null;
         String[] gameToSave = new String[6];
         gameToSave[VideogamesOnSaleAttributes.GAMENAME.ordinal()] = game.getName();
-        gameToSave[VideogamesOnSaleAttributes.CONSOLE.ordinal()] = filters.getPlatform();
+        gameToSave[VideogamesOnSaleAttributes.CONSOLE.ordinal()] = filters.getConsole();
         gameToSave[VideogamesOnSaleAttributes.CATEGORY.ordinal()] = filters.getCategory();
         gameToSave[VideogamesOnSaleAttributes.DESCRIPTION.ordinal()] = game.getDescription();
         gameToSave[VideogamesOnSaleAttributes.COPIES.ordinal()] = String.valueOf(game.getCopies());
@@ -85,9 +84,10 @@ public class ItemDAOCSV implements ItemDAO {
             channel.truncate(0);
 
             while((myRecord = csvReader.readNext()) != null){
-                if(gameToSave[VideogamesOnSaleAttributes.GAMENAME.ordinal()].equals(myRecord[VideogamesOnSaleAttributes.GAMENAME.ordinal()])){
+                if(gameToSave[VideogamesOnSaleAttributes.GAMENAME.ordinal()].equals(myRecord[VideogamesOnSaleAttributes.GAMENAME.ordinal()]) && gameToSave[VideogamesOnSaleAttributes.CONSOLE.ordinal()].equals(filters.getConsole())){
                     int totalCopiesOnSale = Integer.parseInt(gameToSave[VideogamesOnSaleAttributes.COPIES.ordinal()]) + Integer.parseInt(myRecord[VideogamesOnSaleAttributes.COPIES.ordinal()]);
                     gameToSave[VideogamesOnSaleAttributes.COPIES.ordinal()] = String.valueOf(totalCopiesOnSale);
+                    gameToSave[VideogamesOnSaleAttributes.PRICE.ordinal()] = String.valueOf(game.getPrice());
                     csvWriter.writeNext(gameToSave);
                 }
                 else csvWriter.writeNext(myRecord);
@@ -108,7 +108,7 @@ public class ItemDAOCSV implements ItemDAO {
         boolean removed = false;
         String[] gameToDelete = null;
         String gameName = game.getName();
-        String platform = filters.getPlatform();
+        String platform = filters.getConsole();
         int copies = game.getCopies();
         File tempFile = new File(TEMP_FILE);
 

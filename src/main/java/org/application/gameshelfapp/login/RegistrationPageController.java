@@ -24,16 +24,6 @@ public class RegistrationPageController {
     private TextField usernameTextField;
     @FXML
     private TextField passwordTextField;
-    @FXML
-    private TextField confirmPasswordTextField;
-    @FXML
-    private RadioButton customerButton;
-    @FXML
-    private RadioButton sellerButton;
-    @FXML
-    private RadioButton bothButton;
-    @FXML
-    private ToggleGroup typeOfUser;
     private UserLogInBoundary userBoundary;
 
     public void setUserLogInBoundary(UserLogInBoundary b){
@@ -46,15 +36,8 @@ public class RegistrationPageController {
 
     @FXML
     private void register(MouseEvent event) {
-
-        String userType = null;
-        if(this.customerButton.isSelected()) userType = "customer";
-        else if(this.sellerButton.isSelected()) userType = "seller";
-        else if(this.bothButton.isSelected()) userType = "both";
-
-        if(userType == null)  ErrorPageController.displayErrorWindow("You should choose your role");
         try{
-            this.userBoundary.register(this.usernameTextField.getText(), this.emailTextField.getText(), this.passwordTextField.getText(), userType);
+            this.userBoundary.register(this.usernameTextField.getText(), this.emailTextField.getText(), this.passwordTextField.getText());
         } catch (PersistencyErrorException | CheckFailedException | SyntaxErrorException | GmailException |
                  NullPasswordException e){
             ErrorPageController.displayErrorWindow(e.getMessage());

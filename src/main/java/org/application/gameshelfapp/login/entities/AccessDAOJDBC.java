@@ -24,7 +24,7 @@ public class AccessDAOJDBC implements AccessDAO{
         Access checkAccess = null;
         try(Connection conn = SingletonConnectionPool.getInstance().getConnection();
             Statement stmt = conn.createStatement()){
-            String query = "SELECT * FROM User WHERE Email = " + access.getEmail() + ";";
+            String query = "SELECT * FROM User WHERE Email = " + access.getEmail() + "OR Username = " + access.getEmail() + ";";
             boolean executed = stmt.execute(query);
             if(executed) {
                 ResultSet rs = stmt.getResultSet();
