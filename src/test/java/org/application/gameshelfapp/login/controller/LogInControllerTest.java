@@ -36,7 +36,7 @@ class LogInControllerTest {
             logInBean.setEmailBean("emailTest@gmail.com");
             logInBean.setPasswordBean("passwordTest");
             assertThrows(CheckFailedException.class, () -> logInController.logIn(logInBean));
-        } catch(SyntaxErrorException | NullPasswordException e){
+        } catch(SyntaxErrorException e){
             fail();
         }
     }
@@ -49,7 +49,7 @@ class LogInControllerTest {
             logInBean.setEmailBean("fer.andrea35@gmail.com");
             logInBean.setPasswordBean("testPassword");
             assertThrows(CheckFailedException.class, () -> logInController.logIn(logInBean));
-        } catch(SyntaxErrorException | NullPasswordException e){
+        } catch(SyntaxErrorException  e){
             fail();
         }
     }
@@ -77,7 +77,7 @@ class LogInControllerTest {
             registrationBean.setEmailBean("email2@gmail.com");
             registrationBean.setPasswordBean("passwordTest");
             assertThrows(CheckFailedException.class, () -> logInController.registration(registrationBean));
-        } catch(SyntaxErrorException | NullPasswordException e){
+        } catch(SyntaxErrorException e){
             fail();
         }
     }
@@ -91,7 +91,7 @@ class LogInControllerTest {
             registrationBean.setEmailBean("email@gmail.com");
             registrationBean.setPasswordBean("testPassword");
             assertThrows(CheckFailedException.class, () -> logInController.registration(registrationBean));
-        } catch(SyntaxErrorException | NullPasswordException e){
+        } catch(SyntaxErrorException e){
              fail();
         }
     }
