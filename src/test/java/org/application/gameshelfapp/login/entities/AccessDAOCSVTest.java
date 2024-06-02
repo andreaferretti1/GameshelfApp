@@ -17,7 +17,7 @@ class AccessDAOCSVTest {
             regAccess.encodePassword();
             AccessDAOCSV accessDAOCSV = new AccessDAOCSV(new File("/org/application/gameshelfapp/persistency/FileSystem/accounts.csv"));
             accessDAOCSV.saveAccount(regAccess);
-            Access access = accessDAOCSV.retrieveAccount(regAccess);
+            Access access = accessDAOCSV.retrieveAccountByEmail(regAccess);
             assertEquals("test", access.getUsername());
             assertEquals("testEmail@example.com", access.getEmail());
             assertEquals(regAccess.getEncodedPassword(), access.getEncodedPassword());
@@ -34,7 +34,7 @@ class AccessDAOCSVTest {
             accessDAOCSV.saveAccount(new AccessThroughRegistration("testName1", "testEmail1@example.com", null, null));
             accessDAOCSV.saveAccount(new AccessThroughRegistration("testName2", "testEmail2@example.com", null, null));
             accessDAOCSV.saveAccount(new AccessThroughRegistration("testName3", "testEmail3@example.com", null, null));
-            Access access = accessDAOCSV.retrieveAccount(new Access("testName", "testEmail@example.com", null, null));
+            Access access = accessDAOCSV.retrieveAccountByEmail(new Access("testName", "testEmail@example.com", null, null));
             assertNull(access);
         } catch(PersistencyErrorException e){
             fail();
@@ -42,30 +42,15 @@ class AccessDAOCSVTest {
     }
 
     @Test  //test executed with the same values inserted in retrieveAccountReturnsNullTest
-    void retrieveAccountWithSameEmailTest(){
+    void retrieveAccountTest(){
         try{
             AccessDAOCSV accessDAOCSV = new AccessDAOCSV(new File("/org/application/gameshelfapp/persistency/FileSystem/accounts.csv"));
             accessDAOCSV.saveAccount(new AccessThroughRegistration("testName1", "testEmail1@example.com", null, null));
             accessDAOCSV.saveAccount(new AccessThroughRegistration("testName2", "testEmail2@example.com", null, null));
             accessDAOCSV.saveAccount(new AccessThroughRegistration("testName3", "testEmail3@example.com", null, null));
-            Access access = accessDAOCSV.retrieveAccount(new Access("testName", "testEmail2@example.com", null, null));
+            Access access = accessDAOCSV.retrieveAccountByEmail(new Access("testName", "testEmail2@example.com", null, null));
             assertNotNull(access);
             assertEquals("testEmail2@example.com", access.getEmail());
-        } catch(PersistencyErrorException e){
-            fail();
-        }
-    }
-
-    @Test       //test executed with the same values inserted in retrieveAccountReturnsNullTest
-    void retrieveAccountWithSameUsernameTest(){
-        try{
-            AccessDAOCSV accessDAOCSV = new AccessDAOCSV(new File("/org/application/gameshelfapp/persistency/FileSystem/accounts.csv"));
-            accessDAOCSV.saveAccount(new AccessThroughRegistration("testName1", "testEmail1@example.com", null, null));
-            accessDAOCSV.saveAccount(new AccessThroughRegistration("testName2", "testEmail2@example.com", null, null));
-            accessDAOCSV.saveAccount(new AccessThroughRegistration("testNAme3", "testEmail3@example.com", null, null));
-            Access access = accessDAOCSV.retrieveAccount(new Access("testName2", "testEmail@example.com", null, null));
-            assertNotNull(access);
-            assertEquals("testName2", access.getUsername());
         } catch(PersistencyErrorException e){
             fail();
         }

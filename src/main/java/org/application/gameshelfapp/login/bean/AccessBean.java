@@ -1,6 +1,5 @@
 package org.application.gameshelfapp.login.bean;
 
-import org.application.gameshelfapp.login.exception.NullPasswordException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 
 import java.util.regex.Matcher;
@@ -10,8 +9,7 @@ public class AccessBean {
 
     protected String emailBean;
     protected String passwordBean;
-
-    protected String emailRegex =  "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+    protected String emailRegex = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
     protected String usernameRegex = "[a-zA-Z]+[0-9._]*";
 
     public void setEmailBean(String emailBean) throws SyntaxErrorException {
@@ -19,8 +17,7 @@ public class AccessBean {
         this.emailBean = emailBean;
     }
 
-    public void setPasswordBean(String passwordBean) throws SyntaxErrorException, NullPasswordException {
-        if(passwordBean == null) throw new NullPasswordException("You should give me a password");
+    public void setPasswordBean(String passwordBean) throws SyntaxErrorException{
         if(passwordBean.isEmpty()) throw new SyntaxErrorException("You should enter a password");
         this.passwordBean = passwordBean;
     }
@@ -43,5 +40,4 @@ public class AccessBean {
             throw new SyntaxErrorException("Invalid syntax of username. You can use numbers, letters, and . or _");
         }
     }
-
 }

@@ -87,16 +87,19 @@ public class SalePageController implements Initializable {
             ((Label) fxmlLoader.getNamespace().get("gameName")).setText(saleBean.getGameSoldBean().getName());
             ((Label) fxmlLoader.getNamespace().get("gamePlatform")).setText(saleBean.getPlatformBean());
             ((Label) fxmlLoader.getNamespace().get("copies")).setText(String.valueOf(saleBean.getGameSoldBean().getCopiesBean()));
-            ((Label) fxmlLoader.getNamespace().get("name")).setText();
+            ((Label) fxmlLoader.getNamespace().get("name")).setText();//TODO aggiungi nome e cognome di chi ha comprato il videogioco
             ((Label) fxmlLoader.getNamespace().get("address")).setText(saleBean.getAddressBean());
             ((Label) fxmlLoader.getNamespace().get("email")).setText(saleBean.getEmailBean());
-            ((Button) fxmlLoader.getNamespace().get("button")).setOnMouseClicked(event -> {
-                try {
-                    this.sellerBoundary.sendGame(gamesSold.getSelectionModel().getSelectedIndex());
-                } catch(ConfirmDeliveryException | GmailException e){
-                    ErrorPageController.displayErrorWindow(e.getMessage());
-                }
-            });
+            switch (saleBean.getStateBean()) {
+                case "To confirm" -> ((Button) fxmlLoader.getNamespace().get("button")).setOnMouseClicked(event -> {
+                    try {
+                        this.sellerBoundary.sendGame(gamesSold.getSelectionModel().getSelectedIndex());
+                    } catch (ConfirmDeliveryException | GmailException e) {
+                        ErrorPageController.displayErrorWindow(e.getMessage());
+                    }
+                });
+                default -> ((Button) fxmlLoader.getNamespace().get("button")).setDisable(true);
+            }
             return vBox;
         } catch(IOException e){
             ErrorPageController.displayErrorWindow("Couldn't show sales");

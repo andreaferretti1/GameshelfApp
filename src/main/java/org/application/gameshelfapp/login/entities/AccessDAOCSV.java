@@ -3,6 +3,7 @@ package org.application.gameshelfapp.login.entities;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
+import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
 import java.io.*;
@@ -14,52 +15,63 @@ public class AccessDAOCSV implements AccessDAO{
 
     public AccessDAOCSV(File fd){
         this.fd = fd;
-
     }
-
     @Override
     public synchronized void saveAccount(AccessThroughRegistration regAccess) throws PersistencyErrorException {
-            String username = regAccess.getUsername();
-            String email = regAccess.getEmail();
-            String password = regAccess.getEncodedPassword();
 
-            String[] instance = new String[4];
+        String[] tuple = new String[4];
 
-            instance[AccountAttributes.USERNAME.ordinal()] = username;
-            instance[AccountAttributes.EMAIL.ordinal()] = email;
-            instance[AccountAttributes.PASSWORD.ordinal()] = password;
-            instance[AccountAttributes.TYPEOFUSER.ordinal()] = regAccess.getTypeOfUser();
+        tuple[AccountAttributes.USERNAME.ordinal()] = regAccess.getUsername();
+        tuple[AccountAttributes.EMAIL.ordinal()] = regAccess.getEmail();
+        tuple[AccountAttributes.PASSWORD.ordinal()] = regAccess.getPassword();
+        tuple[AccountAttributes.TYPE_OF_USER.ordinal()] = regAccess.getTypeOfUser();
 
-            try(CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(this.fd, true)));){
-                csvWriter.writeNext(instance);
-            } catch(IOException e){
-                throw new PersistencyErrorException("Couldn't save account");
-            }
+        try(CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(this.fd, true)));){
+            csvWriter.writeNext(tuple);
+        } catch(IOException e){
+            throw new PersistencyErrorException("Couldn't save account");
+        }
     }
 
 
     @Override
-    public Access retrieveAccount(Access access) throws PersistencyErrorException{
-        String[] instance;
+    public Access retrieveAccountByEmail(Access access) throws PersistencyErrorException{
+        String[] tuple;
         Access user = null;
 
-        String username = access.getUsername();
         String email = access.getEmail();
 
         try (CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)));){
-             while((instance = csvReader.readNext()) != null){
-                    if(instance[AccountAttributes.EMAIL.ordinal()].equals(email) || instance[AccountAttributes.USERNAME.ordinal()].equals(username)){
-                        user = new Access(instance[AccountAttributes.USERNAME.ordinal()], instance[AccountAttributes.EMAIL.ordinal()], null, instance[AccountAttributes.TYPEOFUSER.ordinal()]);
-                        user.setEncodedPassword(instance[AccountAttributes.PASSWORD.ordinal()]);
+             while((tuple = csvReader.readNext()) != null){
+                    if(tuple[AccountAttributes.EMAIL.ordinal()].equals(email)){
+                        user = new Access(tuple[AccountAttributes.USERNAME.ordinal()], tuple[AccountAttributes.EMAIL.ordinal()], null, tuple[AccountAttributes.TYPE_OF_USER.ordinal()]);
+                        user.setEncodedPassword(tuple[AccountAttributes.PASSWORD.ordinal()]);
                     }
              }
-        } catch(IOException | CsvValidationException e){
+        }catch(IOException | CsvValidationException e){
             throw new PersistencyErrorException("Couldn't retrieve account");
         }
         return user;
     }
 
+    @Override
+    public void checkAccount(AccessThroughRegistration regAccess) throws PersistencyErrorException, CheckFailedException {
+        String[] tuple;
+
+        String username = regAccess.getUsername();
+        String email = regAccess.getEmail();
+
+        try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)))){
+            while((tuple = csvReader.readNext()) != null){
+                if(tuple[AccountAttributes.USERNAME.ordinal()].equals(username) || tuple[AccountAttributes.EMAIL.ordinal()].equals(email)){
+                    throw new CheckFailedException("Username or email already existing");
+                }
+            }
+        } catch(IOException | CsvValidationException e){
+            throw new PersistencyErrorException("Couldn't register your account");
+        }
+    }
     private enum AccountAttributes{
-        USERNAME, EMAIL, PASSWORD, TYPEOFUSER;
+        USERNAME, EMAIL, PASSWORD, TYPE_OF_USER;
     }
 }

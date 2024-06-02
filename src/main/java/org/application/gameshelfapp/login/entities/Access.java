@@ -32,24 +32,25 @@ public class Access {
     public void setEncodedPassword(String encodedPassword) {
         this.encodedPassword = encodedPassword;
     }
-
     public String getPassword(){
         return this.password;
     }
-
-
     public String getEncodedPassword(){
         return this.encodedPassword;
     }
     public String getUsername(){
         return this.username;
     }
-
     public void encodePassword() throws NullPasswordException {
         this.encoder.cryptPassword();
         this.encodedPassword = this.encoder.getEncryptedPassword();
         Arrays.fill(this.password.toCharArray(), '\0');
         this.password = null;
     }
-
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

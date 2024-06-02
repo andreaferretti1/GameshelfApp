@@ -102,13 +102,13 @@ class LogInControllerTest {
         AccessThroughRegistration registration = new AccessThroughRegistration("nameTest", "email@gmail.com", "passwordTest", "Customer");
         try {
             registration.encodePassword();
-            registration.getMessageToSend();
+            registration.generateCode();
             int code = registration.getCodeGenerated();
             RegistrationBean registrationBean = new RegistrationBean();
             registrationBean.setCheckCode(code);
             logInController.checkCode(registrationBean);
             AccessDAO accessDAO = PersistencyAbstractFactory.getFactory().createAccessDAO();
-            Access access = accessDAO.retrieveAccount(registration);
+            Access access = accessDAO.retrieveAccountByEmail(registration);
             assertNotNull(access);
         } catch (NullPasswordException | CheckFailedException | PersistencyErrorException e) {
             fail();
@@ -119,7 +119,7 @@ class LogInControllerTest {
     void checkCodeFailedTest(){
         LogInController logInController = new LogInController();
         AccessThroughRegistration registration = new AccessThroughRegistration(null, null, null, null);
-        registration.getMessageToSend();
+        registration.generateCode();
         int code = registration.getCodeGenerated();
         RegistrationBean registrationBean = new RegistrationBean();
         registrationBean.setCheckCode(code + 1);

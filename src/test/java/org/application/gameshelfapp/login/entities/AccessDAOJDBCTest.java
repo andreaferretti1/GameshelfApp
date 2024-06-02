@@ -13,7 +13,7 @@ class AccessDAOJDBCTest {
         try{
             JDBCFactory jdbcFactory = new JDBCFactory();
             AccessDAO accessDAO = jdbcFactory.createAccessDAO();
-            Access access = accessDAO.retrieveAccount(new Access("testName", "testEmail", "testPAssword","Customer"));
+            Access access = accessDAO.retrieveAccountByEmail(new Access("testName", "testEmail", "testPAssword","Customer"));
             assertEquals("testName", access.getUsername());
             assertEquals("testEmail", access.getEmail());
             assertEquals("testPassword", access.getEncodedPassword());
@@ -22,6 +22,21 @@ class AccessDAOJDBCTest {
             fail();
         }
     }
+
+    @Test
+    void retrieveAccountReturnsNullTest(){
+        try{
+            AccessDAOJDBC accessDAOJDBC = new AccessDAOJDBC();
+            accessDAOJDBC.saveAccount(new AccessThroughRegistration("testName1", "testEmail1@example.com", null, null));
+            accessDAOJDBC.saveAccount(new AccessThroughRegistration("testName2", "testEmail2@example.com", null, null));
+            accessDAOJDBC.saveAccount(new AccessThroughRegistration("testName3", "testEmail3@example.com", null, null));
+            Access access = accessDAOJDBC.retrieveAccountByEmail(new Access("testName", "testEmail@example.com", null, null));
+            assertNull(access);
+        } catch(PersistencyErrorException e){
+            fail();
+        }
+    }
+
     @Test   //this test was taken after testing "retrieveAccount" method, so that any failure was due to saveAccount method.
     void saveAccountTest(){
         try {
@@ -29,7 +44,7 @@ class AccessDAOJDBCTest {
             AccessDAO accessDAO = jdbcFactory.createAccessDAO();
             AccessThroughRegistration registration = new AccessThroughRegistration("testName", "testEmail", "passwordTest", "Customer");
             accessDAO.saveAccount(registration);
-            Access access = accessDAO.retrieveAccount(registration);
+            Access access = accessDAO.retrieveAccountByEmail(registration);
             assertEquals("testName", access.getUsername());
             assertEquals("testEmail", access.getEmail());
             assertEquals("passwordTest", access.getEncodedPassword());

@@ -51,7 +51,8 @@ public class BuyGamesController {
                 itemDAO.removeGameForSale(game, filters);
                 GoogleBoundary googleBoundary = new GoogleBoundary();
                 String messageToSend = userBean.getUsername() + "bought" + quantity + "of" + game.getName() + "for" + amountToPay;
-                googleBoundary.sendMail("Videogame bought", messageToSend, "gameshelfApp2024@gmail.com");
+                googleBoundary.setMessageToSend(messageToSend);
+                googleBoundary.sendMail("Videogame bought", "gameshelfApp2024@gmail.com");
                 saleDAO.saveSale(sale);
             }catch(GmailException e){
                 itemDAO.addGameForSale(game, filters);
@@ -95,7 +96,8 @@ public class BuyGamesController {
             shipmentCompany.confirmDelivery(sale.getAddress());
 
             String message = "Your order has been confirmed.";
-            googleBoundary.sendMail("delivery CONFIRMED", message, sale.getEmail());
+            googleBoundary.setMessageToSend(message);
+            googleBoundary.sendMail("delivery CONFIRMED", sale.getEmail());
 
         } catch (PersistencyErrorException e) {
             throw new ConfirmDeliveryException("Couldn't confirm delivery. Try later");

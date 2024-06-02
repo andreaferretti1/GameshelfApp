@@ -29,7 +29,7 @@ public class LogInController {
         logAccess.encodePassword();
 
         AccessDAO accessDAO = PersistencyAbstractFactory.getFactory().createAccessDAO();
-        Access access = accessDAO.retrieveAccount(logAccess);
+        Access access = accessDAO.retrieveAccountByEmail(logAccess);
         logAccess.checkAccount(access);
         User user = new User(access.getUsername(), access.getEmail(), access.getTypeOfUser());
         UserBean userBean = new UserBean();
@@ -41,11 +41,12 @@ public class LogInController {
         this.regAccess = new AccessThroughRegistration(regBean.getUsernameBean(), regBean.getEmailBean(), regBean.getPasswordBean(), "Customer");
         this.regAccess.encodePassword();
         AccessDAO accessDAO = PersistencyAbstractFactory.getFactory().createAccessDAO();
-        Access account = accessDAO.retrieveAccount(this.regAccess);
-        this.regAccess.checkAccount(account);
-        String messageToSend = this.regAccess.getMessageToSend();
+        accessDAO.checkAccount(this.regAccess);
+        this.regAccess.generateCode();
         GoogleBoundary googleBoundary = new GoogleBoundary();
-        googleBoundary.sendMail("check email", messageToSend, regAccess.getEmail());
+        String message = "Your code is " + this.regAccess.getCodeGenerated() + ".";
+        googleBoundary.setMessageToSend(message);
+        googleBoundary.sendMail("check email", regAccess.getEmail());
     }
 
     public UserBean checkCode(RegistrationBean regBean) throws CheckFailedException, PersistencyErrorException{

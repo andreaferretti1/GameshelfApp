@@ -30,6 +30,7 @@ import java.util.Set;
 
 public class GoogleBoundary {
     private final Gmail service;
+    private String messageToSend;
     public GoogleBoundary() throws GmailException {
         final NetHttpTransport httpTransport;
         try {
@@ -64,7 +65,7 @@ public class GoogleBoundary {
         }
     }
 
-    public void sendMail(String subject, String messageToSend, String toEmailAddress) throws GmailException{
+    public void sendMail(String subject, String toEmailAddress) throws GmailException{
 
         Properties props = new Properties();
         Session session = Session.getDefaultInstance(props, null);
@@ -74,7 +75,7 @@ public class GoogleBoundary {
             email.addRecipient(javax.mail.Message.RecipientType.TO,
                     new InternetAddress(toEmailAddress));
             email.setSubject(subject);
-            email.setText(messageToSend);
+            email.setText(this.messageToSend);
 
             // Encode and wrap the MIME message into a gmail message
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -87,5 +88,11 @@ public class GoogleBoundary {
         } catch (MessagingException | IOException e) {
             throw new GmailException("Couldn't send mail");
         }
+    }
+    public void setMessageToSend(String message){
+        this.messageToSend = message;
+    }
+    public String getMessageToSend(){
+        return this.messageToSend;
     }
 }

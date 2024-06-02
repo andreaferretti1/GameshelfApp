@@ -7,6 +7,7 @@ public class RegistrationBean extends AccessBean{
 
     private  String usernameBean;
     private String typeOfUser;
+
     private int checkCode;
 
     public RegistrationBean(){
@@ -33,5 +34,4 @@ public class RegistrationBean extends AccessBean{
     public String getTypeOfUser() {
         return this.typeOfUser;
     }
-
 }
