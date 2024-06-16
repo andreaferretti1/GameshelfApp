@@ -1,6 +1,5 @@
 package org.application.gameshelfapp.login.graphiccontroller2;
 
-import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -28,7 +27,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 
-public class TerminalController extends Application implements Initializable {
+public class TerminalController implements Initializable {
     @FXML
     private TextArea textArea;
     @FXML
@@ -39,7 +38,7 @@ public class TerminalController extends Application implements Initializable {
     private SellerBoundary sellerBoundary;
     private String[] command;
     private status state;
-
+    //TODO prova a fare unaa funzione per ogni UC
     @FXML
     private void execute(KeyEvent event) {
 
@@ -76,13 +75,16 @@ public class TerminalController extends Application implements Initializable {
                     this.customerBoundary.insertFilters(command[1], command[2], command[3]);
                     VideogamesFoundBean videogamesFoundBean = this.customerBoundary.getVideogamesFoundBean();
                     videogamesFoundBean.getInformationFromModel();
-                    this.showVideogames(videogamesFoundBean.getVideoamesFoundBean());
+                    this.showVideogames(videogamesFoundBean.getVideogamesFoundBean());
                     textArea.appendText("\n\nEnter <see numberOfLine\n>");
                 } else if (this.command[0].equals("see") && this.state == status.BUY) {
                     this.seeVideogame(Integer.parseInt(command[1]));
-                    textArea.appendText("\n\nType <buy typeOfCard paymentkey street region country videogameNumber> to buy the videogame\n");
-                } else if (this.command[0].equals("buy") && this.state == status.BUY){
-                    this.customerBoundary.insertCredentialsAndPay(command[1], command[2], command[3], command[4], command[5], this.customerBoundary.getVideogamesFoundBean().getVideoamesFoundBean().get(Integer.parseInt(command[6])));
+                    textArea.appendText("\n\nType <buy videogameNumber> to buy the videogame\n");
+                } else if(this.command[0].equals("buy")){
+                    this.customerBoundary.setGameToBuy(this.customerBoundary.getVideogamesFoundBean().getVideogamesFoundBean().get(Integer.parseInt(command[1])));
+                    textArea.appendText("\n\nType <credentials nameAndSurname typeOfCard paymentkey street region country> to pay\n");
+                }else if (this.command[0].equals("credentials") && this.state == status.BUY){
+                    this.customerBoundary.insertCredentialsAndPay(command[1], command[2], command[3], command[4], command[5], command[6]);
                     textArea.appendText("\n\npayment successful\n");
                 } else if (this.command[0].equals("seeSales")){
                     this.sellerBoundary = new SellerBoundary(this.userBean);
@@ -114,7 +116,7 @@ public class TerminalController extends Application implements Initializable {
         }
     }
     private void seeVideogame(int index) {
-        VideogameBean gameSelected = this.customerBoundary.getVideogamesFoundBean().getVideoamesFoundBean().get(index);
+        VideogameBean gameSelected = this.customerBoundary.getVideogamesFoundBean().getVideogamesFoundBean().get(index);
         FiltersBean filters = this.customerBoundary.getFiltersBean();
         String textToShow = gameSelected.getName() + "\n" +
                 "Filters: " + filters.getConsoleBean() + " " + filters.getCategoryBean() + "\n"
@@ -123,21 +125,19 @@ public class TerminalController extends Application implements Initializable {
         this.textArea.appendText(textToShow);
     }
 
-
     private void showSales(List<SaleBean> sales) {
         for (SaleBean saleBean : sales) {
             saleBean.getInformationFromModel();
-            String[] components = {String.valueOf(saleBean.getIdBean()), saleBean.getGameSoldBean().getName(), String.valueOf(saleBean.getGameSoldBean().getCopiesBean()), String.valueOf(saleBean.getGameSoldBean().getPriceBean()), saleBean.getEmailBean(), saleBean.getAddressBean(), saleBean.getPlatformBean(), saleBean.getStateBean()};
+            String[] components = {String.valueOf(saleBean.getIdBean()), saleBean.getGameSoldBean().getName(), String.valueOf(saleBean.getGameSoldBean().getCopiesBean()), String.valueOf(saleBean.getGameSoldBean().getPriceBean()), saleBean.getEmailBean(), saleBean.getAddressBean(), saleBean.getNameBean(), saleBean.getStateBean()};
             String line = String.join(" ", components) + "\n";
             this.textArea.appendText(line);
         }
     }
 
-
-    @Override
-    public void start(Stage stage) throws IOException, PersistencyErrorException {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/org/application/gameshelfapp/GUI2/Access-Page.fxml"));
+    public static void start() throws IOException, PersistencyErrorException {
+        FXMLLoader fxmlLoader = new FXMLLoader(TerminalController.class.getResource("/org/application/gameshelfapp/GUI2/Access-Page.fxml"));
         Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
         Scene scene = new Scene(root, 1440, 768);
         stage.setScene(scene);
         stage.setTitle("Gameshelfapp");

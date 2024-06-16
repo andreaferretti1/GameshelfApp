@@ -8,7 +8,7 @@ public class SaleBean {
     private VideogameBean gameSoldBean;
     private String emailBean;
     private String addressBean;
-    private String platformBean;
+    private String nameBean;
     private String stateBean;
     private Sale sale;
 
@@ -44,12 +44,12 @@ public class SaleBean {
         this.addressBean = addressBean;
     }
 
-    public String getPlatformBean() {
-        return platformBean;
+    public String getNameBean() {
+        return nameBean;
     }
 
-    public void setPlatformBean(String platformBean) {
-        this.platformBean = platformBean;
+    public void setNameBean(String nameBean) {
+        this.nameBean = nameBean;
     }
 
     public String getStateBean() {
@@ -75,7 +75,7 @@ public class SaleBean {
         this.gameSoldBean.getVideogameFromModel();
         this.emailBean = this.sale.getEmail();
         this.addressBean = this.sale.getAddress();
-        this.platformBean = this.sale.getPlatform();
+        this.nameBean = this.sale.getName();
         this.stateBean = this.sale.getState();
     }
 }

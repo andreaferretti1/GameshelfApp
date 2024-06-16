@@ -44,6 +44,14 @@ class CustomerBoundaryTest {
     }
 
     @Test
+    void setAndGetGameToBuyTest(){
+        CustomerBoundary customerBoundary = new CustomerBoundary(null);
+        VideogameBean videogameBean = new VideogameBean();
+        customerBoundary.setGameToBuy(videogameBean);
+        assertEquals(videogameBean, customerBoundary.getGameToBuy());
+    }
+
+    @Test
     void getUserBeanTest(){
         CustomerBoundary customerBoundary = new CustomerBoundary(new UserBean());
         assertNotNull(customerBoundary.getUserBean());
@@ -54,7 +62,8 @@ class CustomerBoundaryTest {
         CustomerBoundary customerBoundary = new CustomerBoundary(new UserBean());
         try{
             customerBoundary.insertFilters("nameTest", "consoleTest", "categoryTest");
-            assertNotNull(customerBoundary.getVideogamesFoundBean());
+            assertNotNull(customerBoundary.getVideogamesFoundBean().getVideogamesFoundBean());
+            assertEquals(0, (long) customerBoundary.getVideogamesFoundBean().getVideogamesFoundBean().size());
         } catch(PersistencyErrorException | FiltersException e){
             fail();
         }
@@ -66,7 +75,7 @@ class CustomerBoundaryTest {
         try{
             customerBoundary.insertFilters("nameTest1", "consoleTest", "categoryTest");
             customerBoundary.getVideogamesFoundBean().getInformationFromModel();
-            List<VideogameBean> gamesBean = customerBoundary.getVideogamesFoundBean().getVideoamesFoundBean();
+            List<VideogameBean> gamesBean = customerBoundary.getVideogamesFoundBean().getVideogamesFoundBean();
             assertNotNull(gamesBean);
             VideogameBean videogameBean = gamesBean.getFirst();
             assertEquals("nameTest1", videogameBean.getName());
@@ -84,7 +93,7 @@ class CustomerBoundaryTest {
         try{
             customerBoundary.insertFilters(null, "consoleTest", "categoryTest");
             customerBoundary.getVideogamesFoundBean().getInformationFromModel();
-            List<VideogameBean> gamesBean = customerBoundary.getVideogamesFoundBean().getVideoamesFoundBean();
+            List<VideogameBean> gamesBean = customerBoundary.getVideogamesFoundBean().getVideogamesFoundBean();
             assertEquals(2, (long) gamesBean.size());
 
             VideogameBean videogameBean1 = gamesBean.getFirst();
@@ -106,24 +115,27 @@ class CustomerBoundaryTest {
     @Test
     void insertCredentialsAndPayTest(){
         VideogameBean videogameBean = new VideogameBean();
-        videogameBean.setName("nameTest");
+        videogameBean.setName("gameNameTest");
         videogameBean.setCopiesBean(2);
         videogameBean.setPriceBean(40);
-        videogameBean.setDescriptionBean("descriptionTest");
+        videogameBean.setPlatformBean("consoleTest");
         UserBean userBean = new UserBean();
         userBean.setEmail("fer.andrea35@gmail.com");
         CustomerBoundary customerBoundary = new CustomerBoundary(userBean);
+        customerBoundary.setGameToBuy(videogameBean);
         try {
-            customerBoundary.insertCredentialsAndPay("card", "key", "Via Cambridge", "Roma", "Italy", videogameBean);
+            customerBoundary.insertCredentialsAndPay("Name","card", "key", "Via Cambridge", "Roma", "Italy");
             SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
             List<Sale> sales = saleDAO.getSales();
             assertNotNull(sales);
 
             Sale sale = sales.getFirst();
             Videogame videogame = sale.getVideogameSold();
-            assertEquals("nameTest", videogame.getName());
+            assertEquals("Name", sale.getName());
+            assertEquals("gameNameTest", videogame.getName());
             assertEquals(2, videogame.getCopies());
             assertEquals(40, videogame.getPrice());
+            assertEquals("consoleTest", videogame.getPlatform());
             assertEquals("fer.andrea35@gmail.com", sale.getEmail());
             assertEquals("Via Cambridge, Roma, Italy", sale.getAddress());
             assertEquals(Sale.TO_CONFIRM, sale.getState());
@@ -134,33 +146,36 @@ class CustomerBoundaryTest {
     }
 
     @Test
-    void insertCredentialsAndPayGameSoldOutTest(){      //In the database there was game ('nameTest', '1', '20', 'descriptionTest')
+    void insertCredentialsAndPayGameSoldOutTest(){      //In the VideogameTable there was game ('gameNameTest', '1', '20', 'descriptionTest', 'consoleTest','categoryTest')
         VideogameBean videogameBean = new VideogameBean();
-        videogameBean.setName("nameTest");
-        videogameBean.setCopiesBean(1);
+        videogameBean.setName("gameNameTest");
+        videogameBean.setCopiesBean(2);
         videogameBean.setPriceBean(20);
         UserBean userBean = new UserBean();
         CustomerBoundary customerBoundary = new CustomerBoundary(userBean);
-        assertThrows(GameSoldOutException.class, () -> customerBoundary.insertCredentialsAndPay("card", "key", "Via Cambridge", "Roma", "Italy", videogameBean));
+        customerBoundary.setGameToBuy(videogameBean);
+        assertThrows(GameSoldOutException.class, () -> customerBoundary.insertCredentialsAndPay("Name", "card", "key", "Via Cambridge", "Roma", "Italy"));
     }
 
     @Test
     void insertCredentialsAndPayInvalidAddressTest(){
         VideogameBean videogameBean = new VideogameBean();
         CustomerBoundary customerBoundary = new CustomerBoundary(new UserBean());
-        assertThrows(InvalidAddressException.class, () -> customerBoundary.insertCredentialsAndPay("card", "key", "Viasbagliata", "Roma", "Italy", videogameBean));
+        customerBoundary.setGameToBuy(videogameBean);
+        assertThrows(InvalidAddressException.class, () -> customerBoundary.insertCredentialsAndPay("Name","card", "key", "Viasbagliata", "Roma", "Italy"));
     }
 
     @Test
-    void insertCredentialsAndPayGmailRefundException(){     //In the sale table there was tuple ('nameTest', '2', '10', 'descriptionTest')
+    void insertCredentialsAndPayGmailRefundException(){     //In the game table there was tuple ('gameNameTest', '2', '10', 'descriptionTest', 'consoleTest', 'categoryTest')
         UserBean userBean = new UserBean();
         userBean.setEmail("test");
         CustomerBoundary customerBoundary = new CustomerBoundary(userBean);
         VideogameBean videogameBean = new VideogameBean();
-        videogameBean.setName("nameTest");
+        videogameBean.setName("gameNameTest");
         videogameBean.setCopiesBean(1);
         videogameBean.setPriceBean(10);
         videogameBean.setDescriptionBean("descriptionTest");
-        assertThrows(RefundException.class, () -> customerBoundary.insertCredentialsAndPay("card", "key", "Via Cambridge", "Rome", "Italy", videogameBean));
+        customerBoundary.setGameToBuy(videogameBean);
+        assertThrows(RefundException.class, () -> customerBoundary.insertCredentialsAndPay("Name", "card", "key", "Via Cambridge", "Rome", "Italy"));
     }
 }

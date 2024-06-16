@@ -9,7 +9,7 @@ import java.util.List;
 public interface ItemDAO {
 
      List<Videogame> getVideogamesForSale(Filters filters) throws PersistencyErrorException;
-     void addGameForSale(Videogame game, Filters filters) throws PersistencyErrorException;
-     void removeGameForSale(Videogame game, Filters filters) throws PersistencyErrorException, GameSoldOutException;
+     void addGameForSale(Videogame game) throws PersistencyErrorException;
+     void removeGameForSale(Videogame game) throws PersistencyErrorException, GameSoldOutException;
 
 }

@@ -13,7 +13,7 @@ class VideogamesFoundTest {
     void setAndGetGamesFoundTest(){
         VideogamesFound videogamesFound = new VideogamesFound();
         List<Videogame> games = new ArrayList<Videogame>();
-        games.add(new Videogame(null, 0, 0, null));
+        games.add(new Videogame(null, 0, 0, null, null, null));
         assertEquals(games, videogamesFound.getGamesFound());
     }
 }

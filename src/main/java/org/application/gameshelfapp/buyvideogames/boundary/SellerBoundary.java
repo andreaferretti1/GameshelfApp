@@ -30,6 +30,7 @@ public class SellerBoundary {
     public void setSalesBean(List<SaleBean> salesBean) {
         this.salesBean = salesBean;
     }
+
     public void getGamesToSend() throws PersistencyErrorException {
         this.salesBean = this.buyGamesController.getSales();
     }

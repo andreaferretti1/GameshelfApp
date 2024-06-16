@@ -11,7 +11,7 @@ public class VideogamesFoundBean {
     private List<VideogameBean> gamesFoundBean;
     private VideogamesFound videogamesFound;
 
-    public List<VideogameBean> getVideoamesFoundBean(){
+    public List<VideogameBean> getVideogamesFoundBean(){
         return this.gamesFoundBean;
     }
     public void setGamesFoundBean(List<VideogameBean> gamesFoundBean){

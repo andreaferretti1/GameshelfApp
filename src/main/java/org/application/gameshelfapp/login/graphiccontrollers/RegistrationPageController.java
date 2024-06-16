@@ -1,19 +1,14 @@
-package org.application.gameshelfapp.login;
+package org.application.gameshelfapp.login.graphiccontrollers;
 
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
-import org.application.gameshelfapp.StartingPageController;
 import org.application.gameshelfapp.login.boundary.UserLogInBoundary;
 import org.application.gameshelfapp.login.exception.*;
-import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
-import org.application.gameshelfapp.login.graphiccontrollers.InsertCodeController;
 
 import java.io.IOException;
 public class RegistrationPageController {
@@ -48,9 +43,7 @@ public class RegistrationPageController {
     @FXML
     private void goToStartPage(MouseEvent event) {
         try {
-            StartingPageController startingPageController = new StartingPageController();
-            startingPageController.setUserBoundary(this.userBoundary);
-            startingPageController.start(this.getStage());
+            StartingPageController.start();
         } catch (IOException | PersistencyErrorException e){
             System.exit(1);
         }

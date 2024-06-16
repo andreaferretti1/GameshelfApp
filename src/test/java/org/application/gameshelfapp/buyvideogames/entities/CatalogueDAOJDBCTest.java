@@ -56,7 +56,7 @@ class CatalogueDAOJDBCTest {
         try{
             JDBCFactory jdbcFactory = new JDBCFactory();
             CatalogueDAO catalogueDAO = jdbcFactory.createCatalogueDAO();
-            Videogame videogame = new Videogame("nameTest", 3, 0, null);
+            Videogame videogame = new Videogame("nameTest", 3, 0, null, null, null);
             catalogueDAO.addVideogame("emailTest", videogame);
             List<Videogame> games = catalogueDAO.getCatalogue("emailTest");
             assertNotNull(games);
@@ -71,7 +71,7 @@ class CatalogueDAOJDBCTest {
         try{
             JDBCFactory jdbcFactory = new JDBCFactory();
             CatalogueDAO catalogueDAO = jdbcFactory.createCatalogueDAO();
-            Videogame videogame = new Videogame("nameTest", 3, 0, null);
+            Videogame videogame = new Videogame("nameTest", 3, 0, null, null, null);
             catalogueDAO.removeVideogame("emailTest", videogame);
             List<Videogame> games = catalogueDAO.getCatalogue("emailTest");
             assertEquals(0, (long) games.size());

@@ -28,8 +28,8 @@ class SellerBoundaryTest {
     }
 
     @Test
-    void getGamesToSendTest(){      /*In the Sale table there were tuples ('1', 'nameTest1', '2', '40', 'platform1', 'To confirm', 'address', 'emailTest')
-                                      ('2', 'nameTest2', '1', '20', 'platform2', 'Confirmed', 'address2', 'emailTest2')*/
+    void getGamesToSendTest(){      /*In the Sale table there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '40', 'platform1', 'To confirm', 'address', 'emailTest')
+                                      ('2', 'nameTest2', 'gameNameTest2', '1', '20', 'platform2', 'Confirmed', 'address2', 'emailTest2')*/
         SellerBoundary sellerBoundary = new SellerBoundary(new UserBean());
         try {
             sellerBoundary.getGamesToSend();
@@ -41,14 +41,16 @@ class SellerBoundaryTest {
     }
 
     @Test
-    void sendGameTest(){         /*In the Sale table there were tuples ('1', 'nameTest1', '2', '40', 'platform1', 'To confirm', 'address', 'fer.andrea35@gmail.com')
-                                      ('2', 'nameTest2', '1', '20', 'platform2', 'Confirmed', 'address2', 'fer.andrea35@gmail.com')*/
+    void sendGameTest(){         /*In the Sale table there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '40', 'platform1', 'To confirm', 'address', 'fer.andrea35@gmail.com')
+                                      ('2', 'nameTest2', 'gameNameTest2', '1', '20', 'platform2', 'Confirmed', 'address2', 'fer.andrea35@gmail.com')*/
         SellerBoundary sellerBoundary = new SellerBoundary(new UserBean());
         try{
             sellerBoundary.getGamesToSend();
             List<SaleBean> sales = sellerBoundary.getSalesBean();
             for(SaleBean saleBean : sales){
-                saleBean.getInformationFromModel();
+                if(saleBean.getStateBean().equals("To confirm")) {
+                    saleBean.getInformationFromModel();
+                }
             }
             sellerBoundary.sendGame(1);
         } catch(PersistencyErrorException | GmailException | ConfirmDeliveryException e){
@@ -57,7 +59,7 @@ class SellerBoundaryTest {
     }
 
     @Test
-    void sendGameGmailExceptionTest(){      //In the Sale table there was tuple ('1', 'nameTest1', '2', '40', 'platform1', 'To confirm', 'address', 'emailTest')
+    void sendGameGmailExceptionTest(){      //In the Sale table there was tuple ('1', 'nameTest1', 'gameNameTest1', '2', '40', 'platform1', 'To confirm', 'address', 'emailTest')
         SellerBoundary sellerBoundary = new SellerBoundary(new UserBean());
         try{
             sellerBoundary.getGamesToSend();

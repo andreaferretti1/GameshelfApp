@@ -7,34 +7,23 @@ import static org.junit.jupiter.api.Assertions.*;
 class FiltersBeanTest {
 
     @Test
-    void getNameBean() {
+    void getAndSetNameTest(){
+        FiltersBean filtersBean = new FiltersBean();
+        filtersBean.setNameBean("nameTest");
+        assertEquals("nameTest", filtersBean.getNameBean());
     }
 
     @Test
-    void getConsoleBean() {
+    void setAndGetPlatformBean(){
+        FiltersBean filtersBean = new FiltersBean();
+        filtersBean.setConsoleBean("platformTest");
+        assertEquals("platformTest", filtersBean.getConsoleBean());
     }
 
     @Test
-    void getOnlineBean() {
-    }
-
-    @Test
-    void getCategoryBean() {
-    }
-
-    @Test
-    void setNameBean() {
-    }
-
-    @Test
-    void setCategoryBean() {
-    }
-
-    @Test
-    void setConsoleBean() {
-    }
-
-    @Test
-    void setOnlineBean() {
+    void setAndGetCategoryTest(){
+        FiltersBean filtersBean = new FiltersBean();
+        filtersBean.setCategoryBean("categoryTest");
+        assertEquals("categoryTest", filtersBean.getCategoryBean());
     }
 }

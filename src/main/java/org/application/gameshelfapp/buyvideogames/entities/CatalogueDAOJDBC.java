@@ -18,7 +18,7 @@ public class CatalogueDAOJDBC implements CatalogueDAO {
             stmt.execute(query);
             ResultSet rs = stmt.getResultSet();
             while(rs.next()) {
-                Videogame videogame = new Videogame(rs.getString("Name"), rs.getInt("Copies"), 0, null);
+                Videogame videogame = new Videogame(rs.getString("Name"), rs.getInt("Copies"), 0, null, null, null);
                 catalogue.add(videogame);
             }
         } catch(SQLException e){

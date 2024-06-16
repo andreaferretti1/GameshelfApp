@@ -4,9 +4,15 @@ import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 
 public class CredentialsBean {
 
+    private String nameBean;
     private String typeOfPaymentBean;
     private String paymentKeyBean;
     private String addressBean;
+
+    public void setNameBean(String nameBean) throws SyntaxErrorException{
+        if(nameBean == null || nameBean.isEmpty()) throw new SyntaxErrorException("Insert your name and surname");
+        this.nameBean = nameBean;
+    }
     public void setTypeOfPaymentBean(String typeOfPaymentBean) throws SyntaxErrorException{
         if(typeOfPaymentBean == null || typeOfPaymentBean.isEmpty()) throw new SyntaxErrorException("Insert type of payment");
         this.typeOfPaymentBean = typeOfPaymentBean;
@@ -22,6 +28,10 @@ public class CredentialsBean {
         else if(regionBean == null || regionBean.isEmpty()) throw new SyntaxErrorException("Insert region");
         else if (countryBean == null || countryBean.isEmpty()) throw new SyntaxErrorException("Insert country");
         this.addressBean = streetBean + "," + regionBean + "," + countryBean;
+    }
+
+    public String getNameBean(){
+        return this.nameBean;
     }
     public String getTypeOfPaymentBean() {
         return this.typeOfPaymentBean;

@@ -33,6 +33,7 @@ public class SaleDAOCSV implements SaleDAO{
         String[] gameSold = new String[7];
 
         gameSold[VideogamesSoldAttributes.GAMEID.ordinal()] = String.valueOf(this.id);
+        gameSold[VideogamesSoldAttributes.CUSTOMEREMAIL.ordinal()] = sale.getName();
         gameSold[VideogamesSoldAttributes.GAMENAME.ordinal()] = sale.getVideogameSold().getName();
         gameSold[VideogamesSoldAttributes.COPIES.ordinal()] = String.valueOf(sale.getVideogameSold().getCopies());
         gameSold[VideogamesSoldAttributes.PRICE.ordinal()] = String.valueOf(sale.getVideogameSold().getPrice());
@@ -54,8 +55,8 @@ public class SaleDAOCSV implements SaleDAO{
 
         try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)))){
             while((myRecord = csvReader.readNext()) != null){
-                Videogame gameSold = new Videogame(myRecord[VideogamesSoldAttributes.GAMENAME.ordinal()], Integer.parseInt(myRecord[VideogamesSoldAttributes.COPIES.ordinal()]), Float.parseFloat(myRecord[VideogamesSoldAttributes.PRICE.ordinal()]), null);
-                Sale sale = new Sale(gameSold, myRecord[VideogamesSoldAttributes.CUSTOMEREMAIL.ordinal()], myRecord[VideogamesSoldAttributes.CUSTOMERADDRESS.ordinal()], myRecord[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()], myRecord[VideogamesSoldAttributes.PLATFORM.ordinal()]);
+                Videogame gameSold = new Videogame(myRecord[VideogamesSoldAttributes.GAMENAME.ordinal()], Integer.parseInt(myRecord[VideogamesSoldAttributes.COPIES.ordinal()]), Float.parseFloat(myRecord[VideogamesSoldAttributes.PRICE.ordinal()]), null,  myRecord[VideogamesSoldAttributes.PLATFORM.ordinal()], null);
+                Sale sale = new Sale(gameSold, myRecord[VideogamesSoldAttributes.CUSTOMEREMAIL.ordinal()], myRecord[VideogamesSoldAttributes.CUSTOMERADDRESS.ordinal()], myRecord[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()], myRecord[VideogamesSoldAttributes.CUSTOMERNAME.ordinal()]);
                 sale.setId(Integer.parseInt(myRecord[VideogamesSoldAttributes.GAMEID.ordinal()]));
                 sales.add(sale);
             }
@@ -107,6 +108,6 @@ public class SaleDAOCSV implements SaleDAO{
     }
 
     private enum VideogamesSoldAttributes{
-        GAMEID, GAMENAME, COPIES, PRICE, PLATFORM, STATE_OF_DELIVERY, CUSTOMERADDRESS, CUSTOMEREMAIL
+        GAMEID, CUSTOMERNAME, GAMENAME, COPIES, PRICE, PLATFORM, STATE_OF_DELIVERY, CUSTOMERADDRESS, CUSTOMEREMAIL
     }
 }

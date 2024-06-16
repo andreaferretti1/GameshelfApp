@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
+import org.application.gameshelfapp.buyvideogames.bean.VideogamesFoundBean;
 import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
 import org.application.gameshelfapp.buyvideogames.exception.FiltersException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
@@ -63,14 +64,7 @@ public class SearchPageController implements Initializable{
             ErrorPageController.displayErrorWindow(e.getMessage());
         }
         this.customerBoundary.getVideogamesFoundBean().getInformationFromModel();
-        List<VideogameBean> gamesList = this.customerBoundary.getVideogamesFoundBean().getVideoamesFoundBean();
-        ObservableList<VideogameBean> gamesToShow = FXCollections.observableList(gamesList);
-
-        this.gameName.setCellValueFactory(new PropertyValueFactory<VideogameBean, String>("name"));
-        this.gameCost.setCellValueFactory(cellData -> new SimpleStringProperty(Float.toString(cellData.getValue().getPriceBean()) + "€"));
-
-        this.seeGame.setCellFactory( param -> new SearchPageController.CustomTableCellButton(gamesToShow));
-        this.gamesFound.setItems(gamesToShow);
+        this.showGamesFound(customerBoundary.getVideogamesFoundBean().getVideogamesFoundBean());
     }
 
     @FXML
@@ -93,6 +87,26 @@ public class SearchPageController implements Initializable{
         myStage.show();
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.categoryChoiceBox.getItems().setAll(category);
+        this.platformChoiceBox.getItems().setAll(platform);
+        this.categoryChoiceBox.setValue("Select category");
+        this.platformChoiceBox.setValue("Select platform");
+        VideogamesFoundBean videogamesFoundBean = this.customerBoundary.getVideogamesFoundBean();
+        if(videogamesFoundBean != null) this.showGamesFound(videogamesFoundBean.getVideogamesFoundBean());
+    }
+
+    private void showGamesFound(List<VideogameBean> games){
+        ObservableList<VideogameBean> gamesToShow = FXCollections.observableList(games);
+
+        this.gameName.setCellValueFactory(new PropertyValueFactory<VideogameBean, String>("name"));
+        this.gameCost.setCellValueFactory(cellData -> new SimpleStringProperty(Float.toString(cellData.getValue().getPriceBean()) + "€"));
+
+        this.seeGame.setCellFactory( param -> new SearchPageController.CustomTableCellButton(gamesToShow));
+        this.gamesFound.setItems(gamesToShow);
+    }
+
     private class CustomTableCellButton extends TableCell<VideogameBean, String> {
         private final Button button;
 
@@ -108,13 +122,5 @@ public class SearchPageController implements Initializable{
                 }
             });
         }
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.categoryChoiceBox.getItems().setAll(category);
-        this.platformChoiceBox.getItems().setAll(platform);
-        this.categoryChoiceBox.setValue("Select category");
-        this.platformChoiceBox.setValue("Select platform");
     }
 }

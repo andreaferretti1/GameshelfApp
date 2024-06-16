@@ -34,30 +34,71 @@ class VideogameBeanTest {
     @Test
     void getAndSetVideogameTest(){
         VideogameBean videogameBean = new VideogameBean();
-        Videogame videogame = new Videogame(null, 0, 0, null);
+        Videogame videogame = new Videogame(null, 0, 0, null, null, null);
         videogameBean.setVideogame(videogame);
         assertEquals(videogame, videogameBean.getVideogame());
+    }
+
+    @Test
+    void getAndSetPlatformTest(){
+        VideogameBean videogameBean = new VideogameBean();
+        videogameBean.setPlatformBean("platformTest");
+        assertEquals("platformTest", videogameBean.getCategoryBean());
+    }
+
+    @Test
+    void getAndSetCategoryTest(){
+        VideogameBean videogameBean = new VideogameBean();
+        videogameBean.setCategoryBean("categoryTest");
+        assertEquals("categoryTest", videogameBean.getCategoryBean());
     }
     @Test
     void getVideogameFromModelNameTest(){
         VideogameBean videogameBean = new VideogameBean();
-        Videogame videogame = new Videogame("gameName", 0, 0, null);
+        Videogame videogame = new Videogame("gameName", 0, 0, null, null, null);
         videogameBean.setVideogame(videogame);
         assertEquals("gameName", videogameBean.getName());
     }
     @Test
     void getVideogameFromModelCopiesTest(){
         VideogameBean videogameBean = new VideogameBean();
-        Videogame videogame = new Videogame(null, 2, 0, null);
+        Videogame videogame = new Videogame(null, 2, 0, null, null, null);
         videogameBean.setVideogame(videogame);
         assertEquals(2, videogameBean.getCopiesBean());
     }
+
     @Test
     void getVideogameFromModelPriceTest(){
+        Videogame videogame = new Videogame(null, 0, 1, null, null, null);
         VideogameBean videogameBean = new VideogameBean();
-        Videogame videogame = new Videogame(null, 0, 0, "descriptionTest");
+        videogameBean.setVideogame(videogame);
+        videogameBean.getVideogameFromModel();
+        assertEquals(1, videogameBean.getPriceBean());
+    }
+    @Test
+    void getVideogameFromModelDescriptionTest(){
+        VideogameBean videogameBean = new VideogameBean();
+        Videogame videogame = new Videogame(null, 0, 0, "descriptionTest", null, null);
         videogameBean.setVideogame(videogame);
         videogameBean.getVideogameFromModel();
         assertEquals("descriptionTest", videogameBean.getDescriptionBean());
+    }
+
+    @Test
+    void getVideogameFromModelPlatformTest(){
+        Videogame videogame = new Videogame(null, 0, 0, null, "platformTest", null);
+        VideogameBean videogameBean = new VideogameBean();
+        videogameBean.setVideogame(videogame);
+        videogameBean.getVideogameFromModel();
+        assertEquals("categoryTest", videogameBean.getPlatformBean());
+    }
+
+    @Test
+    void getVideogameFromModelCategoryTest(){
+        Videogame videogame = new Videogame(null, 0, 0, null, null, "categoryTest");
+        VideogameBean videogameBean = new VideogameBean();
+        videogameBean.setVideogame(videogame);
+        videogameBean.getVideogameFromModel();
+        assertEquals("categoryTest", videogameBean.getCategoryBean());
     }
 }

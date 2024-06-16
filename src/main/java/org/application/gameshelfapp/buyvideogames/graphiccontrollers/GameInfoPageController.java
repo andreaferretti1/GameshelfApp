@@ -10,7 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.application.gameshelfapp.buyvideogames.bean.FiltersBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
@@ -30,25 +29,15 @@ public class GameInfoPageController implements Initializable {
     @FXML
     private Label gameName;
     @FXML
-    private Label online;
-    @FXML
     private Label price;
-    @FXML
-    private Label sellerEmail;
-    @FXML
-    private Label sellerName;
     @FXML
     private TextField copiesSelected;
     private Stage stage;
     private CustomerBoundary customerBoundary;
     private VideogameBean gameBean;
-    private FiltersBean filters;
 
     private void setGameBean(VideogameBean gameBean){
         this.gameBean = gameBean;
-    }
-    private void setFilters(FiltersBean filters) {
-        this.filters = filters;
     }
 
     private void setStage(Stage stage) {
@@ -70,12 +59,7 @@ public class GameInfoPageController implements Initializable {
 
     @FXML
     private void buy(){
-        VideogameBean videogameBean = new VideogameBean();
-        videogameBean.setName(this.gameName.getText());
-        videogameBean.setCopiesBean(Integer.parseInt(this.copiesSelected.getText()));
-        videogameBean.setPriceBean(Float.parseFloat(this.price.getText()));
-        videogameBean.setDescriptionBean(this.description.getText());
-        this.customerBoundary.setGameToBuy(videogameBean);
+        this.customerBoundary.setGameToBuy(this.gameBean);
         try{
             CredentialsPageController.start(this.stage, this.customerBoundary);
         } catch(IOException e){
@@ -90,7 +74,6 @@ public class GameInfoPageController implements Initializable {
         controller.setStage(stage);
         controller.setCustomerBoundary(boundary);
         controller.setGameBean(gameBean);
-        controller.setFilters(controller.customerBoundary.getFiltersBean());
         Scene scene = new Scene(root, 1440, 768);
         stage.setScene(scene);
         stage.show();
@@ -98,9 +81,9 @@ public class GameInfoPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.console.setText(this.filters.getConsoleBean());
-        this.category.setText(this.filters.getCategoryBean());
-
+        this.console.setText(this.gameBean.getPlatformBean());
+        this.category.setText(this.gameBean.getCategoryBean());
+        this.price.setText(String.valueOf(this.gameBean.getPriceBean()));
         this.gameName.setText(this.gameBean.getName());
         this.description.setText(this.gameBean.getDescriptionBean());
     }

@@ -23,7 +23,7 @@ public class ItemDAOJDBC implements ItemDAO {
             stmt.execute(query);
             ResultSet rs = stmt.getResultSet();
             while(rs.next()){
-                Videogame game = new Videogame(rs.getString("Name"), rs.getInt("Copies"), rs.getFloat("Price"), rs.getString("Description"));
+                Videogame game = new Videogame(rs.getString("Name"), rs.getInt("Copies"), rs.getFloat("Price"), rs.getString("Description"), filters.getConsole(), filters.getCategory());
                 videogamesFound.add(game);
             }
             rs.close();
@@ -34,14 +34,14 @@ public class ItemDAOJDBC implements ItemDAO {
     }
 
     @Override
-    public void addGameForSale(Videogame game, Filters filters) throws PersistencyErrorException{
+    public void addGameForSale(Videogame game) throws PersistencyErrorException{
 
             try(Connection conn = SingletonConnectionPool.getInstance().getConnection();
                 Statement stmt = conn.createStatement()){
 
-                String query = String.format("INSERT INTO ObjectOnSale (Name, Platform, Price, Description, Copies) VALUES (%s, %s, %f, %s, %d) ON DUPLICATE KEY UPDATE Copies = Copies + %d, Price = %f;", game.getName(), filters.getConsole(), game.getPrice(), game.getDescription(), game.getCopies(),game.getCopies(), game.getPrice());
+                String query = String.format("INSERT INTO ObjectOnSale (Name, Platform, Price, Description, Copies) VALUES (%s, %s, %f, %s, %d) ON DUPLICATE KEY UPDATE Copies = Copies + %d, Price = %f;", game.getName(), game.getPlatform(), game.getPrice(), game.getDescription(), game.getCopies(), game.getCopies(), game.getPrice());
                 stmt.execute(query);
-                query =String.format( "INSERT IGNORE INTO Filtered (Name, Platform, Type) VALUES (%s, %s, %s);", game.getName(), filters.getConsole(), filters.getCategory());
+                query =String.format( "INSERT IGNORE INTO Filtered (Name, Platform, Type) VALUES (%s, %s, %s);", game.getName(), game.getPlatform(), game.getCategory());
                 stmt.execute(query);
 
             } catch(SQLException e){
@@ -50,11 +50,11 @@ public class ItemDAOJDBC implements ItemDAO {
     }
 
     @Override
-    public void removeGameForSale(Videogame game, Filters filters) throws PersistencyErrorException, GameSoldOutException{
+    public void removeGameForSale(Videogame game) throws PersistencyErrorException, GameSoldOutException{
         ResultSet rs = null;
         try(Connection conn = SingletonConnectionPool.getInstance().getConnection();
             Statement stmt = conn.createStatement()){
-            String query = "SELECT Copies FROM ObjectOnSale WHERE Name = " + game.getName() + "AND Platform = " + filters.getConsole() + ";";
+            String query = "SELECT Copies FROM ObjectOnSale WHERE Name = " + game.getName() + "AND Platform = " + game.getPlatform() + ";";
             stmt.execute(query);
             rs = stmt.getResultSet();
             int copies = 0;
@@ -64,7 +64,7 @@ public class ItemDAOJDBC implements ItemDAO {
             rs.close();
             if(copies < game.getCopies()) throw new GameSoldOutException("Game is sold out");
             copies = copies - game.getCopies();
-            query = "UPDATE ObjectOnSale SET Copies = " + copies + "WHERE Name = " + game.getName() + "AND Platform = " + filters.getConsole() + ";";
+            query = "UPDATE ObjectOnSale SET Copies = " + copies + "WHERE Name = " + game.getName() + "AND Platform = " + game.getPlatform() + ";";
             stmt.execute(query);
         } catch(SQLException e){
             throw new PersistencyErrorException("Couldn't remove game for sale");

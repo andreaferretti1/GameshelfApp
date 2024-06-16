@@ -4,18 +4,18 @@ import com.google.gson.annotations.SerializedName;
 
 public class Credentials {
 
-    private final String typeOfPayment;
-    private final String paymentKey;
+    private String name;
+    private String typeOfPayment;
+    private String paymentKey;
     @SerializedName("display_name")
-    private final String address;
+    private String address;
 
-    public Credentials(String typeOfPayment, String paymentKey, String address){
-
+    public Credentials(String name, String typeOfPayment, String paymentKey, String address){
+        this.name = name;
         this.typeOfPayment = typeOfPayment;
         this.paymentKey = paymentKey;
         this.address = address;
     }
-
 
     public String getTypeOfPayment() {
         return this.typeOfPayment;
@@ -27,5 +27,20 @@ public class Credentials {
 
     public String getAddress() {
         return this.address;
+    }
+    public String getName() {
+        return this.name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setTypeOfPayment(String typeOfPayment) {
+        this.typeOfPayment = typeOfPayment;
+    }
+    public void setPaymentKey(String paymentKey) {
+        this.paymentKey = paymentKey;
+    }
+    public void setAddress(String address){
+        this.address = address;
     }
 }

@@ -10,7 +10,6 @@ import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
-import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
@@ -22,6 +21,8 @@ public class CredentialsPageController {
     private CustomerBoundary customerBoundary;
 
     @FXML
+    private TextField name;
+    @FXML
     private TextField typeOfCard;
     @FXML
     private TextField paymentKey;
@@ -32,8 +33,6 @@ public class CredentialsPageController {
     @FXML
     private TextField countryField;
 
-
-
     public void setCustomerBoundary(CustomerBoundary customerBoundary) {
         this.customerBoundary = customerBoundary;
     }
@@ -41,8 +40,8 @@ public class CredentialsPageController {
     @FXML
     private void insertCredentials(){
         try {
-            this.customerBoundary.insertCredentialsAndPay(typeOfCard.getText(), paymentKey.getText(), address.getText(), regionField.getText(), countryField.getText());
-        } catch (SyntaxErrorException | RefundException | GameSoldOutException | GmailException | PersistencyErrorException | InvalidAddressException e) {
+            this.customerBoundary.insertCredentialsAndPay(name.getText(), typeOfCard.getText(), paymentKey.getText(), address.getText(), regionField.getText(), countryField.getText());
+        } catch (SyntaxErrorException | RefundException | GameSoldOutException | PersistencyErrorException | InvalidAddressException e) {
             ErrorPageController.displayErrorWindow(e.getMessage());
         }
     }

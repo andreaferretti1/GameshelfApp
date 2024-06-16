@@ -32,7 +32,7 @@ public class BuyGamesController {
         return gamesFoundBean;
     }
 
-    public void sendMoney(CredentialsBean credentialsBean, VideogameBean videogameBean, UserBean userBean, FiltersBean filtersBean) throws RefundException, GameSoldOutException, PersistencyErrorException, InvalidAddressException {
+    public void sendMoney(CredentialsBean credentialsBean, VideogameBean videogameBean, UserBean userBean) throws RefundException, GameSoldOutException, PersistencyErrorException, InvalidAddressException {
         Braintree braintree = new Braintree();
         Geocoder geocoder = new Geocoder();
 
@@ -40,22 +40,21 @@ public class BuyGamesController {
         ItemDAO itemDAO = factory.createItemDAO();
         SaleDAO saleDAO = factory.createSaleDAO();
 
-        Videogame game = new Videogame(videogameBean.getName(), videogameBean.getCopiesBean(), videogameBean.getPriceBean(), videogameBean.getDescriptionBean());
-        Filters filters = new Filters(null, filtersBean.getConsoleBean(), null);
-        Sale sale = new Sale(game, userBean.getEmail(), credentialsBean.getAddressBean(), Sale.TO_CONFIRM, filtersBean.getConsoleBean());
+        Videogame game = new Videogame(videogameBean.getName(), videogameBean.getCopiesBean(), videogameBean.getPriceBean(), videogameBean.getDescriptionBean(), videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
+        Sale sale = new Sale(game, userBean.getEmail(), credentialsBean.getAddressBean(), Sale.TO_CONFIRM, credentialsBean.getNameBean());
             try{
                 geocoder.checkAddress(credentialsBean.getAddressBean());
                 int quantity = game.getCopies();
                 float amountToPay = game.getPrice() * quantity;
                 braintree.pay(amountToPay, credentialsBean.getPaymentKeyBean(), credentialsBean.getTypeOfPaymentBean());
-                itemDAO.removeGameForSale(game, filters);
+                itemDAO.removeGameForSale(game);
                 GoogleBoundary googleBoundary = new GoogleBoundary();
                 String messageToSend = userBean.getUsername() + "bought" + quantity + "of" + game.getName() + "for" + amountToPay;
                 googleBoundary.setMessageToSend(messageToSend);
                 googleBoundary.sendMail("Videogame bought", "gameshelfApp2024@gmail.com");
                 saleDAO.saveSale(sale);
             }catch(GmailException e){
-                itemDAO.addGameForSale(game, filters);
+                itemDAO.addGameForSale(game);
                 braintree.refund();
                 throw new RefundException("Transaction has been refunded.");
             } catch (PersistencyErrorException e){
@@ -84,8 +83,8 @@ public class BuyGamesController {
     public void confirmDelivery(SaleBean saleBean) throws GmailException, ConfirmDeliveryException{
         ShipmentCompany shipmentCompany = new ShipmentCompany();
         GoogleBoundary googleBoundary = new GoogleBoundary();
-        Videogame gameToSend = new Videogame(saleBean.getGameSoldBean().getName(), saleBean.getGameSoldBean().getCopiesBean(), saleBean.getGameSoldBean().getPriceBean(), null);
-        Sale sale = new Sale(gameToSend, saleBean.getEmailBean(), saleBean.getAddressBean(), Sale.CONFIRMED, saleBean.getPlatformBean());
+        Videogame gameToSend = new Videogame(saleBean.getGameSoldBean().getName(), saleBean.getGameSoldBean().getCopiesBean(), saleBean.getGameSoldBean().getPriceBean(), null, saleBean.getGameSoldBean().getPlatformBean(), null);
+        Sale sale = new Sale(gameToSend, saleBean.getEmailBean(), saleBean.getAddressBean(), Sale.CONFIRMED, saleBean.getNameBean());
 
         try{
             PersistencyAbstractFactory factory = PersistencyAbstractFactory.getFactory();

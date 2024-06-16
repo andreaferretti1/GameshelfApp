@@ -6,16 +6,16 @@ public class Sale {
     private String email;
     private String address;
     private String state;
-    private String platform;
+    private String name;
 
     public static final String TO_CONFIRM = "To confirm";
     public static final String CONFIRMED = "Confirmed";
-    public Sale(Videogame game, String email, String address, String state, String platform) {
+    public Sale(Videogame game, String email, String address, String state, String name) {
         this.gameSold = game;
         this.email = email;
         this.address = address;
         this.state = state;
-        this.platform = platform;
+        this.name = name;
     }
     public int getId() {
         return this.id;
@@ -41,11 +41,11 @@ public class Sale {
     public void setState(String state) {
         this.state = state;
     }
-    public String getPlatform() {
-        return this.platform;
+    public String getName() {
+        return this.name;
     }
-    public void setPlatform(String platform) {
-        this.platform = platform;
+    public void setName(String name) {
+        this.name = name;
     }
     public String getEmail() {
         return this.email;

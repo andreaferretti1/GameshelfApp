@@ -30,12 +30,12 @@ public class CatalogueDAOCSV implements CatalogueDAO {
     @Override
     public List<Videogame> getCatalogue(String email) throws PersistencyErrorException {
         List<Videogame> catalogue = new ArrayList<Videogame>();
-        String[] tuple = new String[3];
+        String[] tuple;
 
         try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fdCatalogue)))){
             while((tuple = csvReader.readNext()) != null){
                 if(tuple[CatalogueAttributes.EMAIL.ordinal()].equals(email)){
-                    Videogame game = new Videogame(tuple[CatalogueAttributes.GAMENAME.ordinal()], Integer.parseInt(tuple[CatalogueAttributes.COPIES.ordinal()]), 0, null);
+                    Videogame game = new Videogame(tuple[CatalogueAttributes.GAMENAME.ordinal()], Integer.parseInt(tuple[CatalogueAttributes.COPIES.ordinal()]), 0, null, null, null);
                     catalogue.add(game);
                 }
             }
@@ -58,7 +58,7 @@ public class CatalogueDAOCSV implements CatalogueDAO {
 
         try (CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(tempFile)));
              CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fdCatalogue)));
-             FileChannel channel = new FileOutputStream(new File(TEMP_FILE)).getChannel()){
+             FileChannel channel = new FileOutputStream(tempFile).getChannel()){
 
             if(!tempFile.exists()) {
                 boolean created = tempFile.createNewFile();
@@ -119,6 +119,6 @@ public class CatalogueDAOCSV implements CatalogueDAO {
         }
     }
     private enum CatalogueAttributes{
-        EMAIL, GAMENAME, COPIES;
+        EMAIL, GAMENAME, COPIES
    }
 }

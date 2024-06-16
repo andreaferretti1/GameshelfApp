@@ -69,4 +69,21 @@ class CredentialsBeanTest {
         CredentialsBean credentialsBean = new CredentialsBean();
         assertThrows(SyntaxErrorException.class, () -> credentialsBean.setAddressBean(null, null, null));
     }
+
+    @Test
+    void setAndGetNameTest(){
+        try {
+            CredentialsBean credentialsBean = new CredentialsBean();
+            credentialsBean.setNameBean("Name");
+            assertEquals("Name", credentialsBean.getNameBean());
+        } catch(SyntaxErrorException e){
+            fail();
+        }
+    }
+
+    @Test
+    void setNullNameTest(){
+        CredentialsBean credentialsBean = new CredentialsBean();
+        assertThrows(SyntaxErrorException.class, () -> credentialsBean.setNameBean(null));
+    }
 }

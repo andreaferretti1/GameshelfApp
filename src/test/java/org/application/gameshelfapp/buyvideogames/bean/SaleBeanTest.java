@@ -22,7 +22,7 @@ class SaleBeanTest {
         assertEquals(videogameBean, saleBean.getGameSoldBean());
     }
     @Test
-    void getAndsetEmailBeanTest(){
+    void getAndSetEmailBeanTest(){
         SaleBean saleBean = new SaleBean();
         saleBean.setEmailBean("emailTest");
         assertEquals("enailTest", saleBean.getEmailBean());
@@ -34,10 +34,10 @@ class SaleBeanTest {
         assertEquals("addressTest", saleBean.getAddressBean());
     }
     @Test
-    void getAndSetPlatformTest(){
+    void getAndSetNameTest(){
         SaleBean saleBean = new SaleBean();
-        saleBean.setPlatformBean("platformTest");
-        assertEquals("platformTest", saleBean.getPlatformBean());
+        saleBean.setNameBean("name");
+        assertEquals("name", saleBean.getNameBean());
     }
     @Test
     void getAndSetStateTest(){
@@ -55,7 +55,7 @@ class SaleBeanTest {
     @Test
     void getInformationFromModelTestVideogameTest(){
         SaleBean saleBean = new SaleBean();
-        Videogame videogame = new Videogame("gameName", 1, 10, "description");
+        Videogame videogame = new Videogame("gameName", 1, 10, "description", null, null);
         Sale sale = new Sale(videogame, null, null, null, null);
         saleBean.setSale(sale);
         saleBean.getInformationFromModel();
@@ -65,9 +65,9 @@ class SaleBeanTest {
         assertEquals("description", saleBean.getGameSoldBean().getDescriptionBean());
     }
     @Test
-    void getInformationMOdelTestEmailTest(){
+    void getInformationModelTestEmailTest(){
         SaleBean saleBean = new SaleBean();
-        Videogame videogame = new Videogame(null, 0, 0, null);
+        Videogame videogame = new Videogame(null, 0, 0, null, null, null);
         Sale sale = new Sale(videogame, "emailTest", null, null, null);
         saleBean.setSale(sale);
         saleBean.getInformationFromModel();
@@ -76,7 +76,7 @@ class SaleBeanTest {
     @Test
     void getInformationFromModelAddressTest(){
         SaleBean saleBean = new SaleBean();
-        Videogame videogame = new Videogame(null, 0, 0, null);
+        Videogame videogame = new Videogame(null, 0, 0, null, null, null);
         Sale sale = new Sale(videogame, null, "addressTest", null, null);
         saleBean.setSale(sale);
         saleBean.getInformationFromModel();
@@ -85,19 +85,19 @@ class SaleBeanTest {
     @Test
     void getInformationFromModelStateTest(){
         SaleBean saleBean = new SaleBean();
-        Videogame videogame = new Videogame(null, 0, 0, null);
+        Videogame videogame = new Videogame(null, 0, 0, null, null, null);
         Sale sale = new Sale(videogame, null, null, Sale.CONFIRMED, null);
         saleBean.setSale(sale);
         saleBean.getInformationFromModel();
         assertEquals(Sale.CONFIRMED, saleBean.getStateBean());
     }
     @Test
-    void getInformationFromModelplatformTest(){
+    void getInformationFromModelPlatformTest(){
         SaleBean saleBean = new SaleBean();
-        Videogame videogame = new Videogame(null, 0, 0, null);
+        Videogame videogame = new Videogame(null, 0, 0, null, null, null);
         Sale sale = new Sale(videogame, null, null, null, "platformTest");
         saleBean.setSale(sale);
         saleBean.getInformationFromModel();
-        assertEquals("platformTest", saleBean.getPlatformBean());
+        assertEquals("platformTest", saleBean.getNameBean());
     }
 }

@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 class SaleDAOCSVTest {
 
     @Test
-    void getSalesTest(){        //In the database there were tuples ('1', 'nameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
+    void getSalesTest(){        //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
         try{
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
@@ -20,20 +20,22 @@ class SaleDAOCSVTest {
 
             Sale sale1 = sales.getFirst();
             assertEquals(1, sale1.getId());
-            assertEquals("nameTest1", sale1.getVideogameSold().getName());
+            assertEquals("nameTest1", sale1.getName());
+            assertEquals("gameNameTest1", sale1.getVideogameSold().getName());
             assertEquals(2, sale1.getVideogameSold().getCopies());
             assertEquals(11, sale1.getVideogameSold().getPrice());
-            assertEquals("consoleTest1", sale1.getPlatform());
+            assertEquals("consoleTest1", sale1.getVideogameSold().getPlatform());
             assertEquals("To confirm", sale1.getState());
             assertEquals("addressTest1", sale1.getAddress());
             assertEquals("emailTest1", sale1.getEmail());
 
             Sale sale2 = sales.getLast();
             assertEquals(2, sale2.getId());
-            assertEquals("nameTest2", sale2.getVideogameSold().getName());
+            assertEquals("nameTest2", sale2.getName());
+            assertEquals("gameNameTest2", sale2.getVideogameSold().getName());
             assertEquals(1, sale2.getVideogameSold().getCopies());
             assertEquals(10, sale2.getVideogameSold().getPrice());
-            assertEquals("consoleTest2", sale2.getPlatform());
+            assertEquals("consoleTest2", sale2.getName());
             assertEquals("Confirmed", sale2.getState());
             assertEquals("addresTest2", sale2.getAddress());
             assertEquals("emailTest2", sale2.getEmail());
@@ -46,18 +48,19 @@ class SaleDAOCSVTest {
         try{
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
-            Videogame gameSold = new Videogame("nameTest", 2, 10, "descriptionTest");
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "consoleTest");
+            Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
+            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getSales();
             assertEquals(1, (long) sales.size());
             Sale sale1 = sales.getFirst();
             assertEquals(1, sale1.getId());
-            assertEquals("nameTest", sale1.getVideogameSold().getName());
+            assertEquals("nameTest", sale1.getName());
+            assertEquals("gameNameTest", sale1.getVideogameSold().getName());
             assertEquals(2, sale1.getVideogameSold().getCopies());
             assertEquals(10, sale1.getVideogameSold().getPrice());
-            assertEquals("consoleTest", sale1.getPlatform());
+            assertEquals("consoleTest", sale1.getVideogameSold().getPlatform());
             assertEquals("To confirm", sale1.getState());
             assertEquals("addressTest", sale1.getAddress());
             assertEquals("emailTest", sale1.getEmail());
@@ -67,10 +70,10 @@ class SaleDAOCSVTest {
     }
 
     @Test
-    void saveSaleSameGameTest(){        //In the database there was tuple ('1', 'nameTest', '2', '11', 'consoleTest', 'To confirm', 'addressTest1', 'emailTest1')
+    void saveSaleSameGameTest(){        //In the database there was tuple ('1', 'nameTest', 'gameNameTest', '2', '11', 'consoleTest', 'To confirm', 'addressTest1', 'emailTest1')
         try{
-            Videogame videogame = new Videogame("nameTest", 2, 10, "descriptionTest");
-            Sale sale = new Sale(videogame, "emailTest2", "addressTest2", Sale.TO_CONFIRM, "consoleTest");
+            Videogame videogame = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
+            Sale sale = new Sale(videogame, "emailTest2", "addressTest2", Sale.TO_CONFIRM, "nameTest");
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             saleDAO.saveSale(sale);
@@ -79,14 +82,14 @@ class SaleDAOCSVTest {
             assertEquals(2, (long) sales.size());
             Sale sale1 = sales.getLast();
             assertEquals(2, sale1.getId());
-            assertEquals("nameTest", sale1.getVideogameSold().getName());
+            assertEquals("gameNameTest", sale1.getVideogameSold().getName());
         } catch(PersistencyErrorException e){
             fail();
         }
     }
 
     @Test
-    void updateSaleTest(){      //In the database there was tuple ('1', 'nameTest', '3', '10', 'consoleTest', 'To confirm', 'addressTest', 'emailTest')
+    void updateSaleTest(){      //In the database there was tuple ('1', 'nameTest', 'gameNameTest', '3', '10', 'consoleTest', 'To confirm', 'addressTest', 'emailTest')
         try{
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
@@ -96,7 +99,7 @@ class SaleDAOCSVTest {
             sales = saleDAO.getSales();
             Sale sale = sales.getFirst();
             assertEquals(1, sale.getId());
-            assertEquals("nameTest", sale.getVideogameSold().getName());
+            assertEquals("gameNameTest", sale.getVideogameSold().getName());
             assertEquals("Confirmed", sale.getState());
         } catch(PersistencyErrorException e){
             fail();

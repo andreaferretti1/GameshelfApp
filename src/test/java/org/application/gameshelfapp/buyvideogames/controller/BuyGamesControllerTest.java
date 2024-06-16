@@ -1,16 +1,16 @@
 package org.application.gameshelfapp.buyvideogames.controller;
 
-import org.application.gameshelfapp.buyvideogames.bean.CredentialsBean;
-import org.application.gameshelfapp.buyvideogames.bean.FiltersBean;
-import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
-import org.application.gameshelfapp.buyvideogames.bean.VideogamesFoundBean;
+import org.application.gameshelfapp.buyvideogames.bean.*;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.bean.UserBean;
+import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,7 +26,7 @@ class BuyGamesControllerTest {
         try{
             VideogamesFoundBean videogamesFoundBean = controller.searchVideogame(filtersBean);
             videogamesFoundBean.getInformationFromModel();
-            assertEquals(1, (long) videogamesFoundBean.getVideoamesFoundBean().size());
+            assertEquals(1, (long) videogamesFoundBean.getVideogamesFoundBean().size());
         } catch (PersistencyErrorException e){
             fail();
         }
@@ -42,7 +42,7 @@ class BuyGamesControllerTest {
         try{
             VideogamesFoundBean videogamesFoundBean = controller.searchVideogame(filtersBean);
             videogamesFoundBean.getInformationFromModel();
-            assertEquals(1, (long) videogamesFoundBean.getVideoamesFoundBean().size());
+            assertEquals(1, (long) videogamesFoundBean.getVideogamesFoundBean().size());
         } catch(PersistencyErrorException e){
             fail();
         }
@@ -59,7 +59,7 @@ class BuyGamesControllerTest {
         try{
             VideogamesFoundBean videogamesFoundBean = controller.searchVideogame(filtersBean);
             videogamesFoundBean.getInformationFromModel();
-            assertEquals(0, (long) videogamesFoundBean.getVideoamesFoundBean().size());
+            assertEquals(0, (long) videogamesFoundBean.getVideogamesFoundBean().size());
         } catch(PersistencyErrorException e){
             fail();
         }
@@ -73,6 +73,7 @@ class BuyGamesControllerTest {
             userBean.setUsername("name");
             userBean.setEmail("fer.andrea35@gmail.com");
             CredentialsBean credentialsBean = new CredentialsBean();
+            credentialsBean.setNameBean("Name");
             credentialsBean.setPaymentKeyBean("key");
             credentialsBean.setTypeOfPaymentBean("payment");
             credentialsBean.setAddressBean("Via Cambridge", "Rome", "Italy");
@@ -80,10 +81,9 @@ class BuyGamesControllerTest {
             videogameBean.setName("nameTest");
             videogameBean.setPriceBean(30);
             videogameBean.setCopiesBean(1);
-            FiltersBean filtersBean = new FiltersBean();
-            filtersBean.setConsoleBean("consoleTest");
-            filtersBean.setCategoryBean("categoryTest");
-            controller.sendMoney(credentialsBean, videogameBean, userBean, filtersBean);
+            videogameBean.setPlatformBean("consoleTest");
+            videogameBean.setCategoryBean("categoryTest");
+            controller.sendMoney(credentialsBean, videogameBean, userBean);
         } catch (PersistencyErrorException | SyntaxErrorException | RefundException | GameSoldOutException | InvalidAddressException e){
             fail();
         }
@@ -97,6 +97,7 @@ class BuyGamesControllerTest {
             userBean.setUsername("name");
             userBean.setEmail("fer.andrea35@gmail.com");
             CredentialsBean credentialsBean = new CredentialsBean();
+            credentialsBean.setNameBean("Name");
             credentialsBean.setPaymentKeyBean("key");
             credentialsBean.setTypeOfPaymentBean("payment");
             credentialsBean.setAddressBean("testAddress", "Rome", "Italy");
@@ -104,10 +105,9 @@ class BuyGamesControllerTest {
             videogameBean.setName("nameTest");
             videogameBean.setPriceBean(30);
             videogameBean.setCopiesBean(1);
-            FiltersBean filtersBean = new FiltersBean();
-            filtersBean.setConsoleBean("consoleTest");
-            filtersBean.setCategoryBean("categoryTest");
-            assertThrows(InvalidAddressException.class, () -> controller.sendMoney(credentialsBean, videogameBean, userBean, filtersBean));
+            videogameBean.setPlatformBean("consoleTest");
+            videogameBean.setCategoryBean("categoryTest");
+            assertThrows(InvalidAddressException.class, () -> controller.sendMoney(credentialsBean, videogameBean, userBean));
         } catch(SyntaxErrorException e){
             fail();
         }
@@ -121,6 +121,7 @@ class BuyGamesControllerTest {
             userBean.setUsername("name");
             userBean.setEmail("fer.andrea35@gmail.com");
             CredentialsBean credentialsBean = new CredentialsBean();
+            credentialsBean.setNameBean("Name");
             credentialsBean.setPaymentKeyBean("key");
             credentialsBean.setTypeOfPaymentBean("payment");
             credentialsBean.setAddressBean("testAddress", "Rome", "Italy");
@@ -128,10 +129,9 @@ class BuyGamesControllerTest {
             videogameBean.setName("nameTest");
             videogameBean.setPriceBean(30);
             videogameBean.setCopiesBean(3);
-            FiltersBean filtersBean = new FiltersBean();
-            filtersBean.setConsoleBean("consoleTest");
-            filtersBean.setCategoryBean("categoryTest");
-            assertThrows(GameSoldOutException.class, () -> controller.sendMoney(credentialsBean, videogameBean, userBean, filtersBean));
+            videogameBean.setPlatformBean("consoleTest");
+            videogameBean.setCategoryBean("categoryTest");
+            assertThrows(GameSoldOutException.class, () -> controller.sendMoney(credentialsBean, videogameBean, userBean));
         } catch(SyntaxErrorException e){
             fail();
         }
@@ -145,6 +145,7 @@ class BuyGamesControllerTest {
             userBean.setUsername("name");
             userBean.setEmail("emailTest");
             CredentialsBean credentialsBean = new CredentialsBean();
+            credentialsBean.setNameBean("Name");
             credentialsBean.setPaymentKeyBean("key");
             credentialsBean.setTypeOfPaymentBean("payment");
             credentialsBean.setAddressBean("Via Cambridge", "Rome", "Italy");
@@ -152,14 +153,73 @@ class BuyGamesControllerTest {
             videogameBean.setName("nameTest");
             videogameBean.setPriceBean(30);
             videogameBean.setCopiesBean(3);
-            FiltersBean filtersBean = new FiltersBean();
-            filtersBean.setConsoleBean("consoleTest");
-            filtersBean.setCategoryBean("categoryTest");
-            assertThrows(RefundException.class, () -> controller.sendMoney(credentialsBean, videogameBean, userBean, filtersBean));
+            videogameBean.setPlatformBean("consoleTest");
+            videogameBean.setCategoryBean("categoryTest");
+            assertThrows(RefundException.class, () -> controller.sendMoney(credentialsBean, videogameBean, userBean));
         } catch(SyntaxErrorException e){
             fail();
         }
     }
 
-    
+    @Test
+    void getSalesTest(){        //In the Sale table there is tuple ('1', 'nameTest1', 'gameNameTest1', '3', '10', 'consoleTest', 'To confirm', 'addressTest', 'emailTest')
+        BuyGamesController controller = new BuyGamesController();
+        try {
+            List<SaleBean> sales = controller.getSales();
+            assertEquals(1, (long) sales.size());
+        }  catch(PersistencyErrorException e){
+            fail();
+        }
+    }
+
+    @Test
+    void getSalesConfirmedSalesTest(){      //In the Sale table there are tuples ('1', 'nameTest1', 'gameNameTest1', '3', '10', 'consoleTest', 'To confirm', 'addressTest', 'emailTest'), ('2', 'nameTest2', 'gameNameTest2', '1', '15', 'consoleTest2', 'Confirmed', 'addressTest', 'emailTest')
+        BuyGamesController controller = new BuyGamesController();
+        try{
+            List<SaleBean> sales = controller.getSales();
+            assertEquals(2, (long) sales.size());
+        } catch(PersistencyErrorException e){
+            fail();
+        }
+    }
+
+    @Test
+    void confirmDeliveryTest(){     //In the Sale table there is tuple ('1', 'nameTest1', 'gameNameTest1', '3', '10', 'consoleTest', 'To confirm', 'addressTest', 'fer.andrea35@gmail.com')
+        BuyGamesController controller = new BuyGamesController();
+        try{
+            VideogameBean videogameBean = new VideogameBean();
+            videogameBean.setName("gameNameTest1");
+            videogameBean.setCopiesBean(3);
+            videogameBean.setPriceBean(10);
+            videogameBean.setPlatformBean("consoleTest");
+            SaleBean saleBean = new SaleBean();
+            saleBean.setIdBean(1);
+            saleBean.setNameBean("nameTest1");
+            saleBean.setGameSoldBean(videogameBean);
+            saleBean.setStateBean("To confirm");
+            saleBean.setAddressBean("addressTest");
+            saleBean.setEmailBean("fer.andrea35@gmail.com");
+            controller.confirmDelivery(saleBean);
+        } catch(Exception e){
+            fail();
+        }
+    }
+
+    @Test
+    void confirmDeliveryGmailEcxeptionTest(){       //In the Sale table there is tuple ('1', 'nameTest1', 'gameNameTest1', '3', '10', 'consoleTest', 'To confirm', 'addressTest', 'emailTest')
+            BuyGamesController controller = new BuyGamesController();
+        VideogameBean videogameBean = new VideogameBean();
+        videogameBean.setName("gameNameTest1");
+        videogameBean.setCopiesBean(3);
+        videogameBean.setPriceBean(10);
+        videogameBean.setPlatformBean("consoleTest");
+        SaleBean saleBean = new SaleBean();
+        saleBean.setIdBean(1);
+        saleBean.setNameBean("nameTest1");
+        saleBean.setGameSoldBean(videogameBean);
+        saleBean.setStateBean("To confirm");
+        saleBean.setAddressBean("addressTest");
+        saleBean.setEmailBean("emailTest");
+        assertThrows(GmailException.class, () -> controller.confirmDelivery(saleBean));
+    }
 }

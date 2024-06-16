@@ -59,12 +59,11 @@ class ItemDAOCSVTest {
     @Test
     void addGameForSaleNotExisting(){
         try{
-            Filters filters = new Filters(null, "categoryTest", "gameTest");
-            Videogame game = new Videogame("nameTest", 2, 10, "descriptionTest");
+            Videogame game = new Videogame("nameTest", 2, 10, "descriptionTest", "platformTest", "categoryTest");
             CSVFactory csvFactory = new CSVFactory();
             ItemDAO itemDAO = csvFactory.createItemDAO();
-            itemDAO.addGameForSale(game, filters);
-            filters.setName("nameTest");
+            itemDAO.addGameForSale(game);
+            Filters filters = new Filters("nameTest", "platformTest", "categoryTest");
             List<Videogame> games = itemDAO.getVideogamesForSale(filters);
             assertEquals(1, (long) games.size());
             Videogame gameForSale = games.getFirst();
@@ -79,12 +78,11 @@ class ItemDAOCSVTest {
     @Test
     void addGameForSaleExistingTest(){      //in the database there was already the tuple('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
         try{
-            Filters filters = new Filters(null, "categoryTest", "consoleTest");
-            Videogame game = new Videogame("nameTest", 3, 12, "descriptionTest");
+            Videogame game = new Videogame("nameTest", 3, 12, "descriptionTest", "consoleTest", "categoryTest");
             CSVFactory csvFactory = new CSVFactory();
             ItemDAO itemDAO = csvFactory.createItemDAO();
-            itemDAO.addGameForSale(game, filters);
-            filters.setName("nameTest");
+            itemDAO.addGameForSale(game);
+            Filters filters = new Filters("nameTest", "consoleTest", "categoryTest");
             List<Videogame> games = itemDAO.getVideogamesForSale(filters);
             assertEquals(1, (long) games.size());
             Videogame gameForSale = games.getFirst();
@@ -97,13 +95,12 @@ class ItemDAOCSVTest {
     @Test
     void addGameForSaleExistingDiffConsoleTest(){       //in the database there was the tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
         try{
-            Filters filters = new Filters(null, "consoleTest2", "categoryTest");
-            Videogame game = new Videogame("nameTest", 3, 11, "descriptionTest");
+            Videogame game = new Videogame("nameTest", 3, 11, "descriptionTest", "consoleTest2", "categoryTest");
             CSVFactory csvFactory = new CSVFactory();
             ItemDAO itemDAO = csvFactory.createItemDAO();
-            itemDAO.addGameForSale(game, filters);
+            itemDAO.addGameForSale(game);
 
-            filters.setName("nameTest");
+            Filters filters = new Filters("nameTest", "consoleTest2", "categoryTest");
             List<Videogame> games = itemDAO.getVideogamesForSale(filters);
             assertEquals(1, (long) games.size());
             Videogame gameForSale = games.getFirst();
@@ -127,13 +124,12 @@ class ItemDAOCSVTest {
     @Test
     void removeGameForSaleTest(){       //In the database there was tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
         try{
-            Filters filters = new Filters(null, "consoleTest", "categoryTest");
-            Videogame game = new Videogame("nameTest", 1, 10, "descriptionTest");
+            Videogame game = new Videogame("nameTest", 1, 10, "descriptionTest", "consoleTest", "categoryTest");
             CSVFactory csvFactory = new CSVFactory();
             ItemDAO itemDAO = csvFactory.createItemDAO();
-            itemDAO.removeGameForSale(game, filters);
+            itemDAO.removeGameForSale(game);
 
-            filters.setName("nameTest");
+            Filters filters = new Filters("nameTest", "consoleTest", "categoryTest");
             List<Videogame> games = itemDAO.getVideogamesForSale(filters);
             Videogame gameForSale = games.getFirst();
             assertEquals("nameTest", gameForSale.getName());
@@ -147,25 +143,23 @@ class ItemDAOCSVTest {
     @Test
     void removeGameForSaleSoldOutTest(){        //In the database there was tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
         try{
-            Filters filters = new Filters(null, "consoleTest", "categoryTest");
-            Videogame game = new Videogame("nameTest", 4, 10, "descriptionTest");
+            Videogame game = new Videogame("nameTest", 4, 10, "descriptionTest", "consoleTest", "categoryTest");
             CSVFactory csvFactory = new CSVFactory();
             ItemDAO itemDAO = csvFactory.createItemDAO();
-            assertThrows(GameSoldOutException.class, () -> itemDAO.removeGameForSale(game, filters));
+            assertThrows(GameSoldOutException.class, () -> itemDAO.removeGameForSale(game));
         } catch(PersistencyErrorException e){
             fail();
         }
     }
     @Test
-    void removeGameForSaleDiffConsoleTest(){        //In the database there were tuples ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest') and ('nameTest', 'cnosoleTest1', 'categoryTest', '3', '12', 'descriptionTest')
+    void removeGameForSaleDiffConsoleTest(){        //In the database there were tuples ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest') and ('nameTest', 'consoleTest1', 'categoryTest', '3', '12', 'descriptionTest')
         try{
-            Filters filters = new Filters(null, "consoleTest", "categoryTest");
-            Videogame game = new Videogame("nameTest", 2, 10, "descriptionTest");
+            Videogame game = new Videogame("nameTest", 2, 10, "descriptionTest", "consoleTest", "categoryTest");
             CSVFactory csvFactory = new CSVFactory();
             ItemDAO itemDAO = csvFactory.createItemDAO();
-            itemDAO.removeGameForSale(game, filters);
+            itemDAO.removeGameForSale(game);
 
-            filters.setName("nameTest");
+            Filters filters = new Filters("nameTest", "consoleTest", "categoryTest");
             List<Videogame> games = itemDAO.getVideogamesForSale(filters);
             Videogame gameForSale = games.getFirst();
             assertEquals("nameTest", gameForSale.getName());

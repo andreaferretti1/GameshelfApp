@@ -22,6 +22,8 @@ class ItemDAOJDBCTest {
             assertEquals(2, gameForSale.getCopies());
             assertEquals(10, gameForSale.getPrice());
             assertEquals("descriptionTest", gameForSale.getDescription());
+            assertEquals("consoleTest", gameForSale.getPlatform());
+            assertEquals("categoryTest", gameForSale.getCategory());
         } catch(PersistencyErrorException e){
             fail();
         }
@@ -60,12 +62,11 @@ class ItemDAOJDBCTest {
     @Test
     void addGameForSaleNotExisting(){
         try{
-            Filters filters = new Filters(null, "categoryTest", "gameTest");
-            Videogame game = new Videogame("nameTest", 2, 10, "descriptionTest");
+            Videogame game = new Videogame("nameTest", 2, 10, "descriptionTest", "platformTest", "categoryTest");
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
-            itemDAO.addGameForSale(game, filters);
-            filters.setName("nameTest");
+            itemDAO.addGameForSale(game);
+            Filters filters = new Filters("nameTest", "platformTest", "categoryTest");
             List<Videogame> games = itemDAO.getVideogamesForSale(filters);
             assertEquals(1, (long) games.size());
             Videogame gameForSale = games.getFirst();
@@ -81,12 +82,11 @@ class ItemDAOJDBCTest {
     @Test
     void addGameForSaleExistingTest(){      //in the database there was already the tuple('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
         try{
-            Filters filters = new Filters(null, "categoryTest", "consoleTest");
-            Videogame game = new Videogame("nameTest", 3, 12, "descriptionTest");
+            Videogame game = new Videogame("nameTest", 3, 12, "descriptionTest", "consoleTest", "categoryTest");
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
-            itemDAO.addGameForSale(game, filters);
-            filters.setName("nameTest");
+            itemDAO.addGameForSale(game);
+            Filters filters = new Filters("nameTest", "consoleTest", "categoryTest");
             List<Videogame> games = itemDAO.getVideogamesForSale(filters);
             assertEquals(1, (long) games.size());
             Videogame gameForSale = games.getFirst();
@@ -99,13 +99,12 @@ class ItemDAOJDBCTest {
     @Test
     void addGameForSaleExistingDiffConsoleTest(){       //in the database there was the tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
         try{
-            Filters filters = new Filters(null, "consoleTest2", "categoryTest");
-            Videogame game = new Videogame("nameTest", 3, 11, "descriptionTest");
+            Videogame game = new Videogame("nameTest", 3, 11, "descriptionTest", "consoleTest2", "categoryTest");
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
-            itemDAO.addGameForSale(game, filters);
+            itemDAO.addGameForSale(game);
 
-            filters.setName("nameTest");
+            Filters filters = new Filters("nameTest", "consoleTest2", "categoryTest");
             List<Videogame> games = itemDAO.getVideogamesForSale(filters);
             assertEquals(1, (long) games.size());
             Videogame gameForSale = games.getFirst();
@@ -129,13 +128,12 @@ class ItemDAOJDBCTest {
     @Test
     void removeGameForSaleTest(){       //In the database there was tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
         try{
-            Filters filters = new Filters(null, "consoleTest", "categoryTest");
-            Videogame game = new Videogame("nameTest", 1, 10, "descriptionTest");
+            Videogame game = new Videogame("nameTest", 1, 10, "descriptionTest", "consoleTest", "categoryTest");
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
-            itemDAO.removeGameForSale(game, filters);
+            itemDAO.removeGameForSale(game);
 
-            filters.setName("nameTest");
+            Filters filters = new Filters("nameTest", "consoleTest", "categoryTest");
             List<Videogame> games = itemDAO.getVideogamesForSale(filters);
             Videogame gameForSale = games.getFirst();
             assertEquals("nameTest", gameForSale.getName());
@@ -148,22 +146,20 @@ class ItemDAOJDBCTest {
     }
     @Test
     void removeGameForSaleSoldOutTest(){        //In the database there was tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
-        Filters filters = new Filters(null, "consoleTest", "categoryTest");
-        Videogame game = new Videogame("nameTest", 4, 10, "descriptionTest");
+        Videogame game = new Videogame("nameTest", 4, 10, "descriptionTest", "consoleTest", "categoryTest");
         JDBCFactory jdbcFactory = new JDBCFactory();
         ItemDAO itemDAO = jdbcFactory.createItemDAO();
-        assertThrows(GameSoldOutException.class, () -> itemDAO.removeGameForSale(game, filters));
+        assertThrows(GameSoldOutException.class, () -> itemDAO.removeGameForSale(game));
     }
     @Test
-    void removeGameForSaleDiffConsoleTest(){        //In the database there were tuples ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest') and ('nameTest', 'cnosoleTest1', 'categoryTest', '3', '12', 'descriptionTest')
+    void removeGameForSaleDiffConsoleTest(){        //In the database there were tuples ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest') and ('nameTest', 'consoleTest1', 'categoryTest', '3', '12', 'descriptionTest')
         try{
-            Filters filters = new Filters(null, "consoleTest", "categoryTest");
-            Videogame game = new Videogame("nameTest", 2, 10, "descriptionTest");
+            Videogame game = new Videogame("nameTest", 2, 10, "descriptionTest", "consoleTest", "categoryTest");
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
-            itemDAO.removeGameForSale(game, filters);
+            itemDAO.removeGameForSale(game);
 
-            filters.setName("nameTest");
+            Filters filters = new Filters("nameTest", "consoleTest", "categoryTest");
             List<Videogame> games = itemDAO.getVideogamesForSale(filters);
             Videogame gameForSale = games.getFirst();
             assertEquals("nameTest", gameForSale.getName());

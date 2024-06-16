@@ -57,7 +57,7 @@ class CatalogueDAOCSVTest {
         try{
             CSVFactory csvFactory = new CSVFactory();
             CatalogueDAO catalogueDAO = csvFactory.createCatalogueDAO();
-            Videogame videogame = new Videogame("nameTest", 3, 0, null);
+            Videogame videogame = new Videogame("nameTest", 3, 0, null, null, null);
             catalogueDAO.addVideogame("emailTest", videogame);
             List<Videogame> games = catalogueDAO.getCatalogue("emailTest");
             assertNotNull(games);
@@ -72,7 +72,7 @@ class CatalogueDAOCSVTest {
         try{
             CSVFactory csvFactory = new CSVFactory();
             CatalogueDAO catalogueDAO = csvFactory.createCatalogueDAO();
-            Videogame videogame = new Videogame("nameTest", 3, 0, null);
+            Videogame videogame = new Videogame("nameTest", 3, 0, null, null, null);
             catalogueDAO.removeVideogame("emailTest", videogame);
             List<Videogame> games = catalogueDAO.getCatalogue("emailTest");
             assertEquals(0, (long) games.size());
