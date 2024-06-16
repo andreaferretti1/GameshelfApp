@@ -8,7 +8,6 @@ public class Videogame {
     private String description;
     private String platform;
     private String category;
-    //TODO vedi test con videogame e aggiungi i filtri
     public Videogame(String name, int copies, float price, String description, String platform, String category) {
         this.name = name;
         this.copies = copies;

@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogamesFoundBean;
 import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
-import org.application.gameshelfapp.buyvideogames.exception.FiltersException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
@@ -57,10 +56,10 @@ public class SearchPageController implements Initializable{
 
     @FXML
     private void searchVideogame(MouseEvent event){
-        String gameName = nameField.getText();
+        String game = nameField.getText();
         try{
-            this.customerBoundary.insertFilters(gameName, this.platformChoiceBox.getValue(), this.categoryChoiceBox.getValue());
-        } catch(FiltersException | PersistencyErrorException e){
+            this.customerBoundary.insertFilters(game, this.platformChoiceBox.getValue(), this.categoryChoiceBox.getValue());
+        } catch(PersistencyErrorException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
         }
         this.customerBoundary.getVideogamesFoundBean().getInformationFromModel();

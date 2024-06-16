@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS User(
 
 CREATE TABLE IF NOT EXISTS Sale(
     Id int AUTO_INCREMENT PRIMARY KEY,
+    Name varchar(100) NOT NULL,
     Copies int NOT NULL,
     State varchar(20) NOT NULL DEFAULT ('To confirm'),
     Price float NOT NULL,

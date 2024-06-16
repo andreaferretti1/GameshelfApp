@@ -5,7 +5,6 @@ import org.application.gameshelfapp.buyvideogames.bean.FiltersBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogamesFoundBean;
 import org.application.gameshelfapp.buyvideogames.controller.BuyGamesController;
-import org.application.gameshelfapp.buyvideogames.exception.FiltersException;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
@@ -45,7 +44,7 @@ public class CustomerBoundary {
     public FiltersBean getFiltersBean() {
         return this.filtersBean;
     }
-    public void insertFilters(String name, String console, String category) throws FiltersException, PersistencyErrorException{
+    public void insertFilters(String name, String console, String category) throws PersistencyErrorException{
         this.filtersBean = new FiltersBean();
         this.filtersBean.setNameBean(name);
         this.filtersBean.setConsoleBean(console);

@@ -10,7 +10,7 @@ public class SaleDAOJDBC implements SaleDAO{
     public void saveSale(Sale sale) throws PersistencyErrorException {
         try(Connection conn = SingletonConnectionPool.getInstance().getConnection();
             Statement stmt = conn.createStatement()){
-            String query = String.format("INSERT INTO Sale (Copies, Price, GameName, Platform, UserEmail, UserAddress) VALUES ('%d', '%f', '%s', '%s', '%s', '%s');", sale.getVideogameSold().getCopies(), sale.getVideogameSold().getPrice(), sale.getVideogameSold().getName(), sale.getPlatform(), sale.getEmail(), sale.getAddress());
+            String query = String.format("INSERT INTO Sale (Copies, Price, GameName, Platform, UserEmail, UserAddress) VALUES ('%d', '%f', '%s', '%s', '%s', '%s');", sale.getVideogameSold().getCopies(), sale.getVideogameSold().getPrice(), sale.getVideogameSold().getName(), sale.getName(), sale.getEmail(), sale.getAddress());
             stmt.execute(query);
         } catch(SQLException e){
             throw new PersistencyErrorException("Couldn't save sale");
@@ -23,13 +23,12 @@ public class SaleDAOJDBC implements SaleDAO{
         List<Sale> sales = new ArrayList<Sale>();
          try(Connection conn = SingletonConnectionPool.getInstance().getConnection();
             Statement stmt = conn.createStatement()){
-             String query = "SELECT * FROM ObjectOnSale;";
+             String query = "SELECT Id, Name, Copies, State, Price, GameName, Platform, UserEmail, UserAddress FROM ObjectOnSale;";
              stmt.execute(query);
              rs = stmt.getResultSet();
              while(rs.next()){
-                 //TODO guarda query
-                 Videogame videogame = new Videogame(rs.getString("GameName"), rs.getInt("Copies"), rs.getFloat("Price"), null);
-                 Sale sale = new Sale(videogame, rs.getString("UserEmail"), rs.getString("UserAddress"), rs.getString("State"), rs.getString("Platform"));
+                 Videogame videogame = new Videogame(rs.getString("GameName"), rs.getInt("Copies"), rs.getFloat("Price"), null, rs.getString("Platform"), null);
+                 Sale sale = new Sale(videogame, rs.getString("UserEmail"), rs.getString("UserAddress"), rs.getString("State"), rs.getString("Name"));
                  sale.setId(rs.getInt("Id"));
                  sales.add(sale);
              }

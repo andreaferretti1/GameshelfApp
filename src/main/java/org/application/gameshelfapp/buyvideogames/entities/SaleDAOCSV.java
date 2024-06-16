@@ -17,7 +17,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class SaleDAOCSV implements SaleDAO{
 
-    private Lock lock;
+    private final Lock lock;
     public static final String TEMP_FILE = "items_sold.csv";
     private final File fd;
     private long id;
@@ -30,16 +30,16 @@ public class SaleDAOCSV implements SaleDAO{
     public void saveSale(Sale sale) throws PersistencyErrorException {
         this.id++;
         this.saveId();
-        String[] gameSold = new String[7];
+        String[] gameSold = new String[9];
 
-        gameSold[VideogamesSoldAttributes.GAMEID.ordinal()] = String.valueOf(this.id);
-        gameSold[VideogamesSoldAttributes.CUSTOMEREMAIL.ordinal()] = sale.getName();
-        gameSold[VideogamesSoldAttributes.GAMENAME.ordinal()] = sale.getVideogameSold().getName();
+        gameSold[VideogamesSoldAttributes.GAME_ID.ordinal()] = String.valueOf(this.id);
+        gameSold[VideogamesSoldAttributes.CUSTOMER_EMAIL.ordinal()] = sale.getName();
+        gameSold[VideogamesSoldAttributes.GAME_NAME.ordinal()] = sale.getVideogameSold().getName();
         gameSold[VideogamesSoldAttributes.COPIES.ordinal()] = String.valueOf(sale.getVideogameSold().getCopies());
         gameSold[VideogamesSoldAttributes.PRICE.ordinal()] = String.valueOf(sale.getVideogameSold().getPrice());
         gameSold[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()] = sale.getState();
-        gameSold[VideogamesSoldAttributes.CUSTOMERADDRESS.ordinal()] = sale.getAddress();
-        gameSold[VideogamesSoldAttributes.CUSTOMEREMAIL.ordinal()] = sale.getEmail();
+        gameSold[VideogamesSoldAttributes.CUSTOMER_ADDRESS.ordinal()] = sale.getAddress();
+        gameSold[VideogamesSoldAttributes.CUSTOMER_EMAIL.ordinal()] = sale.getEmail();
 
         try(CSVWriter cvsWriter = new CSVWriter(new BufferedWriter(new FileWriter(this.fd, true)))){
             cvsWriter.writeNext(gameSold);
@@ -51,13 +51,13 @@ public class SaleDAOCSV implements SaleDAO{
     @Override
     public List<Sale> getSales() throws PersistencyErrorException {
         List<Sale> sales = new ArrayList<Sale>();
-        String[] myRecord = null;
+        String[] myRecord;
 
         try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)))){
             while((myRecord = csvReader.readNext()) != null){
-                Videogame gameSold = new Videogame(myRecord[VideogamesSoldAttributes.GAMENAME.ordinal()], Integer.parseInt(myRecord[VideogamesSoldAttributes.COPIES.ordinal()]), Float.parseFloat(myRecord[VideogamesSoldAttributes.PRICE.ordinal()]), null,  myRecord[VideogamesSoldAttributes.PLATFORM.ordinal()], null);
-                Sale sale = new Sale(gameSold, myRecord[VideogamesSoldAttributes.CUSTOMEREMAIL.ordinal()], myRecord[VideogamesSoldAttributes.CUSTOMERADDRESS.ordinal()], myRecord[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()], myRecord[VideogamesSoldAttributes.CUSTOMERNAME.ordinal()]);
-                sale.setId(Integer.parseInt(myRecord[VideogamesSoldAttributes.GAMEID.ordinal()]));
+                Videogame gameSold = new Videogame(myRecord[VideogamesSoldAttributes.GAME_NAME.ordinal()], Integer.parseInt(myRecord[VideogamesSoldAttributes.COPIES.ordinal()]), Float.parseFloat(myRecord[VideogamesSoldAttributes.PRICE.ordinal()]), null,  myRecord[VideogamesSoldAttributes.PLATFORM.ordinal()], null);
+                Sale sale = new Sale(gameSold, myRecord[VideogamesSoldAttributes.CUSTOMER_EMAIL.ordinal()], myRecord[VideogamesSoldAttributes.CUSTOMER_ADDRESS.ordinal()], myRecord[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()], myRecord[VideogamesSoldAttributes.CUSTOMER_NAME.ordinal()]);
+                sale.setId(Integer.parseInt(myRecord[VideogamesSoldAttributes.GAME_ID.ordinal()]));
                 sales.add(sale);
             }
         }catch(IOException | CsvValidationException e){
@@ -72,11 +72,11 @@ public class SaleDAOCSV implements SaleDAO{
         this.lock.lock();
 
         try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)));
-            CSVWriter csvWriter= new CSVWriter(new BufferedWriter(new FileWriter(tempFile)));
+            CSVWriter csvWriter= new CSVWriter(new BufferedWriter(new FileWriter(tempFile)))
         ){
             String[] myRecord;
             while((myRecord = csvReader.readNext()) != null){
-                if(myRecord[VideogamesSoldAttributes.GAMEID.ordinal()].equals(String.valueOf(sale.getId()))){
+                if(myRecord[VideogamesSoldAttributes.GAME_ID.ordinal()].equals(String.valueOf(sale.getId()))){
                     myRecord[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()] = Sale.CONFIRMED;
                 }
                 csvWriter.writeNext(myRecord);
@@ -108,6 +108,6 @@ public class SaleDAOCSV implements SaleDAO{
     }
 
     private enum VideogamesSoldAttributes{
-        GAMEID, CUSTOMERNAME, GAMENAME, COPIES, PRICE, PLATFORM, STATE_OF_DELIVERY, CUSTOMERADDRESS, CUSTOMEREMAIL
+        GAME_ID, CUSTOMER_NAME, GAME_NAME, COPIES, PRICE, PLATFORM, STATE_OF_DELIVERY, CUSTOMER_ADDRESS, CUSTOMER_EMAIL
     }
 }
