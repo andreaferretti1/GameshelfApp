@@ -7,7 +7,6 @@ import org.application.gameshelfapp.buyvideogames.entities.PersistencyAbstractFa
 import org.application.gameshelfapp.buyvideogames.entities.Sale;
 import org.application.gameshelfapp.buyvideogames.entities.SaleDAO;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
-import org.application.gameshelfapp.buyvideogames.exception.FiltersException;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
@@ -64,7 +63,7 @@ class CustomerBoundaryTest {
             customerBoundary.insertFilters("nameTest", "consoleTest", "categoryTest");
             assertNotNull(customerBoundary.getVideogamesFoundBean().getVideogamesFoundBean());
             assertEquals(0, (long) customerBoundary.getVideogamesFoundBean().getVideogamesFoundBean().size());
-        } catch(PersistencyErrorException | FiltersException e){
+        } catch(PersistencyErrorException e){
             fail();
         }
     }
@@ -82,7 +81,7 @@ class CustomerBoundaryTest {
             assertEquals(2, videogameBean.getCopiesBean());
             assertEquals(11, videogameBean.getPriceBean());
             assertEquals("descriptionTest1", videogameBean.getDescriptionBean());
-        } catch(PersistencyErrorException | FiltersException e){
+        } catch(PersistencyErrorException e){
             fail();
         }
     }
@@ -107,7 +106,7 @@ class CustomerBoundaryTest {
             assertEquals(3, videogameBean2.getCopiesBean());
             assertEquals(20, videogameBean2.getPriceBean());
             assertEquals("descriptionTest2", videogameBean2.getDescriptionBean());
-        } catch(PersistencyErrorException | FiltersException e){
+        } catch(PersistencyErrorException e){
             fail();
         }
     }

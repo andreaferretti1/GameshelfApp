@@ -96,8 +96,8 @@ public class TerminalController implements Initializable {
                     this.sellerBoundary.sendGame(Integer.parseInt(command[0]));
                 }
             }
-        } catch (SyntaxErrorException | PersistencyErrorException | CheckFailedException | GmailException |
-                 FiltersException | NumberFormatException | RefundException | GameSoldOutException |
+        } catch (SyntaxErrorException | PersistencyErrorException | CheckFailedException | GmailException
+                 | NumberFormatException | RefundException | GameSoldOutException |
                  NullPasswordException | InvalidAddressException | ConfirmDeliveryException e) {
             this.textArea.appendText("\n\n" + e.getMessage());
         } catch (ArrayIndexOutOfBoundsException e) {

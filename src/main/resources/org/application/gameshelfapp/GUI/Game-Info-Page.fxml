@@ -108,7 +108,7 @@
                   </ScrollPane>
                </children>
             </HBox>
-            <Button mnemonicParsing="false" onMouseClicked="#addGameToCart" prefHeight="55.0" prefWidth="130.0" style="-fx-background-color: #2E60E1; -fx-background-radius: 60;" text="Add" textFill="WHITE">
+            <Button mnemonicParsing="false" onMouseClicked="#buy" prefHeight="55.0" prefWidth="130.0" style="-fx-background-color: #2E60E1; -fx-background-radius: 60;" text="Add" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
