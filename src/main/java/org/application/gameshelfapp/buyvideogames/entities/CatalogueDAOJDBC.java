@@ -48,7 +48,6 @@ public class CatalogueDAOJDBC implements CatalogueDAO {
             query = "SELECT Copies FROM Catalogue WHERE Name = " + game.getName() + "AND Email = " + email + ";";
             stmt.execute(query);
             ResultSet rs = stmt.getResultSet();
-             //TODO definisci eccezione per i videogiochi che voglio rimuovere ma che non sono presenti nel catalogo
             quantity = rs.getInt("Copies");
             rs.close();
             if(quantity == 0){

@@ -17,9 +17,12 @@ module org.application.gameshelfapp {
 
     opens org.application.gameshelfapp to javafx.fxml;
     exports org.application.gameshelfapp;
-    exports org.application.gameshelfapp.login;
-    opens org.application.gameshelfapp.login to javafx.fxml;
     exports org.application.gameshelfapp.login.graphiccontrollers;
+    exports org.application.gameshelfapp.login.exception;
+    exports org.application.gameshelfapp.login.boundary;
+    exports org.application.gameshelfapp.login.bean;
+    exports org.application.gameshelfapp.buyvideogames.boundary;
+    exports org.application.gameshelfapp.buyvideogames.bean;
     opens org.application.gameshelfapp.login.graphiccontrollers to javafx.fxml;
     exports org.application.gameshelfapp.buyvideogames.graphiccontrollers;
     opens org.application.gameshelfapp.buyvideogames.graphiccontrollers to javafx.fxml;

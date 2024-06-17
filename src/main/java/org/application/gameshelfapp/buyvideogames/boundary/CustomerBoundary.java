@@ -20,7 +20,6 @@ public class CustomerBoundary {
 
     private final BuyGamesController buyGamesController;
     private VideogamesFoundBean videogamesFoundBean;
-    private FiltersBean filtersBean;    //TODO togli questo attributo, correggendo opportunamente test e controller grafici
     private final UserBean userBean;
     private VideogameBean gameToBuy;
 
@@ -38,18 +37,12 @@ public class CustomerBoundary {
     public VideogamesFoundBean getVideogamesFoundBean() {
         return this.videogamesFoundBean;
     }
-    public void setFiltersBean(FiltersBean filtersBean) {
-        this.filtersBean = filtersBean;
-    }
-    public FiltersBean getFiltersBean() {
-        return this.filtersBean;
-    }
     public void insertFilters(String name, String console, String category) throws PersistencyErrorException{
-        this.filtersBean = new FiltersBean();
-        this.filtersBean.setNameBean(name);
-        this.filtersBean.setConsoleBean(console);
-        this.filtersBean.setCategoryBean(category);
-        this.videogamesFoundBean = this.buyGamesController.searchVideogame(filtersBean);
+        FiltersBean filtersBean = new FiltersBean();
+        filtersBean.setNameBean(name);
+        filtersBean.setConsoleBean(console);
+        filtersBean.setCategoryBean(category);
+        videogamesFoundBean = this.buyGamesController.searchVideogame(filtersBean);
     }
     public void setGameToBuy(VideogameBean videogameBean){
         this.gameToBuy = videogameBean;

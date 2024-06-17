@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserLogInBoundaryTest {
     @Test
-    void logSuccessfulTest(){       //Username: test, email: testEmail@example.com, password: test, typeOfUser: customer;
+    void logSuccessfulTest(){
         try {
             UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
             userLogInBoundary.log("testEmail@example.com", "test");

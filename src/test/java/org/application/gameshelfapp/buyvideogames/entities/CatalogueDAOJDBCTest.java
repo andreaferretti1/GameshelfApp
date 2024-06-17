@@ -79,7 +79,4 @@ class CatalogueDAOJDBCTest {
             fail();
         }
     }
-
-    //TODO definisci test che lancia l'eccezione dei videogiochi non presenti nel catalogo che voglio rimuovere
-
 }

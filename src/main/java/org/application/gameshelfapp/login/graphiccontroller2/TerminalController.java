@@ -109,6 +109,8 @@ public class TerminalController implements Initializable {
         this.command = textField.getText().split(" ");
         this.textArea.appendText("\n" + textField.getText() + "\n");
     }
+
+
     private void showVideogames(List<VideogameBean> videogames) {
         for (VideogameBean game : videogames) {
             String lineToShow = game.getName() + " " + " " + game.getCopiesBean() + " " + game.getPriceBean() + "€\n";

@@ -1,6 +1,5 @@
 package org.application.gameshelfapp.buyvideogames.boundary;
 
-import org.application.gameshelfapp.buyvideogames.bean.FiltersBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogamesFoundBean;
 import org.application.gameshelfapp.buyvideogames.entities.PersistencyAbstractFactory;
@@ -26,13 +25,6 @@ class CustomerBoundaryTest {
         CustomerBoundary customerBoundary = new CustomerBoundary(userBean);
         assertSame(userBean, customerBoundary.getUserBean());
         assertNotNull(customerBoundary.getBuyGamesController());
-    }
-
-    @Test
-    void setAndGetFiltersBeanTest(){
-        CustomerBoundary customerBoundary = new CustomerBoundary(null);
-        customerBoundary.setFiltersBean(new FiltersBean());
-        assertNotNull(customerBoundary.getFiltersBean());
     }
 
     @Test
