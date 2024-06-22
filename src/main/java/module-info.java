@@ -23,6 +23,7 @@ module org.application.gameshelfapp {
     exports org.application.gameshelfapp.login.bean;
     exports org.application.gameshelfapp.buyvideogames.boundary;
     exports org.application.gameshelfapp.buyvideogames.bean;
+    exports org.application.gameshelfapp.buyvideogames.exception;
     opens org.application.gameshelfapp.login.graphiccontrollers to javafx.fxml;
     exports org.application.gameshelfapp.buyvideogames.graphiccontrollers;
     opens org.application.gameshelfapp.buyvideogames.graphiccontrollers to javafx.fxml;
