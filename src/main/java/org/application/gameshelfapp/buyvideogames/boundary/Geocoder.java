@@ -5,13 +5,24 @@ import org.application.gameshelfapp.buyvideogames.entities.Credentials;
 import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Properties;
+
 public class Geocoder {
-    private String getURL(String address){
-        return String.format("https://geocode.maps.co/search?q=%s&api_key=6637ee4ba2422085994104svn291950", address);
+    private String getURL(String address) throws IOException{
+        try(FileInputStream in = new FileInputStream("src/main/resources/org/application/gameshelfapp/configuration/configuration.properties")){
+            Properties properties = new Properties();
+            properties.load(in);
+
+            String key = properties.getProperty("GEOCODER");
+            return String.format("https://geocode.maps.co/search?q=%s&api_key=%s", address, key);
+        } catch(IOException e){
+            throw new IOException("Couldn't send credentials");
+        }
     }
 
     public void checkAddress(String address) throws InvalidAddressException, IOException{
