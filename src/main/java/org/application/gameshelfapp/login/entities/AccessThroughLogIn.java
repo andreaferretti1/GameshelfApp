@@ -4,8 +4,8 @@ import org.application.gameshelfapp.login.exception.CheckFailedException;
 
 public class AccessThroughLogIn extends Access {
 
-    public AccessThroughLogIn(String email, String password, String typeOfUser){
-        super(email, password, null, typeOfUser);
+    public AccessThroughLogIn(String username, String email, String typeOfUser){
+        super(username, email, null, typeOfUser);
     }
 
     public void checkAccount(Access user) throws CheckFailedException {

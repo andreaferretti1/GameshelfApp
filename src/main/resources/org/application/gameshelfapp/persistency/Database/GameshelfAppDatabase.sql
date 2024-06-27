@@ -8,7 +8,6 @@ CREATE TABLE IF NOT EXISTS ObjectOnSale(
     Type varchar(40) NOT NULL,
     Description varchar(500),
     Copies int NOT NULL,
-    Filter varchar(40),
     PRIMARY KEY (Name, Platform)
 );
 
@@ -49,10 +48,11 @@ CREATE TABLE IF NOT EXISTS Sale(
     Id int AUTO_INCREMENT PRIMARY KEY,
     Name varchar(100) NOT NULL,
     Copies int NOT NULL,
-    State varchar(20) NOT NULL DEFAULT ('To confirm'),
+    State varchar(20),
     Price float NOT NULL,
     GameName varchar(40),
     Platform varchar(20),
+    Username varchar(60),
     UserEmail varchar(100) REFERENCES User(Email),
     UserAddress varchar(100) NOT NULL,
     FOREIGN KEY (GameName, Platform) REFERENCES ObjectOnSale(Name, Platform)

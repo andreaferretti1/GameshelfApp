@@ -1,11 +1,11 @@
 package org.application.gameshelfapp.login.controller;
 
-import org.application.gameshelfapp.buyvideogames.entities.PersistencyAbstractFactory;
+import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.bean.LogInBean;
 import org.application.gameshelfapp.login.bean.RegistrationBean;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.entities.Access;
-import org.application.gameshelfapp.login.entities.AccessDAO;
+import org.application.gameshelfapp.login.dao.AccessDAO;
 import org.application.gameshelfapp.login.entities.AccessThroughRegistration;
 import org.application.gameshelfapp.login.exception.*;
 import org.junit.jupiter.api.Test;

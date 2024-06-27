@@ -2,9 +2,9 @@ package org.application.gameshelfapp.buyvideogames.boundary;
 
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogamesFoundBean;
-import org.application.gameshelfapp.buyvideogames.entities.PersistencyAbstractFactory;
+import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.buyvideogames.entities.Sale;
-import org.application.gameshelfapp.buyvideogames.entities.SaleDAO;
+import org.application.gameshelfapp.buyvideogames.dao.SaleDAO;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;

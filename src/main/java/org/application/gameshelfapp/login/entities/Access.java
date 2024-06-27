@@ -8,10 +8,15 @@ import java.util.Arrays;
 public class Access {
 
     protected String username;
+
     protected String email;
+
     protected String password;
+
     private String typeOfUser;
+
     protected String encodedPassword;
+
     protected Encoder encoder;
 
     protected Access(String username, String email, String password, String typeOfUser){

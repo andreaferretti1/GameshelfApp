@@ -1,9 +1,9 @@
 package org.application.gameshelfapp.signemployee.controller;
 
-import org.application.gameshelfapp.buyvideogames.entities.PersistencyAbstractFactory;
+import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.bean.RegistrationBean;
 import org.application.gameshelfapp.login.entities.Access;
-import org.application.gameshelfapp.login.entities.AccessDAO;
+import org.application.gameshelfapp.login.dao.AccessDAO;
 import org.application.gameshelfapp.login.entities.AccessThroughLogIn;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.NullPasswordException;

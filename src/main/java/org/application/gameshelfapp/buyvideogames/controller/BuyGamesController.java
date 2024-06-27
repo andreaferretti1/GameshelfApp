@@ -4,6 +4,9 @@ import org.application.gameshelfapp.buyvideogames.bean.*;
 import org.application.gameshelfapp.buyvideogames.boundary.Braintree;
 import org.application.gameshelfapp.buyvideogames.boundary.Geocoder;
 import org.application.gameshelfapp.buyvideogames.boundary.ShipmentCompany;
+import org.application.gameshelfapp.buyvideogames.dao.CatalogueDAO;
+import org.application.gameshelfapp.buyvideogames.dao.ItemDAO;
+import org.application.gameshelfapp.buyvideogames.dao.SaleDAO;
 import org.application.gameshelfapp.buyvideogames.entities.*;
 import org.application.gameshelfapp.buyvideogames.exception.ConfirmDeliveryException;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
@@ -11,6 +14,7 @@ import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressExcept
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.boundary.GoogleBoundary;
+import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
