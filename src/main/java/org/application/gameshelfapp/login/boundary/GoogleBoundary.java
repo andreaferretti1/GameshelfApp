@@ -84,7 +84,7 @@ public class GoogleBoundary {
             String encodedEmail = Base64.encodeBase64URLSafeString(rawMessageBytes);
             Message message = new Message();
             message.setRaw(encodedEmail);
-            message = this.service.users().messages().send("me", message).execute();
+            this.service.users().messages().send("me", message).execute();
         } catch (MessagingException | IOException e) {
             throw new GmailException("Couldn't send mail");
         }

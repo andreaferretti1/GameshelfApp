@@ -13,7 +13,7 @@ public class Access {
 
     protected String password;
 
-    private String typeOfUser;
+    private final String typeOfUser;
 
     protected String encodedPassword;
 

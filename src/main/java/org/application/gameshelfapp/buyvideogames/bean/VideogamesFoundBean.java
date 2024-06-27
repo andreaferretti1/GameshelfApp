@@ -25,7 +25,7 @@ public class VideogamesFoundBean {
         return this.videogamesFound;
     }
     public void getInformationFromModel(){
-        this.gamesFoundBean = new ArrayList<VideogameBean>();
+        this.gamesFoundBean = new ArrayList<>();
         List<Videogame> gamesFound = videogamesFound.getGamesFound();
         for(Videogame game: gamesFound){
             VideogameBean gameBean = new VideogameBean();
