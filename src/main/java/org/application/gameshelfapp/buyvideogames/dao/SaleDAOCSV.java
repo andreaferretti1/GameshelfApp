@@ -52,21 +52,12 @@ public class SaleDAOCSV implements SaleDAO {
     }
 
     @Override
-    public List<Sale> getSales() throws PersistencyErrorException {
-        List<Sale> sales = new ArrayList<>();
-        String[] myRecord;
-
-        try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)))){
-            while((myRecord = csvReader.readNext()) != null){
-                Videogame gameSold = new Videogame(myRecord[VideogamesSoldAttributes.GAME_NAME.ordinal()], Integer.parseInt(myRecord[VideogamesSoldAttributes.COPIES.ordinal()]), Float.parseFloat(myRecord[VideogamesSoldAttributes.PRICE.ordinal()]), null,  myRecord[VideogamesSoldAttributes.PLATFORM.ordinal()], null);
-                Sale sale = new Sale(gameSold, myRecord[VideogamesSoldAttributes.CUSTOMER_EMAIL.ordinal()], myRecord[VideogamesSoldAttributes.CUSTOMER_ADDRESS.ordinal()], myRecord[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()], myRecord[VideogamesSoldAttributes.CUSTOMER_NAME.ordinal()]);
-                sale.setId(Integer.parseInt(myRecord[VideogamesSoldAttributes.GAME_ID.ordinal()]));
-                sales.add(sale);
-            }
-        }catch(IOException | CsvValidationException e){
-            throw new PersistencyErrorException("Couldn't get sales");
-        }
-        return sales;
+    public List<Sale> getConfirmedSales() throws PersistencyErrorException{
+        return this.getSalesByState(Sale.CONFIRMED);
+    }
+    @Override
+    public List<Sale> getToConfirmSales() throws PersistencyErrorException{
+        return this.getSalesByState(Sale.TO_CONFIRM);
     }
 
     @Override
@@ -110,6 +101,24 @@ public class SaleDAOCSV implements SaleDAO {
         }
     }
 
+    private List<Sale> getSalesByState(String state) throws PersistencyErrorException{
+        List<Sale> sales = new ArrayList<>();
+        String[] myRecord;
+
+        try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)))){
+            while((myRecord = csvReader.readNext()) != null){
+                if(myRecord[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()].equals(state)){
+                    Videogame gameSold = new Videogame(myRecord[VideogamesSoldAttributes.GAME_NAME.ordinal()], Integer.parseInt(myRecord[VideogamesSoldAttributes.COPIES.ordinal()]), Float.parseFloat(myRecord[VideogamesSoldAttributes.PRICE.ordinal()]), null, myRecord[VideogamesSoldAttributes.PLATFORM.ordinal()], null);
+                    Sale sale = new Sale(gameSold, myRecord[VideogamesSoldAttributes.CUSTOMER_EMAIL.ordinal()], myRecord[VideogamesSoldAttributes.CUSTOMER_ADDRESS.ordinal()], state, myRecord[VideogamesSoldAttributes.CUSTOMER_NAME.ordinal()]);
+                    sale.setId(Integer.parseInt(myRecord[VideogamesSoldAttributes.GAME_ID.ordinal()]));
+                    sales.add(sale);
+                }
+            }
+        }catch(IOException | CsvValidationException e){
+            throw new PersistencyErrorException("Couldn't get sales");
+        }
+        return sales;
+    }
     private enum VideogamesSoldAttributes{
         GAME_ID, CUSTOMER_NAME, GAME_NAME, COPIES, PRICE, PLATFORM, STATE_OF_DELIVERY, CUSTOMER_ADDRESS, CUSTOMER_EMAIL
     }

@@ -74,8 +74,8 @@ public class BuyGamesController {
 
     public List<SaleBean> getSales() throws PersistencyErrorException{
         SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
-        List<Sale> sales = saleDAO.getSales();
-        List<SaleBean> salesBean = new ArrayList<SaleBean>();
+        List<Sale> sales = saleDAO.getToConfirmSales();
+        List<SaleBean> salesBean = new ArrayList<>();
         for(Sale sale: sales){
             SaleBean saleBean = new SaleBean();
             saleBean.setSale(sale);

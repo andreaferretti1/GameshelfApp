@@ -8,6 +8,7 @@ import java.util.List;
 public interface SaleDAO {
 
     void saveSale(Sale sale) throws PersistencyErrorException;
-    List<Sale> getSales() throws PersistencyErrorException;
+    List<Sale> getConfirmedSales() throws PersistencyErrorException;
+    List<Sale> getToConfirmSales() throws PersistencyErrorException;
     void updateSale(Sale sale) throws PersistencyErrorException;
 }

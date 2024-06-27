@@ -18,26 +18,6 @@ public class SaleDAOJDBC implements SaleDAO {
             throw new PersistencyErrorException("Couldn't save sale");
         }
     }
-
-    @Override
-    public List<Sale> getSales() throws PersistencyErrorException {
-        ResultSet rs = null;
-        List<Sale> sales = new ArrayList<Sale>();
-         try(Connection conn = SingletonConnectionPool.getInstance().getConnection()){
-             rs = SaleDAOQueries.getSalesQuery(conn);
-             while(rs.next()){
-                 Videogame videogame = new Videogame(rs.getString("GameName"), rs.getInt("Copies"), rs.getFloat("Price"), null, rs.getString("Platform"), null);
-                 Sale sale = new Sale(videogame, rs.getString("UserEmail"), rs.getString("UserAddress"), rs.getString("State"), rs.getString("Name"));
-                 sale.setId(rs.getInt("Id"));
-                 sales.add(sale);
-             }
-             rs.close();
-         } catch(SQLException e){
-             throw new PersistencyErrorException("Couldn't get sales.");
-         }
-         return sales;
-    }
-
     @Override
     public void updateSale(Sale sale) throws PersistencyErrorException {
         try(Connection conn = SingletonConnectionPool.getInstance().getConnection()){
@@ -47,12 +27,29 @@ public class SaleDAOJDBC implements SaleDAO {
         }
     }
 
-    private List<Sale> getSalesByState(String state){
-        List<Sale> sales = new ArrayList<>();
-
-        return sales;
+    @Override
+    public List<Sale> getConfirmedSales() throws PersistencyErrorException{
+        return this.getSalesByState(Sale.CONFIRMED);
     }
-    private List<Sale> getConfirmedSales(){
+    @Override
+    public List<Sale> getToConfirmSales() throws PersistencyErrorException{
+        return this.getSalesByState(Sale.TO_CONFIRM);
+    }
 
+    private List<Sale> getSalesByState(String state) throws PersistencyErrorException{
+        List<Sale> sales = new ArrayList<>();
+        try(Connection conn = SingletonConnectionPool.getInstance().getConnection()){
+            ResultSet rs = SaleDAOQueries.getSalesByStateQuery(conn, state);
+            while(rs.next()){
+                Videogame videogame = new Videogame(rs.getString("GameName"), rs.getInt("Copies"), rs.getFloat("Price"), null, rs.getString("Platform"), null);
+                Sale sale = new Sale(videogame, rs.getString("UserEmail"), rs.getString("UserAddress"), state, rs.getString("Name"));
+                sale.setId(rs.getInt("Id"));
+                sales.add(sale);
+            }
+            rs.close();
+        } catch(SQLException e){
+            throw new PersistencyErrorException("Couldn't get sales.");
+        }
+        return sales;
     }
 }

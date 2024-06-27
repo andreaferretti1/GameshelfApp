@@ -29,9 +29,10 @@ public class SaleDAOQueries {
         }
     }
 
-    public static ResultSet getSalesQuery(Connection conn) throws SQLException{
-        String query = "SELECT Id, Name, Copies, State, Price, GameName, Platform, UserEmail, UserAddress FROM ObjectOnSale;";
+    public static ResultSet getSalesByStateQuery(Connection conn, String state) throws SQLException{
+        String query = "SELECT Id, Name, Copies, Price, GameName, Platform, UserEmail, UserAddress FROM ObjectOnSale WHERE State = ?;";
         try(PreparedStatement pstmt = conn.prepareStatement(query)){
+            pstmt.setString(1, state);
             pstmt.execute();
             return pstmt.getResultSet();
         } catch(SQLException e){
