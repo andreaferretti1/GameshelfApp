@@ -15,13 +15,6 @@ CREATE TABLE IF NOT EXISTS Filters(
     Type varchar(40) PRIMARY KEY
     );
 
-CREATE TABLE IF NOT EXISTS Filtered(
-    Name varchar(40) REFERENCES ObjectOnSale(Name),
-    Platform varchar(20) REFERENCES ObjectOnSale(Platform),
-    Type varchar(40) REFERENCES Filters(Type),
-    PRIMARY KEY (Name, Platform, Type)
-    );
-
 INSERT IGNORE INTO Filters(Type) VALUES
 ('Action'),
 ('Adventure'),
