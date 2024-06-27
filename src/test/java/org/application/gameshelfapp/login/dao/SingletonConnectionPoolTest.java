@@ -1,6 +1,5 @@
 package org.application.gameshelfapp.login.dao;
 
-import org.application.gameshelfapp.login.dao.SingletonConnectionPool;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.junit.jupiter.api.Test;
 

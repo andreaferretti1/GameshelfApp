@@ -1,8 +1,5 @@
 package org.application.gameshelfapp.login.dao;
 
-import org.application.gameshelfapp.login.dao.CSVFactory;
-import org.application.gameshelfapp.login.dao.JDBCFactory;
-import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

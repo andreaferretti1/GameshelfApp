@@ -1,6 +1,5 @@
 package org.application.gameshelfapp.buyvideogames.dao;
 
-import org.application.gameshelfapp.buyvideogames.dao.SaleDAO;
 import org.application.gameshelfapp.buyvideogames.entities.Sale;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.login.dao.JDBCFactory;

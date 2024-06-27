@@ -1,6 +1,7 @@
 package org.application.gameshelfapp.login.dao;
 
 import org.application.gameshelfapp.login.entities.Access;
+import org.application.gameshelfapp.login.entities.AccessThroughLogIn;
 import org.application.gameshelfapp.login.entities.AccessThroughRegistration;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,8 @@ class AccessDAOJDBCTest {
         try{
             JDBCFactory jdbcFactory = new JDBCFactory();
             AccessDAO accessDAO = jdbcFactory.createAccessDAO();
-            Access access = accessDAO.retrieveAccountByEmail(new Access("testName", "testEmail", "testPAssword","Customer"));
+            Access access = accessDAO.retrieveAccountByEmail(new AccessThroughLogIn("testName", "testEmail","Customer"));
+            access.setEncodedPassword("testPassword");
             assertEquals("testName", access.getUsername());
             assertEquals("testEmail", access.getEmail());
             assertEquals("testPassword", access.getEncodedPassword());
@@ -31,7 +33,7 @@ class AccessDAOJDBCTest {
             accessDAOJDBC.saveAccount(new AccessThroughRegistration("testName1", "testEmail1@example.com", null, null));
             accessDAOJDBC.saveAccount(new AccessThroughRegistration("testName2", "testEmail2@example.com", null, null));
             accessDAOJDBC.saveAccount(new AccessThroughRegistration("testName3", "testEmail3@example.com", null, null));
-            Access access = accessDAOJDBC.retrieveAccountByEmail(new Access("testName", "testEmail@example.com", null, null));
+            Access access = accessDAOJDBC.retrieveAccountByEmail(new AccessThroughLogIn("testName", "testEmail@example.com", null));
             assertNull(access);
         } catch(PersistencyErrorException e){
             fail();

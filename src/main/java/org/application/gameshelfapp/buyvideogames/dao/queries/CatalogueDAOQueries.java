@@ -9,6 +9,8 @@ import java.sql.SQLException;
 
 public class CatalogueDAOQueries {
 
+    private CatalogueDAOQueries(){}
+
     public static ResultSet getCatalogueQuery(Connection conn, String email) throws SQLException{
         String query = "SELECT Name, Copies FROM Catalogue WHERE Email = ?;";
         try(PreparedStatement pstmt = conn.prepareStatement(query)){

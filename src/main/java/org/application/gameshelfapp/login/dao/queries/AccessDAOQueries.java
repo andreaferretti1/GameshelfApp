@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 public class AccessDAOQueries {
 
+    private AccessDAOQueries(){}
     public static void insertAccountQuery(Connection conn, AccessThroughRegistration regAccess) throws SQLException{
         String query = "INSERT INTO User (Username, Email, Password, Type) VALUES (?, ?, ?, ?);";
         try(PreparedStatement pstmt = conn.prepareStatement(query)){

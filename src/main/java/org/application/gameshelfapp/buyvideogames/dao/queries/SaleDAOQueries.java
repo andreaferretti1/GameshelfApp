@@ -9,6 +9,7 @@ import java.sql.SQLException;
 
 public class SaleDAOQueries {
 
+    private SaleDAOQueries(){}
     public static void saveSaleQuery(Connection conn, Sale sale) throws SQLException{
         String query = "INSERT INTO Sale (Copies, Price, State, GameName, Platform, Username, UserEmail, UserAddress) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 

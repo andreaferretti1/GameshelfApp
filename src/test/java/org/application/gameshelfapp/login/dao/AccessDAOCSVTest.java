@@ -1,7 +1,7 @@
 package org.application.gameshelfapp.login.dao;
 
-import org.application.gameshelfapp.login.dao.AccessDAOCSV;
 import org.application.gameshelfapp.login.entities.Access;
+import org.application.gameshelfapp.login.entities.AccessThroughLogIn;
 import org.application.gameshelfapp.login.entities.AccessThroughRegistration;
 import org.application.gameshelfapp.login.exception.NullPasswordException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
@@ -37,7 +37,7 @@ class AccessDAOCSVTest {
             accessDAOCSV.saveAccount(new AccessThroughRegistration("testName1", "testEmail1@example.com", null, null));
             accessDAOCSV.saveAccount(new AccessThroughRegistration("testName2", "testEmail2@example.com", null, null));
             accessDAOCSV.saveAccount(new AccessThroughRegistration("testName3", "testEmail3@example.com", null, null));
-            Access access = accessDAOCSV.retrieveAccountByEmail(new Access("testName", "testEmail@example.com", null, null));
+            Access access = accessDAOCSV.retrieveAccountByEmail(new AccessThroughLogIn("testName", "testEmail@example.com", null));
             assertNull(access);
         } catch(PersistencyErrorException e){
             fail();
@@ -51,7 +51,7 @@ class AccessDAOCSVTest {
             accessDAOCSV.saveAccount(new AccessThroughRegistration("testName1", "testEmail1@example.com", null, null));
             accessDAOCSV.saveAccount(new AccessThroughRegistration("testName2", "testEmail2@example.com", null, null));
             accessDAOCSV.saveAccount(new AccessThroughRegistration("testName3", "testEmail3@example.com", null, null));
-            Access access = accessDAOCSV.retrieveAccountByEmail(new Access("testName", "testEmail2@example.com", null, null));
+            Access access = accessDAOCSV.retrieveAccountByEmail(new AccessThroughLogIn("testName", "testEmail2@example.com", null));
             assertNotNull(access);
             assertEquals("testEmail2@example.com", access.getEmail());
         } catch(PersistencyErrorException e){

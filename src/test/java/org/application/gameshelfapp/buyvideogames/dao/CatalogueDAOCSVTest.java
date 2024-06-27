@@ -1,6 +1,5 @@
 package org.application.gameshelfapp.buyvideogames.dao;
 
-import org.application.gameshelfapp.buyvideogames.dao.CatalogueDAO;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.login.dao.CSVFactory;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
