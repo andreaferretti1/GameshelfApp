@@ -1,8 +1,10 @@
 package org.application.gameshelfapp.buyvideogames.bean;
 
+import com.google.gson.annotations.SerializedName;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 
 public class VideogameBean {
+    @SerializedName("title")
     private String name;
     private int copiesBean;
     private float priceBean;
