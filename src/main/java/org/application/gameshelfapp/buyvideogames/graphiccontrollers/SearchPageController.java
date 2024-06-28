@@ -109,7 +109,7 @@ public class SearchPageController implements Initializable{
     private class CustomTableCellButton extends TableCell<VideogameBean, String> {
         private final Button button;
 
-        private CustomTableCellButton(ObservableList<VideogameBean> gamesToShow){
+        public CustomTableCellButton(ObservableList<VideogameBean> gamesToShow){
             button = new Button("See description");
             button.setPrefWidth(134);
             button.setStyle("-fx-background-color:  #2E60E1; -fx-text-fill: white; -fx-background-radius: 60");

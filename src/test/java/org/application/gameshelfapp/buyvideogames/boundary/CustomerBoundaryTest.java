@@ -117,7 +117,7 @@ class CustomerBoundaryTest {
         try {
             customerBoundary.insertCredentialsAndPay("Name","card", "key", "Via Cambridge", "Roma", "Italy");
             SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
-            List<Sale> sales = saleDAO.getSales();
+            List<Sale> sales = saleDAO.getToConfirmSales();
             assertNotNull(sales);
 
             Sale sale = sales.getFirst();
