@@ -19,7 +19,7 @@ import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController
 import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
 import org.application.gameshelfapp.sellvideogames.boundary.SellerAddGamesBoundary;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
-import org.w3c.dom.events.MouseEvent;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
