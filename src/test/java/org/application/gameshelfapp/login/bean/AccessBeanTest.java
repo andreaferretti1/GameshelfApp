@@ -37,7 +37,7 @@ class AccessBeanTest {
             AccessBean accessBean = new AccessBean();
             accessBean.setPasswordBean("ciao");
             assertEquals("ciao", accessBean.getPasswordBean());
-        } catch (SyntaxErrorException | NullPasswordException e) {
+        } catch (SyntaxErrorException e) {
             fail();
         }
     }

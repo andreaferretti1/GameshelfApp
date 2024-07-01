@@ -18,6 +18,7 @@ import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
+import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
 import java.io.IOException;
 import java.net.URL;
@@ -59,7 +60,7 @@ public class SearchPageController implements Initializable{
         String game = nameField.getText();
         try{
             this.customerBoundary.insertFilters(game, this.platformChoiceBox.getValue(), this.categoryChoiceBox.getValue());
-        } catch(PersistencyErrorException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
         }
         this.customerBoundary.getVideogamesFoundBean().getInformationFromModel();
