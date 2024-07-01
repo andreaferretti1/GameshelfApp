@@ -19,7 +19,6 @@ import org.application.gameshelfapp.sellvideogames.entities.SellingGamesCatalogu
 import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -41,7 +40,7 @@ public class SellGamesController {
         return sellingGamesCatalogueBean;
     }
 
-    public SellingGamesCatalogueBean addGameToCatalogue (VideogameBean videogameBean) throws PersistencyErrorException, InvalidTitleException, CheckFailedException, NoGameInCatalogueException {
+    public SellingGamesCatalogueBean addGameToCatalogue (VideogameBean videogameBean) throws PersistencyErrorException, InvalidTitleException, CheckFailedException, NoGameInCatalogueException, GmailException {
         ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
         Videogame videogame = new Videogame(videogameBean.getName(), videogameBean.getCopiesBean(),videogameBean.getPriceBean(), videogameBean.getDescriptionBean(), videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
 
@@ -50,23 +49,20 @@ public class SellGamesController {
 
         itemDAO.addGameForSale(videogame);
 
-        try{
-            AccessDAO accessDAO = PersistencyAbstractFactory.getFactory().createAccessDAO();
+        AccessDAO accessDAO = PersistencyAbstractFactory.getFactory().createAccessDAO();
 
-            List<Access> customers = accessDAO.getRandomCustomers();
-            GoogleBoundary mailSender = new GoogleBoundary();
-            for (Access cust: customers){
-                mailSender.setMessageToSend(String.format("New Sale: %s for %s", videogameBean.getName(), videogameBean.getPlatformBean()));
-                mailSender.sendMail(null, cust.getEmail());
-            }
-        } finally {
-            FiltersBean filtersBean = new FiltersBean();
-            filtersBean.setCategoryBean(videogameBean.getCategoryBean());
-            filtersBean.setConsoleBean(videogameBean.getPlatformBean());
-            filtersBean.setNameBean(videogameBean.getName());
-
-            return this.showSellingGamesCatalogue(filtersBean);
+        List<Access> customers = accessDAO.getRandomCustomers();
+        GoogleBoundary mailSender = new GoogleBoundary();
+        for (Access cust: customers){
+            mailSender.setMessageToSend(String.format("New Sale: %s for %s", videogameBean.getName(), videogameBean.getPlatformBean()));
+            mailSender.sendMail(null, cust.getEmail());
         }
+        FiltersBean filtersBean = new FiltersBean();
+        filtersBean.setCategoryBean(videogameBean.getCategoryBean());
+        filtersBean.setConsoleBean(videogameBean.getPlatformBean());
+        filtersBean.setNameBean(videogameBean.getName());
+
+        return this.showSellingGamesCatalogue(filtersBean);
     }
 
     public SellingGamesCatalogueBean removeGameFromCatalogue(VideogameBean videogameBean) throws PersistencyErrorException, NoGameInCatalogueException, GameSoldOutException {

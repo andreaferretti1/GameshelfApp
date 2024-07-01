@@ -6,11 +6,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-//import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-//import javafx.util.Callback;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
+import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
@@ -65,7 +64,8 @@ public class AddGameInfoPageController implements Initializable {
             gameBean.setDescriptionBean(this.descriptionArea.getText());
             this.sellerBoundary.addSellingGames(gameBean);
             SellingGameCataloguePageController.start(this.stage, this.sellerBoundary);
-        } catch (PersistencyErrorException | CheckFailedException | InvalidTitleException | NoGameInCatalogueException e){
+        } catch (PersistencyErrorException | CheckFailedException | InvalidTitleException | NoGameInCatalogueException |
+                 GmailException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
         } catch (IOException e){
             ErrorPageController.displayErrorWindow("Couldn't show updated catalogue");

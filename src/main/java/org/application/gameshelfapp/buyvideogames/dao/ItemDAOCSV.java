@@ -58,7 +58,7 @@ public class ItemDAOCSV implements ItemDAO {
          } catch (IOException | CsvValidationException e) {
              throw new PersistencyErrorException("Couldn't retrieve videogames");
          }
-         if (gamesFound.size() == 0){
+         if (gamesFound.isEmpty()){
              throw new NoGameInCatalogueException("No games found");
          }
         return gamesFound;
