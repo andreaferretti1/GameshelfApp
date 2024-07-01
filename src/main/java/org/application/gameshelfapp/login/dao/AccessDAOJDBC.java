@@ -8,6 +8,8 @@ import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AccessDAOJDBC implements AccessDAO {
 
@@ -45,5 +47,20 @@ public class AccessDAOJDBC implements AccessDAO {
         } catch(SQLException e){
             throw new PersistencyErrorException("Couldn't register your account");
         }
+    }
+
+    @Override
+    public List<Access> getRandomCustomers() throws PersistencyErrorException {
+        List<Access> winners = new ArrayList<>();
+        try(Connection conn = SingletonConnectionPool.getInstance().getConnection()){
+            ResultSet rs = AccessDAOQueries.getRandomCustomersQuery(conn);
+            while(rs.next()){
+                Access user = new AccessThroughLogIn(null, rs.getString("Email"), null);
+                winners.add(user);
+            }
+        } catch(SQLException e){
+            throw new PersistencyErrorException("Couldn't register your account");
+        }
+        return winners;
     }
 }

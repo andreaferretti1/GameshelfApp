@@ -7,6 +7,7 @@ import org.application.gameshelfapp.buyvideogames.entities.Filters;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
 import java.io.*;
 import java.nio.channels.FileChannel;
@@ -30,7 +31,7 @@ public class ItemDAOCSV implements ItemDAO {
     }
 
     @Override
-    public List<Videogame> getVideogamesForSale(Filters filters) throws PersistencyErrorException{
+    public List<Videogame> getVideogamesForSale(Filters filters) throws PersistencyErrorException, NoGameInCatalogueException {
 
          List<Videogame> gamesFound = new ArrayList<>();
          String[] myRecord;
@@ -55,7 +56,10 @@ public class ItemDAOCSV implements ItemDAO {
                 }
             }
          } catch (IOException | CsvValidationException e) {
-             throw new PersistencyErrorException("couldn't retrieve videogames");
+             throw new PersistencyErrorException("Couldn't retrieve videogames");
+         }
+         if (gamesFound.size() == 0){
+             throw new NoGameInCatalogueException("No games found");
          }
         return gamesFound;
     }
@@ -145,6 +149,43 @@ public class ItemDAOCSV implements ItemDAO {
 
         if(!removed){
             throw new GameSoldOutException("Videogame is sold out");
+        }
+    }
+    @Override
+    public void updateGameForSale(Videogame game) throws PersistencyErrorException{
+        String[] gameToUpdate;
+        String gameName = game.getName();
+        String platform = game.getPlatform();
+        int copies = game.getCopies();
+        float price = game.getPrice();
+        String description = game.getDescription();
+        File tempFile = new File(TEMP_FILE);
+
+        this.lock.lock();
+
+        try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fdGamesForSale)));
+            CSVWriter csvWriter= new CSVWriter(new BufferedWriter(new FileWriter(tempFile)))){
+
+            if(!tempFile.exists()) {
+                boolean created = tempFile.createNewFile();
+                if(!created) throw new PersistencyErrorException("Couldn't remove game for sale");
+            }
+
+            while((gameToUpdate = csvReader.readNext()) != null){
+                if(gameToUpdate[VideogamesOnSaleAttributes.GAMENAME.ordinal()].equals(gameName) && gameToUpdate[VideogamesOnSaleAttributes.CONSOLE.ordinal()].equals(platform)){
+                    int newCopies = Integer.parseInt(gameToUpdate[VideogamesOnSaleAttributes.COPIES.ordinal()]) + copies;
+                    gameToUpdate[VideogamesOnSaleAttributes.COPIES.ordinal()] = String.valueOf(newCopies);
+                    gameToUpdate[VideogamesOnSaleAttributes.PRICE.ordinal()] = String.valueOf(price);
+                    gameToUpdate[VideogamesOnSaleAttributes.DESCRIPTION.ordinal()] = description;
+                }
+                csvWriter.writeNext(gameToUpdate);
+            }
+            Files.move(tempFile.toPath(), this.fdGamesForSale.toPath(), REPLACE_EXISTING);
+
+        }catch(IOException | CsvValidationException e){
+            throw new PersistencyErrorException("Couldn't remove videogame for sale");
+        }finally{
+            this.lock.unlock();
         }
     }
     private enum VideogamesOnSaleAttributes{

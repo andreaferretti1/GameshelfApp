@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gameshelfapp.sellvideogames.graphiccontrollers.SellingGameCataloguePageController">
+   <children>
+      <Region prefHeight="27.0" prefWidth="1440.0" style="-fx-background-color: #2E60E1;" />
+      <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#goToHomePage" prefHeight="20.0" prefWidth="40.0" style="-fx-background-color: transparent;" text="Button" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="7.0">
+         <graphic>
+            <ImageView>
+               <image>
+                  <Image url="@../icons/undo_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <VBox alignment="TOP_RIGHT" layoutX="20.0" layoutY="20.0" prefHeight="741.0" prefWidth="100.0" style="-fx-background-color: #433f3f;" AnchorPane.leftAnchor="1340.0" AnchorPane.topAnchor="27.0">
+         <children>
+            <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#goToHomePage" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Button">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/home_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets top="214.0" />
+               </VBox.margin>
+            </Button>
+            <Button contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: transparent;" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="214.0" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/games_fill_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+         <effect>
+            <DropShadow height="0.0" radius="4.75" />
+         </effect>
+      </VBox>
+      <VBox prefHeight="741.0" prefWidth="1340.0" AnchorPane.topAnchor="27.0">
+         <children>
+            <HBox prefHeight="103.0" prefWidth="1340.0" style="-fx-background-color: #433f3f;">
+               <children>
+                  <Label text="Selling Catalogue" textFill="#2e60e1">
+                     <font>
+                        <Font size="45.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="475.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button mnemonicParsing="false" onMouseClicked="#addNewGameForSale" style="-fx-background-color: #2E60E1; -fx-background-radius: 60;" text="Add Game" textFill="WHITE">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="360.0" top="27.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #433f3f;">
+               <VBox.margin>
+                  <Insets top="-4.0" />
+               </VBox.margin>
+               <children>
+                  <TextField fx:id="titleField" prefWidth="400.0" promptText="Search by Name" style="-fx-background-radius: 60; -fx-prompt-text-fill: #2e60e1; -fx-text-fill: #2e60e1;">
+                     <font>
+                        <Font name="System Italic" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="12.0" top="27.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Label prefWidth="129.0" text="Category: " textFill="#2e60e1">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="45.0" top="27.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ChoiceBox fx:id="categoryChoiceBox" prefHeight="43.0" prefWidth="150.0" style="-fx-background-color: #ffffff; -fx-text-fill: #2e60e1; -fx-background-radius: 60;">
+                     <HBox.margin>
+                        <Insets top="27.0" />
+                     </HBox.margin>
+                  </ChoiceBox>
+                  <Label prefWidth="120.0" text="Platform: " textFill="#2e60e1">
+                     <HBox.margin>
+                        <Insets left="55.0" top="27.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="platformChoiceBox" prefHeight="43.0" prefWidth="150.0" style="-fx-background-color: #ffffff; -fx-text-fill: #2e60e1; -fx-background-radius: 60;">
+                     <HBox.margin>
+                        <Insets top="27.0" />
+                     </HBox.margin>
+                  </ChoiceBox>
+                  <Button mnemonicParsing="false" onMouseClicked="#searchGameByFilters" style="-fx-background-color: #2E60E1; -fx-background-radius: 60;" text="Search" textFill="WHITE">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="141.0" top="27.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <ScrollPane hbarPolicy="NEVER" prefHeight="550.0" prefWidth="1340.0" style="-fx-background-color: #433f3f;" vbarPolicy="ALWAYS">
+               <VBox.margin>
+                  <Insets top="-4.0" />
+               </VBox.margin>
+               <content>
+                  <ListView fx:id="gameInCatalogue" prefHeight="550.0" prefWidth="1340.0" style="-fx-background-color: #433f3f;" />
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

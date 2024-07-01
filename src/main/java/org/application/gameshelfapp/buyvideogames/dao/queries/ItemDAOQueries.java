@@ -67,4 +67,18 @@ public class ItemDAOQueries{
             throw new SQLException(e.getMessage());
         }
     }
+
+    public static void updateGameForSaleQuery(Connection connection, Videogame videogame) throws SQLException{
+        String query = "UPDATE ObjectOnSale SET Copies = Copies + ?, Price = ?, Description = ? WHERE Name = ? AND Platform = ?;";
+        try(PreparedStatement pstmt = connection.prepareStatement(query)){
+            pstmt.setInt(1, videogame.getCopies());
+            pstmt.setFloat(2, videogame.getPrice());
+            pstmt.setString(3, videogame.getDescription());
+            pstmt.setString(4, videogame.getName());
+            pstmt.setString(5,videogame.getPlatform());
+            pstmt.execute();
+        } catch (SQLException e){
+            throw new SQLException(e.getMessage());
+        }
+    }
 }

@@ -55,4 +55,13 @@ public class ItemDAOJDBC implements ItemDAO {
             throw new PersistencyErrorException("Couldn't remove game for sale");
         }
     }
+
+    @Override
+    public void updateGameForSale(Videogame game) throws PersistencyErrorException{
+        try(Connection conn = SingletonConnectionPool.getInstance().getConnection()){
+            ItemDAOQueries.updateGameForSaleQuery(conn, game);
+        }catch (SQLException e){
+            throw new PersistencyErrorException("Couldn't update chosen game");
+        }
+    }
 }

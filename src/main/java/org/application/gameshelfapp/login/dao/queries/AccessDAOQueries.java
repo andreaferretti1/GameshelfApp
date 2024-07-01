@@ -51,4 +51,15 @@ public class AccessDAOQueries {
             throw new SQLException(e.getMessage());
         }
     }
+
+    public static ResultSet getRandomCustomersQuery(Connection conn) throws SQLException{
+        String query = "SELECT Email FROM User WHERE Type = Customer ORDER BY RAND() LIMIT 20;";
+
+        try(PreparedStatement pstmt = conn.prepareStatement(query)){
+            pstmt.execute();
+            return pstmt.getResultSet();
+        } catch(SQLException e){
+            throw new SQLException(e.getMessage());
+        }
+    }
 }

@@ -8,12 +8,14 @@ public class SellingGamesCatalogue extends Subject{
 
     private List<Videogame> sellingGames;
 
+    public SellingGamesCatalogue(){
+        super();
+    }
+
     public void setSellingGames(List<Videogame> sellingGames){
         this.sellingGames = sellingGames;
         this.notifyObservers();
     }
-
-
 
     public List<Videogame> getSellingGames(){
         return this.sellingGames;

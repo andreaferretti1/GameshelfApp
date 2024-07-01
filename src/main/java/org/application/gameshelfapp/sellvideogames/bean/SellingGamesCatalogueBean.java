@@ -7,7 +7,7 @@ import org.application.gameshelfapp.sellvideogames.entities.SellingGamesCatalogu
 import java.util.ArrayList;
 import java.util.List;
 
-public class SellingGamesCatalogueBean extends Observer{
+public class SellingGamesCatalogueBean implements Observer{
 
     private List<VideogameBean> sellingGamesBean;
 

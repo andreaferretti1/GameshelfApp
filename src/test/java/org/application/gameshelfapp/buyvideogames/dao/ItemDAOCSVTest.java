@@ -5,6 +5,7 @@ import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.login.dao.CSVFactory;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -25,7 +26,7 @@ class ItemDAOCSVTest {
             assertEquals("descriptionTest", videogame.getDescription());
             assertEquals(2, videogame.getCopies());
             assertEquals(10, videogame.getPrice());
-        } catch(PersistencyErrorException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException e){
             fail();
         }
     }
@@ -41,7 +42,7 @@ class ItemDAOCSVTest {
             Videogame game2 = games.getLast();
             assertEquals("gameTest1", game1.getName());
             assertEquals("gameTest2", game2.getName());
-        } catch(PersistencyErrorException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException e){
             fail();
         }
     }
@@ -54,7 +55,7 @@ class ItemDAOCSVTest {
             ItemDAO itemDAO = csvFactory.createItemDAO();
             List<Videogame> games = itemDAO.getVideogamesForSale(filters);
             assertEquals(0, (long) games.size());
-        } catch(PersistencyErrorException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException e){
             fail();
         }
     }
@@ -74,7 +75,7 @@ class ItemDAOCSVTest {
             assertEquals(2, gameForSale.getCopies());
             assertEquals(10, gameForSale.getPrice());
             assertEquals("descriptionTest", gameForSale.getDescription());
-        } catch(PersistencyErrorException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException e){
             fail();
         }
     }
@@ -91,7 +92,7 @@ class ItemDAOCSVTest {
             Videogame gameForSale = games.getFirst();
             assertEquals(5, gameForSale.getCopies());
             assertEquals(12, gameForSale.getPrice());
-        } catch(PersistencyErrorException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException e){
             fail();
         }
     }
@@ -120,7 +121,7 @@ class ItemDAOCSVTest {
             assertEquals(2, gameForSale.getCopies());
             assertEquals(10, gameForSale.getPrice());
             assertEquals("descriptionTest", gameForSale.getDescription());
-        } catch(PersistencyErrorException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException e){
             fail();
         }
     }
@@ -139,7 +140,7 @@ class ItemDAOCSVTest {
             assertEquals(1, gameForSale.getCopies());
             assertEquals(10, gameForSale.getPrice());
             assertEquals("descriptionTest", gameForSale.getDescription());
-        } catch(PersistencyErrorException | GameSoldOutException e){
+        } catch(PersistencyErrorException | GameSoldOutException | NoGameInCatalogueException e){
             fail();
         }
     }
@@ -173,7 +174,7 @@ class ItemDAOCSVTest {
             gameForSale = games.getFirst();
             assertEquals("nameTest", gameForSale.getName());
             assertEquals(3, gameForSale.getCopies());
-        } catch(PersistencyErrorException | GameSoldOutException e){
+        } catch(PersistencyErrorException | GameSoldOutException | NoGameInCatalogueException e){
             fail();
         }
     }
