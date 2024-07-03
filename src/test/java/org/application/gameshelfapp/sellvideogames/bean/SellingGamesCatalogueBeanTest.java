@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SellingGamesCatalogueBeanTest {
+class SellingGamesCatalogueBeanTest {
     @Test
     void setAndGetSellingGamesBeanTest(){
         SellingGamesCatalogueBean test = new SellingGamesCatalogueBean();

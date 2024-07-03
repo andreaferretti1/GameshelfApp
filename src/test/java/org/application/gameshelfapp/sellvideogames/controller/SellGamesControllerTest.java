@@ -13,8 +13,7 @@ import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueEx
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-public class SellGamesControllerTest {
+class SellGamesControllerTest {
 
     @Test
     void showSellingGameCatalogueTest(){            //Videogame(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
