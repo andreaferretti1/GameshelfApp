@@ -11,6 +11,7 @@ import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
+import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
 public class CustomerBoundary {
     private final BuyGamesController buyGamesController;
@@ -36,7 +37,7 @@ public class CustomerBoundary {
     public VideogamesFoundBean getVideogamesFoundBean() {
         return this.videogamesFoundBean;
     }
-    public void insertFilters(String name, String console, String category) throws PersistencyErrorException{
+    public void insertFilters(String name, String console, String category) throws PersistencyErrorException, NoGameInCatalogueException {
         FiltersBean filtersBean = new FiltersBean();
         filtersBean.setNameBean(name);
         filtersBean.setConsoleBean(console);

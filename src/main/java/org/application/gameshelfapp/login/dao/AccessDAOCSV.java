@@ -10,6 +10,9 @@ import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
 import java.io.*;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class AccessDAOCSV implements AccessDAO {
@@ -73,6 +76,27 @@ public class AccessDAOCSV implements AccessDAO {
         } catch(IOException | CsvValidationException e){
             throw new PersistencyErrorException("Couldn't register your account");
         }
+    }
+    @Override
+    public List<Access> getRandomCustomers() throws PersistencyErrorException{
+        String[] tuple;
+        int counter = 0;
+        SecureRandom coin = new SecureRandom();
+        List<Access> winners = new ArrayList<>();
+
+        try (CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)))){
+            while((tuple = csvReader.readNext()) != null && counter<20){
+                if(tuple[AccountAttributes.TYPE_OF_USER.ordinal()].equals("Customer") && coin.nextBoolean()){
+                    Access user = new AccessThroughLogIn(null, tuple[AccountAttributes.EMAIL.ordinal()], null);
+                    winners.add(user);
+                    counter++;
+                }
+            }
+        }catch(IOException | CsvValidationException e){
+            throw new PersistencyErrorException("Couldn't retrieve account");
+        }
+
+        return winners;
     }
     private enum AccountAttributes{
         USERNAME, EMAIL, PASSWORD, TYPE_OF_USER

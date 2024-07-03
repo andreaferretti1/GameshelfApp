@@ -32,4 +32,7 @@ module org.application.gameshelfapp {
     exports org.application.gameshelfapp.login.controller;
     exports org.application.gameshelfapp.login.entities;
     exports org.application.gameshelfapp.buyvideogames.graphiccontrollers;
+    opens org.application.gameshelfapp.buyvideogames.bean to com.google.gson;
+    opens org.application.gameshelfapp.buyvideogames.entities to com.google.gson;
+    exports org.application.gameshelfapp.sellvideogames.exception;
 }

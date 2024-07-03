@@ -23,6 +23,7 @@ import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.boundary.UserLogInBoundary;
 import org.application.gameshelfapp.login.exception.*;
+import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
 import java.io.IOException;
 import java.net.URL;
@@ -43,7 +44,7 @@ public class TerminalController extends Application implements Initializable{
     private status state;
     //TODO prova a fare una funzione per ogni UC
     @FXML
-    private void execute(KeyEvent event) {
+    /*private void execute(KeyEvent event) {
 
         try {
             if (event.getCode() == KeyCode.ENTER) {
@@ -101,12 +102,13 @@ public class TerminalController extends Application implements Initializable{
             }
         } catch (SyntaxErrorException | PersistencyErrorException | CheckFailedException | GmailException
                  | NumberFormatException | RefundException | GameSoldOutException |
-                 NullPasswordException | InvalidAddressException | ConfirmDeliveryException e) {
+                 NullPasswordException | InvalidAddressException | ConfirmDeliveryException |
+                 NoGameInCatalogueException e) {
             this.textArea.appendText("\n\n" + e.getMessage());
         } catch (ArrayIndexOutOfBoundsException e) {
             this.textArea.appendText("You should insert the right number of parameters");
         }
-    }
+    }*/
 
     private void readLine() {
         this.command = textField.getText().split(" ");
@@ -120,14 +122,14 @@ public class TerminalController extends Application implements Initializable{
             this.textArea.appendText(lineToShow);
         }
     }
-    private void seeVideogame(int index) {
+    /*private void seeVideogame(int index) {
         VideogameBean gameSelected = this.customerBoundary.getVideogamesFoundBean().getVideogamesFoundBean().get(index);
         String textToShow = gameSelected.getName() + "\n" +
                 "Filters: " + gameSelected.getPlatformBean() + " " + gameSelected.getCategoryBean() + "\n"
                 + "Price per copy: " + gameSelected.getPriceBean() + "€ " + "Copies: " + gameSelected.getCopiesBean() + "\n"
                 + gameSelected.getDescriptionBean() + "\n";
         this.textArea.appendText(textToShow);
-    }
+    }*/
 
     private void showSales(List<SaleBean> sales) {
         for (SaleBean saleBean : sales) {

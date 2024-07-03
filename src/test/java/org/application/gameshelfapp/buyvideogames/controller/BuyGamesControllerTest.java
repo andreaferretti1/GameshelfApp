@@ -8,6 +8,7 @@ import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
+import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -27,7 +28,7 @@ class BuyGamesControllerTest {
             VideogamesFoundBean videogamesFoundBean = controller.searchVideogame(filtersBean);
             videogamesFoundBean.getInformationFromModel();
             assertEquals(1, (long) videogamesFoundBean.getVideogamesFoundBean().size());
-        } catch (PersistencyErrorException e){
+        } catch (PersistencyErrorException | NoGameInCatalogueException e){
             fail();
         }
     }
@@ -43,7 +44,7 @@ class BuyGamesControllerTest {
             VideogamesFoundBean videogamesFoundBean = controller.searchVideogame(filtersBean);
             videogamesFoundBean.getInformationFromModel();
             assertEquals(1, (long) videogamesFoundBean.getVideogamesFoundBean().size());
-        } catch(PersistencyErrorException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException e){
             fail();
         }
     }
@@ -56,13 +57,7 @@ class BuyGamesControllerTest {
         filtersBean.setNameBean("nameTest");
         filtersBean.setConsoleBean("consoleTest");
         filtersBean.setCategoryBean("categoryTest");
-        try{
-            VideogamesFoundBean videogamesFoundBean = controller.searchVideogame(filtersBean);
-            videogamesFoundBean.getInformationFromModel();
-            assertEquals(0, (long) videogamesFoundBean.getVideogamesFoundBean().size());
-        } catch(PersistencyErrorException e){
-            fail();
-        }
+        assertThrows(NoGameInCatalogueException.class, ()->controller.searchVideogame(filtersBean));
     }
 
     @Test

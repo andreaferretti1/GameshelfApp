@@ -12,6 +12,7 @@ import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
+import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -51,13 +52,8 @@ class CustomerBoundaryTest {
     @Test
     void insertFiltersNoGamesFoundTest(){       //Database was empty
         CustomerBoundary customerBoundary = new CustomerBoundary(new UserBean());
-        try{
-            customerBoundary.insertFilters("nameTest", "consoleTest", "categoryTest");
-            assertNotNull(customerBoundary.getVideogamesFoundBean().getVideogamesFoundBean());
-            assertEquals(0, (long) customerBoundary.getVideogamesFoundBean().getVideogamesFoundBean().size());
-        } catch(PersistencyErrorException e){
-            fail();
-        }
+        assertThrows(NoGameInCatalogueException.class, ()->customerBoundary.insertFilters("nameTest", "consoleTest", "categoryTest"));
+
     }
 
     @Test
@@ -73,7 +69,7 @@ class CustomerBoundaryTest {
             assertEquals(2, videogameBean.getCopiesBean());
             assertEquals(11, videogameBean.getPriceBean());
             assertEquals("descriptionTest1", videogameBean.getDescriptionBean());
-        } catch(PersistencyErrorException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException e){
             fail();
         }
     }
@@ -98,7 +94,7 @@ class CustomerBoundaryTest {
             assertEquals(3, videogameBean2.getCopiesBean());
             assertEquals(20, videogameBean2.getPriceBean());
             assertEquals("descriptionTest2", videogameBean2.getDescriptionBean());
-        } catch(PersistencyErrorException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException e){
             fail();
         }
     }
