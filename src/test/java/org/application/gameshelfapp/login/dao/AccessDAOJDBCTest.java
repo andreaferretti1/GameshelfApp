@@ -6,6 +6,8 @@ import org.application.gameshelfapp.login.entities.AccessThroughRegistration;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AccessDAOJDBCTest {
@@ -53,6 +55,19 @@ class AccessDAOJDBCTest {
             assertEquals("passwordTest", access.getEncodedPassword());
             assertEquals("Customer", access.getTypeOfUser());
         } catch(PersistencyErrorException e){
+            fail();
+        }
+    }
+
+    @Test
+    void getRandomCustomersTest(){             //In database there are one customer, one seller and one admin
+        try{
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            AccessDAO accessDAO = jdbcFactory.createAccessDAO(); List<Access> testAccess = accessDAO.getRandomCustomers();
+            for(Access acc: testAccess){
+                assertEquals("Customer",acc.getTypeOfUser());
+            }
+        } catch (PersistencyErrorException e){
             fail();
         }
     }

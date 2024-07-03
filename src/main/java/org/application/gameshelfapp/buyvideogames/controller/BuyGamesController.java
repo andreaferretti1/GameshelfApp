@@ -32,7 +32,7 @@ public class BuyGamesController {
         VideogamesFound gamesFound = new VideogamesFound();
         VideogamesFoundBean gamesFoundBean = new VideogamesFoundBean();
 
-        gamesFound.setGamesFound(itemDao.getVideogamesForSale(filters));
+        gamesFound.setGamesFound(itemDao.getVideogamesFiltered(filters));
         gamesFoundBean.setVideogamesFound(gamesFound);
         return gamesFoundBean;
     }

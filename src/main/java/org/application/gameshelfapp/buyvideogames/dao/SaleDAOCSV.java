@@ -75,8 +75,12 @@ public class SaleDAOCSV implements SaleDAO {
                 }
                 csvWriter.writeNext(myRecord);
             }
-            Files.move(tempFile.toPath(), this.fd.toPath(), REPLACE_EXISTING);
         } catch(IOException | CsvValidationException e){
+            throw new PersistencyErrorException("Couldn't confirm delivery");
+        }
+        try{
+            Files.move(tempFile.toPath(), this.fd.toPath(), REPLACE_EXISTING);
+        } catch (IOException e){
             throw new PersistencyErrorException("Couldn't confirm delivery");
         }
     }

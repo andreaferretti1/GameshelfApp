@@ -6,6 +6,8 @@ import org.application.gameshelfapp.login.dao.SingletonConnectionPool;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVideogameException;
+import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +15,7 @@ import java.sql.*;
 
 public class ItemDAOJDBC implements ItemDAO {
 
-    @Override
-    public List<Videogame> getVideogamesForSale(Filters filters) throws PersistencyErrorException{
+    private List<Videogame> getVideogamesForSale(Filters filters) throws PersistencyErrorException{
         List<Videogame> videogamesFound = new ArrayList<>();
         try(Connection conn = SingletonConnectionPool.getInstance().getConnection()){
             ResultSet rs = ItemDAOQueries.getVideogameOnSaleQuery(conn, filters);
@@ -28,6 +29,20 @@ public class ItemDAOJDBC implements ItemDAO {
         }
         return videogamesFound;
     }
+
+    @Override
+    public void checkVideogameExistence(Filters filters) throws PersistencyErrorException, AlreadyExistingVideogameException {
+        List<Videogame> gameList = this.getVideogamesForSale(filters);
+        if (!gameList.isEmpty()) throw new AlreadyExistingVideogameException("Game Already in Catalogue");
+    }
+
+    @Override
+    public List<Videogame> getVideogamesFiltered(Filters filters) throws PersistencyErrorException, NoGameInCatalogueException {
+        List<Videogame> gameList = this.getVideogamesForSale(filters);
+        if (gameList.isEmpty()) throw new NoGameInCatalogueException("Couldn't find Videogame");
+        return gameList;
+    }
+
 
     @Override
     public void addGameForSale(Videogame game) throws PersistencyErrorException{

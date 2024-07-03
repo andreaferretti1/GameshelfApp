@@ -14,6 +14,7 @@ import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
 import org.application.gameshelfapp.sellvideogames.boundary.SellerAddGamesBoundary;
+import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVideogameException;
 import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 import javafx.scene.input.MouseEvent;
@@ -65,7 +66,7 @@ public class AddGameInfoPageController implements Initializable {
             this.sellerBoundary.addSellingGames(gameBean);
             SellingGameCataloguePageController.start(this.stage, this.sellerBoundary);
         } catch (PersistencyErrorException | CheckFailedException | InvalidTitleException | NoGameInCatalogueException |
-                 GmailException e){
+                 GmailException | AlreadyExistingVideogameException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
         } catch (IOException e){
             ErrorPageController.displayErrorWindow("Couldn't show updated catalogue");

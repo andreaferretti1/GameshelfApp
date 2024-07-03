@@ -9,6 +9,7 @@ import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.controller.SellGamesController;
+import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVideogameException;
 import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
@@ -30,7 +31,7 @@ public class SellerAddGamesBoundary {
         this.sellingGamesCatalogueBean = this.sellGamesController.showSellingGamesCatalogue(filtersBean);
     }
 
-    public void addSellingGames (VideogameBean videogameBean) throws PersistencyErrorException, CheckFailedException, InvalidTitleException, NoGameInCatalogueException, GmailException {
+    public void addSellingGames (VideogameBean videogameBean) throws PersistencyErrorException, CheckFailedException, InvalidTitleException, NoGameInCatalogueException, GmailException, AlreadyExistingVideogameException {
         this.sellingGamesCatalogueBean = this.sellGamesController.addGameToCatalogue(videogameBean);
     }
 

@@ -16,6 +16,7 @@ import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.boundary.MobyGames;
 import org.application.gameshelfapp.sellvideogames.entities.SellingGamesCatalogue;
+import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVideogameException;
 import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
@@ -33,20 +34,21 @@ public class SellGamesController {
         sellingGamesCatalogue.attach(sellingGamesCatalogueBean);
         sellingGamesCatalogueBean.setSubject(sellingGamesCatalogue);
 
-        List<Videogame> gamesOnSale = itemDAO.getVideogamesForSale(filters);
+        List<Videogame> gamesOnSale = itemDAO.getVideogamesFiltered(filters);
         sellingGamesCatalogue.setSellingGames(gamesOnSale);
         sellingGamesCatalogueBean.setSubject(null);
 
         return sellingGamesCatalogueBean;
     }
 
-    public SellingGamesCatalogueBean addGameToCatalogue (VideogameBean videogameBean) throws PersistencyErrorException, InvalidTitleException, CheckFailedException, NoGameInCatalogueException, GmailException {
+    public SellingGamesCatalogueBean addGameToCatalogue (VideogameBean videogameBean) throws PersistencyErrorException, InvalidTitleException, CheckFailedException, NoGameInCatalogueException, GmailException, AlreadyExistingVideogameException {
         ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
         Videogame videogame = new Videogame(videogameBean.getName(), videogameBean.getCopiesBean(),videogameBean.getPriceBean(), videogameBean.getDescriptionBean(), videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
 
         MobyGames mobyGames = new MobyGames();
         mobyGames.verifyVideogame(videogame.getName());
 
+        itemDAO.checkVideogameExistence(new Filters(videogameBean.getName(), videogameBean.getPlatformBean(), videogameBean.getCategoryBean()));
         itemDAO.addGameForSale(videogame);
 
         AccessDAO accessDAO = PersistencyAbstractFactory.getFactory().createAccessDAO();
@@ -69,7 +71,8 @@ public class SellGamesController {
         ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
         Filters filters = new Filters(videogameBean.getName(), videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
 
-        List<Videogame> selling = itemDAO.getVideogamesForSale(filters);
+        List<Videogame> selling = itemDAO.getVideogamesFiltered(filters);
+        selling.getFirst().setCopies(videogameBean.getCopiesBean());
         itemDAO.removeGameForSale(selling.getFirst());
 
         FiltersBean filtersBean = new FiltersBean();
@@ -84,7 +87,7 @@ public class SellGamesController {
         ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
         Filters filters = new Filters(videogameBean.getName(), videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
 
-        List<Videogame> updating = itemDAO.getVideogamesForSale(filters);
+        List<Videogame> updating = itemDAO.getVideogamesFiltered(filters);
         Videogame game = updating.getFirst();
         game.setCopies(videogameBean.getCopiesBean());
         game.setPrice(videogameBean.getPriceBean());

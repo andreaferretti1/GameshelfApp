@@ -1,14 +1,12 @@
 package org.application.gameshelfapp.sellvideogames.boundary;
 
-import com.google.gson.Gson;
-import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleException;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.lang.reflect.InaccessibleObjectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Properties;
@@ -37,17 +35,16 @@ public class MobyGames{
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuilder response = new StringBuilder();
-                String inputLine;
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
+                String inputLine = in.readLine();
+                response.append(inputLine);
                 in.close();
-                Gson gson = new Gson();
-                VideogameBean[] responseDataArray = gson.fromJson(response.toString(), VideogameBean[].class);
-                if (responseDataArray.length == 0) throw new InvalidTitleException("Title is invalid");
+                JsonObject responseDataObject = JsonParser.parseString(inputLine).getAsJsonObject();
+                if (!responseDataObject.has("games") || responseDataObject.get("games").getAsJsonArray().isEmpty()) throw new InvalidTitleException("Title is invalid");
             }
         } catch (IOException e){
             throw new CheckFailedException("Couldn't find requested videogame");
+        } catch (InaccessibleObjectException e){
+            throw new InvalidTitleException("Title is invalid");
         }
     }
 }

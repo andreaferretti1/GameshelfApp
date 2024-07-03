@@ -30,7 +30,7 @@ public class ItemDAOQueries{
     }
 
     public static void addGameForSaleQuery(Connection connection, Videogame videogame) throws SQLException{
-        String query = "INSERT INTO ObjectOnSale (Name, Platform, Category, Price, Description, Copies) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE Copies = Copies + VALUES(Copies), Price = VALUES(Price);";
+        String query = "INSERT INTO ObjectOnSale (Name, Platform, Category, Price, Description, Copies) VALUES (?, ?, ?, ?, ?, ?);";
         try(PreparedStatement pstmt = connection.prepareStatement(query)){
             pstmt.setString(1, videogame.getName());
             pstmt.setString(2, videogame.getPlatform());

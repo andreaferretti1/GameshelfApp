@@ -8,6 +8,7 @@ import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,6 +56,20 @@ class AccessDAOCSVTest {
             assertNotNull(access);
             assertEquals("testEmail2@example.com", access.getEmail());
         } catch(PersistencyErrorException e){
+            fail();
+        }
+    }
+
+    @Test
+    void getRandomCustomersTest(){      //In database there are one customer, one seller and one admin
+        try{
+            CSVFactory csvFactory = new CSVFactory();
+            AccessDAO accessDAO = csvFactory.createAccessDAO();
+            List<Access> testAccess = accessDAO.getRandomCustomers();
+            for(Access acc: testAccess){
+                assertEquals("Customer",acc.getTypeOfUser());
+            }
+        } catch (PersistencyErrorException e){
             fail();
         }
     }

@@ -89,6 +89,7 @@ public class AccessDAOCSV implements AccessDAO {
                 if(tuple[AccountAttributes.TYPE_OF_USER.ordinal()].equals("Customer") && coin.nextBoolean()){
                     Access user = new AccessThroughLogIn(null, tuple[AccountAttributes.EMAIL.ordinal()], null);
                     winners.add(user);
+                    counter++;
                 }
             }
         }catch(IOException | CsvValidationException e){
