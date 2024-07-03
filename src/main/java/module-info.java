@@ -35,4 +35,5 @@ module org.application.gameshelfapp {
     opens org.application.gameshelfapp.login.graphiccontroller2 to javafx.fxml;
     opens org.application.gameshelfapp.buyvideogames.bean to com.google.gson;
     opens org.application.gameshelfapp.buyvideogames.entities to com.google.gson;
+    exports org.application.gameshelfapp.sellvideogames.exception;
 }
