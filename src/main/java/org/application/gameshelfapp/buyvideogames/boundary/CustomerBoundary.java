@@ -13,11 +13,6 @@ import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 
 public class CustomerBoundary {
-
-    public BuyGamesController getBuyGamesController() {
-        return this.buyGamesController;
-    }
-
     private final BuyGamesController buyGamesController;
     private VideogamesFoundBean videogamesFoundBean;
     private final UserBean userBean;
@@ -26,6 +21,10 @@ public class CustomerBoundary {
     public CustomerBoundary(UserBean userBean){
         this.userBean = userBean;
         this.buyGamesController = new BuyGamesController();
+    }
+
+    public BuyGamesController getBuyGamesController() {
+        return this.buyGamesController;
     }
 
     public UserBean getUserBean(){

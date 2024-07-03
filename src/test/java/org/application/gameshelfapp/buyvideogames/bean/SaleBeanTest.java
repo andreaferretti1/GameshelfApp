@@ -25,7 +25,7 @@ class SaleBeanTest {
     void getAndSetEmailBeanTest(){
         SaleBean saleBean = new SaleBean();
         saleBean.setEmailBean("emailTest");
-        assertEquals("enailTest", saleBean.getEmailBean());
+        assertEquals("emailTest", saleBean.getEmailBean());
     }
     @Test
     void getAndSetAddressBeanTest(){

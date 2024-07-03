@@ -1,9 +1,8 @@
 package org.application.gameshelfapp.signemployee.boundary;
 
-import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
-import org.application.gameshelfapp.login.bean.RegistrationBean;
-import org.application.gameshelfapp.login.entities.Access;
 import org.application.gameshelfapp.login.dao.AccessDAO;
+import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
+import org.application.gameshelfapp.login.entities.Access;
 import org.application.gameshelfapp.login.entities.AccessThroughLogIn;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.NullPasswordException;
@@ -19,12 +18,7 @@ class AdminBoundaryTest {
     void registerTest(){
         try{
             AdminBoundary adminBoundary = new AdminBoundary();
-            RegistrationBean registrationBean = new RegistrationBean();
-            registrationBean.setEmailBean("testmail@gmail.com");
-            registrationBean.setUsernameBean("usernameTest");
-            registrationBean.setPasswordBean("password");
-            registrationBean.setTypeOfUser("Seller");
-            adminBoundary.register(registrationBean);
+            adminBoundary.register("usernameTest", "testmail@gmail.com", "password", "Seller");
             AccessDAO accessDAO = PersistencyAbstractFactory.getFactory().createAccessDAO();
             Access access = accessDAO.retrieveAccountByEmail(new AccessThroughLogIn("testmail@gmail.com", null, null));
             assertNotNull(access);
@@ -34,31 +28,14 @@ class AdminBoundaryTest {
     }
 
     @Test
-    void registerEmailCheckFailedExceptionTest(){        //in the database there was tuple ('username', 'emailtest@gmail.com', 'passwordtest', 'seller')
-        try{
-            AdminBoundary adminBoundary = new AdminBoundary();
-            RegistrationBean registrationBean = new RegistrationBean();
-            registrationBean.setUsernameBean("name");
-            registrationBean.setEmailBean("emailtest@gmail.com");
-            registrationBean.setPasswordBean("password");
-            registrationBean.setTypeOfUser("seller");
-            assertThrows(CheckFailedException.class, () -> adminBoundary.register(registrationBean));
-        } catch(SyntaxErrorException e){
-            fail();
-        }
+    void registerEmailCheckFailedExceptionTest(){        //in the database there was tuple ('username', 'emailtest@gmail.com', 'passwordtest', 'Seller')
+        AdminBoundary adminBoundary = new AdminBoundary();
+        assertThrows(CheckFailedException.class, () -> adminBoundary.register("name", "emailtest@gmail.com", "password", "Seller"));
     }
 
     @Test
-    void registerUsernameCheckFailedExceptionTest(){        //in the database there was tuple ('username', 'emailtest@gmail.com', 'passwordtest', 'seller')
-        try{
-            AdminBoundary adminBoundary = new AdminBoundary();
-            RegistrationBean registrationBean = new RegistrationBean();
-            registrationBean.setUsernameBean("username");
-            registrationBean.setEmailBean("email@gmail.com");
-            registrationBean.setPasswordBean("password");
-            assertThrows(CheckFailedException.class, () -> adminBoundary.register(registrationBean));
-        } catch(SyntaxErrorException e){
-            fail();
-        }
+    void registerUsernameCheckFailedExceptionTest(){        //in the database there was tuple ('username', 'emailtest@gmail.com', 'passwordtest', 'Seller')
+        AdminBoundary adminBoundary = new AdminBoundary();
+        assertThrows(CheckFailedException.class, () -> adminBoundary.register("username", "email@gmail.com", "password", null));
     }
 }

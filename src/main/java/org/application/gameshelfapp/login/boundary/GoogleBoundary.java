@@ -46,9 +46,9 @@ public class GoogleBoundary {
 
     private static Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory) throws GmailException{
         // Load client secrets.
-        InputStream in = GoogleBoundary.class.getResourceAsStream("/client_secret_862393017889-3e1kmgmdq3jmgltkc0rg0g4svvsl7lej.apps.googleusercontent.com.json");
+        InputStream in = GoogleBoundary.class.getResourceAsStream("/org/application/gameshelfapp/client_secret_862393017889-3e1kmgmdq3jmgltkc0rg0g4svvsl7lej.apps.googleusercontent.com.json");
         if (in == null) {
-            throw new GmailException("Resource not found: " + "client_secret_862393017889-3e1kmgmdq3jmgltkc0rg0g4svvsl7lej.apps.googleusercontent.com.json");
+            throw new GmailException("Resource not found: " + "/org/application/gameshelfapp/client_secret_862393017889-3e1kmgmdq3jmgltkc0rg0g4svvsl7lej.apps.googleusercontent.com.json");
         }
 
         try {

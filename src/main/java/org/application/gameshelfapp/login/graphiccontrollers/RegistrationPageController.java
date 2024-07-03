@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
+import org.application.gameshelfapp.StartingPageController;
 import org.application.gameshelfapp.login.boundary.UserLogInBoundary;
 import org.application.gameshelfapp.login.exception.*;
 
@@ -33,18 +34,19 @@ public class RegistrationPageController {
     private void register(MouseEvent event) {
         try{
             this.userBoundary.register(this.usernameTextField.getText(), this.emailTextField.getText(), this.passwordTextField.getText());
+            this.switchToInsertCodeScene();
         } catch (PersistencyErrorException | CheckFailedException | SyntaxErrorException | GmailException |
                  NullPasswordException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
         }
-        this.switchToInsertCodeScene();
     }
 
     @FXML
     private void goToStartPage(MouseEvent event) {
         try {
-            StartingPageController.start();
-        } catch (IOException | PersistencyErrorException e){
+            StartingPageController controller = new StartingPageController();
+            controller.start(this.getStage());
+        } catch (IOException e){
             System.exit(1);
         }
     }

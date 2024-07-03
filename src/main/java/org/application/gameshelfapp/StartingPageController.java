@@ -1,5 +1,6 @@
-package org.application.gameshelfapp.login.graphiccontrollers;
+package org.application.gameshelfapp;
 
+import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,11 +14,14 @@ import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.NullPasswordException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
+import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
+import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
+import org.application.gameshelfapp.login.graphiccontrollers.RegistrationPageController;
 
 import java.io.IOException;
 
 
-public class StartingPageController {
+public class StartingPageController extends Application {
 
     @FXML
     private PasswordField passwordField;
@@ -55,19 +59,23 @@ public class StartingPageController {
         }
     }
 
-    public static void start() throws IOException, PersistencyErrorException {
+    @Override
+    public void start(Stage stage) throws IOException{
 
         FXMLLoader fxmlLoader = new FXMLLoader(StartingPageController.class.getResource("/org/application/gameshelfapp/GUI/Starting-Page.fxml"));
         Parent root = fxmlLoader.load();
 
         StartingPageController startingPageController = fxmlLoader.getController();
         startingPageController.setUserBoundary(new UserLogInBoundary());
-        Stage stage = new Stage();
         Scene scene = new Scene(root, 1440, 768);
         stage.setScene(scene);
 
         stage.setTitle("GameShelf");
 
         stage.show();
+    }
+
+    public static void main(String[] args){
+        launch();
     }
 }

@@ -16,6 +16,9 @@ module org.application.gameshelfapp {
     requires com.google.gson;
 
     opens org.application.gameshelfapp to javafx.fxml;
+    opens org.application.gameshelfapp.login.graphiccontrollers to javafx.fxml;
+    opens org.application.gameshelfapp.buyvideogames.graphiccontrollers to javafx.fxml;
+    opens org.application.gameshelfapp.signemployee.graphiccontrollers to javafx.fxml;
     exports org.application.gameshelfapp;
     exports org.application.gameshelfapp.login.graphiccontrollers;
     exports org.application.gameshelfapp.login.exception;
@@ -28,9 +31,5 @@ module org.application.gameshelfapp {
     exports org.application.gameshelfapp.buyvideogames.controller;
     exports org.application.gameshelfapp.login.controller;
     exports org.application.gameshelfapp.login.entities;
-    opens org.application.gameshelfapp.login.graphiccontrollers to javafx.fxml;
     exports org.application.gameshelfapp.buyvideogames.graphiccontrollers;
-    opens org.application.gameshelfapp.buyvideogames.graphiccontrollers to javafx.fxml;
-    exports org.application.gameshelfapp.login.graphiccontroller2;
-    opens org.application.gameshelfapp.login.graphiccontroller2 to javafx.fxml;
 }

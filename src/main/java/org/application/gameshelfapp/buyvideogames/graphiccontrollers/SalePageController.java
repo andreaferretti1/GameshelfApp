@@ -18,6 +18,7 @@ import org.application.gameshelfapp.buyvideogames.bean.SaleBean;
 import org.application.gameshelfapp.buyvideogames.boundary.SellerBoundary;
 import org.application.gameshelfapp.buyvideogames.exception.ConfirmDeliveryException;
 import org.application.gameshelfapp.login.exception.GmailException;
+import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
 
@@ -63,7 +64,7 @@ public class SalePageController implements Initializable {
         myStage.show();
     }
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle){
         ObservableList<HBox> objects = FXCollections.observableArrayList();
         gamesSold.setCellFactory(new Callback<ListView<HBox>, ListCell<HBox>>() {
             @Override
@@ -71,17 +72,24 @@ public class SalePageController implements Initializable {
                 return new MyCell();
             }
         });
-        List<SaleBean> gamesSoldBean = this.sellerBoundary.getSalesBean();
-        for(SaleBean saleBean : gamesSoldBean){
-            saleBean.getInformationFromModel();
-            objects.add(this.createHBox(saleBean));
+        try{
+            this.sellerBoundary.getGamesToSend();
+            List<SaleBean> gamesSoldBean = this.sellerBoundary.getSalesBean();
+            for(SaleBean saleBean : gamesSoldBean){
+                saleBean.getInformationFromModel();
+                objects.add(this.createHBox(saleBean));
+            }
+            gamesSold.setItems(objects);
+        } catch(PersistencyErrorException e){
+            ErrorPageController.displayErrorWindow(e.getMessage());
+        } catch(IOException e){
+            ErrorPageController.displayErrorWindow("Couldn't show sales.");
         }
-        gamesSold.setItems(objects);
 
     }
-    private HBox createHBox(SaleBean saleBean){
+    private HBox createHBox(SaleBean saleBean) throws IOException{
 
-        try {
+
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("hbox-salePage.fxml"));
             HBox hBox = fxmlLoader.load();
             ((Label) fxmlLoader.getNamespace().get("gameName")).setText(saleBean.getGameSoldBean().getName());
@@ -90,22 +98,14 @@ public class SalePageController implements Initializable {
             ((Label) fxmlLoader.getNamespace().get("name")).setText(saleBean.getNameBean());
             ((Label) fxmlLoader.getNamespace().get("address")).setText(saleBean.getAddressBean());
             ((Label) fxmlLoader.getNamespace().get("email")).setText(saleBean.getEmailBean());
-            if (saleBean.getStateBean().equals("To confirm")) {
-                ((Button) fxmlLoader.getNamespace().get("button")).setOnMouseClicked(event -> {
+            ((Button) fxmlLoader.getNamespace().get("button")).setOnMouseClicked(event -> {
                     try {
                         this.sellerBoundary.sendGame(gamesSold.getSelectionModel().getSelectedIndex());
                     } catch (ConfirmDeliveryException | GmailException e) {
                         ErrorPageController.displayErrorWindow(e.getMessage());
                     }
                 });
-            } else {
-                ((Button) fxmlLoader.getNamespace().get("button")).setDisable(true);
-            }
             return hBox;
-        } catch(IOException e){
-            ErrorPageController.displayErrorWindow("Couldn't show sales");
-        }
-        return null;
     }
 }
 class MyCell extends ListCell<HBox>{

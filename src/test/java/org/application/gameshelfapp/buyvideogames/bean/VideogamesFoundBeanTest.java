@@ -14,7 +14,7 @@ class VideogamesFoundBeanTest {
     @Test
     void getAndSetVideogamesFoundBeanTest(){
         VideogamesFoundBean videogamesFoundBean  = new VideogamesFoundBean();
-        List<VideogameBean> gamesBean = new ArrayList<VideogameBean>();
+        List<VideogameBean> gamesBean = new ArrayList<>();
         videogamesFoundBean.setGamesFoundBean(gamesBean);
         assertEquals(gamesBean, videogamesFoundBean.getVideogamesFoundBean());
     }
@@ -30,7 +30,7 @@ class VideogamesFoundBeanTest {
         VideogamesFoundBean videogamesFoundBean = new VideogamesFoundBean();
         Videogame videogame1 = new Videogame(null, 0, 0, null, null, null);
         Videogame videogame2 = new Videogame(null, 0, 0, null, null, null);
-        List<Videogame> games = new ArrayList<Videogame>();
+        List<Videogame> games = new ArrayList<>();
         games.add(videogame1);
         games.add(videogame2);
         VideogamesFound videogamesFound = new VideogamesFound();
@@ -43,7 +43,7 @@ class VideogamesFoundBeanTest {
     void getInformationFromModelNameTest(){
         VideogamesFoundBean videogamesFoundBean = new VideogamesFoundBean();
         Videogame videogame = new Videogame("nameTest", 0, 0, null, null, null);
-        List<Videogame> games = new ArrayList<Videogame>();
+        List<Videogame> games = new ArrayList<>();
         games.add(videogame);
         VideogamesFound videogamesFound = new VideogamesFound();
         videogamesFound.setGamesFound(games);
@@ -55,7 +55,7 @@ class VideogamesFoundBeanTest {
     void getInformationFromModelCopiesTest(){
         VideogamesFoundBean videogamesFoundBean = new VideogamesFoundBean();
         Videogame videogame = new Videogame(null, 2, 0, null, null, null);
-        List<Videogame> games = new ArrayList<Videogame>();
+        List<Videogame> games = new ArrayList<>();
         games.add(videogame);
         VideogamesFound videogamesFound = new VideogamesFound();
         videogamesFound.setGamesFound(games);
@@ -67,7 +67,7 @@ class VideogamesFoundBeanTest {
     void getInformationFromModelPriceTest(){
         VideogamesFoundBean videogamesFoundBean = new VideogamesFoundBean();
         Videogame videogame = new Videogame(null, 0, 13.1f, null, null, null);
-        List<Videogame> games = new ArrayList<Videogame>();
+        List<Videogame> games = new ArrayList<>();
         games.add(videogame);
         VideogamesFound videogamesFound = new VideogamesFound();
         videogamesFound.setGamesFound(games);
@@ -79,7 +79,7 @@ class VideogamesFoundBeanTest {
     void getInformationFromModelDescriptionTest(){
         VideogamesFoundBean videogamesFoundBean = new VideogamesFoundBean();
         Videogame videogame = new Videogame(null, 0, 0, "descriptionTest", null, null);
-        List<Videogame> games = new ArrayList<Videogame>();
+        List<Videogame> games = new ArrayList<>();
         games.add(videogame);
         VideogamesFound videogamesFound = new VideogamesFound();
         videogamesFound.setGamesFound(games);
@@ -92,7 +92,7 @@ class VideogamesFoundBeanTest {
     void getInformationFromModelPlatformTest(){
         VideogamesFoundBean videogamesFoundBean = new VideogamesFoundBean();
         Videogame videogame = new Videogame(null, 0, 0, null, "platformTest", null);
-        List<Videogame> games = new ArrayList<Videogame>();
+        List<Videogame> games = new ArrayList<>();
         games.add(videogame);
         VideogamesFound videogamesFound = new VideogamesFound();
         videogamesFound.setGamesFound(games);
@@ -105,7 +105,7 @@ class VideogamesFoundBeanTest {
     void getInformationFromModelCategoryBeanTest(){
         VideogamesFoundBean videogamesFoundBean = new VideogamesFoundBean();
         Videogame videogame = new Videogame(null, 0, 0, null, null, "categoryTest");
-        List<Videogame> games = new ArrayList<Videogame>();
+        List<Videogame> games = new ArrayList<>();
         games.add(videogame);
         VideogamesFound videogamesFound = new VideogamesFound();
         videogamesFound.setGamesFound(games);

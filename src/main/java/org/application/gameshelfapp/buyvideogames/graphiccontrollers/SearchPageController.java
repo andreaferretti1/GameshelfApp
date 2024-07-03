@@ -90,8 +90,6 @@ public class SearchPageController implements Initializable{
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.categoryChoiceBox.getItems().setAll(category);
         this.platformChoiceBox.getItems().setAll(platform);
-        this.categoryChoiceBox.setValue("Select category");
-        this.platformChoiceBox.setValue("Select platform");
         VideogamesFoundBean videogamesFoundBean = this.customerBoundary.getVideogamesFoundBean();
         if(videogamesFoundBean != null) this.showGamesFound(videogamesFoundBean.getVideogamesFoundBean());
     }
@@ -99,8 +97,8 @@ public class SearchPageController implements Initializable{
     private void showGamesFound(List<VideogameBean> games){
         ObservableList<VideogameBean> gamesToShow = FXCollections.observableList(games);
 
-        this.gameName.setCellValueFactory(new PropertyValueFactory<VideogameBean, String>("name"));
-        this.gameCost.setCellValueFactory(cellData -> new SimpleStringProperty(Float.toString(cellData.getValue().getPriceBean()) + "€"));
+        this.gameName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        this.gameCost.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPriceBean() + "€"));
 
         this.seeGame.setCellFactory( param -> new SearchPageController.CustomTableCellButton(gamesToShow));
         this.gamesFound.setItems(gamesToShow);

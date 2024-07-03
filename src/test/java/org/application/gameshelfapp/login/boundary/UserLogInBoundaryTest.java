@@ -24,42 +24,26 @@ class UserLogInBoundaryTest {
 
     @Test
     void logSyntaxErrorExceptionTest(){
-        try {
-            UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
-            assertThrows(SyntaxErrorException.class, () -> userLogInBoundary.log("test", "testEmail"));
-        }catch(PersistencyErrorException e){
-            fail();
-        }
+        UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
+        assertThrows(SyntaxErrorException.class, () -> userLogInBoundary.log("test", "testEmail"));
     }
 
     @Test
     void logEmailCheckFailedExceptionTest(){
-        try{
-            UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
-            assertThrows(CheckFailedException.class, () -> userLogInBoundary.log("testEMAIL@example.com", "test"));
-        } catch(PersistencyErrorException e){
-            fail();
-        }
+        UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
+        assertThrows(CheckFailedException.class, () -> userLogInBoundary.log("testEmail@example.com", "test"));
     }
 
     @Test
     void logPasswordCheckFailedExceptionTest(){
-        try{
-            UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
-            assertThrows(CheckFailedException.class, () -> userLogInBoundary.log("testEmail@example.com", "TEST"));
-        } catch(PersistencyErrorException e){
-            fail();
-        }
+        UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
+        assertThrows(CheckFailedException.class, () -> userLogInBoundary.log("testEmail@example.com", "TEST"));
     }
 
     @Test
     void logPasswordNullExceptionTest(){
-        try{
-            UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
-            assertThrows(NullPasswordException.class, () -> userLogInBoundary.log("testEmail@example.com", null));
-        } catch(PersistencyErrorException e){
-            fail();
-        }
+        UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
+        assertThrows(NullPasswordException.class, () -> userLogInBoundary.log("testEmail@example.com", null));
     }
 
     @Test
@@ -74,52 +58,32 @@ class UserLogInBoundaryTest {
 
     @Test
     void registerUsernameSyntaxErrorExceptionTest(){
-        try{
-            UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
-            assertThrows(SyntaxErrorException.class,() ->userLogInBoundary.register(".-<", "fer.andrea35@gmail.com", "test"));
-        } catch(PersistencyErrorException e){
-            fail();
-        }
+        UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
+        assertThrows(SyntaxErrorException.class,() ->userLogInBoundary.register(".-<", "fer.andrea35@gmail.com", "test"));
     }
 
     @Test
     void registerEmailSyntaxErrorException(){
-        try{
-            UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
-            assertThrows(SyntaxErrorException.class, () -> userLogInBoundary.register("testName", "testEmail", "test"));
-        } catch(PersistencyErrorException e){
-            fail();
-        }
+        UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
+        assertThrows(SyntaxErrorException.class, () -> userLogInBoundary.register("testName", "testEmail", "test"));
     }
 
     @Test  //credentials already existing in persistency are username: test, email: testEmail@example.com, password: test, typeOfUser: customer.
     void registerUsernameCheckFailedException(){
-        try{
-            UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
-            assertThrows(CheckFailedException.class, () -> userLogInBoundary.register("test", "testEmail2@example.com", "test"));
-        } catch(PersistencyErrorException e){
-            fail();
-        }
+        UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
+        assertThrows(CheckFailedException.class, () -> userLogInBoundary.register("test", "testEmail2@example.com", "test"));
     }
 
     @Test
     void registerEmailCheckFailedException(){
-        try{
-            UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
-            assertThrows(CheckFailedException.class, () -> userLogInBoundary.register("test1", "testEmail@example.com", "test"));
-        } catch(PersistencyErrorException e){
-            fail();
-        }
+        UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
+        assertThrows(CheckFailedException.class, () -> userLogInBoundary.register("test1", "testEmail@example.com", "test"));
     }
 
     @Test
     void registerNullPasswordException(){
-        try{
-            UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
-            assertThrows(NullPasswordException.class, () -> userLogInBoundary.register("test", "testEmail@example.com", null));
-        } catch(PersistencyErrorException e){
-            fail();
-        }
+        UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
+        assertThrows(NullPasswordException.class, () -> userLogInBoundary.register("test", "testEmail@example.com", null));
     }
 
     @Test
@@ -147,12 +111,8 @@ class UserLogInBoundaryTest {
     }
     @Test
     void checkCodeNumberFormatExceptionTest(){
-        try{
-            UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
-            assertThrows(NumberFormatException.class, () -> userLogInBoundary.checkCode("test"));
-        } catch(PersistencyErrorException e){
-            fail();
-        }
+        UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
+        assertThrows(NumberFormatException.class, () -> userLogInBoundary.checkCode("test"));
     }
 
 }

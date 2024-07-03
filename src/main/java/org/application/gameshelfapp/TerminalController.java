@@ -1,5 +1,6 @@
-package org.application.gameshelfapp.login.graphiccontroller2;
+package org.application.gameshelfapp;
 
+import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,13 +11,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import org.application.gameshelfapp.buyvideogames.bean.FiltersBean;
 import org.application.gameshelfapp.buyvideogames.bean.SaleBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogamesFoundBean;
 import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
 import org.application.gameshelfapp.buyvideogames.boundary.SellerBoundary;
-import org.application.gameshelfapp.buyvideogames.exception.*;
+import org.application.gameshelfapp.buyvideogames.exception.ConfirmDeliveryException;
+import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
+import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
+import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.boundary.UserLogInBoundary;
 import org.application.gameshelfapp.login.exception.*;
@@ -27,7 +30,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 
-public class TerminalController implements Initializable {
+public class TerminalController extends Application implements Initializable{
     @FXML
     private TextArea textArea;
     @FXML
@@ -38,7 +41,7 @@ public class TerminalController implements Initializable {
     private SellerBoundary sellerBoundary;
     private String[] command;
     private status state;
-    //TODO prova a fare unaa funzione per ogni UC
+    //TODO prova a fare una funzione per ogni UC
     @FXML
     private void execute(KeyEvent event) {
 
@@ -93,7 +96,7 @@ public class TerminalController implements Initializable {
                     this.state = status.SALES;
                     this.textArea.appendText("\n\nType <confirm line>");
                 } else if (this.command[0].equals("command") && this.state == status.SALES){
-                    this.sellerBoundary.sendGame(Integer.parseInt(command[0]));
+                    this.sellerBoundary.sendGame(Integer.parseInt(command[1]));
                 }
             }
         } catch (SyntaxErrorException | PersistencyErrorException | CheckFailedException | GmailException
@@ -119,9 +122,8 @@ public class TerminalController implements Initializable {
     }
     private void seeVideogame(int index) {
         VideogameBean gameSelected = this.customerBoundary.getVideogamesFoundBean().getVideogamesFoundBean().get(index);
-        FiltersBean filters = this.customerBoundary.getFiltersBean();
         String textToShow = gameSelected.getName() + "\n" +
-                "Filters: " + filters.getConsoleBean() + " " + filters.getCategoryBean() + "\n"
+                "Filters: " + gameSelected.getPlatformBean() + " " + gameSelected.getCategoryBean() + "\n"
                 + "Price per copy: " + gameSelected.getPriceBean() + "€ " + "Copies: " + gameSelected.getCopiesBean() + "\n"
                 + gameSelected.getDescriptionBean() + "\n";
         this.textArea.appendText(textToShow);
@@ -136,10 +138,10 @@ public class TerminalController implements Initializable {
         }
     }
 
-    public static void start() throws IOException, PersistencyErrorException {
+    @Override
+    public void start(Stage stage) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(TerminalController.class.getResource("/org/application/gameshelfapp/GUI2/Access-Page.fxml"));
         Parent root = fxmlLoader.load();
-        Stage stage = new Stage();
         Scene scene = new Scene(root, 1440, 768);
         stage.setScene(scene);
         stage.setTitle("Gameshelfapp");
@@ -149,15 +151,17 @@ public class TerminalController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.textArea.setText("digit <login email password>\n or <register username email password>");
-        try {
-            this.userLogInBoundary = new UserLogInBoundary();
-        } catch (PersistencyErrorException e) {
-            System.exit(1);
-        }
+        this.userLogInBoundary = new UserLogInBoundary();
+
     }
+
 
     private enum status {
         REGISTER, BUY, SALES, SELL
+    }
+
+    public static void main(String[] args){
+        launch();
     }
 }
 

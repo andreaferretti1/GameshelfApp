@@ -28,7 +28,7 @@ class VideogameBeanTest {
     @Test
     void getAndSetDescriptionTest(){
         VideogameBean videogameBean = new VideogameBean();
-        videogameBean.setDescriptionBean("description test");
+        videogameBean.setDescriptionBean("descriptionTest");
         assertEquals("descriptionTest", videogameBean.getDescriptionBean());
     }
     @Test
@@ -43,7 +43,7 @@ class VideogameBeanTest {
     void getAndSetPlatformTest(){
         VideogameBean videogameBean = new VideogameBean();
         videogameBean.setPlatformBean("platformTest");
-        assertEquals("platformTest", videogameBean.getCategoryBean());
+        assertEquals("platformTest", videogameBean.getPlatformBean());
     }
 
     @Test
@@ -57,6 +57,7 @@ class VideogameBeanTest {
         VideogameBean videogameBean = new VideogameBean();
         Videogame videogame = new Videogame("gameName", 0, 0, null, null, null);
         videogameBean.setVideogame(videogame);
+        videogameBean.getVideogameFromModel();
         assertEquals("gameName", videogameBean.getName());
     }
     @Test
@@ -64,6 +65,7 @@ class VideogameBeanTest {
         VideogameBean videogameBean = new VideogameBean();
         Videogame videogame = new Videogame(null, 2, 0, null, null, null);
         videogameBean.setVideogame(videogame);
+        videogameBean.getVideogameFromModel();
         assertEquals(2, videogameBean.getCopiesBean());
     }
 
@@ -90,7 +92,7 @@ class VideogameBeanTest {
         VideogameBean videogameBean = new VideogameBean();
         videogameBean.setVideogame(videogame);
         videogameBean.getVideogameFromModel();
-        assertEquals("categoryTest", videogameBean.getPlatformBean());
+        assertEquals("platformTest", videogameBean.getPlatformBean());
     }
 
     @Test
