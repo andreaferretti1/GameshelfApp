@@ -1,7 +1,6 @@
 package org.application.gameshelfapp.login.boundary2.adapter;
 
 
-import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.boundary.UserLogInBoundary;
 import org.application.gameshelfapp.login.controller.LogInController;
 import org.application.gameshelfapp.login.exception.*;
@@ -9,8 +8,6 @@ import org.application.gameshelfapp.login.exception.*;
 public class LogInAdapter extends LogIn {
 
     UserLogInBoundary boundary;
-    UserBean userBean;
-
     public LogInAdapter() {
         this.boundary = new UserLogInBoundary();
     }

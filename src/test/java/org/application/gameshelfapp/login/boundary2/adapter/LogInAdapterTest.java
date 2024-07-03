@@ -78,7 +78,7 @@ class LogInAdapterTest{
     @Test
     void registerEmailCheckFailedExceptionTest(){
         LogInAdapter adapter = new LogInAdapter();
-        assertThrows(CheckFailedException.class, () -> adapter.register("andrea", "testEmail@gmail.com", "test"));
+        assertThrows(CheckFailedException.class, () -> adapter.register("testName", "testEmail@gmail.com", "testPassword"));
     }
 
     @Test

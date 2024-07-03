@@ -104,7 +104,7 @@ class TerminalUserLogInBoundaryTest {
     @Test
     void executeCommandRegisterEmailCheckFailedExceptionTest(){
         TerminalUserLogInBoundary boundary = new TerminalUserLogInBoundary();
-        String[] command = {"register", "andrea", "testEmail@gmail.com", "test"};
+        String[] command = {"register", "testName", "testEmail@gmail.com", "testPassword"};
         assertThrows(CheckFailedException.class, () -> boundary.executeCommand(command));
     }
 
