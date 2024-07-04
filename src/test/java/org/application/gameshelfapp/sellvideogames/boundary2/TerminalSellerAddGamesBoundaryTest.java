@@ -13,13 +13,13 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TerminalSellerAddGamesBoundaryTest {
+class TerminalSellerAddGamesBoundaryTest {
     @Test
     void executeCommandGetSellingCatalogueTest(){             //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
         try{
             TerminalSellerAddGamesBoundary test = new TerminalSellerAddGamesBoundary(null);
             String[] testCommand = {"show", "Dark Souls", "TestConsole2", "TestCategory2"};
-            String testReturn = String.format("name: %s, console: %s, category: %s, copies: %d, price: %f, description: %s\n", "Dark Souls", "TestConsole2", "TestCategory2", 1, 10f, "This is another test") + "\nType <add/remove/update, gameTitle, console, category, description, copies, price>\n\n";
+            String testReturn = String.format("name: %s, console: %s, category: %s, copies: %d, price: %f, description: %s%n", "Dark Souls", "TestConsole2", "TestCategory2", 1, 10f, "This is another test") + "\nType <add/remove/update, gameTitle, console, category, description, copies, price>\n\n";
             String testString = test.executeCommand(testCommand);
             assertEquals(testReturn, testString);
         } catch (PersistencyErrorException | NoGameInCatalogueException | CheckFailedException | GmailException |
@@ -40,7 +40,7 @@ public class TerminalSellerAddGamesBoundaryTest {
         try{
             TerminalSellerAddGamesBoundary test = new TerminalSellerAddGamesBoundary(null);
             String[] testCommand = {"add", "Dark Souls", "TestConsole2", "TestCategory2", "This is another test", "1", "10"};
-            String testReturn = String.format("name: %s, console: %s, category: %s, copies: %d, price: %f, description: %s\n", "Dark Souls", "TestConsole2", "TestCategory2", 1, 10f, "This is another test") + "\nType <add/remove/update, gameTitle, console, category, description, copies, price>\n\n";
+            String testReturn = String.format("name: %s, console: %s, category: %s, copies: %d, price: %f, description: %s%n", "Dark Souls", "TestConsole2", "TestCategory2", 1, 10f, "This is another test") + "\nType <add/remove/update, gameTitle, console, category, description, copies, price>\n\n";
             assertEquals(testReturn, test.executeCommand(testCommand));
         } catch(PersistencyErrorException | CheckFailedException | InvalidTitleException | NoGameInCatalogueException |
                 GmailException | AlreadyExistingVideogameException | GameSoldOutException e){
@@ -67,7 +67,7 @@ public class TerminalSellerAddGamesBoundaryTest {
         try{
             TerminalSellerAddGamesBoundary test = new TerminalSellerAddGamesBoundary(null);
             String[] testCommand = {"remove", "Dark Souls", "TestConsole2", "TestCategory2", "This is another test", "1", "10"};
-            String testReturn = String.format("name: %s, console: %s, category: %s, copies: %d, price: %f, description: %s\n", "Dark Souls", "TestConsole2", "TestCategory2", 0, 10f, "This is another test") + "\nType <add/remove/update, gameTitle, console, category, description, copies, price>\n\n";
+            String testReturn = String.format("name: %s, console: %s, category: %s, copies: %d, price: %f, description: %s%n", "Dark Souls", "TestConsole2", "TestCategory2", 0, 10f, "This is another test") + "\nType <add/remove/update, gameTitle, console, category, description, copies, price>\n\n";
             assertEquals(testReturn, test.executeCommand(testCommand));
         } catch(PersistencyErrorException | NoGameInCatalogueException | GameSoldOutException | CheckFailedException |
                 GmailException | InvalidTitleException | AlreadyExistingVideogameException e){
@@ -94,7 +94,7 @@ public class TerminalSellerAddGamesBoundaryTest {
         try{
             TerminalSellerAddGamesBoundary test = new TerminalSellerAddGamesBoundary(null);
             String[] testCommand = {"update", "Dark Souls", "TestConsole2", "TestCategory2", "This is another test", "1", "10"};
-            String testReturn = String.format("name: %s, console: %s, category: %s, copies: %d, price: %f, description: %s\n", "Dark Souls", "TestConsole2", "TestCategory2", 2, 10f, "This is another test") + "\nType <add/remove/update, gameTitle, console, category, description, copies, price>\n\n";
+            String testReturn = String.format("name: %s, console: %s, category: %s, copies: %d, price: %f, description: %s%n", "Dark Souls", "TestConsole2", "TestCategory2", 2, 10f, "This is another test") + "\nType <add/remove/update, gameTitle, console, category, description, copies, price>\n\n";
             assertEquals(testReturn, test.executeCommand(testCommand));
         } catch(PersistencyErrorException | NoGameInCatalogueException | CheckFailedException | GmailException |
                 InvalidTitleException | AlreadyExistingVideogameException | GameSoldOutException e){

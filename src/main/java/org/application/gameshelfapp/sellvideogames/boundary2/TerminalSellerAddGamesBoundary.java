@@ -22,7 +22,7 @@ public class TerminalSellerAddGamesBoundary implements TerminalBoundary {
     private String catalogueBeanToString(SellingGamesCatalogueBean catalogueBean){
         StringBuilder game = new StringBuilder();
         for(VideogameBean gameBean: catalogueBean.getSellingGamesBean()){
-           game.append(String.format("name: %s, console: %s, category: %s, copies: %d, price: %f, description: %s\n", gameBean.getName(), gameBean.getPlatformBean(), gameBean.getCategoryBean(), gameBean.getCopiesBean(), gameBean.getPriceBean(), gameBean.getDescriptionBean())) ;
+           game.append(String.format("name: %s, console: %s, category: %s, copies: %d, price: %f, description: %s%n", gameBean.getName(), gameBean.getPlatformBean(), gameBean.getCategoryBean(), gameBean.getCopiesBean(), gameBean.getPriceBean(), gameBean.getDescriptionBean())) ;
         }
         return game + "\nType <add/remove/update, gameTitle, console, category, description, copies, price>\n\n";
     }
