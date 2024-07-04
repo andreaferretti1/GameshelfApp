@@ -3,6 +3,7 @@ package org.application.gameshelfapp.buyvideogames.boundary;
 import org.application.gameshelfapp.buyvideogames.bean.SaleBean;
 import org.application.gameshelfapp.buyvideogames.controller.BuyGamesController;
 import org.application.gameshelfapp.buyvideogames.exception.ConfirmDeliveryException;
+import org.application.gameshelfapp.buyvideogames.exception.WrongSaleException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
@@ -35,7 +36,7 @@ public class SellerBoundary {
         this.salesBean = this.buyGamesController.getSales();
     }
 
-    public void sendGame(int index) throws ConfirmDeliveryException, GmailException{
+    public void sendGame(int index) throws ConfirmDeliveryException, GmailException, PersistencyErrorException, WrongSaleException {
         this.buyGamesController.confirmDelivery(this.salesBean.get(index));
     }
 }

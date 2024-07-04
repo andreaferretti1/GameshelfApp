@@ -24,7 +24,7 @@ class JDBCFactoryTest {
     @Test
     void createAccessDAOTest() {
         JDBCFactory jdbcFactory = new JDBCFactory();
-        assertInstanceOf(JDBCFactory.class, jdbcFactory.createAccessDAO());
+        assertInstanceOf(AccessDAOJDBC.class, jdbcFactory.createAccessDAO());
     }
 
     @Test

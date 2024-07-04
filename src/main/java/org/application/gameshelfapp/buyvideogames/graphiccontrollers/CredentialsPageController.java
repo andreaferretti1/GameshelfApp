@@ -13,6 +13,7 @@ import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
+import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
 import java.io.IOException;
 
@@ -41,7 +42,7 @@ public class CredentialsPageController {
     private void insertCredentials(){
         try {
             this.customerBoundary.insertCredentialsAndPay(name.getText(), typeOfCard.getText(), paymentKey.getText(), address.getText(), regionField.getText(), countryField.getText());
-        } catch (SyntaxErrorException | RefundException | GameSoldOutException | PersistencyErrorException | InvalidAddressException e) {
+        } catch (SyntaxErrorException | RefundException | GameSoldOutException | PersistencyErrorException | InvalidAddressException | NoGameInCatalogueException e) {
             ErrorPageController.displayErrorWindow(e.getMessage());
         }
     }

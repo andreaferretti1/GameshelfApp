@@ -46,8 +46,6 @@ public class SaleDAOQueries {
         try(PreparedStatement pstmt = conn.prepareStatement(query)){
             pstmt.setInt(1, sale.getId());
             pstmt.execute();
-        } catch(SQLException e){
-            throw new SQLException(e.getMessage());
         }
     }
 }

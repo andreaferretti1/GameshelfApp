@@ -1,9 +1,7 @@
 package org.application.gameshelfapp.buyvideogames.controller;
 
 import org.application.gameshelfapp.buyvideogames.bean.*;
-import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
-import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
-import org.application.gameshelfapp.buyvideogames.exception.RefundException;
+import org.application.gameshelfapp.buyvideogames.exception.*;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
@@ -79,9 +77,19 @@ class BuyGamesControllerTest {
             videogameBean.setPlatformBean("consoleTest");
             videogameBean.setCategoryBean("categoryTest");
             controller.sendMoney(credentialsBean, videogameBean, userBean);
-        } catch (PersistencyErrorException | SyntaxErrorException | RefundException | GameSoldOutException | InvalidAddressException e){
+        } catch (PersistencyErrorException | SyntaxErrorException | RefundException | GameSoldOutException | InvalidAddressException | NoGameInCatalogueException e){
             fail();
         }
+    }
+
+    @Test
+    void sendMoneyNoGameInCatalogueExceptionTest(){     //database was empty
+        BuyGamesController controller = new BuyGamesController();
+        VideogameBean gameBean = new VideogameBean();
+        gameBean.setName("nameTest");
+        gameBean.setPlatformBean("platformTest");
+        gameBean.setCategoryBean("categoryTest");
+        assertThrows(NoGameInCatalogueException.class, () -> controller.sendMoney(new CredentialsBean(), gameBean, new UserBean()));
     }
 
     @Test
@@ -195,9 +203,25 @@ class BuyGamesControllerTest {
             saleBean.setAddressBean("addressTest");
             saleBean.setEmailBean("fer.andrea35@gmail.com");
             controller.confirmDelivery(saleBean);
-        } catch(Exception e){
+        } catch(PersistencyErrorException | ConfirmDeliveryException | WrongSaleException | GmailException e){
             fail();
         }
+    }
+
+    @Test
+    void confirmDeliveryWrongSaleExceptionTest(){       //database was empty
+        BuyGamesController controller = new BuyGamesController();
+        SaleBean saleBean = new SaleBean();
+        saleBean.setIdBean(2);
+        assertThrows(WrongSaleException.class, () -> controller.confirmDelivery(saleBean));
+    }
+
+    @Test
+    void confirmedDeliveryWrongStateExceptionTest(){        //In the database there was tuple ('1', 'testName', 'gameName', '2', '22', 'platformTest', 'Comfirmed', 'addressTest', 'emailTest')
+        BuyGamesController controller = new BuyGamesController();
+        SaleBean saleBean = new SaleBean();
+        saleBean.setIdBean(1);
+        assertThrows(WrongSaleException.class, () -> controller.confirmDelivery(saleBean));
     }
 
     @Test

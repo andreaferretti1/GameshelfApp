@@ -8,10 +8,7 @@ import org.application.gameshelfapp.buyvideogames.dao.CatalogueDAO;
 import org.application.gameshelfapp.buyvideogames.dao.ItemDAO;
 import org.application.gameshelfapp.buyvideogames.dao.SaleDAO;
 import org.application.gameshelfapp.buyvideogames.entities.*;
-import org.application.gameshelfapp.buyvideogames.exception.ConfirmDeliveryException;
-import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
-import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
-import org.application.gameshelfapp.buyvideogames.exception.RefundException;
+import org.application.gameshelfapp.buyvideogames.exception.*;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.boundary.GoogleBoundary;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
@@ -37,7 +34,7 @@ public class BuyGamesController {
         return gamesFoundBean;
     }
 
-    public void sendMoney(CredentialsBean credentialsBean, VideogameBean videogameBean, UserBean userBean) throws RefundException, GameSoldOutException, PersistencyErrorException, InvalidAddressException {
+    public void sendMoney(CredentialsBean credentialsBean, VideogameBean videogameBean, UserBean userBean) throws RefundException, GameSoldOutException, PersistencyErrorException, InvalidAddressException, NoGameInCatalogueException {
         Braintree braintree = new Braintree();
         Geocoder geocoder = new Geocoder();
 
@@ -45,7 +42,10 @@ public class BuyGamesController {
         ItemDAO itemDAO = factory.createItemDAO();
         SaleDAO saleDAO = factory.createSaleDAO();
 
-        Videogame game = new Videogame(videogameBean.getName(), videogameBean.getCopiesBean(), videogameBean.getPriceBean(), videogameBean.getDescriptionBean(), videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
+        Filters filters = new Filters(videogameBean.getName(), videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
+        List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
+        Videogame game = games.getFirst();
+        game.setCopies(videogameBean.getCopiesBean());
         Sale sale = new Sale(game, userBean.getEmail(), credentialsBean.getAddressBean(), Sale.TO_CONFIRM, credentialsBean.getNameBean());
             try{
                 geocoder.checkAddress(credentialsBean.getAddressBean());
@@ -85,17 +85,15 @@ public class BuyGamesController {
         return salesBean;
     }
 
-    public void confirmDelivery(SaleBean saleBean) throws GmailException, ConfirmDeliveryException{
+    public void confirmDelivery(SaleBean saleBean) throws GmailException, ConfirmDeliveryException, PersistencyErrorException, WrongSaleException {
         ShipmentCompany shipmentCompany = new ShipmentCompany();
         GoogleBoundary googleBoundary = new GoogleBoundary();
-        Videogame gameToSend = new Videogame(saleBean.getGameSoldBean().getName(), saleBean.getGameSoldBean().getCopiesBean(), saleBean.getGameSoldBean().getPriceBean(), null, saleBean.getGameSoldBean().getPlatformBean(), null);
-        Sale sale = new Sale(gameToSend, saleBean.getEmailBean(), saleBean.getAddressBean(), Sale.CONFIRMED, saleBean.getNameBean());
 
+        SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
+        Sale sale = saleDAO.getSaleToConfirmById(saleBean.getIdBean());
         try{
-            PersistencyAbstractFactory factory = PersistencyAbstractFactory.getFactory();
-            CatalogueDAO catalogueDAO = factory.createCatalogueDAO();
-            SaleDAO saleDAO = factory.createSaleDAO();
-            catalogueDAO.addVideogame(saleBean.getEmailBean(), gameToSend);
+            CatalogueDAO catalogueDAO = PersistencyAbstractFactory.getFactory().createCatalogueDAO();
+            catalogueDAO.addVideogame(saleBean.getEmailBean(), sale.getVideogameSold());
             saleDAO.updateSale(sale);
             shipmentCompany.confirmDelivery(sale.getAddress());
 

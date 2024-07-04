@@ -16,7 +16,7 @@ public abstract class PersistencyAbstractFactory {
 
         public static PersistencyAbstractFactory getFactory(){
 
-            try(FileInputStream in = new FileInputStream("/src/main/resources/org/application/gameshelfapp/configuration/configuration.properties")){
+            try(FileInputStream in = new FileInputStream("src/main/resources/org/application/gameshelfapp/configuration/configuration.properties")){
             Properties properties = new Properties();
 
             properties.load(in);

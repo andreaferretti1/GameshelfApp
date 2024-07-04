@@ -2,14 +2,14 @@ package org.application.gameshelfapp.buyvideogames.dao;
 
 import org.application.gameshelfapp.buyvideogames.entities.Sale;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
+import org.application.gameshelfapp.buyvideogames.exception.WrongSaleException;
 import org.application.gameshelfapp.login.dao.CSVFactory;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 class SaleDAOCSVTest {
 
@@ -116,6 +116,40 @@ class SaleDAOCSVTest {
             assertEquals(1, sale.getId());
             assertEquals("gameNameTest", sale.getVideogameSold().getName());
             assertEquals("Confirmed", sale.getState());
+        } catch(PersistencyErrorException e){
+            fail();
+        }
+    }
+
+    @Test
+    void getSaleToConfirmByStateTest(){     //In the database there was tuple (1, 'nameTest', 'gameName', '2', '40', 'platformTest', 'To confirm', 'addressTest', 'emailTest')
+        try{
+            CSVFactory csvFactory = new CSVFactory();
+            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            Sale sale = saleDAO.getSaleToConfirmById(1);
+            assertNotNull(sale);
+        } catch(PersistencyErrorException | WrongSaleException e){
+            fail();
+        }
+    }
+
+    @Test
+    void getSaleToConfirmWrongSaleExceptionTest(){      //database was empty
+        try {
+            CSVFactory csvFactory = new CSVFactory();
+            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            assertThrows(WrongSaleException.class, () -> saleDAO.getSaleToConfirmById(1));
+        } catch(PersistencyErrorException e){
+            fail();
+        }
+    }
+
+    @Test
+    void getSaleToConfirmWrongStateExceptionTest(){     //in the database there was tuple (1, 'nameTest', 'gameName', '2', '40', 'platformTest', 'Confirmed', 'addressTest', 'emailTest')
+        try{
+            CSVFactory csvFactory = new CSVFactory();
+            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            assertThrows(WrongSaleException.class, () -> saleDAO.getSaleToConfirmById(1));
         } catch(PersistencyErrorException e){
             fail();
         }

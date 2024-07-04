@@ -2,14 +2,14 @@ package org.application.gameshelfapp.buyvideogames.boundary;
 
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogamesFoundBean;
-import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
-import org.application.gameshelfapp.buyvideogames.entities.Sale;
 import org.application.gameshelfapp.buyvideogames.dao.SaleDAO;
+import org.application.gameshelfapp.buyvideogames.entities.Sale;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.bean.UserBean;
+import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
@@ -127,9 +127,20 @@ class CustomerBoundaryTest {
             assertEquals("Via Cambridge, Roma, Italy", sale.getAddress());
             assertEquals(Sale.TO_CONFIRM, sale.getState());
         } catch (PersistencyErrorException | RefundException | GameSoldOutException |
-                 SyntaxErrorException | InvalidAddressException e) {
+                 SyntaxErrorException | InvalidAddressException | NoGameInCatalogueException e) {
            fail();
         }
+    }
+
+    @Test
+    void insertCredentialsAndPayNoGameInCatalogueExceptionTest(){       //database was empty
+        CustomerBoundary boundary = new CustomerBoundary(new UserBean());
+        VideogameBean videogameBean = new VideogameBean();
+        videogameBean.setName("nameTest");
+        videogameBean.setPlatformBean("platformTest");
+        videogameBean.setCategoryBean("categoryTest");
+        boundary.setGameToBuy(videogameBean);
+        assertThrows(NoGameInCatalogueException.class, () -> boundary.insertCredentialsAndPay(null, null, null, null, null, null));
     }
 
     @Test

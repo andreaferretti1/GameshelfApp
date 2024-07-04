@@ -3,6 +3,7 @@ package org.application.gameshelfapp.buyvideogames.dao;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
+import org.application.gameshelfapp.buyvideogames.exception.WrongSaleException;
 import org.application.gameshelfapp.login.dao.CSVFactory;
 import org.application.gameshelfapp.buyvideogames.entities.Sale;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
@@ -85,6 +86,16 @@ public class SaleDAOCSV implements SaleDAO {
         }
     }
 
+    @Override
+    public Sale getSaleToConfirmById(long id) throws PersistencyErrorException, WrongSaleException {
+        List<Sale> sales = this.getToConfirmSales();
+        Sale saleToConfirm = null;
+        for(Sale sale: sales){
+            if(sale.getId() == id && sale.getState().equals(Sale.TO_CONFIRM)) saleToConfirm = sale;
+        }
+        if(saleToConfirm == null) throw new WrongSaleException("Sale has been already cofirmed or doesn't exists");
+        return saleToConfirm;
+    }
     private long getId() throws PersistencyErrorException{
         try(FileInputStream in = new FileInputStream(CSVFactory.PROPERTIES)){
             Properties properties = new Properties();

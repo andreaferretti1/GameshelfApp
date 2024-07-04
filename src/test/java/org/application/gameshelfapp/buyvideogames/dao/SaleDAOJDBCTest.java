@@ -2,6 +2,7 @@ package org.application.gameshelfapp.buyvideogames.dao;
 
 import org.application.gameshelfapp.buyvideogames.entities.Sale;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
+import org.application.gameshelfapp.buyvideogames.exception.WrongSaleException;
 import org.application.gameshelfapp.login.dao.JDBCFactory;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.junit.jupiter.api.Test;
@@ -117,5 +118,32 @@ class SaleDAOJDBCTest {
         } catch(PersistencyErrorException e){
             fail();
         }
+    }
+
+    @Test
+    void getSaleToConfirmByStateTest(){     //In the database there was tuple (1, 'nameTest', 'gameName', '2', '40', 'platformTest', 'To confirm', 'addressTest', 'emailTest')
+        try{
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
+            Sale sale = saleDAO.getSaleToConfirmById(1);
+            assertNotNull(sale);
+        } catch(PersistencyErrorException | WrongSaleException e){
+            fail();
+        }
+    }
+
+    @Test
+    void getSaleToConfirmWrongSaleExceptionTest(){      //database was empty
+        JDBCFactory jdbcFactory = new JDBCFactory();
+        SaleDAO saleDAO = jdbcFactory.createSaleDAO();
+        assertThrows(WrongSaleException.class, () -> saleDAO.getSaleToConfirmById(1));
+
+    }
+
+    @Test
+    void getSaleToConfirmWrongStateExceptionTest(){     //in the database there was tuple (1, 'nameTest', 'gameName', '2', '40', 'platformTest', 'Confirmed', 'addressTest', 'emailTest')
+        JDBCFactory jdbcFactory = new JDBCFactory();
+        SaleDAO saleDAO = jdbcFactory.createSaleDAO();
+        assertThrows(WrongSaleException.class, () -> saleDAO.getSaleToConfirmById(1));
     }
 }

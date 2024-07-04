@@ -17,6 +17,7 @@ import javafx.util.Callback;
 import org.application.gameshelfapp.buyvideogames.bean.SaleBean;
 import org.application.gameshelfapp.buyvideogames.boundary.SellerBoundary;
 import org.application.gameshelfapp.buyvideogames.exception.ConfirmDeliveryException;
+import org.application.gameshelfapp.buyvideogames.exception.WrongSaleException;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
@@ -101,7 +102,7 @@ public class SalePageController implements Initializable {
             ((Button) fxmlLoader.getNamespace().get("button")).setOnMouseClicked(event -> {
                     try {
                         this.sellerBoundary.sendGame(gamesSold.getSelectionModel().getSelectedIndex());
-                    } catch (ConfirmDeliveryException | GmailException e) {
+                    } catch (ConfirmDeliveryException | GmailException | WrongSaleException | PersistencyErrorException e) {
                         ErrorPageController.displayErrorWindow(e.getMessage());
                     }
                 });

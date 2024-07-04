@@ -2,6 +2,7 @@ package org.application.gameshelfapp.buyvideogames.boundary;
 
 import org.application.gameshelfapp.buyvideogames.bean.SaleBean;
 import org.application.gameshelfapp.buyvideogames.exception.ConfirmDeliveryException;
+import org.application.gameshelfapp.buyvideogames.exception.WrongSaleException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
@@ -53,21 +54,29 @@ class SellerBoundaryTest {
                 }
             }
             sellerBoundary.sendGame(1);
-        } catch(PersistencyErrorException | GmailException | ConfirmDeliveryException e){
+        } catch(PersistencyErrorException | GmailException | ConfirmDeliveryException | WrongSaleException e){
             fail();
         }
     }
 
     @Test
-    void sendGameGmailExceptionTest(){      //In the Sale table there was tuple ('1', 'nameTest1', 'gameNameTest1', '2', '40', 'platform1', 'To confirm', 'address', 'emailTest')
-        SellerBoundary sellerBoundary = new SellerBoundary(new UserBean());
-        try{
-            sellerBoundary.getGamesToSend();
-            List<SaleBean> saleBeans = sellerBoundary.getSalesBean();
-            saleBeans.getFirst().getInformationFromModel();
-            assertThrows(GmailException.class, () -> sellerBoundary.sendGame(1));
-        } catch(PersistencyErrorException e){
-            fail();
-        }
+    void sendGameWrongSaleExceptionTest(){      //database was empty
+        SellerBoundary boundary = new SellerBoundary(new UserBean());
+        List<SaleBean> saleBeans = new ArrayList<>();
+        SaleBean saleBean = new SaleBean();
+        saleBeans.add(saleBean);
+        boundary.setSalesBean(saleBeans);
+        saleBean.setIdBean(1);
+        assertThrows(WrongSaleException.class, () -> boundary.sendGame(1));
+    }
+
+    @Test
+    void sendGameWrongStateExceptionTest(){     //in the database there was tuple (1, 'nameTest', 'gameName', '2', '40', 'platformTest', 'Confirmed', 'addressTest', 'emailTest')
+        SellerBoundary boundary = new SellerBoundary(new UserBean());
+        List<SaleBean> salesBean = new ArrayList<>();
+        SaleBean saleBean = new SaleBean();
+        saleBean.setIdBean(1);
+        salesBean.add(saleBean);
+        assertThrows(WrongSaleException.class, () -> boundary.sendGame(1));
     }
 }

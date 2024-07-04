@@ -2,6 +2,7 @@ package org.application.gameshelfapp.buyvideogames.dao;
 
 import org.application.gameshelfapp.buyvideogames.dao.queries.SaleDAOQueries;
 import org.application.gameshelfapp.buyvideogames.entities.Sale;
+import org.application.gameshelfapp.buyvideogames.exception.WrongSaleException;
 import org.application.gameshelfapp.login.dao.SingletonConnectionPool;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
@@ -36,6 +37,16 @@ public class SaleDAOJDBC implements SaleDAO {
         return this.getSalesByState(Sale.TO_CONFIRM);
     }
 
+    @Override
+    public Sale getSaleToConfirmById(long id) throws PersistencyErrorException, WrongSaleException{
+        List<Sale> sales = this.getToConfirmSales();
+        Sale saleToConfirm = null;
+        for(Sale sale: sales){
+            if(sale.getId() == id && sale.getState().equals(Sale.TO_CONFIRM)) saleToConfirm = sale;
+        }
+        if(saleToConfirm == null) throw new WrongSaleException("This sale is already confirmed or doesn't exist");
+        return saleToConfirm;
+    }
     private List<Sale> getSalesByState(String state) throws PersistencyErrorException{
         List<Sale> sales = new ArrayList<>();
         try(Connection conn = SingletonConnectionPool.getInstance().getConnection()){

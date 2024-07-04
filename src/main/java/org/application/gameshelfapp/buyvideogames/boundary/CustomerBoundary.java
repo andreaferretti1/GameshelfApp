@@ -50,7 +50,7 @@ public class CustomerBoundary {
     public VideogameBean getGameToBuy() {
         return this.gameToBuy;
     }
-    public void insertCredentialsAndPay(String name, String typeOfCard, String paymentKey, String street, String region, String country) throws RefundException, GameSoldOutException, SyntaxErrorException, PersistencyErrorException, InvalidAddressException{
+    public void insertCredentialsAndPay(String name, String typeOfCard, String paymentKey, String street, String region, String country) throws RefundException, GameSoldOutException, SyntaxErrorException, PersistencyErrorException, InvalidAddressException, NoGameInCatalogueException{
         CredentialsBean credentialsBean = new CredentialsBean();
         credentialsBean.setNameBean(name);
         credentialsBean.setTypeOfPaymentBean(typeOfCard);
