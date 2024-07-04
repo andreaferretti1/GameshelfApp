@@ -22,8 +22,8 @@ public class SellerAddGamesBoundary {
     private SellingGamesCatalogueBean sellingGamesCatalogueBean;
 
 
-    public SellerAddGamesBoundary (SellGamesController controller, UserBean userBean) {
-        this.sellGamesController = controller;
+    public SellerAddGamesBoundary (UserBean userBean) {
+        this.sellGamesController = new SellGamesController();
         this.userBean = userBean;
     }
 

@@ -7,7 +7,6 @@ import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
-import org.application.gameshelfapp.sellvideogames.controller.SellGamesController;
 import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVideogameException;
 import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
@@ -20,8 +19,7 @@ class SellerAddGamesBoundaryTest {
     @Test
     void getSellingCatalogueTest(){             //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
         try{
-            SellGamesController testController = new SellGamesController();
-            SellerAddGamesBoundary test = new SellerAddGamesBoundary(testController, null);
+            SellerAddGamesBoundary test = new SellerAddGamesBoundary(null);
             FiltersBean testBean = new FiltersBean();
             testBean.setNameBean("Dark Souls");
             testBean.setConsoleBean("TestConsole2");
@@ -35,8 +33,7 @@ class SellerAddGamesBoundaryTest {
 
     @Test
     void getSellingGamesCatalogueNoGameInCatalogueExceptionLaunchedTest(){
-        SellGamesController testController = new SellGamesController();
-        SellerAddGamesBoundary test = new SellerAddGamesBoundary(testController, null);
+        SellerAddGamesBoundary test = new SellerAddGamesBoundary(null);
         FiltersBean testBean = new FiltersBean();
         testBean.setNameBean("Dark Souls");
         testBean.setConsoleBean("TestConsole2");
@@ -47,8 +44,7 @@ class SellerAddGamesBoundaryTest {
     @Test
     void addSellingGamesTest(){
         try{
-            SellGamesController testController = new SellGamesController();
-            SellerAddGamesBoundary test = new SellerAddGamesBoundary(testController, null);
+            SellerAddGamesBoundary test = new SellerAddGamesBoundary(null);
             VideogameBean gameBeanTest = new VideogameBean();
             gameBeanTest.setName("Dark Souls");
             gameBeanTest.setCopiesBean(1);
@@ -65,8 +61,7 @@ class SellerAddGamesBoundaryTest {
 
     @Test
     void addSellingGamesInvalidTitleExceptionLaunchedTest(){
-        SellGamesController testController = new SellGamesController();
-        SellerAddGamesBoundary test = new SellerAddGamesBoundary(testController, null);
+        SellerAddGamesBoundary test = new SellerAddGamesBoundary(null);
         VideogameBean gameBeanTest = new VideogameBean();
         gameBeanTest.setName("Dark Souls 9");
         gameBeanTest.setCopiesBean(1);
@@ -79,8 +74,7 @@ class SellerAddGamesBoundaryTest {
 
     @Test
     void addSellingGamesAlreadyExistingVideogameExceptionLaunchedTest(){            //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
-        SellGamesController testController = new SellGamesController();
-        SellerAddGamesBoundary test = new SellerAddGamesBoundary(testController, null);
+        SellerAddGamesBoundary test = new SellerAddGamesBoundary(null);
         VideogameBean gameBeanTest = new VideogameBean();
         gameBeanTest.setName("Dark Souls");
         gameBeanTest.setCopiesBean(1);
@@ -94,8 +88,7 @@ class SellerAddGamesBoundaryTest {
     @Test
     void removeSellingGamesCatalogueTest(){         //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
         try{
-            SellGamesController testController = new SellGamesController();
-            SellerAddGamesBoundary test = new SellerAddGamesBoundary(testController, null);
+            SellerAddGamesBoundary test = new SellerAddGamesBoundary(null);
             VideogameBean gameBeanTest = new VideogameBean();
             gameBeanTest.setName("Dark Souls");
             gameBeanTest.setCopiesBean(1);
@@ -112,8 +105,7 @@ class SellerAddGamesBoundaryTest {
 
     @Test
     void removeSellingGamesCatalogueNoGameInCatalogueExceptionLaunchedTest(){
-        SellGamesController testController = new SellGamesController();
-        SellerAddGamesBoundary test = new SellerAddGamesBoundary(testController, null);
+        SellerAddGamesBoundary test = new SellerAddGamesBoundary(null);
         VideogameBean gameBeanTest = new VideogameBean();
         gameBeanTest.setName("Dark Souls");
         gameBeanTest.setCopiesBean(1);
@@ -126,8 +118,7 @@ class SellerAddGamesBoundaryTest {
 
     @Test
     void removeSellingGamesCatalogueGameSolOutExceptionLaunchedTest(){          //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
-        SellGamesController testController = new SellGamesController();
-        SellerAddGamesBoundary test = new SellerAddGamesBoundary(testController, null);
+        SellerAddGamesBoundary test = new SellerAddGamesBoundary(null);
         VideogameBean gameBeanTest = new VideogameBean();
         gameBeanTest.setName("Dark Souls");
         gameBeanTest.setCopiesBean(2);
@@ -141,8 +132,7 @@ class SellerAddGamesBoundaryTest {
     @Test
     void updateSellingGameTest(){            //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
         try{
-            SellGamesController testController = new SellGamesController();
-            SellerAddGamesBoundary test = new SellerAddGamesBoundary(testController, null);
+            SellerAddGamesBoundary test = new SellerAddGamesBoundary(null);
             VideogameBean gameBeanTest = new VideogameBean();
             gameBeanTest.setName("Dark Souls");
             gameBeanTest.setCopiesBean(2);
@@ -159,8 +149,7 @@ class SellerAddGamesBoundaryTest {
 
     @Test
     void updateSellingGameNoGameInCatalogueExceptionLaunchedTest(){
-        SellGamesController testController = new SellGamesController();
-        SellerAddGamesBoundary test = new SellerAddGamesBoundary(testController, null);
+        SellerAddGamesBoundary test = new SellerAddGamesBoundary(null);
         VideogameBean gameBeanTest = new VideogameBean();
         gameBeanTest.setName("Dark Souls");
         gameBeanTest.setCopiesBean(2);
@@ -173,8 +162,7 @@ class SellerAddGamesBoundaryTest {
 
     @Test
     void setAndGetUserBeanTest(){
-        SellGamesController testController = new SellGamesController();
-        SellerAddGamesBoundary test = new SellerAddGamesBoundary(testController, null);
+        SellerAddGamesBoundary test = new SellerAddGamesBoundary(null);
         UserBean testUser = new UserBean();
         test.setUserBean(testUser);
         assertEquals(testUser, test.getUserBean());
