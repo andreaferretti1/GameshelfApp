@@ -59,7 +59,7 @@ public class AccessDAOJDBC implements AccessDAO {
                 winners.add(user);
             }
         } catch(SQLException e){
-            throw new PersistencyErrorException("Couldn't register your account");
+            throw new PersistencyErrorException("Couldn't get account to send email");
         }
         return winners;
     }
