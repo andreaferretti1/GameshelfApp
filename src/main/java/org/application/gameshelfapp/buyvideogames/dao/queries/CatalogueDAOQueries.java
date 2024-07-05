@@ -12,7 +12,7 @@ public class CatalogueDAOQueries {
     private CatalogueDAOQueries(){}
 
     public static ResultSet getCatalogueQuery(Connection conn, String email) throws SQLException{
-        String query = "SELECT Name, Copies FROM Catalogue WHERE Email = ?;";
+        String query = "SELECT Name, Copies, Platform FROM Catalogue WHERE Email = ?;";
         try(PreparedStatement pstmt = conn.prepareStatement(query)){
             pstmt.setString(1, email);
             pstmt.execute();
@@ -24,12 +24,12 @@ public class CatalogueDAOQueries {
     }
 
     public static void addVideogameQuery(Connection connection, String email, Videogame videogame) throws SQLException{
-        String query ="INSERT INTO Catalogue (Name, Email, Copies) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Copies = Copies + ?;";
+        String query ="INSERT INTO Catalogue (Name, Email, Platform, Copies) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE Copies = Copies + Values(Copies);";
 
         try(PreparedStatement pstmt = connection.prepareStatement(query)){
             pstmt.setString(1, videogame.getName());
             pstmt.setString(2, email);
-            pstmt.setInt(3, videogame.getCopies());
+            pstmt.setString(3, videogame.getPlatform());
             pstmt.setInt(4, videogame.getCopies());
 
             pstmt.execute();
@@ -39,8 +39,8 @@ public class CatalogueDAOQueries {
     }
 
     public static void removeVideogameQuery(Connection conn, String email, Videogame videogame) throws SQLException{
-        String updateQuery = "UPDATE Catalogue SET Copies = Copies - ? WHERE Name = ? AND Email = ?;";
-        String deleteQuery = "DELETE FROM Catalogue WHERE Name = ? AND Email = ? AND Copies <= 0;";
+        String updateQuery = "UPDATE Catalogue SET Copies = Copies - ? WHERE Name = ? AND Platform = ? AND Email = ?;";
+        String deleteQuery = "DELETE FROM Catalogue WHERE Name = ? AND Platform = ? AND Email = ? AND Copies <= 0;";
 
         try(PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
             PreparedStatement deleteStmt = conn.prepareStatement(deleteQuery)){
@@ -48,9 +48,11 @@ public class CatalogueDAOQueries {
 
             updateStmt.setInt(1, videogame.getCopies());
             updateStmt.setString(2, videogame.getName());
-            updateStmt.setString(3, email);
+            updateStmt.setString(3, videogame.getPlatform());
+            updateStmt.setString(4, email);
 
             deleteStmt.setString(1, videogame.getName());
+            deleteStmt.setString(2, videogame.getPlatform());
             deleteStmt.setString(2, email);
 
             updateStmt.execute();

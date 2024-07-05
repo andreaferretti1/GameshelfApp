@@ -29,7 +29,7 @@ public class AccessDAOCSV implements AccessDAO {
 
         tuple[AccountAttributes.USERNAME.ordinal()] = regAccess.getUsername();
         tuple[AccountAttributes.EMAIL.ordinal()] = regAccess.getEmail();
-        tuple[AccountAttributes.PASSWORD.ordinal()] = regAccess.getPassword();
+        tuple[AccountAttributes.PASSWORD.ordinal()] = regAccess.getEncodedPassword();
         tuple[AccountAttributes.TYPE_OF_USER.ordinal()] = regAccess.getTypeOfUser();
 
         try(CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(this.fd, true)))){

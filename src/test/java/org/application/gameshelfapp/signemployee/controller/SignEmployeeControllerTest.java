@@ -39,9 +39,9 @@ class SignEmployeeControllerTest {
             SignEmployeeController controller = new SignEmployeeController();
             RegistrationBean registrationBean = new RegistrationBean();
             registrationBean.setUsernameBean("name");
-            registrationBean.setEmailBean("emailtest@gmail.com");
+            registrationBean.setEmailBean("testmail@gmail.com");
             registrationBean.setPasswordBean("password");
-            registrationBean.setTypeOfUser("seller");
+            registrationBean.setTypeOfUser("Seller");
             assertThrows(CheckFailedException.class, () -> controller.registerEmployee(registrationBean));
         } catch(SyntaxErrorException e){
             fail();

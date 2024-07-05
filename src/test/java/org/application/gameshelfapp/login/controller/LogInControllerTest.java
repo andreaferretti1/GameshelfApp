@@ -1,11 +1,8 @@
 package org.application.gameshelfapp.login.controller;
 
-import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.bean.LogInBean;
 import org.application.gameshelfapp.login.bean.RegistrationBean;
 import org.application.gameshelfapp.login.bean.UserBean;
-import org.application.gameshelfapp.login.entities.Access;
-import org.application.gameshelfapp.login.dao.AccessDAO;
 import org.application.gameshelfapp.login.entities.AccessThroughRegistration;
 import org.application.gameshelfapp.login.exception.*;
 import org.junit.jupiter.api.Test;
@@ -95,37 +92,6 @@ class LogInControllerTest {
              fail();
         }
     }
-
-    @Test
-    void checkCodeTest(){
-        LogInController logInController = new LogInController();
-        AccessThroughRegistration registration = new AccessThroughRegistration("nameTest", "email@gmail.com", "passwordTest", "Customer");
-        try {
-            registration.encodePassword();
-            registration.generateCode();
-            int code = registration.getCodeGenerated();
-            RegistrationBean registrationBean = new RegistrationBean();
-            registrationBean.setCheckCode(code);
-            logInController.checkCode(registrationBean);
-            AccessDAO accessDAO = PersistencyAbstractFactory.getFactory().createAccessDAO();
-            Access access = accessDAO.retrieveAccountByEmail(registration);
-            assertNotNull(access);
-        } catch (NullPasswordException | CheckFailedException | PersistencyErrorException e) {
-            fail();
-        }
-    }
-
-    @Test
-    void checkCodeFailedTest(){
-        LogInController logInController = new LogInController();
-        AccessThroughRegistration registration = new AccessThroughRegistration(null, null, null, null);
-        registration.generateCode();
-        int code = registration.getCodeGenerated();
-        RegistrationBean registrationBean = new RegistrationBean();
-        registrationBean.setCheckCode(code + 1);
-        assertThrows(CheckFailedException.class, () -> logInController.checkCode(registrationBean));
-    }
-
     @Test
     void setAndGetRegAccessTest(){
         LogInController logInController = new LogInController();

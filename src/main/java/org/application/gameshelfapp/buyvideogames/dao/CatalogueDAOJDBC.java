@@ -21,7 +21,7 @@ public class CatalogueDAOJDBC implements CatalogueDAO {
         try(Connection conn = SingletonConnectionPool.getInstance().getConnection()){
             ResultSet rs = CatalogueDAOQueries.getCatalogueQuery(conn, email);
             while(rs.next()) {
-                Videogame videogame = new Videogame(rs.getString("Name"), rs.getInt("Copies"), 0, null, null, null);
+                Videogame videogame = new Videogame(rs.getString("Name"), rs.getInt("Copies"), 0, null, rs.getString("Platform"), null);
                 catalogue.add(videogame);
             }
         } catch(SQLException e){

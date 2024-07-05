@@ -36,7 +36,7 @@ public class CatalogueDAOCSV implements CatalogueDAO {
         try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fdCatalogue)))){
             while((tuple = csvReader.readNext()) != null){
                 if(tuple[CatalogueAttributes.EMAIL.ordinal()].equals(email)){
-                    Videogame game = new Videogame(tuple[CatalogueAttributes.GAMENAME.ordinal()], Integer.parseInt(tuple[CatalogueAttributes.COPIES.ordinal()]), 0, null, null, null);
+                    Videogame game = new Videogame(tuple[CatalogueAttributes.GAMENAME.ordinal()], Integer.parseInt(tuple[CatalogueAttributes.COPIES.ordinal()]), 0, null, tuple[CatalogueAttributes.PLATFORM.ordinal()], null);
                     catalogue.add(game);
                 }
             }
@@ -48,10 +48,15 @@ public class CatalogueDAOCSV implements CatalogueDAO {
 
     @Override
     public void addVideogame(String email, Videogame game) throws PersistencyErrorException {
-        String[] myRecord = new String[3];
+        String[] myRecord = new String[4];
+        String[] recordRead;
+        boolean added = false;
+
         String gameName = game.getName();
+        String platform = game.getPlatform();
         myRecord[CatalogueAttributes.EMAIL.ordinal()] = email;
         myRecord[CatalogueAttributes.GAMENAME.ordinal()] = gameName;
+        myRecord[CatalogueAttributes.PLATFORM.ordinal()] = platform;
         myRecord[CatalogueAttributes.COPIES.ordinal()] = String.valueOf(game.getCopies());
         File tempFile = new File(TEMP_FILE);
 
@@ -68,25 +73,38 @@ public class CatalogueDAOCSV implements CatalogueDAO {
             }
             channel.truncate(0);
 
-            while((myRecord = csvReader.readNext()) != null){
-                if(myRecord[CatalogueAttributes.GAMENAME.ordinal()].equals(gameName)){
+            while((recordRead = csvReader.readNext()) != null){
+                if(recordRead[CatalogueAttributes.GAMENAME.ordinal()].equals(gameName) && recordRead[CatalogueAttributes.PLATFORM.ordinal()].equals(platform)){
                     int newNumberOfCopies = game.getCopies() + Integer.parseInt(myRecord[CatalogueAttributes.COPIES.ordinal()]);
-                    myRecord[CatalogueAttributes.COPIES.ordinal()] = String.valueOf(newNumberOfCopies);
+                    recordRead[CatalogueAttributes.COPIES.ordinal()] = String.valueOf(newNumberOfCopies);
+                    added = true;
                 }
-                csvWriter.writeNext(myRecord);
+                csvWriter.writeNext(recordRead);
             }
 
+            if(!added) csvWriter.writeNext(myRecord);
+
             csvWriter.flush();
-            Files.move(tempFile.toPath(), this.fdCatalogue.toPath(), REPLACE_EXISTING);
         } catch (IOException | CsvValidationException e) {
             throw new PersistencyErrorException(SAVE_ERROR);
         }finally{this.lock.unlock();}
+
+        try {
+            Files.move(tempFile.toPath(), this.fdCatalogue.toPath(), REPLACE_EXISTING);
+        }  catch (IOException e){
+            throw new PersistencyErrorException("Couldn't update videogame");
+        }
     }
 
     @Override
     public void removeVideogame(String email, Videogame game) throws PersistencyErrorException {  //quantity rappresenta il numero di copie del videogioco possedute dal proprietario. Se è 0, allora rimuovo il videogioco
         String[] myRecord;
+
         File tempFile = new File(TEMP_FILE);
+
+        String gameName = game.getName();
+        String platform = game.getPlatform();
+        int copiesToRemove = game.getCopies();
 
         this.lock.lock();
         try (CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fdCatalogue)));
@@ -102,26 +120,31 @@ public class CatalogueDAOCSV implements CatalogueDAO {
 
             while ((myRecord = csvReader.readNext()) != null) {
 
-                if (myRecord[CatalogueAttributes.GAMENAME.ordinal()].equals(game.getName())) {
-                    int quantity = Integer.parseInt(myRecord[CatalogueAttributes.COPIES.ordinal()]);
+                if (myRecord[CatalogueAttributes.GAMENAME.ordinal()].equals(gameName) && myRecord[CatalogueAttributes.PLATFORM.ordinal()].equals(platform)) {
+                    int quantity = Integer.parseInt(myRecord[CatalogueAttributes.COPIES.ordinal()]) - copiesToRemove;
                     if (quantity > 0) {
                         myRecord[CatalogueAttributes.COPIES.ordinal()] = String.valueOf(quantity);
-                    } else continue;
+                        csvWriter.writeNext(myRecord);
+                    }
+                } else {
+                    csvWriter.writeNext(myRecord);
                 }
-                csvWriter.writeNext(myRecord);
             }
 
             csvWriter.flush();
-            Files.move(tempFile.toPath(), this.fdCatalogue.toPath(), REPLACE_EXISTING);
-        } catch (IOException e) {
+        } catch (IOException | CsvValidationException e) {
             throw new PersistencyErrorException("Couldn't remove videogame from catalogue");
-        } catch (CsvValidationException e) {
-            throw new PersistencyErrorException("Couldn't access to catalogue");
-        }finally{
+        } finally{
             this.lock.unlock();
+        }
+
+        try{
+            Files.move(tempFile.toPath(), this.fdCatalogue.toPath(), REPLACE_EXISTING);
+        } catch(IOException e){
+            throw new PersistencyErrorException("Couldn't remove game from catalogue");
         }
     }
     private enum CatalogueAttributes{
-        EMAIL, GAMENAME, COPIES
+        EMAIL, GAMENAME, PLATFORM, COPIES
    }
 }

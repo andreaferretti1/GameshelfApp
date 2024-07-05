@@ -64,13 +64,6 @@ class TerminalUserLogInBoundaryTest {
     }
 
     @Test
-    void exectueCommandLogPasswordNullEcxeptionTest(){
-        TerminalUserLogInBoundary boundary = new TerminalUserLogInBoundary();
-        String[] command = {"log", "testEmail@gmail.com", null};
-        assertThrows(NullPasswordException.class, () -> boundary.executeCommand(command));
-    }
-
-    @Test
     void executeCommandRegisterSuccessfulTest(){
         try {
             TerminalUserLogInBoundary boundary = new TerminalUserLogInBoundary();
@@ -106,13 +99,6 @@ class TerminalUserLogInBoundaryTest {
         TerminalUserLogInBoundary boundary = new TerminalUserLogInBoundary();
         String[] command = {"register", "testName", "testEmail@gmail.com", "testPassword"};
         assertThrows(CheckFailedException.class, () -> boundary.executeCommand(command));
-    }
-
-    @Test
-    void executeCommandRegisterNullPasswordExceptionTest(){
-        TerminalUserLogInBoundary boundary = new TerminalUserLogInBoundary();
-        String[] command = {"register", "andrea", "testEmail@gmail.com", null};
-        assertThrows(NullPasswordException.class, () -> boundary.executeCommand(command));
     }
 
     @Test

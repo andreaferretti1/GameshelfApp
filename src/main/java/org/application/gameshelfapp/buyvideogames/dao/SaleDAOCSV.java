@@ -37,10 +37,11 @@ public class SaleDAOCSV implements SaleDAO {
         String[] gameSold = new String[9];
 
         gameSold[VideogamesSoldAttributes.GAME_ID.ordinal()] = String.valueOf(this.id);
-        gameSold[VideogamesSoldAttributes.CUSTOMER_EMAIL.ordinal()] = sale.getName();
+        gameSold[VideogamesSoldAttributes.CUSTOMER_NAME.ordinal()] = sale.getName();
         gameSold[VideogamesSoldAttributes.GAME_NAME.ordinal()] = sale.getVideogameSold().getName();
         gameSold[VideogamesSoldAttributes.COPIES.ordinal()] = String.valueOf(sale.getVideogameSold().getCopies());
         gameSold[VideogamesSoldAttributes.PRICE.ordinal()] = String.valueOf(sale.getVideogameSold().getPrice());
+        gameSold[VideogamesSoldAttributes.PLATFORM.ordinal()] = sale.getVideogameSold().getPlatform();
         gameSold[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()] = sale.getState();
         gameSold[VideogamesSoldAttributes.CUSTOMER_ADDRESS.ordinal()] = sale.getAddress();
         gameSold[VideogamesSoldAttributes.CUSTOMER_EMAIL.ordinal()] = sale.getEmail();
@@ -107,12 +108,17 @@ public class SaleDAOCSV implements SaleDAO {
     }
 
     private void saveId() throws PersistencyErrorException{
+        Properties properties = new Properties();
         try(FileInputStream in = new FileInputStream(CSVFactory.PROPERTIES)){
-            Properties properties = new Properties();
             properties.load(in);
-            properties.setProperty("ID", Long.toString(this.id));
         } catch (IOException e){
             throw new PersistencyErrorException("Couldn't access to sales.");
+        }
+        properties.setProperty("ID", Long.toString(this.id));
+        try(FileOutputStream out = new FileOutputStream(CSVFactory.PROPERTIES)){
+            properties.store(out, null);
+        } catch(IOException e){
+            throw new PersistencyErrorException("Couldn't access to sales");
         }
     }
 

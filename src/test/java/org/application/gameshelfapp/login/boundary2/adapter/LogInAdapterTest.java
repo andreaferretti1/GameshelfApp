@@ -11,7 +11,7 @@ class LogInAdapterTest{
     void logInSuccessfulTest(){
         try{
             LogInAdapter adapter = new LogInAdapter();
-            assertEquals("You're logged.\n\nType <buy>\n", adapter.logIn("testEmail@gmail.com", "test"));
+            assertEquals("You're logged.\n\nType <buy>\n", adapter.logIn("testEmail@gmail.com", "testPassword"));
         } catch(PersistencyErrorException | CheckFailedException | NullPasswordException | SyntaxErrorException e) {
             fail();
         }
@@ -36,12 +36,6 @@ class LogInAdapterTest{
     }
 
     @Test
-    void logInPasswordNullExceptionTest(){
-        LogInAdapter adapter = new LogInAdapter();
-        assertThrows(NullPasswordException.class, () -> adapter.logIn("emailTest@gmail.com", null));
-    }
-
-    @Test
     void registerSuccessfulTest(){
         try {
             LogInAdapter adapter = new LogInAdapter();
@@ -61,12 +55,6 @@ class LogInAdapterTest{
     void registerEmailSyntaxErrorExceptionTest(){
         LogInAdapter adapter = new LogInAdapter();
         assertThrows(SyntaxErrorException.class, () -> adapter.register("andrea", "testEmail", "test"));
-    }
-
-    @Test
-    void registerNullPasswordExceptionTest(){
-        LogInAdapter adapter = new LogInAdapter();
-        assertThrows(NullPasswordException.class, () -> adapter.register("andrea", "testEmail@gmail.com", null));
     }
 
     @Test

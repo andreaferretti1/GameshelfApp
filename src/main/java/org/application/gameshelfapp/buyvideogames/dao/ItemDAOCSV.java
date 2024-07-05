@@ -84,7 +84,7 @@ public class ItemDAOCSV implements ItemDAO {
 
         this.lock.lock();
 
-        try(CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(this.fdGamesForSale)))){
+        try(CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(this.fdGamesForSale, true)))){
             csvWriter.writeNext(gameToSave);
         }catch(IOException e){
             throw new PersistencyErrorException("Couldn't save videogame in the sale catalogue");

@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS Catalogue(
     Name varchar(40) REFERENCES ObjectOnSale(Name),
     Email varchar(100) REFERENCES User(Email),
     Copies int NOT NULL,
+    Platform varchar(50) NOT NULL,
     PRIMARY KEY (Name, Email)
 );
 

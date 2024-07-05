@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CatalogueDAOCSVTest {
 
     @Test
-    void getCatalogueTest(){        //In the database there was tuple ('emailTest', 'nameTest', 3)
+    void getCatalogueTest(){        //In the database there was tuple ('emailTest', 'nameTest', 'platformTest', 3)
         try{
             CSVFactory csvFactory = new CSVFactory();
             CatalogueDAO catalogueDAO = csvFactory.createCatalogueDAO();
@@ -20,6 +20,7 @@ class CatalogueDAOCSVTest {
             assertNotNull(games);
             Videogame videogame = games.getFirst();
             assertEquals("nameTest", videogame.getName());
+            assertEquals("platformTest", videogame.getPlatform());
             assertEquals(3, videogame.getCopies());
         } catch(PersistencyErrorException e){
             fail();
@@ -27,7 +28,7 @@ class CatalogueDAOCSVTest {
     }
 
     @Test
-    void getCatalogueDifferentEmailsTest(){     //In the database there were tuples ('emailTest1', 'nameTest', 2), ('emailTest2', 'nameTest2', 1)
+    void getCatalogueDifferentEmailsTest(){     //In the database there were tuples ('emailTest1', 'nameTest', 'platformTest1', 2), ('emailTest2', 'nameTest2', 'platformTest2', 1)
         try{
             CSVFactory csvFactory = new CSVFactory();
             CatalogueDAO catalogueDAO = csvFactory.createCatalogueDAO();
@@ -35,6 +36,7 @@ class CatalogueDAOCSVTest {
             assertNotNull(games);
             Videogame videogame = games.getFirst();
             assertEquals("nameTest2", videogame.getName());
+            assertEquals("platformTest2", videogame.getPlatform());
             assertEquals(1, videogame.getCopies());
         } catch(PersistencyErrorException e){
             fail();
@@ -59,7 +61,7 @@ class CatalogueDAOCSVTest {
         try{
             CSVFactory csvFactory = new CSVFactory();
             CatalogueDAO catalogueDAO = csvFactory.createCatalogueDAO();
-            Videogame videogame = new Videogame("nameTest", 3, 0, null, null, null);
+            Videogame videogame = new Videogame("nameTest", 3, 0, null, "platformTest", null);
             catalogueDAO.addVideogame("emailTest", videogame);
             List<Videogame> games = catalogueDAO.getCatalogue("emailTest");
             assertNotNull(games);
@@ -70,11 +72,11 @@ class CatalogueDAOCSVTest {
     }
 
     @Test
-    void removeVideogameTest(){      //In the database there was tuple ('emailTest', 'nameTest', 3)
+    void removeVideogameTest(){      //In the database there was tuple ('emailTest', 'nameTest', 'platformTest', 3)
         try{
             CSVFactory csvFactory = new CSVFactory();
             CatalogueDAO catalogueDAO = csvFactory.createCatalogueDAO();
-            Videogame videogame = new Videogame("nameTest", 3, 0, null, null, null);
+            Videogame videogame = new Videogame("nameTest", 3, 0, null, "platformTest", null);
             catalogueDAO.removeVideogame("emailTest", videogame);
             List<Videogame> games = catalogueDAO.getCatalogue("emailTest");
             assertEquals(0, (long) games.size());
