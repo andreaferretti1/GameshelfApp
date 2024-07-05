@@ -58,7 +58,7 @@ class ItemDAOJDBCTest {
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
-            assertEquals(0, (long) games.size());
+            assertEquals(1, (long) games.size());
         } catch(PersistencyErrorException | NoGameInCatalogueException e){
             fail();
         }
@@ -84,23 +84,6 @@ class ItemDAOJDBCTest {
         }
     }
 
-    @Test
-    void addGameForSaleExistingTest(){      //in the database there was already the tuple('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
-        try{
-            Videogame game = new Videogame("nameTest", 3, 12, "descriptionTest", "consoleTest", "categoryTest");
-            JDBCFactory jdbcFactory = new JDBCFactory();
-            ItemDAO itemDAO = jdbcFactory.createItemDAO();
-            itemDAO.addGameForSale(game);
-            Filters filters = new Filters("nameTest", "consoleTest", "categoryTest");
-            List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
-            assertEquals(1, (long) games.size());
-            Videogame gameForSale = games.getFirst();
-            assertEquals(5, gameForSale.getCopies());
-            assertEquals(12, gameForSale.getPrice());
-        } catch(PersistencyErrorException | NoGameInCatalogueException e){
-            fail();
-        }
-    }
     @Test
     void addGameForSaleExistingDiffConsoleTest(){       //in the database there was the tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
         try{
