@@ -12,9 +12,10 @@ public class ItemDAOQueries{
     private ItemDAOQueries(){}
 
     public static ResultSet getVideogameOnSaleQuery(Connection conn, Filters filters) throws SQLException{
-        String query = "SELECT Name, Copies, Price, Description, Platform, Type FROM ObjectOnSale WHERE (? IS NULL OR Name = ?) AND (? IS NULL OR Platform = ?) AND (? IS NULL OR Category = ?);";
+        String query = "SELECT Name, Copies, Price, Description, Platform, Category FROM ObjectOnSale WHERE (? IS NULL OR Name = ?) AND (? IS NULL OR Platform = ?) AND (? IS NULL OR Category = ?);";
 
-        try(PreparedStatement pstmt = conn.prepareStatement(query)){
+        try{
+            PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1,filters.getName());
             pstmt.setString(2, filters.getName());
             pstmt.setString(3, filters.getConsole());
