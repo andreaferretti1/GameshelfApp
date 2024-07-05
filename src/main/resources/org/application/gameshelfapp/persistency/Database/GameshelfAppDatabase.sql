@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS ObjectOnSale(
 
 CREATE TABLE IF NOT EXISTS Filters(
     Type varchar(40) PRIMARY KEY
-    );
+);
 
 INSERT IGNORE INTO Filters(Type) VALUES
 ('Action'),
@@ -21,15 +21,6 @@ INSERT IGNORE INTO Filters(Type) VALUES
 ('Shooting'),
 ('Arcade'),
 ('Simulation');
-
-
-CREATE TABLE IF NOT EXISTS Catalogue(
-    Name varchar(40) REFERENCES ObjectOnSale(Name),
-    Email varchar(100) REFERENCES User(Email),
-    Copies int NOT NULL,
-    Platform varchar(50) NOT NULL,
-    PRIMARY KEY (Name, Email)
-);
 
 CREATE TABLE IF NOT EXISTS User(
     Username varchar(50) NOT NULL UNIQUE,
@@ -50,4 +41,12 @@ CREATE TABLE IF NOT EXISTS Sale(
     UserEmail varchar(100) REFERENCES User(Email),
     UserAddress varchar(100) NOT NULL,
     FOREIGN KEY (GameName, Platform) REFERENCES ObjectOnSale(Name, Platform)
+);
+
+CREATE TABLE IF NOT EXISTS Catalogue(
+    Name varchar(40) REFERENCES ObjectOnSale(Name),
+    Email varchar(100) REFERENCES User(Email),
+    Copies int NOT NULL,
+    Platform varchar(50) NOT NULL,
+    PRIMARY KEY (Name, Email)
 );
