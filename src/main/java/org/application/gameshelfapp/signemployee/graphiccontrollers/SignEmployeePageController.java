@@ -54,8 +54,7 @@ public class SignEmployeePageController implements Initializable{
         Parent root = fxmlLoader.load();
 
         SignEmployeePageController controller = fxmlLoader.getController();
-        controller.setAdminBoundary(new AdminBoundary());
-        controller.getAdminBoundary().setUserBean(userBean);
+        controller.setAdminBoundary(new AdminBoundary(userBean));
         controller.setStage(stage);
         Scene scene = new Scene(root, 1440, 768);
         stage.setScene(scene);

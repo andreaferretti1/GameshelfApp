@@ -37,8 +37,8 @@ public class AccessDAOQueries {
         String query = "SELECT Username, Email FROM User WHERE Email = ? OR Username = ?;";
 
         PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setString(1, regAccess.getUsername());
-        pstmt.setString(2, regAccess.getEmail());
+        pstmt.setString(2, regAccess.getUsername());
+        pstmt.setString(1, regAccess.getEmail());
 
         pstmt.execute();
         return pstmt.getResultSet();

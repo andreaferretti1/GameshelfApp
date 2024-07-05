@@ -1,5 +1,6 @@
 package org.application.gameshelfapp.signemployee.boundary;
 
+import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.dao.AccessDAO;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.entities.Access;
@@ -17,7 +18,7 @@ class AdminBoundaryTest {
     @Test
     void registerTest(){
         try{
-            AdminBoundary adminBoundary = new AdminBoundary();
+            AdminBoundary adminBoundary = new AdminBoundary(new UserBean());
             adminBoundary.register("usernameTest", "testmail@gmail.com", "password", "Seller");
             AccessDAO accessDAO = PersistencyAbstractFactory.getFactory().createAccessDAO();
             Access access = accessDAO.retrieveAccountByEmail(new AccessThroughLogIn("testmail@gmail.com", null, null));
@@ -29,13 +30,13 @@ class AdminBoundaryTest {
 
     @Test
     void registerEmailCheckFailedExceptionTest(){        //in the database there was tuple ('username', 'emailtest@gmail.com', 'passwordtest', 'Seller')
-        AdminBoundary adminBoundary = new AdminBoundary();
+        AdminBoundary adminBoundary = new AdminBoundary(new UserBean());
         assertThrows(CheckFailedException.class, () -> adminBoundary.register("name", "emailtest@gmail.com", "password", "Seller"));
     }
 
     @Test
     void registerUsernameCheckFailedExceptionTest(){        //in the database there was tuple ('username', 'emailtest@gmail.com', 'passwordtest', 'Seller')
-        AdminBoundary adminBoundary = new AdminBoundary();
+        AdminBoundary adminBoundary = new AdminBoundary(new UserBean());
         assertThrows(CheckFailedException.class, () -> adminBoundary.register("username", "email@gmail.com", "password", null));
     }
 }

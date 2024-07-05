@@ -11,8 +11,9 @@ import org.application.gameshelfapp.signemployee.controller.SignEmployeeControll
 public class AdminBoundary {
     SignEmployeeController controller;
     UserBean userBean;
-    public AdminBoundary(){
+    public AdminBoundary(UserBean userBean){
         this.controller = new SignEmployeeController();
+        this.userBean = userBean;
     }
 
     public UserBean getUserBean(){
