@@ -13,37 +13,34 @@ public class CatalogueDAOQueries {
 
     public static ResultSet getCatalogueQuery(Connection conn, String email) throws SQLException{
         String query = "SELECT Name, Copies, Platform FROM Catalogue WHERE Email = ?;";
-        try(PreparedStatement pstmt = conn.prepareStatement(query)){
-            pstmt.setString(1, email);
-            pstmt.execute();
 
-            return pstmt.getResultSet();
-        } catch(SQLException e){
-            throw new SQLException(e.getMessage());
-        }
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setString(1, email);
+        pstmt.execute();
+
+        return pstmt.getResultSet();
     }
 
     public static void addVideogameQuery(Connection connection, String email, Videogame videogame) throws SQLException{
         String query ="INSERT INTO Catalogue (Name, Email, Platform, Copies) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE Copies = Copies + Values(Copies);";
 
-        try(PreparedStatement pstmt = connection.prepareStatement(query)){
-            pstmt.setString(1, videogame.getName());
-            pstmt.setString(2, email);
-            pstmt.setString(3, videogame.getPlatform());
-            pstmt.setInt(4, videogame.getCopies());
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setString(1, videogame.getName());
+        pstmt.setString(2, email);
+        pstmt.setString(3, videogame.getPlatform());
+        pstmt.setInt(4, videogame.getCopies());
 
-            pstmt.execute();
-        } catch(SQLException e){
-            throw new SQLException(e.getMessage());
-        }
+        pstmt.execute();
+
     }
 
     public static void removeVideogameQuery(Connection conn, String email, Videogame videogame) throws SQLException{
         String updateQuery = "UPDATE Catalogue SET Copies = Copies - ? WHERE Name = ? AND Platform = ? AND Email = ?;";
         String deleteQuery = "DELETE FROM Catalogue WHERE Name = ? AND Platform = ? AND Email = ? AND Copies <= 0;";
 
-        try(PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
-            PreparedStatement deleteStmt = conn.prepareStatement(deleteQuery)){
+        try{
+            PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
+            PreparedStatement deleteStmt = conn.prepareStatement(deleteQuery);
             conn.setAutoCommit(false);
 
             updateStmt.setInt(1, videogame.getCopies());
