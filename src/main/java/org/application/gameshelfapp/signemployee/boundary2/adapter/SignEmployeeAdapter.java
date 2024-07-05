@@ -8,7 +8,7 @@ import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.signemployee.boundary.AdminBoundary;
 
 public class SignEmployeeAdapter implements SignEmployee{
-    private AdminBoundary boundary;
+    private  final AdminBoundary boundary;
     public SignEmployeeAdapter(UserBean userBean){ this.boundary = new AdminBoundary(userBean);}
     @Override
     public String register(String userName, String email, String password, String type) throws PersistencyErrorException, CheckFailedException, SyntaxErrorException, NullPasswordException {

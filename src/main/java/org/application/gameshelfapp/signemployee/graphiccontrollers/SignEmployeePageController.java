@@ -42,9 +42,6 @@ public class SignEmployeePageController implements Initializable{
         this.adminBoundary = adminBoundary;
     }
 
-    public AdminBoundary getAdminBoundary() {
-        return this.adminBoundary;
-    }
     public void setStage(Stage stage){
         this.stage = stage;
     }
