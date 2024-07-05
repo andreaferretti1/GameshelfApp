@@ -45,7 +45,7 @@ public class AccessDAOQueries {
     }
 
     public static ResultSet getRandomCustomersQuery(Connection conn) throws SQLException{
-        String query = "SELECT Email FROM User WHERE Type = Customer ORDER BY RAND() LIMIT 20;";
+        String query = "SELECT Email FROM User WHERE Type = 'Customer' ORDER BY RAND() LIMIT 20;";
 
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.execute();
