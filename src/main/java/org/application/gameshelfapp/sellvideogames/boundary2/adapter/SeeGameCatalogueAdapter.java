@@ -13,10 +13,10 @@ import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVide
 import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
-public class SellVideogamesAdapter  implements SellVideogames{
+public class SeeGameCatalogueAdapter implements SeeGameCatalogue {
     SellerAddGamesBoundary boundary;
 
-    public SellVideogamesAdapter(UserBean userBean) { this.boundary = new SellerAddGamesBoundary(userBean); }
+    public SeeGameCatalogueAdapter(UserBean userBean) { this.boundary = new SellerAddGamesBoundary(userBean); }
 
     private VideogameBean createVideogameBean(String gameTitle, String console, String category, String description, int copies, float price){
         VideogameBean gameBean = new VideogameBean();

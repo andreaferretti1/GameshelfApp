@@ -7,17 +7,17 @@ import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.boundary2.TerminalBoundary;
 import org.application.gameshelfapp.login.exception.*;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
-import org.application.gameshelfapp.sellvideogames.boundary2.adapter.SellVideogames;
-import org.application.gameshelfapp.sellvideogames.boundary2.adapter.SellVideogamesAdapter;
+import org.application.gameshelfapp.sellvideogames.boundary2.adapter.SeeGameCatalogue;
+import org.application.gameshelfapp.sellvideogames.boundary2.adapter.SeeGameCatalogueAdapter;
 import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVideogameException;
 import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
 public class TerminalSellerAddGamesBoundary implements TerminalBoundary {
 
-    SellVideogames sellVideogamesAdapter;
+    SeeGameCatalogue seeGameCatalogueAdapter;
 
-    public TerminalSellerAddGamesBoundary(UserBean userBean) { this.sellVideogamesAdapter = new SellVideogamesAdapter(userBean);}
+    public TerminalSellerAddGamesBoundary(UserBean userBean) { this.seeGameCatalogueAdapter = new SeeGameCatalogueAdapter(userBean);}
 
     private String catalogueBeanToString(SellingGamesCatalogueBean catalogueBean){
         StringBuilder game = new StringBuilder();
@@ -30,16 +30,16 @@ public class TerminalSellerAddGamesBoundary implements TerminalBoundary {
     public String executeCommand(String[] command) throws PersistencyErrorException, CheckFailedException, GmailException, ArrayIndexOutOfBoundsException, NoGameInCatalogueException, InvalidTitleException, AlreadyExistingVideogameException, GameSoldOutException {
         switch(command[0]){
             case "show" -> {
-                return this.catalogueBeanToString(this.sellVideogamesAdapter.getSellingGamesCatalogue(command[1], command[2], command[3]));
+                return this.catalogueBeanToString(this.seeGameCatalogueAdapter.getSellingGamesCatalogue(command[1], command[2], command[3]));
             }
             case "add" -> {
-                return this.catalogueBeanToString(this.sellVideogamesAdapter.addSellingGames(command[1], command[2], command[3], command[4], Integer.parseInt(command[5]), Float.parseFloat(command[6])));
+                return this.catalogueBeanToString(this.seeGameCatalogueAdapter.addSellingGames(command[1], command[2], command[3], command[4], Integer.parseInt(command[5]), Float.parseFloat(command[6])));
             }
             case "remove" -> {
-                return this.catalogueBeanToString(this.sellVideogamesAdapter.removeSellingGames(command[1], command[2], command[3], command[4], Integer.parseInt(command[5]), Float.parseFloat(command[6])));
+                return this.catalogueBeanToString(this.seeGameCatalogueAdapter.removeSellingGames(command[1], command[2], command[3], command[4], Integer.parseInt(command[5]), Float.parseFloat(command[6])));
             }
             case "update" -> {
-                return this.catalogueBeanToString(this.sellVideogamesAdapter.updateSellingGames(command[1], command[2], command[3], command[4], Integer.parseInt(command[5]), Float.parseFloat(command[6])));
+                return this.catalogueBeanToString(this.seeGameCatalogueAdapter.updateSellingGames(command[1], command[2], command[3], command[4], Integer.parseInt(command[5]), Float.parseFloat(command[6])));
             }
             default -> {
                 return "Wrong command inserted";
@@ -47,5 +47,5 @@ public class TerminalSellerAddGamesBoundary implements TerminalBoundary {
         }
     }
     @Override
-    public UserBean getUserBean(){ return this.sellVideogamesAdapter.getUserBean();}
+    public UserBean getUserBean(){ return this.seeGameCatalogueAdapter.getUserBean();}
 }

@@ -37,4 +37,6 @@ module org.application.gameshelfapp {
     exports org.application.gameshelfapp.sellvideogames.exception;
     exports org.application.gameshelfapp.registration.bean;
     exports org.application.gameshelfapp.registration.entities;
+    exports org.application.gameshelfapp.registration.grapichcontroller;
+    opens org.application.gameshelfapp.registration.grapichcontroller to javafx.fxml;
 }

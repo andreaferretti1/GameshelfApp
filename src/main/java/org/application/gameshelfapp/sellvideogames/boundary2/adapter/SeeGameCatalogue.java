@@ -10,7 +10,7 @@ import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVide
 import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
-public interface SellVideogames {
+public interface SeeGameCatalogue {
     SellingGamesCatalogueBean getSellingGamesCatalogue(String gameTitle, String console, String category) throws PersistencyErrorException, NoGameInCatalogueException;
     SellingGamesCatalogueBean addSellingGames(String gameTitle, String console, String category, String description, int copies, float price) throws PersistencyErrorException, CheckFailedException, NoGameInCatalogueException, GmailException, InvalidTitleException, AlreadyExistingVideogameException;
     SellingGamesCatalogueBean removeSellingGames(String gameTitle, String console, String category, String description, int copies, float price) throws PersistencyErrorException, NoGameInCatalogueException, GameSoldOutException;

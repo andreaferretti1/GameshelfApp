@@ -16,7 +16,7 @@ import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
-import org.application.gameshelfapp.login.graphiccontrollers.RegistrationPageController;
+import org.application.gameshelfapp.registration.grapichcontroller.RegistrationPageController;
 
 import java.io.IOException;
 

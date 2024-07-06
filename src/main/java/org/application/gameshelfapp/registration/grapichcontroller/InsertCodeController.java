@@ -1,4 +1,4 @@
-package org.application.gameshelfapp.login.graphiccontrollers;
+package org.application.gameshelfapp.registration.grapichcontroller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 import org.application.gameshelfapp.login.boundary.UserLogInBoundary;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
+import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
+
 import java.io.IOException;
 public class InsertCodeController  {
     private UserLogInBoundary userLogInBoundary;

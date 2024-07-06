@@ -13,12 +13,12 @@ import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueEx
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-class SellGamesControllerTest {
+class SellVideogamesControllerTest {
 
     @Test
     void showSellingGameCatalogueTest(){            //Videogame(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
         try{
-            SellGamesController test = new SellGamesController();
+            SellVideogamesController test = new SellVideogamesController();
             FiltersBean testFiltersBean = new FiltersBean();
             testFiltersBean.setNameBean("Dark Souls");
             testFiltersBean.setConsoleBean("TestConsole2");
@@ -33,7 +33,7 @@ class SellGamesControllerTest {
 
     @Test
     void showSellingGameCatalogueNoGameInCatalogueExceptionLaunchedTest(){           //Database is Empty
-        SellGamesController test = new SellGamesController();
+        SellVideogamesController test = new SellVideogamesController();
         FiltersBean testFiltersBean = new FiltersBean();
         testFiltersBean.setNameBean("Test1");
         testFiltersBean.setConsoleBean("TestConsole1");
@@ -44,7 +44,7 @@ class SellGamesControllerTest {
     @Test
     void addGameToCatalogueTest(){          //Database is empty
         try{
-           SellGamesController test = new SellGamesController();
+           SellVideogamesController test = new SellVideogamesController();
            VideogameBean gameBeanTest = new VideogameBean();
            gameBeanTest.setName("Dark Souls");
            gameBeanTest.setCopiesBean(1);
@@ -62,7 +62,7 @@ class SellGamesControllerTest {
 
     @Test
     void addGameToCatalogueAlreadyExistingVideogameExceptionLaunchedTest(){         //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
-        SellGamesController test = new SellGamesController();
+        SellVideogamesController test = new SellVideogamesController();
         VideogameBean gameBeanTest = new VideogameBean();
         gameBeanTest.setName("Dark Souls");
         gameBeanTest.setCopiesBean(1);
@@ -76,7 +76,7 @@ class SellGamesControllerTest {
     @Test
     void removeGameFromCatalogueTest(){          //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
         try{
-            SellGamesController test = new SellGamesController();
+            SellVideogamesController test = new SellVideogamesController();
             VideogameBean gameBeanTest = new VideogameBean();
             gameBeanTest.setName("Dark Souls");
             gameBeanTest.setCopiesBean(1);
@@ -94,7 +94,7 @@ class SellGamesControllerTest {
 
     @Test
     void removeGameFromCatalogueGameSoldOutExceptionLaunchedTest(){     //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
-        SellGamesController test = new SellGamesController();
+        SellVideogamesController test = new SellVideogamesController();
         VideogameBean gameBeanTest = new VideogameBean();
         gameBeanTest.setName("Dark Souls");
         gameBeanTest.setCopiesBean(2);
@@ -107,7 +107,7 @@ class SellGamesControllerTest {
 
     @Test
     void removeGameFromCatalogueNoGameInCatalogueExceptionLaunchedTest(){           //Database is empty
-        SellGamesController test = new SellGamesController();
+        SellVideogamesController test = new SellVideogamesController();
         VideogameBean gameBeanTest = new VideogameBean();
         gameBeanTest.setName("Test");
         gameBeanTest.setCopiesBean(2);
@@ -121,7 +121,7 @@ class SellGamesControllerTest {
     @Test
     void updateGameInCatalogueTest(){           //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
         try {
-            SellGamesController test = new SellGamesController();
+            SellVideogamesController test = new SellVideogamesController();
             VideogameBean gameBeanTest = new VideogameBean();
             gameBeanTest.setName("Dark Souls");
             gameBeanTest.setCopiesBean(2);
@@ -141,7 +141,7 @@ class SellGamesControllerTest {
 
     @Test
     void updateGameInCatalogueExceptionLaunchedTest(){          //Databse is empty
-        SellGamesController test = new SellGamesController();
+        SellVideogamesController test = new SellVideogamesController();
         VideogameBean gameBeanTest = new VideogameBean();
         gameBeanTest.setName("Test");
         gameBeanTest.setCopiesBean(2);

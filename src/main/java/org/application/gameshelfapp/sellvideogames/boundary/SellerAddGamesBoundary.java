@@ -8,39 +8,39 @@ import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
-import org.application.gameshelfapp.sellvideogames.controller.SellGamesController;
+import org.application.gameshelfapp.sellvideogames.controller.SellVideogamesController;
 import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVideogameException;
 import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
 public class SellerAddGamesBoundary {
 
-    private final SellGamesController sellGamesController;
+    private final SellVideogamesController sellVideogamesController;
 
     private UserBean userBean;
 
     private SellingGamesCatalogueBean sellingGamesCatalogueBean;
 
 
-    public SellerAddGamesBoundary (UserBean userBean) {
-        this.sellGamesController = new SellGamesController();
+    public SellerAddGamesBoundary(UserBean userBean) {
+        this.sellVideogamesController = new SellVideogamesController();
         this.userBean = userBean;
     }
 
     public void getSellingCatalogue (FiltersBean filtersBean) throws PersistencyErrorException, NoGameInCatalogueException {
-        this.sellingGamesCatalogueBean = this.sellGamesController.showSellingGamesCatalogue(filtersBean);
+        this.sellingGamesCatalogueBean = this.sellVideogamesController.showSellingGamesCatalogue(filtersBean);
     }
 
     public void addSellingGames (VideogameBean videogameBean) throws PersistencyErrorException, CheckFailedException, InvalidTitleException, NoGameInCatalogueException, GmailException, AlreadyExistingVideogameException {
-        this.sellingGamesCatalogueBean = this.sellGamesController.addGameToCatalogue(videogameBean);
+        this.sellingGamesCatalogueBean = this.sellVideogamesController.addGameToCatalogue(videogameBean);
     }
 
     public void removeSellingGames(VideogameBean videogameBean) throws PersistencyErrorException, NoGameInCatalogueException, GameSoldOutException {
-        this.sellingGamesCatalogueBean = this.sellGamesController.removeGameFromCatalogue(videogameBean);
+        this.sellingGamesCatalogueBean = this.sellVideogamesController.removeGameFromCatalogue(videogameBean);
     }
 
     public void updateSellingGame(VideogameBean videogameBean) throws PersistencyErrorException, NoGameInCatalogueException{
-        this.sellingGamesCatalogueBean = this.sellGamesController.updateGameInCatalogue(videogameBean);
+        this.sellingGamesCatalogueBean = this.sellVideogamesController.updateGameInCatalogue(videogameBean);
     }
 
     public SellingGamesCatalogueBean getSellingGamesCatalogueBean () {

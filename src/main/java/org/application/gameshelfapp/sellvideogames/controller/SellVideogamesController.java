@@ -23,8 +23,7 @@ import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueEx
 import java.util.List;
 
 
-public class SellGamesController {
-
+public class SellVideogamesController {
     public SellingGamesCatalogueBean showSellingGamesCatalogue (FiltersBean filtersBean) throws PersistencyErrorException, NoGameInCatalogueException {
         ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
         Filters filters = new Filters(filtersBean.getNameBean(), filtersBean.getConsoleBean(), filtersBean.getCategoryBean());

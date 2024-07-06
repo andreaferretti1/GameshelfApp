@@ -1,4 +1,4 @@
-package org.application.gameshelfapp.login.graphiccontrollers;
+package org.application.gameshelfapp.registration.grapichcontroller;
 
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import org.application.gameshelfapp.StartingPageController;
 import org.application.gameshelfapp.login.boundary.UserLogInBoundary;
 import org.application.gameshelfapp.login.exception.*;
+import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 
 import java.io.IOException;
 public class RegistrationPageController {
