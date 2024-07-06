@@ -74,7 +74,7 @@ class SellVideogamesControllerTest {
     }
 
     @Test
-    void removeGameFromCatalogueTest(){          //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
+    void cancelGameFromCatalogueTest(){          //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
         try{
             SellVideogamesController test = new SellVideogamesController();
             VideogameBean gameBeanTest = new VideogameBean();
@@ -84,7 +84,7 @@ class SellVideogamesControllerTest {
             gameBeanTest.setPlatformBean("TestConsole2");
             gameBeanTest.setCategoryBean("TestCategory2");
             gameBeanTest.setDescriptionBean("This is another test");
-            SellingGamesCatalogueBean testBean = test.removeGameFromCatalogue(gameBeanTest);
+            SellingGamesCatalogueBean testBean = test.cancelGameFromCatalogue(gameBeanTest);
             gameBeanTest = testBean.getSellingGamesBean().getFirst();
             assertEquals(0, gameBeanTest.getCopiesBean());
         } catch (PersistencyErrorException | NoGameInCatalogueException | GameSoldOutException e){
@@ -93,7 +93,7 @@ class SellVideogamesControllerTest {
     }
 
     @Test
-    void removeGameFromCatalogueGameSoldOutExceptionLaunchedTest(){     //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
+    void cancelGameFromCatalogueGameSoldOutExceptionLaunchedTest(){     //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
         SellVideogamesController test = new SellVideogamesController();
         VideogameBean gameBeanTest = new VideogameBean();
         gameBeanTest.setName("Dark Souls");
@@ -102,11 +102,11 @@ class SellVideogamesControllerTest {
         gameBeanTest.setPlatformBean("TestConsole2");
         gameBeanTest.setCategoryBean("TestCategory2");
         gameBeanTest.setDescriptionBean("This is another test");
-        assertThrows(GameSoldOutException.class, ()-> test.removeGameFromCatalogue(gameBeanTest));
+        assertThrows(GameSoldOutException.class, ()-> test.cancelGameFromCatalogue(gameBeanTest));
     }
 
     @Test
-    void removeGameFromCatalogueNoGameInCatalogueExceptionLaunchedTest(){           //Database is empty
+    void cancelGameFromCatalogueNoGameInCatalogueExceptionLaunchedTest(){           //Database is empty
         SellVideogamesController test = new SellVideogamesController();
         VideogameBean gameBeanTest = new VideogameBean();
         gameBeanTest.setName("Test");
@@ -115,11 +115,11 @@ class SellVideogamesControllerTest {
         gameBeanTest.setPlatformBean("TestConsole2");
         gameBeanTest.setCategoryBean("TestCategory2");
         gameBeanTest.setDescriptionBean("This is another test");
-        assertThrows(NoGameInCatalogueException.class, ()-> test.removeGameFromCatalogue(gameBeanTest));
+        assertThrows(NoGameInCatalogueException.class, ()-> test.cancelGameFromCatalogue(gameBeanTest));
     }
 
     @Test
-    void updateGameInCatalogueTest(){           //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
+    void modifyGameInCatalogueTest(){           //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
         try {
             SellVideogamesController test = new SellVideogamesController();
             VideogameBean gameBeanTest = new VideogameBean();
@@ -129,7 +129,7 @@ class SellVideogamesControllerTest {
             gameBeanTest.setPlatformBean("TestConsole2");
             gameBeanTest.setCategoryBean("TestCategory2");
             gameBeanTest.setDescriptionBean("This is a new description");
-            SellingGamesCatalogueBean testBean = test.updateGameInCatalogue(gameBeanTest);
+            SellingGamesCatalogueBean testBean = test.modifyGameInCatalogue(gameBeanTest);
             gameBeanTest = testBean.getSellingGamesBean().getFirst();
             assertEquals(3, gameBeanTest.getCopiesBean());
             assertEquals(15, gameBeanTest.getPriceBean());
@@ -140,7 +140,7 @@ class SellVideogamesControllerTest {
     }
 
     @Test
-    void updateGameInCatalogueExceptionLaunchedTest(){          //Databse is empty
+    void modifyGameInCatalogueExceptionLaunchedTest(){          //Databse is empty
         SellVideogamesController test = new SellVideogamesController();
         VideogameBean gameBeanTest = new VideogameBean();
         gameBeanTest.setName("Test");
@@ -149,6 +149,6 @@ class SellVideogamesControllerTest {
         gameBeanTest.setPlatformBean("TestConsole2");
         gameBeanTest.setCategoryBean("TestCategory2");
         gameBeanTest.setDescriptionBean("This is a new description");
-        assertThrows(NoGameInCatalogueException.class, ()->test.updateGameInCatalogue(gameBeanTest));
+        assertThrows(NoGameInCatalogueException.class, ()->test.modifyGameInCatalogue(gameBeanTest));
     }
 }
