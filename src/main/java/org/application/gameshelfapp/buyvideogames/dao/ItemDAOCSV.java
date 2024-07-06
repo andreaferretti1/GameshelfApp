@@ -41,17 +41,10 @@ public class ItemDAOCSV implements ItemDAO {
 
          try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fdGamesForSale)))){
             while((myRecord = csvReader.readNext()) != null){
-                if(gameName == null){
-                    if(myRecord[VideogamesOnSaleAttributes.CONSOLE.ordinal()].equals(console) && myRecord[VideogamesOnSaleAttributes.CATEGORY.ordinal()].equals(category)){
+
+                if((gameName == null || myRecord[VideogamesOnSaleAttributes.GAMENAME.ordinal()].equals(gameName)) && (console == null || myRecord[VideogamesOnSaleAttributes.CONSOLE.ordinal()].equals(console)) && (category == null || myRecord[VideogamesOnSaleAttributes.CATEGORY.ordinal()].equals(category))){
                         Videogame game = new Videogame(myRecord[VideogamesOnSaleAttributes.GAMENAME.ordinal()], Integer.parseInt(myRecord[VideogamesOnSaleAttributes.COPIES.ordinal()]), Float.parseFloat(myRecord[VideogamesOnSaleAttributes.PRICE.ordinal()]), myRecord[VideogamesOnSaleAttributes.DESCRIPTION.ordinal()], console, category);
                         gamesFound.add(game);
-                    }
-                }
-                else{
-                    if(myRecord[VideogamesOnSaleAttributes.GAMENAME.ordinal()].equals(gameName) && myRecord[VideogamesOnSaleAttributes.CONSOLE.ordinal()].equals(console) && myRecord[VideogamesOnSaleAttributes.CATEGORY.ordinal()].equals(category)){
-                        Videogame game = new Videogame(gameName, Integer.parseInt(myRecord[VideogamesOnSaleAttributes.COPIES.ordinal()]), Float.parseFloat(myRecord[VideogamesOnSaleAttributes.PRICE.ordinal()]), myRecord[VideogamesOnSaleAttributes.DESCRIPTION.ordinal()], console, category);
-                        gamesFound.add(game);
-                    }
                 }
             }
          } catch (IOException | CsvValidationException e) {

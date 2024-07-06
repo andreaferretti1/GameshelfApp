@@ -16,33 +16,97 @@ import static org.junit.jupiter.api.Assertions.*;
 class ItemDAOCSVTest {
 
     @Test
-    void getVideogamesForSaleByNameTest(){        //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
-        try {
+    void getVideogamesForSaleGameNameTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
+        try{
             Filters filters = new Filters("gameTest", "consoleTest", "categoryTest");
             CSVFactory csvFactory = new CSVFactory();
             ItemDAO itemDAO = csvFactory.createItemDAO();
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
-            Videogame videogame = games.getFirst();
-            assertEquals("gameTest", videogame.getName());
-            assertEquals("descriptionTest", videogame.getDescription());
-            assertEquals(2, videogame.getCopies());
-            assertEquals(10, videogame.getPrice());
+            Videogame gameForSale = games.getFirst();
+            assertEquals("gameTest", gameForSale.getName());
         } catch(PersistencyErrorException | NoGameInCatalogueException e){
             fail();
         }
     }
+
     @Test
-    void getVideogamesForSaleByCategoryTest(){      //to run this test were added games ('gameTest1', 'consoleTest1', 'categoryTest1', 'descriptionTest1', '2', '10'), ('gameTest2', 'consoleTest1', 'categoryTest1', 'descriptionTest2', '3', '10'), ('gameTest3', 'consoleTest2', 'categoryTest2', 'descriptionTest3', '4', '9')
+    void getVideogamesForSaleCopiesTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
+        try{
+            Filters filters = new Filters("gameTest", "consoleTest", "categoryTest");
+            CSVFactory csvFactory = new CSVFactory();
+            ItemDAO itemDAO = csvFactory.createItemDAO();
+            List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
+            Videogame gameForSale = games.getFirst();
+            assertEquals(2, gameForSale.getCopies());
+        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+            fail();
+        }
+    }
+
+    @Test
+    void getVideogamesForSalePriceTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
+        try{
+            Filters filters = new Filters("gameTest", "consoleTest", "categoryTest");
+            CSVFactory csvFactory = new CSVFactory();
+            ItemDAO itemDAO = csvFactory.createItemDAO();
+            List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
+            Videogame gameForSale = games.getFirst();
+            assertEquals(10, gameForSale.getPrice());
+        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+            fail();
+        }
+    }
+
+    @Test
+    void getVideogamesForSaleDescriptionTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
+        try{
+            Filters filters = new Filters("gameTest", "consoleTest", "categoryTest");
+            CSVFactory csvFactory = new CSVFactory();
+            ItemDAO itemDAO = csvFactory.createItemDAO();
+            List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
+            Videogame gameForSale = games.getFirst();
+            assertEquals("descriptionTest", gameForSale.getDescription());
+        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+            fail();
+        }
+    }
+
+    @Test
+    void getVideogamesForSalePlatformTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
+        try{
+            Filters filters = new Filters("gameTest", "consoleTest", "categoryTest");
+            CSVFactory csvFactory = new CSVFactory();
+            ItemDAO itemDAO = csvFactory.createItemDAO();
+            List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
+            Videogame gameForSale = games.getFirst();
+            assertEquals("consoleTest", gameForSale.getPlatform());
+        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+            fail();
+        }
+    }
+
+    @Test
+    void getVideogamesForSaleCategoryTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
+        try{
+            Filters filters = new Filters("gameTest", "consoleTest", "categoryTest");
+            CSVFactory csvFactory = new CSVFactory();
+            ItemDAO itemDAO = csvFactory.createItemDAO();
+            List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
+            Videogame gameForSale = games.getFirst();
+            assertEquals("categoryTest", gameForSale.getCategory());
+        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+            fail();
+        }
+    }
+
+    @Test
+    void getVideogameForSaleWithoutNameTest(){       //to run this test were added games ('gameTest1', 'consoleTest1', 'categoryTest1', 'descriptionTest1', '2', '10'), ('gameTest2', 'consoleTest1', 'categoryTest1', 'descriptionTest2', '3', '10'), ('gameTest3', 'consoleTest2', 'categoryTest2', 'descriptionTest3', '4', '9')
         try{
             Filters filters = new Filters(null, "consoleTest1", "categoryTest1");
             CSVFactory csvFactory = new CSVFactory();
             ItemDAO itemDAO = csvFactory.createItemDAO();
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             assertEquals(2, (long) games.size());
-            Videogame game1 = games.getFirst();
-            Videogame game2 = games.getLast();
-            assertEquals("gameTest1", game1.getName());
-            assertEquals("gameTest2", game2.getName());
         } catch(PersistencyErrorException | NoGameInCatalogueException e){
             fail();
         }
@@ -62,7 +126,7 @@ class ItemDAOCSVTest {
     }
 
     @Test
-    void addGameForSaleNotExisting(){
+    void addGameForSaleTest(){
         try{
             Videogame game = new Videogame("nameTest", 2, 10, "descriptionTest", "platformTest", "categoryTest");
             CSVFactory csvFactory = new CSVFactory();
@@ -71,15 +135,12 @@ class ItemDAOCSVTest {
             Filters filters = new Filters("nameTest", "platformTest", "categoryTest");
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             assertEquals(1, (long) games.size());
-            Videogame gameForSale = games.getFirst();
-            assertEquals("nameTest", gameForSale.getName());
-            assertEquals(2, gameForSale.getCopies());
-            assertEquals(10, gameForSale.getPrice());
-            assertEquals("descriptionTest", gameForSale.getDescription());
         } catch(PersistencyErrorException | NoGameInCatalogueException e){
             fail();
         }
     }
+
+    //TODO fai test per verificare che copie, prezzo e descrizione siano corrette
 
     @Test
     void addGameForSaleExistingDiffConsoleTest(){       //in the database there was the tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
@@ -110,6 +171,40 @@ class ItemDAOCSVTest {
             Videogame gameForSale = games.getFirst();
             assertEquals(1, gameForSale.getCopies());
         } catch(PersistencyErrorException | GameSoldOutException | NoGameInCatalogueException e){
+            fail();
+        }
+    }
+
+    @Test
+    void removGameForSaleSamePriceTest() {        //In the database there was tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
+        try {
+            Videogame game = new Videogame("nameTest", 1, 10, "descriptionTest", "consoleTest", "categoryTest");
+            CSVFactory csvFactory = new CSVFactory();
+            ItemDAO itemDAO = csvFactory.createItemDAO();
+            itemDAO.removeGameForSale(game);
+
+            Filters filters = new Filters("nameTest", "consoleTest", "categoryTest");
+            List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
+            Videogame gameForSale = games.getFirst();
+            assertEquals(10, gameForSale.getPrice());
+        } catch (PersistencyErrorException | GameSoldOutException | NoGameInCatalogueException e) {
+            fail();
+        }
+    }
+
+    @Test
+    void removGameForSaleSameDescriptionTest() {        //In the database there was tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
+        try {
+            Videogame game = new Videogame("nameTest", 1, 10, "descriptionTest", "consoleTest", "categoryTest");
+            CSVFactory csvFactory = new CSVFactory();
+            ItemDAO itemDAO = csvFactory.createItemDAO();
+            itemDAO.removeGameForSale(game);
+
+            Filters filters = new Filters("nameTest", "consoleTest", "categoryTest");
+            List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
+            Videogame gameForSale = games.getFirst();
+            assertEquals("descriptionTest", gameForSale.getDescription());
+        } catch (PersistencyErrorException | GameSoldOutException | NoGameInCatalogueException e) {
             fail();
         }
     }

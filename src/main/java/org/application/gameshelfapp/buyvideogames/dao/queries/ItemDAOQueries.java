@@ -41,9 +41,10 @@ public class ItemDAOQueries{
         PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setString(1, videogame.getName());
         pstmt.setString(2, videogame.getPlatform());
-        pstmt.execute(query);
+        pstmt.execute();
         return pstmt.getResultSet();
     }
+
     public static void removeGameForSaleQuery(Connection connection, Videogame videogame) throws SQLException{
         String query = "UPDATE ObjectOnSale SET Copies = Copies - ? WHERE Name = ? AND Platform = ?;";
         PreparedStatement pstmt = connection.prepareStatement(query);

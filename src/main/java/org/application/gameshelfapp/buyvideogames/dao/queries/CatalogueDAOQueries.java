@@ -50,7 +50,7 @@ public class CatalogueDAOQueries {
 
             deleteStmt.setString(1, videogame.getName());
             deleteStmt.setString(2, videogame.getPlatform());
-            deleteStmt.setString(2, email);
+            deleteStmt.setString(3, email);
 
             updateStmt.execute();
             deleteStmt.execute();

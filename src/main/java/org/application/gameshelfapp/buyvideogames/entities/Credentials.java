@@ -1,13 +1,10 @@
 package org.application.gameshelfapp.buyvideogames.entities;
 
-import com.google.gson.annotations.SerializedName;
-
 public class Credentials {
 
     private String name;
     private String typeOfPayment;
     private String paymentKey;
-    @SerializedName("display_name")
     private String address;
 
     public Credentials(String name, String typeOfPayment, String paymentKey, String address){

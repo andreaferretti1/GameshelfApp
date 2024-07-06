@@ -11,7 +11,7 @@ public class SaleDAOQueries {
 
     private SaleDAOQueries(){}
     public static void saveSaleQuery(Connection conn, Sale sale) throws SQLException{
-        String query = "INSERT INTO Sale (Copies, Price, State, GameName, Platform, Username, UserEmail, UserAddress) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        String query = "INSERT INTO Sale (Copies, Price, State, GameName, Platform, Name, UserEmail, UserAddress) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setInt(1, sale.getVideogameSold().getCopies());
@@ -27,7 +27,7 @@ public class SaleDAOQueries {
     }
 
     public static ResultSet getSalesByStateQuery(Connection conn, String state) throws SQLException{
-        String query = "SELECT Id, Name, Copies, Price, GameName, Platform, UserEmail, UserAddress FROM ObjectOnSale WHERE State = ?;";
+        String query = "SELECT Id, Name, Copies, Price, GameName, Platform, UserEmail, UserAddress FROM Sale WHERE State = ?;";
 
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setString(1, state);
@@ -36,7 +36,7 @@ public class SaleDAOQueries {
     }
 
     public static void updateSaleQuery(Connection conn, Sale sale) throws SQLException{
-        String query = "UPDATE Sale SET State = Confirmed WHERE Id = ?;";
+        String query = "UPDATE Sale SET State = 'Confirmed' WHERE Id = ?;";
 
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setInt(1, sale.getId());

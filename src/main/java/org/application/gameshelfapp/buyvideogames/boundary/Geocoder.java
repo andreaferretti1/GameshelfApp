@@ -1,7 +1,7 @@
 package org.application.gameshelfapp.buyvideogames.boundary;
 
-import com.google.gson.Gson;
-import org.application.gameshelfapp.buyvideogames.entities.Credentials;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
 
 import java.io.BufferedReader;
@@ -33,15 +33,11 @@ public class Geocoder {
         int responseCode = connection.getResponseCode();
         if (responseCode == HttpURLConnection.HTTP_OK) {
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            StringBuilder response = new StringBuilder();
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
+            String inputLine = in.readLine();
+
+            JsonArray jsonArray = JsonParser.parseString(inputLine).getAsJsonArray();
+            if(jsonArray.isEmpty()) throw new InvalidAddressException("Address inserted is invalid");
             in.close();
-            Gson gson = new Gson();
-            Credentials[] responseDataArray = gson.fromJson(response.toString(), Credentials[].class);
-            if(responseDataArray.length == 0) throw new InvalidAddressException("Address is invalid");
         }
     }
 }
