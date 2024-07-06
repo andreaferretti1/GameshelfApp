@@ -1,7 +1,6 @@
 package org.application.gameshelfapp.registration.bean;
 
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
-import org.application.gameshelfapp.registration.bean.RegistrationBean;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
