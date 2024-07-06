@@ -140,8 +140,6 @@ class ItemDAOCSVTest {
         }
     }
 
-    //TODO fai test per verificare che copie, prezzo e descrizione siano corrette
-
     @Test
     void addGameForSaleExistingDiffConsoleTest(){       //in the database there was the tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
         try{
