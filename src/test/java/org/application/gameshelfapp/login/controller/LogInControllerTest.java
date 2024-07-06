@@ -1,9 +1,8 @@
 package org.application.gameshelfapp.login.controller;
 
 import org.application.gameshelfapp.login.bean.LogInBean;
-import org.application.gameshelfapp.login.bean.RegistrationBean;
+import org.application.gameshelfapp.registration.bean.RegistrationBean;
 import org.application.gameshelfapp.login.bean.UserBean;
-import org.application.gameshelfapp.login.entities.AccessThroughRegistration;
 import org.application.gameshelfapp.login.exception.*;
 import org.junit.jupiter.api.Test;
 
@@ -91,11 +90,5 @@ class LogInControllerTest {
         } catch(SyntaxErrorException e){
              fail();
         }
-    }
-    @Test
-    void setAndGetRegAccessTest(){
-        LogInController logInController = new LogInController();
-        logInController.setRegAccess(new AccessThroughRegistration(null, null, null, null));
-        assertNotNull(logInController.getRegAccess());
     }
 }

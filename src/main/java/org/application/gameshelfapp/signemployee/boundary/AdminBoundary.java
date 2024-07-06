@@ -1,6 +1,6 @@
 package org.application.gameshelfapp.signemployee.boundary;
 
-import org.application.gameshelfapp.login.bean.RegistrationBean;
+import org.application.gameshelfapp.registration.bean.RegistrationBean;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.NullPasswordException;

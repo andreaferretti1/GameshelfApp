@@ -1,7 +1,7 @@
 package org.application.gameshelfapp.login.dao.queries;
 
 import org.application.gameshelfapp.login.entities.Access;
-import org.application.gameshelfapp.login.entities.AccessThroughRegistration;
+import org.application.gameshelfapp.registration.entities.AccessThroughRegistration;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

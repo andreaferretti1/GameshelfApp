@@ -5,7 +5,7 @@ import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 import org.application.gameshelfapp.login.entities.Access;
 import org.application.gameshelfapp.login.entities.AccessThroughLogIn;
-import org.application.gameshelfapp.login.entities.AccessThroughRegistration;
+import org.application.gameshelfapp.registration.entities.AccessThroughRegistration;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
@@ -87,7 +87,7 @@ public class AccessDAOCSV implements AccessDAO {
         try (CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)))){
             while((tuple = csvReader.readNext()) != null && counter<20){
                 if(tuple[AccountAttributes.TYPE_OF_USER.ordinal()].equals("Customer") && coin.nextBoolean()){
-                    Access user = new AccessThroughLogIn(null, tuple[AccountAttributes.EMAIL.ordinal()], null);
+                    Access user = new AccessThroughLogIn(tuple[AccountAttributes.EMAIL.ordinal()], null, "Customer");
                     winners.add(user);
                     counter++;
                 }

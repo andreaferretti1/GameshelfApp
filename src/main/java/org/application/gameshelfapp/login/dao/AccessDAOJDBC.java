@@ -3,7 +3,7 @@ package org.application.gameshelfapp.login.dao;
 import org.application.gameshelfapp.login.dao.queries.AccessDAOQueries;
 import org.application.gameshelfapp.login.entities.Access;
 import org.application.gameshelfapp.login.entities.AccessThroughLogIn;
-import org.application.gameshelfapp.login.entities.AccessThroughRegistration;
+import org.application.gameshelfapp.registration.entities.AccessThroughRegistration;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
@@ -29,7 +29,7 @@ public class AccessDAOJDBC implements AccessDAO {
         try(Connection conn = SingletonConnectionPool.getInstance().getConnection()){
                 ResultSet rs = AccessDAOQueries.getAccountQuery(conn, access);
                 while(rs.next()) {
-                    checkAccess = new AccessThroughLogIn(rs.getString("Username"), rs.getString("Email"), rs.getString("Type"));
+                    checkAccess = new AccessThroughRegistration(rs.getString("Username"), rs.getString("Email"), null, rs.getString("Type"));
                     checkAccess.setEncodedPassword(rs.getString("password"));
                 }
                 rs.close();
@@ -56,7 +56,7 @@ public class AccessDAOJDBC implements AccessDAO {
         try(Connection conn = SingletonConnectionPool.getInstance().getConnection()){
             ResultSet rs = AccessDAOQueries.getRandomCustomersQuery(conn);
             while(rs.next()){
-                Access user = new AccessThroughLogIn(null, rs.getString("Email"), null);
+                Access user = new AccessThroughLogIn(rs.getString("Email"), null, "Customer");
                 winners.add(user);
             }
         } catch(SQLException e){

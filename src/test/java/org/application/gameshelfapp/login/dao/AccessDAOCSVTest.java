@@ -2,7 +2,7 @@ package org.application.gameshelfapp.login.dao;
 
 import org.application.gameshelfapp.login.entities.Access;
 import org.application.gameshelfapp.login.entities.AccessThroughLogIn;
-import org.application.gameshelfapp.login.entities.AccessThroughRegistration;
+import org.application.gameshelfapp.registration.entities.AccessThroughRegistration;
 import org.application.gameshelfapp.login.exception.NullPasswordException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.junit.jupiter.api.Test;

@@ -1,9 +1,10 @@
-package org.application.gameshelfapp.login.bean;
+package org.application.gameshelfapp.registration.bean;
 
+import org.application.gameshelfapp.login.bean.AccessBean;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 
 
-public class RegistrationBean extends AccessBean{
+public class RegistrationBean extends AccessBean {
 
     private  String usernameBean;
     private String typeOfUser;

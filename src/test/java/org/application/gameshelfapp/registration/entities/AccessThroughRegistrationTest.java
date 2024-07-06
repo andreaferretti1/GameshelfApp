@@ -1,6 +1,7 @@
-package org.application.gameshelfapp.login.entities;
+package org.application.gameshelfapp.registration.entities;
 
 import org.application.gameshelfapp.login.exception.CheckFailedException;
+import org.application.gameshelfapp.registration.entities.AccessThroughRegistration;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

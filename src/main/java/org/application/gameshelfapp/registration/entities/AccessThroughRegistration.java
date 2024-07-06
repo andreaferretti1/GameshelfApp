@@ -1,6 +1,7 @@
-package org.application.gameshelfapp.login.entities;
+package org.application.gameshelfapp.registration.entities;
 
 
+import org.application.gameshelfapp.login.entities.Access;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import java.security.SecureRandom;
 

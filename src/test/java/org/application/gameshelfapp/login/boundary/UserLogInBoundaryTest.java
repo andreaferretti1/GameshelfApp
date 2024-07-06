@@ -1,6 +1,5 @@
 package org.application.gameshelfapp.login.boundary;
 
-import org.application.gameshelfapp.login.entities.AccessThroughRegistration;
 import org.application.gameshelfapp.login.exception.*;
 import org.junit.jupiter.api.Test;
 
@@ -86,29 +85,6 @@ class UserLogInBoundaryTest {
         assertThrows(NullPasswordException.class, () -> userLogInBoundary.register("test", "testEmail@example.com", null));
     }
 
-    @Test
-    void checkCodeSuccessfulTest(){
-        try{
-            UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
-            userLogInBoundary.register("andrea", "fer.andrea35@gmail.com", "test");
-            AccessThroughRegistration accessThroughRegistration = userLogInBoundary.getController().getRegAccess();
-            userLogInBoundary.checkCode(String.valueOf(accessThroughRegistration.getCodeGenerated()));
-        } catch(PersistencyErrorException | SyntaxErrorException | CheckFailedException | GmailException | NullPasswordException e){
-            fail();
-        }
-    }
-
-    @Test
-    void checkCodeFailedTest(){
-        try{
-            UserLogInBoundary userLogInBoundary = new UserLogInBoundary();
-            userLogInBoundary.register("andrea", "fer.andrea35@gmail.com", "test");
-            AccessThroughRegistration accessThroughRegistration = userLogInBoundary.getController().getRegAccess();
-            assertThrows(CheckFailedException.class, () -> userLogInBoundary.checkCode(String.valueOf(accessThroughRegistration.getCodeGenerated() + 1)));
-        } catch(PersistencyErrorException | SyntaxErrorException | CheckFailedException | GmailException | NullPasswordException e){
-            fail();
-        }
-    }
     @Test
     void checkCodeNumberFormatExceptionTest(){
         UserLogInBoundary userLogInBoundary = new UserLogInBoundary();

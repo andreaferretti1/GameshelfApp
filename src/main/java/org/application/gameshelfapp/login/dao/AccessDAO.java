@@ -1,7 +1,7 @@
 package org.application.gameshelfapp.login.dao;
 
 import org.application.gameshelfapp.login.entities.Access;
-import org.application.gameshelfapp.login.entities.AccessThroughRegistration;
+import org.application.gameshelfapp.registration.entities.AccessThroughRegistration;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 

@@ -1,7 +1,7 @@
 package org.application.gameshelfapp.login.boundary;
 
 import org.application.gameshelfapp.login.bean.LogInBean;
-import org.application.gameshelfapp.login.bean.RegistrationBean;
+import org.application.gameshelfapp.registration.bean.RegistrationBean;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.controller.LogInController;
 import org.application.gameshelfapp.login.exception.*;
