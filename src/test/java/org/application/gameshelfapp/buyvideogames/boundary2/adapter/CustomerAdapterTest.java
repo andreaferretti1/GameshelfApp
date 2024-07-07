@@ -46,7 +46,7 @@ class CustomerAdapterTest {
     void insertFiltersWithoutNameTest(){        //In the database there were tuples ('nameTest1', 'consoleTest', 'categoryTest', 'descriptionTest1', '2', '11'), ('nameTest2', 'consoleTest', 'categoryTest', 'descriptionTest', '3', '20'), ('nameTest3', 'consoleTest1', 'categoryTest1', 'descriptionTest2', '5', '30')
         CustomerAdapter adapter = new CustomerAdapter(new UserBean());
         try{
-            List<VideogameBean> gamesBean = adapter.searchVideogame(null, "consoleTest", "categoryTest").getSellingGamesBean();
+            List<VideogameBean> gamesBean = adapter.searchVideogame("null", "consoleTest", "categoryTest").getSellingGamesBean();
             assertEquals(2, (long) gamesBean.size());
         } catch(PersistencyErrorException | NoGameInCatalogueException e){
             fail();
