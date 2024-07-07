@@ -26,6 +26,9 @@ public class CustomerAdapter implements CustomerBoundaryInterface {
 
     @Override
     public SellingGamesCatalogueBean searchVideogame(String gameNameBean, String consoleBean, String categoryBean) throws PersistencyErrorException, NoGameInCatalogueException {
+        if(gameNameBean.equals("null")) gameNameBean = null;
+        if(consoleBean.equals("null")) consoleBean = null;
+        if(categoryBean.equals("null")) categoryBean = null;
         this.customerBoundary.insertFilters(gameNameBean, consoleBean, categoryBean);
         return this.customerBoundary.getSellingGamesCatalogueBean();
     }

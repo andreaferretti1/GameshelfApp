@@ -6,7 +6,8 @@ import org.application.gameshelfapp.login.boundary2.adapter.LogInAdapter;
 import org.application.gameshelfapp.login.exception.*;
 
 public class TerminalUserLogInBoundary implements TerminalBoundary{
-    LogIn logInAdapter;
+    private final LogIn logInAdapter;
+    public static String START_COMMAND = "Type <login, email, password>";
     public TerminalUserLogInBoundary(){
         this.logInAdapter = new LogInAdapter();
     }

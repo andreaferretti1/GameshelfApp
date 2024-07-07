@@ -48,7 +48,7 @@ class TerminalCustomerBoundaryTest {
     void insertFiltersWithoutNameTest(){        //In the database there were tuples ('nameTest1', 'consoleTest', 'categoryTest', 'descriptionTest1', '2', '11'), ('nameTest2', 'consoleTest', 'categoryTest', 'descriptionTest', '3', '20'), ('nameTest3', 'consoleTest1', 'categoryTest1', 'descriptionTest2', '5', '30')
         TerminalCustomerBoundary boundary = new TerminalCustomerBoundary(new UserBean());
         try{
-            String[] command = {"see catalogue", null, "consoleTest", "categoryTest"};
+            String[] command = {"see catalogue", "null", "consoleTest", "categoryTest"};
             String expectedStringGame1 = String.format("name: %s, console: %s, category: %s, copies: %d, price: %f, description: %s%n", "nameTest1", "consoleTest", "categoryTest", 2, 11f, "descriptionTest1");
             String expectedStringGame2 = String.format("name: %s, console: %s, category: %s, copies: %d, price: %f, description: %s%n", "nameTest2", "consoleTest", "categoryTest", 3, 20f, "descriptionTest");
             String expectedString = expectedStringGame1 + expectedStringGame2 + "\nType <select gameToBuy, gameTitle, console, category, copies, price>\n\n";

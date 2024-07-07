@@ -11,6 +11,7 @@ import org.application.gameshelfapp.signemployee.boundary2.adapter.SignEmployeeA
 
 public class TerminalAdminBoundary implements TerminalBoundary {
     SignEmployee signEmployeeAdapter;
+    public static String START_COMMAND = "<Type sign employee, ";
     public TerminalAdminBoundary(UserBean userBean){ this.signEmployeeAdapter = new SignEmployeeAdapter(userBean);}
     @Override
     public String executeCommand(String[] command) throws PersistencyErrorException, CheckFailedException, SyntaxErrorException, NullPasswordException {

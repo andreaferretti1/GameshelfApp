@@ -16,6 +16,7 @@ import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueEx
 public class TerminalCustomerBoundary implements TerminalBoundary {
 
     private final CustomerBoundaryInterface customer;
+    public static String START_COMMAND = "Type <see catalogue, gameName/null, console/null, category/null>";
 
     public TerminalCustomerBoundary(UserBean userBean){
         this.customer = new CustomerAdapter(userBean);
@@ -28,7 +29,7 @@ public class TerminalCustomerBoundary implements TerminalBoundary {
             }
             case "select gameToBuy" -> {
                 this.customer.chooseGameToBuy(command[1], command[2], command[3], Integer.parseInt(command[4]), Float.parseFloat(command[5]));
-                return "\n\n Type <pay yourName typeOfcard paymentKey street region country>\n";
+                return "\n\n Type <pay, yourName, typeOfcard, paymentKey, street, region, country>\n";
             }
             case "pay" -> {
                 this.customer.pay(command[1], command[2], command[3], command[4], command[5], command[6]);
@@ -40,8 +41,6 @@ public class TerminalCustomerBoundary implements TerminalBoundary {
         }
     }
 
-
-    //TODO sostituisci gamesfoundbean con cataloguebean, rivedi caso d'uso, dove includi see videogame catalogue
     @Override
     public UserBean getUserBean(){
         return this.customer.getUserBean();
