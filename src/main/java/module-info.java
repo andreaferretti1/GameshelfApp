@@ -40,4 +40,5 @@ module org.application.gameshelfapp {
     exports org.application.gameshelfapp.registration.grapichcontroller;
     opens org.application.gameshelfapp.registration.grapichcontroller to javafx.fxml;
     exports org.application.gameshelfapp.registration.boundary;
+    exports org.application.gameshelfapp.sellvideogames.bean;
 }
