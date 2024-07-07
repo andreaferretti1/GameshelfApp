@@ -3,7 +3,6 @@ package org.application.gameshelfapp.buyvideogames.bean;
 import org.application.gameshelfapp.buyvideogames.entities.Sale;
 
 public class SaleBean {
-
     private long idBean;
     private VideogameBean gameSoldBean;
     private String emailBean;

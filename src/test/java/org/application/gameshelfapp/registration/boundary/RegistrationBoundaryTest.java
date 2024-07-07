@@ -42,9 +42,4 @@ class RegistrationBoundaryTest {
         RegistrationBoundary boundary = new RegistrationBoundary();
         assertThrows(CheckFailedException.class, () -> boundary.register("test1", "testEmail@example.com", "test"));
     }
-    @Test
-    void checkCodeNumberFormatExceptionTest(){
-        RegistrationBoundary boundary = new RegistrationBoundary();
-        assertThrows(NumberFormatException.class, () -> boundary.checkCode("test"));
-    }
 }

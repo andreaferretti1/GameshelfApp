@@ -9,7 +9,6 @@ public class AccessThroughLogIn extends Access {
     }
 
     public void checkAccount(Access user) throws CheckFailedException {
-
         if(user == null || !this.encodedPassword.equals(user.getEncodedPassword())){
             throw new CheckFailedException("Credentials are not correct");
         }

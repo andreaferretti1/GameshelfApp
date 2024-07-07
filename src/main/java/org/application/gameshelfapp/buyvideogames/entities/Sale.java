@@ -10,7 +10,8 @@ public class Sale {
 
     public static final String TO_CONFIRM = "To confirm";
     public static final String CONFIRMED = "Confirmed";
-    public Sale(Videogame game, String email, String address, String state, String name) {
+    public Sale(int id, Videogame game, String email, String address, String state, String name) {
+        this.id = id;
         this.gameSold = game;
         this.email = email;
         this.address = address;

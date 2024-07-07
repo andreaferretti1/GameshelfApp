@@ -24,10 +24,6 @@ public class CustomerBoundary {
         this.buyGamesController = new BuyGamesController();
     }
 
-    public BuyGamesController getBuyGamesController() {
-        return this.buyGamesController;
-    }
-
     public UserBean getUserBean(){
         return this.userBean;
     }
@@ -46,9 +42,6 @@ public class CustomerBoundary {
     }
     public void setGameToBuy(VideogameBean videogameBean){
         this.gameToBuy = videogameBean;
-    }
-    public VideogameBean getGameToBuy() {
-        return this.gameToBuy;
     }
     public void insertCredentialsAndPay(String name, String typeOfCard, String paymentKey, String street, String region, String country) throws RefundException, GameSoldOutException, SyntaxErrorException, PersistencyErrorException, InvalidAddressException, NoGameInCatalogueException{
         CredentialsBean credentialsBean = new CredentialsBean();

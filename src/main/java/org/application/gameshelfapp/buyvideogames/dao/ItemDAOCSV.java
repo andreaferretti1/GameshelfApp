@@ -41,7 +41,6 @@ public class ItemDAOCSV implements ItemDAO {
 
          try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fdGamesForSale)))){
             while((myRecord = csvReader.readNext()) != null){
-
                 if((gameName == null || myRecord[VideogamesOnSaleAttributes.GAMENAME.ordinal()].equals(gameName)) && (console == null || myRecord[VideogamesOnSaleAttributes.CONSOLE.ordinal()].equals(console)) && (category == null || myRecord[VideogamesOnSaleAttributes.CATEGORY.ordinal()].equals(category))){
                         Videogame game = new Videogame(myRecord[VideogamesOnSaleAttributes.GAMENAME.ordinal()], Integer.parseInt(myRecord[VideogamesOnSaleAttributes.COPIES.ordinal()]), Float.parseFloat(myRecord[VideogamesOnSaleAttributes.PRICE.ordinal()]), myRecord[VideogamesOnSaleAttributes.DESCRIPTION.ordinal()], console, category);
                         gamesFound.add(game);

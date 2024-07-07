@@ -77,7 +77,6 @@ public class GoogleBoundary {
             email.setSubject(subject);
             email.setText(this.messageToSend);
 
-            // Encode and wrap the MIME message into a gmail message
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             email.writeTo(buffer);
             byte[] rawMessageBytes = buffer.toByteArray();

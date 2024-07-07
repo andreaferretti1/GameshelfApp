@@ -22,9 +22,8 @@ public class RegistrationBoundary {
         this.controller.registration(regBean);
     }
 
-    public void checkCode(String code) throws NumberFormatException, CheckFailedException, PersistencyErrorException{
-        int insertedCode = Integer.parseInt(code);
-        this.userBean = this.controller.checkCode(insertedCode);
+    public void checkCode(int code) throws NumberFormatException, CheckFailedException, PersistencyErrorException{
+        this.userBean = this.controller.checkCode(code);
         this.userBean.getDataFromModel();
     }
 

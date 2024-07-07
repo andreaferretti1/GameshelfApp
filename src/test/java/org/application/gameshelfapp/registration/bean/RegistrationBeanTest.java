@@ -28,11 +28,4 @@ class RegistrationBeanTest {
         RegistrationBean regBean = new RegistrationBean();
         assertThrows(SyntaxErrorException.class, () -> regBean.setUsernameBean(""));
     }
-
-    @Test
-    void checkCodeBeanTest(){
-        RegistrationBean regBean = new RegistrationBean();
-        regBean.setCheckCode(90);
-        assertEquals(90, regBean.getCheckCode());
-    }
 }

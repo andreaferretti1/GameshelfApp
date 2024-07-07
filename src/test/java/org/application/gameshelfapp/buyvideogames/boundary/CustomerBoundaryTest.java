@@ -19,27 +19,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerBoundaryTest {
-    @Test
-    void constructorTest(){
-        UserBean userBean = new UserBean();
-        CustomerBoundary customerBoundary = new CustomerBoundary(userBean);
-        assertSame(userBean, customerBoundary.getUserBean());
-        assertNotNull(customerBoundary.getBuyGamesController());
-    }
 
     @Test
-    void setAndGetVideogameSellingGameCatalogueTestTest(){
-        CustomerBoundary customerBoundary = new CustomerBoundary(null);
-        customerBoundary.setSellingGamesCatalogueBean(new SellingGamesCatalogueBean());
-        assertNotNull(customerBoundary.getSellingGamesCatalogueBean());
-    }
-
-    @Test
-    void setAndGetGameToBuyTest(){
-        CustomerBoundary customerBoundary = new CustomerBoundary(null);
-        VideogameBean videogameBean = new VideogameBean();
-        customerBoundary.setGameToBuy(videogameBean);
-        assertEquals(videogameBean, customerBoundary.getGameToBuy());
+    void getandSetSellingGamesCatalogueBeanTest(){
+        CustomerBoundary boundary = new CustomerBoundary(null);
+        boundary.setSellingGamesCatalogueBean(new SellingGamesCatalogueBean());
+        assertNotNull(boundary.getSellingGamesCatalogueBean());
     }
 
     @Test

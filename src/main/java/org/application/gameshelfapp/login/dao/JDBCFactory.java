@@ -3,7 +3,6 @@ package org.application.gameshelfapp.login.dao;
 import org.application.gameshelfapp.buyvideogames.dao.*;
 
 public class JDBCFactory extends PersistencyAbstractFactory {
-
     @Override
     public ItemDAO createItemDAO(){
         return new ItemDAOJDBC();

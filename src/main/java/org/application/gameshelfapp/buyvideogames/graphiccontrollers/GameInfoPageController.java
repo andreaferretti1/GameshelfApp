@@ -51,7 +51,7 @@ public class GameInfoPageController implements Initializable {
     @FXML
     private void goToGameList(MouseEvent event){
         try {
-            GamesFoundPageController.start(this.stage, this.customerBoundary);
+            SearchPageController.start(this.stage, this.customerBoundary);
         } catch (IOException e) {
             System.exit(1);
         }

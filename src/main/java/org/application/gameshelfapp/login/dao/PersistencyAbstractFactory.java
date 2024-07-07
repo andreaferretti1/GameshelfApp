@@ -11,7 +11,6 @@ import java.util.Properties;
 
 public abstract class PersistencyAbstractFactory {
 
-        private static final String CSV = "CSV";
         private static final String JDBC = "JDBC";
 
         public static PersistencyAbstractFactory getFactory(){

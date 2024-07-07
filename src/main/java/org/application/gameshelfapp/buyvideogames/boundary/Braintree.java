@@ -13,7 +13,4 @@ public class Braintree {
     public void refund(){
         this.transactionId = "refunded";
     }
-
-
-
 }

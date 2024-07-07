@@ -27,8 +27,4 @@ public class UserLogInBoundary {
     public UserBean getUserBean(){
         return this.userBean;
     }
-    public LogInController getController(){
-        return this.controller;
-    }
-
 }

@@ -49,6 +49,8 @@ public class SaleDAOCSV implements SaleDAO {
         try(CSVWriter cvsWriter = new CSVWriter(new BufferedWriter(new FileWriter(this.fd, true)))){
             cvsWriter.writeNext(gameSold);
         }catch(IOException e){
+            this.id--;
+            this.saveId();
             throw new PersistencyErrorException("Couldn't save sale");
         }
     }
@@ -130,8 +132,7 @@ public class SaleDAOCSV implements SaleDAO {
             while((myRecord = csvReader.readNext()) != null){
                 if(myRecord[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()].equals(state)){
                     Videogame gameSold = new Videogame(myRecord[VideogamesSoldAttributes.GAME_NAME.ordinal()], Integer.parseInt(myRecord[VideogamesSoldAttributes.COPIES.ordinal()]), Float.parseFloat(myRecord[VideogamesSoldAttributes.PRICE.ordinal()]), null, myRecord[VideogamesSoldAttributes.PLATFORM.ordinal()], null);
-                    Sale sale = new Sale(gameSold, myRecord[VideogamesSoldAttributes.CUSTOMER_EMAIL.ordinal()], myRecord[VideogamesSoldAttributes.CUSTOMER_ADDRESS.ordinal()], state, myRecord[VideogamesSoldAttributes.CUSTOMER_NAME.ordinal()]);
-                    sale.setId(Integer.parseInt(myRecord[VideogamesSoldAttributes.GAME_ID.ordinal()]));
+                    Sale sale = new Sale(Integer.parseInt(myRecord[VideogamesSoldAttributes.GAME_ID.ordinal()]), gameSold, myRecord[VideogamesSoldAttributes.CUSTOMER_EMAIL.ordinal()], myRecord[VideogamesSoldAttributes.CUSTOMER_ADDRESS.ordinal()], state, myRecord[VideogamesSoldAttributes.CUSTOMER_NAME.ordinal()]);
                     sales.add(sale);
                 }
             }

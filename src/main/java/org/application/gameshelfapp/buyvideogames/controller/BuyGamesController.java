@@ -39,29 +39,27 @@ public class BuyGamesController {
         Filters filters = new Filters(videogameBean.getName(), videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
         List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
         Videogame game = games.getFirst();
+        if(game.getPrice() != videogameBean.getPriceBean()) throw new RefundException("Price has been changed");
         game.setCopies(videogameBean.getCopiesBean());
-        Sale sale = new Sale(game, userBean.getEmail(), credentialsBean.getAddressBean(), Sale.TO_CONFIRM, credentialsBean.getNameBean());
+        Sale sale = new Sale(-1, game, userBean.getEmail(), credentialsBean.getAddressBean(), Sale.TO_CONFIRM, credentialsBean.getNameBean());
+        itemDAO.removeGameForSale(game);
             try{
                 geocoder.checkAddress(credentialsBean.getAddressBean());
+
                 int quantity = game.getCopies();
                 float amountToPay = game.getPrice() * quantity;
                 braintree.pay(amountToPay, credentialsBean.getPaymentKeyBean(), credentialsBean.getTypeOfPaymentBean());
-                itemDAO.removeGameForSale(game);
+
                 GoogleBoundary googleBoundary = new GoogleBoundary();
-                String messageToSend = userBean.getUsername() + "bought" + quantity + "of" + game.getName() + "for" + amountToPay;
+                String messageToSend = userBean.getUsername() + " bought " + quantity + " of " + game.getName() + " for " + amountToPay;
                 googleBoundary.setMessageToSend(messageToSend);
-                googleBoundary.sendMail("Videogame bought", "gameshelfApp2024@gmail.com");
+                googleBoundary.sendMail("Videogame bought", "fer.andrea35@gmail.com");
+
                 saleDAO.saveSale(sale);
-            }catch(GmailException e){
+            }catch(GmailException | PersistencyErrorException e){
                 itemDAO.addGameForSale(game);
                 braintree.refund();
-                throw new RefundException("Transaction has been refunded.");
-            } catch (PersistencyErrorException e){
-                braintree.refund();
-                throw new RefundException("Transaction has been refunded due to problems");
-            } catch(GameSoldOutException e){
-                braintree.refund();
-                throw new GameSoldOutException(e.getMessage());
+                throw new RefundException("Transaction has been refunded due to problems.");
             } catch(IOException e){
                 throw new RefundException("Couldn't buy videogame");
             }

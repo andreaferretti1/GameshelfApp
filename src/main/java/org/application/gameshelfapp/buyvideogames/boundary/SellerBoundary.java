@@ -11,7 +11,6 @@ import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import java.util.List;
 
 public class SellerBoundary {
-
     private List<SaleBean> salesBean;
     private final BuyGamesController buyGamesController;
     private final UserBean userBean;

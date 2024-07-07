@@ -52,7 +52,6 @@ public class RegistrationPageController {
         }
     }
     public void switchToInsertCodeScene(){
-
         try{
             InsertCodeController.start(this.getStage(), this.registrationBoundary);
         }catch (IOException e) {

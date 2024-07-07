@@ -53,8 +53,7 @@ public class SaleDAOJDBC implements SaleDAO {
             ResultSet rs = SaleDAOQueries.getSalesByStateQuery(conn, state);
             while(rs.next()){
                 Videogame videogame = new Videogame(rs.getString("GameName"), rs.getInt("Copies"), rs.getFloat("Price"), null, rs.getString("Platform"), null);
-                Sale sale = new Sale(videogame, rs.getString("UserEmail"), rs.getString("UserAddress"), state, rs.getString("Name"));
-                sale.setId(rs.getInt("Id"));
+                Sale sale = new Sale(rs.getInt("id"), videogame, rs.getString("UserEmail"), rs.getString("UserAddress"), state, rs.getString("Name"));
                 sales.add(sale);
             }
             rs.close();

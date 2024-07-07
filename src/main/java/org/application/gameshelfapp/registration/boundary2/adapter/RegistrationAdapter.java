@@ -17,8 +17,8 @@ public class RegistrationAdapter implements Registration{
     }
 
     @Override
-    public String checkCode(String code) throws PersistencyErrorException, CheckFailedException {
-        this.registrationBoundary.checkCode(code);
+    public String checkCode(String code) throws PersistencyErrorException, CheckFailedException, NumberFormatException {
+        this.registrationBoundary.checkCode(Integer.parseInt(code));
         return "You're registered.\n\nType <see catalogue>\n";
     }
 

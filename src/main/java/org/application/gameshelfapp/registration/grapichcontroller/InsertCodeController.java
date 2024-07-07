@@ -30,7 +30,7 @@ public class InsertCodeController  {
 
     @FXML
     private void verifyCode(MouseEvent event){
-        String code = this.codeField.getText();
+        int code = Integer.parseInt(this.codeField.getText());
         try{
             this.registrationBoundary.checkCode(code);
             HomePageController.start(this.getStage(), this.registrationBoundary.getUserBean());
