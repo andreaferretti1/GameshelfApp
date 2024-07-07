@@ -178,7 +178,7 @@ class SaleDAOJDBCTest {
             JDBCFactory jdbcFactory = new JDBCFactory();
             SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -195,7 +195,7 @@ class SaleDAOJDBCTest {
             JDBCFactory jdbcFactory = new JDBCFactory();
             SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -212,7 +212,7 @@ class SaleDAOJDBCTest {
             JDBCFactory jdbcFactory = new JDBCFactory();
             SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -229,7 +229,7 @@ class SaleDAOJDBCTest {
             JDBCFactory jdbcFactory = new JDBCFactory();
             SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -247,7 +247,7 @@ class SaleDAOJDBCTest {
             JDBCFactory jdbcFactory = new JDBCFactory();
             SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -264,7 +264,7 @@ class SaleDAOJDBCTest {
             JDBCFactory jdbcFactory = new JDBCFactory();
             SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -281,7 +281,7 @@ class SaleDAOJDBCTest {
             JDBCFactory jdbcFactory = new JDBCFactory();
             SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -298,7 +298,7 @@ class SaleDAOJDBCTest {
            JDBCFactory jdbcFactory = new JDBCFactory();
             SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -315,7 +315,7 @@ class SaleDAOJDBCTest {
             JDBCFactory jdbcFactory = new JDBCFactory();
             SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();

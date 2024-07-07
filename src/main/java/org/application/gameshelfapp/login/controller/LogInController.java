@@ -1,14 +1,13 @@
 package org.application.gameshelfapp.login.controller;
 
-import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.buyvideogames.entities.User;
 import org.application.gameshelfapp.login.bean.LogInBean;
-import org.application.gameshelfapp.registration.bean.RegistrationBean;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.dao.AccessDAO;
-import org.application.gameshelfapp.login.entities.*;
+import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
+import org.application.gameshelfapp.login.entities.Access;
+import org.application.gameshelfapp.login.entities.AccessThroughLogIn;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
-import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.NullPasswordException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.registration.controller.RegistrationController;
@@ -31,14 +30,5 @@ public class LogInController {
         UserBean userBean = new UserBean();
         userBean.setUser(user);
         return userBean;
-    }
-
-    public void registration(RegistrationBean regBean) throws PersistencyErrorException, CheckFailedException, GmailException, NullPasswordException {
-        this.regController = new RegistrationController();
-        this.regController.registration(regBean);
-    }
-
-    public UserBean checkCode(int code) throws CheckFailedException, PersistencyErrorException{
-        return this.regController.checkCode(code);
     }
 }
