@@ -7,16 +7,14 @@ import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
-import org.application.gameshelfapp.sellvideogames.controller.SellVideogamesController;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class RemoveVideogameControllerTest {
+class RemoveVideogameControllerTest {
 
     @Test
     void removeGameFromCatalogueTest(){          //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)

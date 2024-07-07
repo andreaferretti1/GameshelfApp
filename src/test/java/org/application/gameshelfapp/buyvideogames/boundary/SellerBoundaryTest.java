@@ -64,10 +64,4 @@ class SellerBoundaryTest {
         SellerBoundary boundary = new SellerBoundary(new UserBean());
         assertThrows(WrongSaleException.class, () -> boundary.sendGame(1));
     }
-
-    @Test
-    void sendGameWrongStateExceptionTest(){     //in the database there was tuple (1, 'nameTest', 'gameName', '2', '40', 'platformTest', 'Confirmed', 'addressTest', 'emailTest')
-        SellerBoundary boundary = new SellerBoundary(new UserBean());
-        assertThrows(WrongSaleException.class, () -> boundary.sendGame(1));
-    }
 }

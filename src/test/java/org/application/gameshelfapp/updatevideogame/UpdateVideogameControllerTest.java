@@ -2,14 +2,13 @@ package org.application.gameshelfapp.updatevideogame;
 
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
-import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.controller.SellVideogamesController;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UpdateVideogameControllerTest {
+class UpdateVideogameControllerTest {
 
     @Test
     void updateGameInCatalogueTest(){           //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
