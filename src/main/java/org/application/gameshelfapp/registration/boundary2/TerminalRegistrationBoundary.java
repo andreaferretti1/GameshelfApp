@@ -9,7 +9,7 @@ import org.application.gameshelfapp.registration.boundary2.adapter.RegistrationA
 public class TerminalRegistrationBoundary implements TerminalBoundary {
 
     private final Registration adapter;
-    public static String START_COMMAND = "Type <register, username, email, password>";
+    public static final String START_COMMAND = "Type <register, username, email, password>";
     public TerminalRegistrationBoundary(){
         this.adapter = new RegistrationAdapter();
     }
