@@ -39,15 +39,4 @@ public class CatalogueDAOJDBC implements CatalogueDAO {
             throw new PersistencyErrorException("Couldn't add videogame to your catalogue.");
         }
     }
-
-    @Override
-    public void removeVideogame(String email, Videogame game) throws PersistencyErrorException{
-
-        try(Connection conn = SingletonConnectionPool.getInstance().getConnection()){
-            CatalogueDAOQueries.removeVideogameQuery(conn, email, game);
-        }catch(SQLException e){
-            throw new PersistencyErrorException("Couldn't remove videogame from your catalogue.");
-        }
-
-    }
 }

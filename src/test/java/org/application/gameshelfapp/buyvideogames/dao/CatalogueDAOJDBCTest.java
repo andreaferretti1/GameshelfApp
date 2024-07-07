@@ -156,17 +156,4 @@ class CatalogueDAOJDBCTest {
             fail();
         }
     }
-    @Test
-    void removeVideogameTest(){      //In the database there was tuple ('emailTest', 'nameTest', 'platformTest', 3)
-        try{
-            JDBCFactory jdbcFactory = new JDBCFactory();
-            CatalogueDAO catalogueDAO = jdbcFactory.createCatalogueDAO();
-            Videogame videogame = new Videogame("nameTest", 3, 0, null, "platformTest", null);
-            catalogueDAO.removeVideogame("emailTest", videogame);
-            List<Videogame> games = catalogueDAO.getCatalogue("emailTest");
-            assertEquals(0, (long) games.size());
-        } catch(PersistencyErrorException e){
-            fail();
-        }
-    }
 }

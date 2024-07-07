@@ -31,37 +31,5 @@ public class CatalogueDAOQueries {
         pstmt.setInt(4, videogame.getCopies());
 
         pstmt.execute();
-
-    }
-
-    public static void removeVideogameQuery(Connection conn, String email, Videogame videogame) throws SQLException{
-        String updateQuery = "UPDATE Catalogue SET Copies = Copies - ? WHERE Name = ? AND Platform = ? AND Email = ?;";
-        String deleteQuery = "DELETE FROM Catalogue WHERE Name = ? AND Platform = ? AND Email = ? AND Copies <= 0;";
-
-        try{
-            PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
-            PreparedStatement deleteStmt = conn.prepareStatement(deleteQuery);
-            conn.setAutoCommit(false);
-
-            updateStmt.setInt(1, videogame.getCopies());
-            updateStmt.setString(2, videogame.getName());
-            updateStmt.setString(3, videogame.getPlatform());
-            updateStmt.setString(4, email);
-
-            deleteStmt.setString(1, videogame.getName());
-            deleteStmt.setString(2, videogame.getPlatform());
-            deleteStmt.setString(3, email);
-
-            updateStmt.execute();
-            deleteStmt.execute();
-
-            conn.commit();
-
-        } catch(SQLException e){
-            conn.rollback();
-            throw new SQLException(e.getMessage());
-        } finally{
-            conn.setAutoCommit(true);
-        }
     }
 }
