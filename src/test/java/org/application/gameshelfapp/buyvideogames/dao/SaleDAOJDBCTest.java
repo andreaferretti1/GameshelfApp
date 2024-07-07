@@ -360,11 +360,4 @@ class SaleDAOJDBCTest {
         SaleDAO saleDAO = jdbcFactory.createSaleDAO();
         assertThrows(WrongSaleException.class, () -> saleDAO.getSaleToConfirmById(1));
     }
-
-    @Test
-    void getSaleToConfirmWrongStateExceptionTest(){     //in the database there was tuple (1, 'nameTest', 'gameName', '2', '40', 'platformTest', 'Confirmed', 'addressTest', 'emailTest')
-        JDBCFactory jdbcFactory = new JDBCFactory();
-        SaleDAO saleDAO = jdbcFactory.createSaleDAO();
-        assertThrows(WrongSaleException.class, () -> saleDAO.getSaleToConfirmById(1));
-    }
 }

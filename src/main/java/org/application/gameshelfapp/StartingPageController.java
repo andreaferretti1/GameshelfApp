@@ -41,7 +41,7 @@ public class StartingPageController extends Application {
     @FXML
     private void switchToRegistrationPage(MouseEvent event) {
         try{
-           RegistrationPageController.start(this.getCurrentStage() , this.userBoundary);
+           RegistrationPageController.start(this.getCurrentStage());
         } catch (IOException e) {
             System.exit(1);
         }

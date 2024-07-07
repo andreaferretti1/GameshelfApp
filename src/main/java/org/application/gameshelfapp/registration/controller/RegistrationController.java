@@ -32,8 +32,8 @@ public class RegistrationController {
         googleBoundary.sendMail("check email", regAccess.getEmail());
     }
 
-    public UserBean checkCode(RegistrationBean regBean) throws CheckFailedException, PersistencyErrorException{
-        this.regAccess.checkCode(regBean.getCheckCode());
+    public UserBean checkCode(int code) throws CheckFailedException, PersistencyErrorException{
+        this.regAccess.checkCode(code);
         AccessDAO accessDAO = PersistencyAbstractFactory.getFactory().createAccessDAO();
         accessDAO.saveAccount(this.regAccess);
         User user = new User(regAccess.getUsername(), regAccess.getEmail(), regAccess.getTypeOfUser());

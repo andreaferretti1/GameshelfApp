@@ -1,7 +1,6 @@
 package org.application.gameshelfapp.buyvideogames.boundary;
 
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
-import org.application.gameshelfapp.buyvideogames.bean.VideogamesFoundBean;
 import org.application.gameshelfapp.buyvideogames.dao.SaleDAO;
 import org.application.gameshelfapp.buyvideogames.entities.Sale;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
@@ -11,6 +10,7 @@ import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
+import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 import org.junit.jupiter.api.Test;
 
@@ -28,10 +28,10 @@ class CustomerBoundaryTest {
     }
 
     @Test
-    void setAndGetVideogameFoundBeanTest(){
+    void setAndGetVideogameSellingGameCatalogueTestTest(){
         CustomerBoundary customerBoundary = new CustomerBoundary(null);
-        customerBoundary.setVideogamesFoundBean(new VideogamesFoundBean());
-        assertNotNull(customerBoundary.getVideogamesFoundBean());
+        customerBoundary.setSellingGamesCatalogueBean(new SellingGamesCatalogueBean());
+        assertNotNull(customerBoundary.getSellingGamesCatalogueBean());
     }
 
     @Test
@@ -60,8 +60,7 @@ class CustomerBoundaryTest {
         CustomerBoundary customerBoundary = new CustomerBoundary(new UserBean());
         try{
             customerBoundary.insertFilters("nameTest1", "consoleTest", "categoryTest");
-            customerBoundary.getVideogamesFoundBean().getInformationFromModel();
-            List<VideogameBean> gamesBean = customerBoundary.getVideogamesFoundBean().getVideogamesFoundBean();
+            List<VideogameBean> gamesBean = customerBoundary.getSellingGamesCatalogueBean().getSellingGamesBean();
             assertEquals(1, (long) gamesBean.size());
         } catch(PersistencyErrorException | NoGameInCatalogueException e){
             fail();
@@ -73,8 +72,7 @@ class CustomerBoundaryTest {
         CustomerBoundary customerBoundary = new CustomerBoundary(new UserBean());
         try{
             customerBoundary.insertFilters(null, "consoleTest", "categoryTest");
-            customerBoundary.getVideogamesFoundBean().getInformationFromModel();
-            List<VideogameBean> gamesBean = customerBoundary.getVideogamesFoundBean().getVideogamesFoundBean();
+            List<VideogameBean> gamesBean = customerBoundary.getSellingGamesCatalogueBean().getSellingGamesBean();
             assertEquals(2, (long) gamesBean.size());
         } catch(PersistencyErrorException | NoGameInCatalogueException e){
             fail();

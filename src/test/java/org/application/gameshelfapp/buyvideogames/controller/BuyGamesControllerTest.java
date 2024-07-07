@@ -8,6 +8,7 @@ import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
+import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 import org.junit.jupiter.api.Test;
 
@@ -25,9 +26,8 @@ class BuyGamesControllerTest{
         filtersBean.setCategoryBean("categoryTest");
         filtersBean.setConsoleBean("consoleTest");
         try{
-            VideogamesFoundBean videogamesFoundBean = controller.searchVideogame(filtersBean);
-            videogamesFoundBean.getInformationFromModel();
-            assertEquals(1, (long) videogamesFoundBean.getVideogamesFoundBean().size());
+            SellingGamesCatalogueBean sellingGamesCatalogueBean = controller.searchVideogame(filtersBean);
+            assertEquals(1, (long) sellingGamesCatalogueBean.getSellingGamesBean().size());
         } catch (PersistencyErrorException | NoGameInCatalogueException e){
             fail();
         }
@@ -41,9 +41,8 @@ class BuyGamesControllerTest{
         filtersBean.setConsoleBean("consoleTest1");
         filtersBean.setCategoryBean("categoryTest1");
         try{
-            VideogamesFoundBean videogamesFoundBean = controller.searchVideogame(filtersBean);
-            videogamesFoundBean.getInformationFromModel();
-            assertEquals(1, (long) videogamesFoundBean.getVideogamesFoundBean().size());
+            SellingGamesCatalogueBean sellingGamesCatalogueBean = controller.searchVideogame(filtersBean);
+            assertEquals(1, (long) sellingGamesCatalogueBean.getSellingGamesBean().size());
         } catch(PersistencyErrorException | NoGameInCatalogueException e){
             fail();
         }
@@ -146,17 +145,6 @@ class BuyGamesControllerTest{
     }
 
     @Test
-    void getSalesTest(){        //In the Sale table there is tuple ('1', 'nameTest1', 'gameNameTest1', '3', '10', 'consoleTest', 'To confirm', 'addressTest', 'emailTest')
-        BuyGamesController controller = new BuyGamesController();
-        try {
-            List<SaleBean> sales = controller.getSales();
-            assertEquals(1, (long) sales.size());
-        }  catch(PersistencyErrorException e){
-            fail();
-        }
-    }
-
-    @Test
     void getSalesDifferentSalesTest(){      //In the Sale table there are tuples ('1', 'nameTest1', 'gameNameTest1', '3', '10', 'consoleTest', 'To confirm', 'addressTest', 'emailTest'), ('2', 'nameTest2', 'gameNameTest2', '1', '15', 'consoleTest2', 'Confirmed', 'addressTest', 'emailTest')
         BuyGamesController controller = new BuyGamesController();
         try{
@@ -171,19 +159,7 @@ class BuyGamesControllerTest{
     void confirmDeliveryTest(){     //In the Sale table there is tuple ('1', 'nameTest1', 'gameNameTest1', '3', '10', 'consoleTest', 'To confirm', 'addressTest', 'fer.andrea35@gmail.com')
         BuyGamesController controller = new BuyGamesController();
         try{
-            VideogameBean videogameBean = new VideogameBean();
-            videogameBean.setName("gameNameTest1");
-            videogameBean.setCopiesBean(3);
-            videogameBean.setPriceBean(10);
-            videogameBean.setPlatformBean("consoleTest");
-            SaleBean saleBean = new SaleBean();
-            saleBean.setIdBean(1);
-            saleBean.setNameBean("nameTest1");
-            saleBean.setGameSoldBean(videogameBean);
-            saleBean.setStateBean("To confirm");
-            saleBean.setAddressBean("addressTest");
-            saleBean.setEmailBean("fer.andrea35@gmail.com");
-            controller.confirmDelivery(saleBean);
+            controller.confirmDelivery(1);
 
             SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
             assertEquals(1, (long) saleDAO.getConfirmedSales().size());
@@ -195,16 +171,12 @@ class BuyGamesControllerTest{
     @Test
     void confirmDeliveryWrongSaleExceptionTest(){       //database was empty
         BuyGamesController controller = new BuyGamesController();
-        SaleBean saleBean = new SaleBean();
-        saleBean.setIdBean(2);
-        assertThrows(WrongSaleException.class, () -> controller.confirmDelivery(saleBean));
+        assertThrows(WrongSaleException.class, () -> controller.confirmDelivery(2));
     }
 
     @Test
     void confirmedDeliveryWrongStateExceptionTest(){        //In the database there was tuple ('1', 'testName', 'gameName', '2', '22', 'platformTest', 'Comfirmed', 'addressTest', 'emailTest')
         BuyGamesController controller = new BuyGamesController();
-        SaleBean saleBean = new SaleBean();
-        saleBean.setIdBean(1);
-        assertThrows(WrongSaleException.class, () -> controller.confirmDelivery(saleBean));
+        assertThrows(WrongSaleException.class, () -> controller.confirmDelivery(1));
     }
 }

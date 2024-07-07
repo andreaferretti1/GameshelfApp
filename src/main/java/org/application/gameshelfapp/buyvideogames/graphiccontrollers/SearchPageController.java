@@ -13,11 +13,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
-import org.application.gameshelfapp.buyvideogames.bean.VideogamesFoundBean;
 import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
+import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
 import java.io.IOException;
@@ -63,8 +63,7 @@ public class SearchPageController implements Initializable{
         } catch(PersistencyErrorException | NoGameInCatalogueException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
         }
-        this.customerBoundary.getVideogamesFoundBean().getInformationFromModel();
-        this.showGamesFound(customerBoundary.getVideogamesFoundBean().getVideogamesFoundBean());
+        this.showGamesFound(this.customerBoundary.getSellingGamesCatalogueBean().getSellingGamesBean());
     }
 
     @FXML
@@ -91,8 +90,8 @@ public class SearchPageController implements Initializable{
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.categoryChoiceBox.getItems().setAll(category);
         this.platformChoiceBox.getItems().setAll(platform);
-        VideogamesFoundBean videogamesFoundBean = this.customerBoundary.getVideogamesFoundBean();
-        if(videogamesFoundBean != null) this.showGamesFound(videogamesFoundBean.getVideogamesFoundBean());
+        SellingGamesCatalogueBean sellingGamesCatalogueBean = this.customerBoundary.getSellingGamesCatalogueBean();
+        if(sellingGamesCatalogueBean != null) this.showGamesFound(sellingGamesCatalogueBean.getSellingGamesBean());
     }
 
     private void showGamesFound(List<VideogameBean> games){

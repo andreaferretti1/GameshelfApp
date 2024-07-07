@@ -3,7 +3,7 @@ package org.application.gameshelfapp.buyvideogames.controller;
 import org.application.gameshelfapp.buyvideogames.bean.*;
 import org.application.gameshelfapp.buyvideogames.boundary.Braintree;
 import org.application.gameshelfapp.buyvideogames.boundary.Geocoder;
-import org.application.gameshelfapp.buyvideogames.boundary.ShipmentCompany;
+import org.application.gameshelfapp.buyvideogames.boundary.FedEx;
 import org.application.gameshelfapp.buyvideogames.dao.CatalogueDAO;
 import org.application.gameshelfapp.buyvideogames.dao.ItemDAO;
 import org.application.gameshelfapp.buyvideogames.dao.SaleDAO;
@@ -14,6 +14,8 @@ import org.application.gameshelfapp.login.boundary.GoogleBoundary;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.seevideogamecatalogue.SeeGameCatalogueController;
+import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
 import java.io.IOException;
@@ -21,17 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BuyGamesController {
-    public VideogamesFoundBean searchVideogame(FiltersBean filtersBean) throws PersistencyErrorException, NoGameInCatalogueException {
-
-        Filters filters = new Filters(filtersBean.getNameBean(), filtersBean.getConsoleBean(), filtersBean.getCategoryBean());
-
-        ItemDAO itemDao = PersistencyAbstractFactory.getFactory().createItemDAO();
-        VideogamesFound gamesFound = new VideogamesFound();
-        VideogamesFoundBean gamesFoundBean = new VideogamesFoundBean();
-
-        gamesFound.setGamesFound(itemDao.getVideogamesFiltered(filters));
-        gamesFoundBean.setVideogamesFound(gamesFound);
-        return gamesFoundBean;
+    public SellingGamesCatalogueBean searchVideogame(FiltersBean filtersBean) throws PersistencyErrorException, NoGameInCatalogueException {
+        SeeGameCatalogueController controller = new SeeGameCatalogueController();
+        return controller.displaySellingGamesCatalogue(filtersBean);
     }
 
     public void sendMoney(CredentialsBean credentialsBean, VideogameBean videogameBean, UserBean userBean) throws RefundException, GameSoldOutException, PersistencyErrorException, InvalidAddressException, NoGameInCatalogueException {
@@ -85,15 +79,15 @@ public class BuyGamesController {
         return salesBean;
     }
 
-    public void confirmDelivery(SaleBean saleBean) throws GmailException, ConfirmDeliveryException, PersistencyErrorException, WrongSaleException {
-        ShipmentCompany shipmentCompany = new ShipmentCompany();
+    public void confirmDelivery(long id) throws GmailException, ConfirmDeliveryException, PersistencyErrorException, WrongSaleException {
+        FedEx shipmentCompany = new FedEx();
         GoogleBoundary googleBoundary = new GoogleBoundary();
 
         SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
-        Sale sale = saleDAO.getSaleToConfirmById(saleBean.getIdBean());
+        Sale sale = saleDAO.getSaleToConfirmById(id);
         try{
             CatalogueDAO catalogueDAO = PersistencyAbstractFactory.getFactory().createCatalogueDAO();
-            catalogueDAO.addVideogame(saleBean.getEmailBean(), sale.getVideogameSold());
+            catalogueDAO.addVideogame(sale.getEmail(), sale.getVideogameSold());
             saleDAO.updateSale(sale);
             shipmentCompany.confirmDelivery(sale.getAddress());
 

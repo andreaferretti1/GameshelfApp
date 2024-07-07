@@ -38,7 +38,7 @@ public class LogInController {
         this.regController.registration(regBean);
     }
 
-    public UserBean checkCode(RegistrationBean regBean) throws CheckFailedException, PersistencyErrorException{
-        return this.regController.checkCode(regBean);
+    public UserBean checkCode(int code) throws CheckFailedException, PersistencyErrorException{
+        return this.regController.checkCode(code);
     }
 }
