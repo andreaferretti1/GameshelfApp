@@ -1,5 +1,6 @@
 package org.application.gameshelfapp.buyvideogames.dao;
 
+import org.application.gameshelfapp.buyvideogames.dao.utils.ItemDAOJDBCUtils;
 import org.application.gameshelfapp.buyvideogames.entities.Filters;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
@@ -7,6 +8,7 @@ import org.application.gameshelfapp.login.dao.JDBCFactory;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVideogameException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -15,9 +17,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ItemDAOJDBCTest {
 
+    @AfterEach
+    void truncateTable(){
+        ItemDAOJDBCUtils.truncateTable();
+    }
     @Test
     void getVideogamesForSaleGameNameTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
         try{
+            ItemDAOJDBCUtils.insertRecord(new String[][]{{"gameTest", "consoleTest", String.valueOf(10), "categoryTest", String.valueOf(2), "descriptionTest"}});
             Filters filters = new Filters("gameTest", "consoleTest", "categoryTest");
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
@@ -32,6 +39,7 @@ class ItemDAOJDBCTest {
     @Test
     void getVideogamesForSaleCopiesTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
         try{
+            ItemDAOJDBCUtils.insertRecord(new String[][]{{"gameTest", "consoleTest", String.valueOf(10), "categoryTest", String.valueOf(2), "descriptionTest"}});
             Filters filters = new Filters("gameTest", "consoleTest", "categoryTest");
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
@@ -46,6 +54,7 @@ class ItemDAOJDBCTest {
     @Test
     void getVideogamesForSalePriceTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
         try{
+            ItemDAOJDBCUtils.insertRecord(new String[][]{{"gameTest", "consoleTest", String.valueOf(10), "categoryTest", String.valueOf(2), "descriptionTest"}});
             Filters filters = new Filters("gameTest", "consoleTest", "categoryTest");
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
@@ -60,6 +69,7 @@ class ItemDAOJDBCTest {
     @Test
     void getVideogamesForSaleDescriptionTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
         try{
+            ItemDAOJDBCUtils.insertRecord(new String[][]{{"gameTest", "consoleTest", String.valueOf(10), "categoryTest", String.valueOf(2), "descriptionTest"}});
             Filters filters = new Filters("gameTest", "consoleTest", "categoryTest");
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
@@ -74,6 +84,7 @@ class ItemDAOJDBCTest {
     @Test
     void getVideogamesForSalePlatformTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
         try{
+            ItemDAOJDBCUtils.insertRecord(new String[][]{{"gameTest", "consoleTest", String.valueOf(10), "categoryTest", String.valueOf(2), "descriptionTest"}});
             Filters filters = new Filters("gameTest", "consoleTest", "categoryTest");
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
@@ -89,6 +100,7 @@ class ItemDAOJDBCTest {
     @Test
     void getVideogamesForSaleCategoryTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
         try{
+            ItemDAOJDBCUtils.insertRecord(new String[][]{{"gameTest", "consoleTest", String.valueOf(10), "categoryTest", String.valueOf(2), "descriptionTest"}});
             Filters filters = new Filters("gameTest", "consoleTest", "categoryTest");
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
@@ -103,6 +115,7 @@ class ItemDAOJDBCTest {
     @Test
     void getVideogameForSaleWithoutNameTest(){       //to run this test were added games ('gameTest1', 'consoleTest1', 'categoryTest1', 'descriptionTest1', '2', '10'), ('gameTest2', 'consoleTest1', 'categoryTest1', 'descriptionTest2', '3', '10'), ('gameTest3', 'consoleTest2', 'categoryTest2', 'descriptionTest3', '4', '9')
         try{
+            ItemDAOJDBCUtils.insertRecord(new String[][]{{"gameTest1", "consoleTest1", String.valueOf(10), "categoryTest1", String.valueOf(2), "descriptionTest1"}, {"gameTest2", "consoleTest1", String.valueOf(10), "categoryTest1", String.valueOf(3), "descriptionTest2"}, {"gameTest3", "consoleTest2", String.valueOf(9), "categoryTest2", String.valueOf(4), "descriptionTest3"}});
             Filters filters = new Filters(null, "consoleTest1", "categoryTest1");
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
@@ -116,6 +129,7 @@ class ItemDAOJDBCTest {
     @Test
     void getVideogamesForSaleZeroCopiesTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '0', '10')
         try{
+            ItemDAOJDBCUtils.insertRecord(new String[][]{{"gameTest", "consoleTest", String.valueOf(10), "categoryTest", String.valueOf(0), "descriptionTest"}});
             Filters filters = new Filters("gameTest", "consoleTest", "categoryTest");
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
@@ -144,6 +158,7 @@ class ItemDAOJDBCTest {
     @Test
     void addGameForSaleExistingDiffConsoleTest(){       //in the database there was the tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
         try{
+            ItemDAOJDBCUtils.insertRecord(new String[][]{{"nameTest", "consoleTest", String.valueOf(10), "categoryTest", String.valueOf(2), "descriptionTest"}});
             Videogame game = new Videogame("nameTest", 3, 11, "descriptionTest", "consoleTest2", "categoryTest");
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
@@ -164,6 +179,7 @@ class ItemDAOJDBCTest {
     @Test
     void removeGameForSaleTest(){       //In the database there was tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
         try{
+            ItemDAOJDBCUtils.insertRecord(new String[][]{{"nameTest", "consoleTest", String.valueOf(10), "categoryTest", String.valueOf(2), "descriptionTest"}});
             Videogame game = new Videogame("nameTest", 1, 10, "descriptionTest", "consoleTest", "categoryTest");
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
@@ -181,6 +197,7 @@ class ItemDAOJDBCTest {
     @Test
     void removGameForSaleSamePriceTest() {        //In the database there was tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
         try {
+            ItemDAOJDBCUtils.insertRecord(new String[][]{{"nameTest", "consoleTest", String.valueOf(10), "categoryTest", String.valueOf(2), "descriptionTest"}});
             Videogame game = new Videogame("nameTest", 1, 10, "descriptionTest", "consoleTest", "categoryTest");
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
@@ -198,6 +215,7 @@ class ItemDAOJDBCTest {
     @Test
     void removGameForSaleSameDescriptionTest() {        //In the database there was tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
         try {
+            ItemDAOJDBCUtils.insertRecord(new String[][]{{"nameTest", "consoleTest", String.valueOf(10), "categoryTest", String.valueOf(2), "descriptionTest"}});
             Videogame game = new Videogame("nameTest", 1, 10, "descriptionTest", "consoleTest", "categoryTest");
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
@@ -213,7 +231,8 @@ class ItemDAOJDBCTest {
     }
 
     @Test
-    void removeGameForSaleSoldOutTest(){        //In the database there was tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
+    void removeGameForSaleSoldOutTest(){    //In the database there was tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
+        ItemDAOJDBCUtils.insertRecord(new String[][]{{"nameTest", "consoleTest", String.valueOf(10), "categoryTest", String.valueOf(2), "descriptionTest"}});
         Videogame game = new Videogame("nameTest", 4, 10, "descriptionTest", "consoleTest", "categoryTest");
         JDBCFactory jdbcFactory = new JDBCFactory();
         ItemDAO itemDAO = jdbcFactory.createItemDAO();
@@ -222,6 +241,7 @@ class ItemDAOJDBCTest {
     @Test
     void removeGameForSaleDiffConsoleTest(){        //In the database there were tuples ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest') and ('nameTest', 'consoleTest1', 'categoryTest', '3', '12', 'descriptionTest')
         try{
+            ItemDAOJDBCUtils.insertRecord(new String[][]{{"nameTest", "consoleTest", String.valueOf(10), "categoryTest", String.valueOf(2), "descriptionTest"}});
             Videogame game = new Videogame("nameTest", 2, 10, "descriptionTest", "consoleTest", "categoryTest");
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();

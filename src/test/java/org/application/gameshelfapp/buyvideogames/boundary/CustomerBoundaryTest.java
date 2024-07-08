@@ -1,6 +1,8 @@
 package org.application.gameshelfapp.buyvideogames.boundary;
 
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
+import org.application.gameshelfapp.buyvideogames.dao.utils.ItemDAOCSVUtils;
+import org.application.gameshelfapp.buyvideogames.dao.utils.ItemDAOJDBCUtils;
 import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
 import org.application.gameshelfapp.confirmsale.entities.Sale;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
@@ -8,10 +10,12 @@ import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressExcept
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
+import org.application.gameshelfapp.login.dao.utils.GetPersistencyTypeUtils;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -20,6 +24,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerBoundaryTest {
 
+    @AfterEach
+    void truncateTable(){
+        if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")){
+            ItemDAOCSVUtils.truncateFile();
+        } else{
+            ItemDAOJDBCUtils.truncateTable();
+        }
+    }
     @Test
     void getandSetSellingGamesCatalogueBeanTest(){
         CustomerBoundary boundary = new CustomerBoundary(null);
@@ -42,6 +54,11 @@ class CustomerBoundaryTest {
 
     @Test
     void inertFiltersByNameTest(){      //In the database there were tuples ('nameTest1', 'consoleTest', 'categoryTest', 'descriptionTest1', '2', '11'), ('nameTest2', 'consoleTest', 'categoryTest', 'descriptionTest', '3', '20')
+        if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")){
+            ItemDAOCSVUtils.insertRecord(new String[][]{{"nameTest1", "consoleTest", "categoryTest", "descriptionTest1", "2", "11"}, {"nameTest2", "consoleTest", "categoryTest", "dscriptionTest", "3", "20"}});
+        } else{
+            ItemDAOJDBCUtils.insertRecord(new String[][]{{"nametest1", "consoleTest", "11", "categoryTest", "descriptionTest1", "2"}, {"nameTest2", "consoleTest", "20", "categoryTest", "descriptionTest", "3"}});
+        }
         CustomerBoundary customerBoundary = new CustomerBoundary(new UserBean());
         try{
             customerBoundary.insertFilters("nameTest1", "consoleTest", "categoryTest");

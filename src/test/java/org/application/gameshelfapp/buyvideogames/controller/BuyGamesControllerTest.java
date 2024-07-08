@@ -3,24 +3,51 @@ package org.application.gameshelfapp.buyvideogames.controller;
 import org.application.gameshelfapp.buyvideogames.bean.CredentialsBean;
 import org.application.gameshelfapp.buyvideogames.bean.FiltersBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
+import org.application.gameshelfapp.buyvideogames.dao.utils.ItemDAOCSVUtils;
+import org.application.gameshelfapp.buyvideogames.dao.utils.ItemDAOJDBCUtils;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
+import org.application.gameshelfapp.confirmsale.bean.SaleBean;
 import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
+import org.application.gameshelfapp.confirmsale.dao.utils.SaleDAOCSVUtils;
+import org.application.gameshelfapp.confirmsale.dao.utils.SaleDAOJDBCUtils;
+import org.application.gameshelfapp.confirmsale.exceptions.ConfirmDeliveryException;
+import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
+import org.application.gameshelfapp.login.dao.utils.GetPersistencyTypeUtils;
+import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BuyGamesControllerTest{
 
+    @AfterEach
+    void truncateFile(){
+        if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")){
+            ItemDAOCSVUtils.truncateFile();
+            SaleDAOCSVUtils.truncateFile();
+        } else{
+            ItemDAOJDBCUtils.truncateTable();
+            SaleDAOJDBCUtils.truncateTable();
+        }
+    }
     @Test
     void searchVideogameTest(){     //In the Videogame table there was tuple ('nameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '20')
+        if (GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) {
+            ItemDAOCSVUtils.insertRecord(new String[][]{{"nameTest", "consoleTest", "categoryTest", "descriptionTest", "2", "20"}});
+        } else {
+            ItemDAOJDBCUtils.insertRecord(new String[][]{{"nameTest", "consoleTest", "20", "categoryTest", "descriptionTest", "2"}});
+        }
         BuyGamesController controller = new BuyGamesController();
         FiltersBean filtersBean = new FiltersBean();
         filtersBean.setNameBean("nameTest");
@@ -37,6 +64,12 @@ class BuyGamesControllerTest{
     @Test
     void searchVideogameWithoutNameTest(){      /*In the videogame table there was tuple ('nameTest1', 'consoleTest1', 'categoryTest1', 'descriptionTest1', '2', '20')
                                                 ('nameTest2', 'consoleTest2', 'categoryTest2', 'descriptionTest2', '3', '40')*/
+
+        if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")){
+            ItemDAOCSVUtils.insertRecord(new String[][]{{"nameTest1", "consoleTest1", "categoryTest1", "descriptionTest1", "2", "20"}, {"nameTest2", "consoleTest2", "categoryTest2", "descriptionTest2", "3", "40"}});
+        } else{
+            ItemDAOJDBCUtils.insertRecord(new String[][]{{"nameTest1", "consoleTest1", "20", "categoryTest1", "descriptionTest1", "2"}, {"nameTest2", "consoleTest2", "40", "categoryTest2", "descriptionTest2", "3"}});
+        }
         BuyGamesController controller = new BuyGamesController();
         FiltersBean filtersBean = new FiltersBean();
         filtersBean.setConsoleBean("consoleTest1");
@@ -62,6 +95,11 @@ class BuyGamesControllerTest{
 
     @Test
     void sendMoneyTest(){       //In the Videogame table there was tuple ('nameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2','30'), sale table was empty
+        if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")){
+            ItemDAOCSVUtils.insertRecord(new String[][]{{"nameTest", "consoleTest", "categoryTest", "descriptionTest", "2", "30"}});
+        } else{
+            ItemDAOJDBCUtils.insertRecord(new String[][]{{"nameTest", "consoleTest", "30", "categoryTest", "descriptionTest", "2"}});
+        }
         try{
             BuyGamesController controller = new BuyGamesController();
             UserBean userBean = new UserBean();
@@ -99,6 +137,11 @@ class BuyGamesControllerTest{
 
     @Test
     void sendMoneyWrongAddressTest(){       //In the Videogame table there was tuple ('nameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2','30')
+        if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")){
+            ItemDAOCSVUtils.insertRecord(new String[][]{{"nameTest", "consoleTest", "categoryTest", "descriptionTest", "2", "30"}});
+        } else{
+            ItemDAOJDBCUtils.insertRecord(new String[][]{{"nameTest", "consoleTest", "30", "categoryTest", "descriptionTest", "2"}});
+        }
         try {
             BuyGamesController controller = new BuyGamesController();
             UserBean userBean = new UserBean();
@@ -123,6 +166,11 @@ class BuyGamesControllerTest{
 
     @Test
     void sendMoneyGameSoldOutTest(){        //In the Videogame table there was tuple ('nameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2','30')
+        if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")){
+            ItemDAOCSVUtils.insertRecord(new String[][]{{"nameTest", "consoleTest", "categoryTest", "descriptionTest", "2", "30"}});
+        } else{
+            ItemDAOJDBCUtils.insertRecord(new String[][]{{"nameTest", "consoleTest", "30", "categoryTest", "descriptionTest", "2"}});
+        }
         try {
             BuyGamesController controller = new BuyGamesController();
             UserBean userBean = new UserBean();
@@ -143,5 +191,56 @@ class BuyGamesControllerTest{
         } catch(SyntaxErrorException e){
             fail();
         }
+    }
+
+    @Test
+    void getSalesDifferentSalesTest(){      //In the Sale table there are tuples ('1', 'nameTest1', 'gameNameTest1', '3', '10', 'consoleTest', 'To confirm', 'addressTest', 'emailTest'), ('2', 'nameTest2', 'gameNameTest2', '1', '15', 'consoleTest2', 'Confirmed', 'addressTest', 'emailTest')
+        if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")){
+            SaleDAOCSVUtils.insertRecord(new String[][]{{"1", "nameTest1", "gameNameTest1", "3", "10", "consoleTest", "To confirm", "addressTest", "emailTest"}, {"2", "nameTest2", "gameNameTest2", "1", "15", "consoleTest2", "Confirmed", "addressTest", "emailTest"}});
+        } else{
+            SaleDAOJDBCUtils.insertRecord(new String[][]{{"3", "10", "To confirm", "gameNameTest1", "consoleTest", "nameTest1", "emailTest", "addressTest"}, {"1", "15", "Confirmed", "gameNametest2", "consoleTest2", "nameTest2", "emailTest", "addressTest"}});
+        }
+        BuyGamesController controller = new BuyGamesController();
+        try{
+            List<SaleBean> sales = controller.getSales();
+            assertEquals(1, (long) sales.size());
+        } catch(PersistencyErrorException e){
+            fail();
+        }
+    }
+
+    @Test
+    void confirmDeliveryTest(){     //In the Sale table there is tuple ('1', 'nameTest1', 'gameNameTest1', '3', '10', 'consoleTest', 'To confirm', 'addressTest', 'fer.andrea35@gmail.com')
+        if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")){
+            SaleDAOCSVUtils.insertRecord(new String[][]{{"1", "nameTest1", "gameNameTest1", "3", "10", "consoleTest", "To confirm", "addressTest", "fer.andrea35@gmail.com"}});
+        } else{
+            SaleDAOJDBCUtils.insertRecord(new String[][]{{"3", "10", "To confirm", "gameNameTest1", "consoleTest", "nameTest1", "fer.andrea35@gmail.com", "addressTest"}});
+        }
+        BuyGamesController controller = new BuyGamesController();
+        try{
+            controller.confirmDelivery(1);
+
+            SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
+            assertEquals(1, (long) saleDAO.getConfirmedSales().size());
+        } catch(PersistencyErrorException | ConfirmDeliveryException | WrongSaleException | GmailException e){
+            fail();
+        }
+    }
+
+    @Test
+    void confirmDeliveryWrongSaleExceptionTest(){       //database was empty
+        BuyGamesController controller = new BuyGamesController();
+        assertThrows(WrongSaleException.class, () -> controller.confirmDelivery(2));
+    }
+
+    @Test
+    void confirmedDeliveryWrongStateExceptionTest(){        //In the database there was tuple ('1', 'testName', 'gameName', '2', '22', 'platformTest', 'Comfirmed', 'addressTest', 'emailTest')
+        if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")){
+            SaleDAOCSVUtils.insertRecord(new String[][]{{"1", "testName", "gameName", "2", "22", "platformTest", "Confirmed", "addressTest", "emailTest"}});
+        } else{
+            SaleDAOJDBCUtils.insertRecord(new String[][]{{"2", "22", "Confirmed", "gameName", "platformTest", "testName", "emailTest", "addressTest"}});
+        }
+        BuyGamesController controller = new BuyGamesController();
+        assertThrows(WrongSaleException.class, () -> controller.confirmDelivery(1));
     }
 }

@@ -34,9 +34,8 @@ CREATE TABLE IF NOT EXISTS Sale(
     Price float NOT NULL,
     GameName varchar(40),
     Platform varchar(20),
-    UserEmail varchar(100) REFERENCES User(Email),
-    UserAddress varchar(100) NOT NULL,
-    FOREIGN KEY (GameName, Platform) REFERENCES ObjectOnSale(Name, Platform)
+    UserEmail varchar(100),
+    UserAddress varchar(100) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Catalogue(
@@ -46,3 +45,4 @@ CREATE TABLE IF NOT EXISTS Catalogue(
     Platform varchar(50) NOT NULL,
     PRIMARY KEY (Name, Email)
 );
+
