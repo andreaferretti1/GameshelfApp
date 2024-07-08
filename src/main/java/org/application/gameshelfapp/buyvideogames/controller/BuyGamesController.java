@@ -28,10 +28,10 @@ import java.io.IOException;
 import java.util.List;
 
 public class BuyGamesController {
-    private ConfirmSaleController controller;
+    private ConfirmSaleController confirmSaleController;
     public SellingGamesCatalogueBean searchVideogame(FiltersBean filtersBean) throws PersistencyErrorException, NoGameInCatalogueException {
-        SeeGameCatalogueController controller = new SeeGameCatalogueController();
-        return controller.displaySellingGamesCatalogue(filtersBean);
+        SeeGameCatalogueController seeGameCatalogueController = new SeeGameCatalogueController();
+        return seeGameCatalogueController.displaySellingGamesCatalogue(filtersBean);
     }
 
     public void sendMoney(CredentialsBean credentialsBean, VideogameBean videogameBean, UserBean userBean) throws RefundException, GameSoldOutException, PersistencyErrorException, InvalidAddressException, NoGameInCatalogueException {
@@ -72,12 +72,12 @@ public class BuyGamesController {
     }
 
     public List<SaleBean> getSales() throws PersistencyErrorException{
-        this.controller = new ConfirmSaleController();
-        return this.controller.getSales();
+        this.confirmSaleController = new ConfirmSaleController();
+        return this.confirmSaleController.getSales();
     }
 
     public void confirmDelivery(long id) throws GmailException, ConfirmDeliveryException, PersistencyErrorException, WrongSaleException {
-        this.controller.confirmDelivery(id);
+        this.confirmSaleController.confirmDelivery(id);
     }
 }
 
