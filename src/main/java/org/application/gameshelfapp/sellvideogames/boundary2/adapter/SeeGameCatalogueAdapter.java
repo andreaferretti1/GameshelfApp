@@ -7,16 +7,19 @@ import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.boundary.SellerAddGamesBoundary;
 import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVideogameException;
 import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
+import java.util.*;
+
 public class SeeGameCatalogueAdapter implements SeeGameCatalogue {
     SellerAddGamesBoundary boundary;
 
-    public SeeGameCatalogueAdapter(UserBean userBean) { this.boundary = new SellerAddGamesBoundary(userBean); }
+    public SeeGameCatalogueAdapter(UserBean userBean) throws WrongUserTypeException { this.boundary = new SellerAddGamesBoundary(userBean); }
 
     private VideogameBean createVideogameBean(String gameTitle, String console, String category, String description, int copies, float price){
         VideogameBean gameBean = new VideogameBean();
@@ -57,4 +60,15 @@ public class SeeGameCatalogueAdapter implements SeeGameCatalogue {
     }
     @Override
     public UserBean getUserBean(){return this.boundary.getUserBean();}
+
+    @Override
+    public Map<String, String[]> getFilters() throws PersistencyErrorException {
+        Map<String, String[]> filters = new HashMap<>();
+        List<String> cat = this.boundary.getCategories();
+        filters.put("Category", cat.toArray(cat.toArray(new String[0])));
+        List<String> con = this.boundary.getConsoles();
+        filters.put("Console", con.toArray(new String[0]));
+        return filters;
+    }
+
 }

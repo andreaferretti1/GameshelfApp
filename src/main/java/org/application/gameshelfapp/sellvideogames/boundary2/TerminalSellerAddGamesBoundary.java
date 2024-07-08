@@ -13,11 +13,15 @@ import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVide
 import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
+import java.util.Map;
+
 public class TerminalSellerAddGamesBoundary implements TerminalBoundary {
 
     SeeGameCatalogue seeGameCatalogueAdapter;
 
-    public TerminalSellerAddGamesBoundary(UserBean userBean) { this.seeGameCatalogueAdapter = new SeeGameCatalogueAdapter(userBean);}
+    public static final String START_COMMAND = "Type <show>";
+
+    public TerminalSellerAddGamesBoundary(UserBean userBean) throws WrongUserTypeException { this.seeGameCatalogueAdapter = new SeeGameCatalogueAdapter(userBean);}
 
     private String catalogueBeanToString(SellingGamesCatalogueBean catalogueBean){
         StringBuilder game = new StringBuilder();
@@ -26,10 +30,20 @@ public class TerminalSellerAddGamesBoundary implements TerminalBoundary {
         }
         return game + "\nType <add/remove/update, gameTitle, console, category, description, copies, price>\n\n";
     }
+    private String mapToString(Map<String, String[]> map){
+        StringBuilder filters = new StringBuilder();
+        for(String str: map.keySet()){
+            filters.append(str).append(": ").append(String.join(", ", map.get(str))).append("\n");
+        }
+        return filters + "\nType <search, gameTitle, console, category>\n\n";
+    }
     @Override
     public String executeCommand(String[] command) throws PersistencyErrorException, CheckFailedException, GmailException, ArrayIndexOutOfBoundsException, NoGameInCatalogueException, InvalidTitleException, AlreadyExistingVideogameException, GameSoldOutException {
         switch(command[0]){
-            case "show" -> {
+            case "filters" -> {
+                return this.mapToString(this.seeGameCatalogueAdapter.getFilters());
+            }
+            case "search" -> {
                 return this.catalogueBeanToString(this.seeGameCatalogueAdapter.getSellingGamesCatalogue(command[1], command[2], command[3]));
             }
             case "add" -> {

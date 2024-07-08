@@ -7,6 +7,8 @@ import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
+import org.application.gameshelfapp.sellvideogames.dao.CategoryDAO;
+import org.application.gameshelfapp.sellvideogames.dao.ConsoleDAO;
 import org.application.gameshelfapp.sellvideogames.entities.SellingGamesCatalogue;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
@@ -27,5 +29,13 @@ public class SeeGameCatalogueController {
         sellingGamesCatalogueBean.setSubject(null);
 
         return sellingGamesCatalogueBean;
+    }
+    public List<String> getCategoriesValue() throws PersistencyErrorException {
+        CategoryDAO categoryDAO = PersistencyAbstractFactory.getFactory().createCategoryDAO();
+        return categoryDAO.getCategories();
+    }
+    public List<String> getConsolesValue() throws PersistencyErrorException {
+        ConsoleDAO consoleDAO = PersistencyAbstractFactory.getFactory().createConsoleDAO();
+        return consoleDAO.getConsoles();
     }
 }

@@ -7,11 +7,14 @@ import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.controller.SellVideogamesController;
 import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVideogameException;
 import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
+
+import java.util.List;
 
 public class SellerAddGamesBoundary {
 
@@ -22,8 +25,8 @@ public class SellerAddGamesBoundary {
     private SellingGamesCatalogueBean sellingGamesCatalogueBean;
 
 
-    public SellerAddGamesBoundary(UserBean userBean) {
-        this.sellVideogamesController = new SellVideogamesController();
+    public SellerAddGamesBoundary(UserBean userBean) throws WrongUserTypeException {
+        this.sellVideogamesController = new SellVideogamesController(userBean);
         this.userBean = userBean;
     }
 
@@ -54,4 +57,8 @@ public class SellerAddGamesBoundary {
     public UserBean getUserBean() {
         return this.userBean;
     }
+
+    public List<String> getCategories() throws PersistencyErrorException { return this.sellVideogamesController.obtainCategories(); }
+
+    public List<String> getConsoles() throws PersistencyErrorException { return this.sellVideogamesController.obtainConsoles(); }
 }

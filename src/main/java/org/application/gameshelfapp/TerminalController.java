@@ -72,12 +72,12 @@ public class TerminalController extends Application implements Initializable{
             } catch (SyntaxErrorException | PersistencyErrorException | CheckFailedException | GmailException |
                      NumberFormatException | RefundException | GameSoldOutException | NullPasswordException |
                      InvalidAddressException | ConfirmDeliveryException | NoGameInCatalogueException |
-                     InvalidTitleException | AlreadyExistingVideogameException | WrongSaleException e) {
+                     InvalidTitleException | AlreadyExistingVideogameException | WrongSaleException | WrongUserTypeException e) {
                 this.textArea.appendText("\n\n" + e.getMessage());
             } catch (ArrayIndexOutOfBoundsException e) {
                 this.textArea.appendText("You should insert the right number of parameters");
             } catch(NullPointerException e){
-            //this.textArea.appendText(String.join(" or ", TerminalUserLogInBoundary.START_COMMAND, TerminalRegistrationBoundary.START_COMMAND, TerminalCustomerBoundary.START_COMMAND, TerminalSellerBoundary.START_COMMAND, TerminalSellerAddGamesBoundary.START_COMMAND, TerminalAdminBoundary.START_COMMAND));
+            this.textArea.appendText(String.join(" or ", TerminalUserLogInBoundary.START_COMMAND, TerminalRegistrationBoundary.START_COMMAND, TerminalCustomerBoundary.START_COMMAND, TerminalSellerBoundary.START_COMMAND, TerminalSellerAddGamesBoundary.START_COMMAND, TerminalAdminBoundary.START_COMMAND));
         }
     }
 

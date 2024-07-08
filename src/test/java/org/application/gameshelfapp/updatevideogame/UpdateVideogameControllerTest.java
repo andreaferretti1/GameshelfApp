@@ -6,7 +6,6 @@ import org.application.gameshelfapp.buyvideogames.entities.Filters;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
-import org.application.gameshelfapp.sellvideogames.controller.SellVideogamesController;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 import org.junit.jupiter.api.Test;
 
@@ -81,7 +80,7 @@ class UpdateVideogameControllerTest {
 
     @Test
     void updateGameInCatalogueExceptionLaunchedTest(){          //Databse is empty
-        SellVideogamesController test = new SellVideogamesController();
+        UpdateVideogameController test = new UpdateVideogameController();
         VideogameBean gameBeanTest = new VideogameBean();
         gameBeanTest.setName("Test");
         gameBeanTest.setCopiesBean(2);
@@ -89,6 +88,6 @@ class UpdateVideogameControllerTest {
         gameBeanTest.setPlatformBean("TestConsole2");
         gameBeanTest.setCategoryBean("TestCategory2");
         gameBeanTest.setDescriptionBean("This is a new description");
-        assertThrows(NoGameInCatalogueException.class, ()->test.modifyGameInCatalogue(gameBeanTest));
+        assertThrows(NoGameInCatalogueException.class, ()->test.updateGameInCatalogue(gameBeanTest));
     }
 }

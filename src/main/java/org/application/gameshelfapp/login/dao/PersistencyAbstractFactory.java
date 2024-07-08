@@ -4,6 +4,8 @@ import org.application.gameshelfapp.buyvideogames.dao.CatalogueDAO;
 import org.application.gameshelfapp.buyvideogames.dao.ItemDAO;
 import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.sellvideogames.dao.CategoryDAO;
+import org.application.gameshelfapp.sellvideogames.dao.ConsoleDAO;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -33,4 +35,6 @@ public abstract class PersistencyAbstractFactory {
         public abstract CatalogueDAO createCatalogueDAO() throws PersistencyErrorException;
         public abstract AccessDAO createAccessDAO() throws PersistencyErrorException;
         public abstract SaleDAO createSaleDAO() throws PersistencyErrorException;
+        public abstract CategoryDAO createCategoryDAO() throws PersistencyErrorException;
+        public abstract ConsoleDAO createConsoleDAO() throws PersistencyErrorException;
 }

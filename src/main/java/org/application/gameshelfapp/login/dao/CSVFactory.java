@@ -4,6 +4,10 @@ import org.application.gameshelfapp.buyvideogames.dao.*;
 import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
 import org.application.gameshelfapp.confirmsale.dao.SaleDAOCSV;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.sellvideogames.dao.CategoryDAO;
+import org.application.gameshelfapp.sellvideogames.dao.CategoryDAOCSV;
+import org.application.gameshelfapp.sellvideogames.dao.ConsoleDAO;
+import org.application.gameshelfapp.sellvideogames.dao.ConsoleDAOCSV;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,6 +34,14 @@ public class CSVFactory extends PersistencyAbstractFactory {
     @Override
     public SaleDAO createSaleDAO() throws PersistencyErrorException {
         return new SaleDAOCSV(this.getFile("CSV_GAMES_SOLD"));
+    }
+    @Override
+    public CategoryDAO createCategoryDAO() throws PersistencyErrorException{
+        return new CategoryDAOCSV(this.getFile("CSV_CATEGORY"));
+    }
+    @Override
+    public ConsoleDAO createConsoleDAO() throws PersistencyErrorException{
+        return new ConsoleDAOCSV(this.getFile("CSV_CONSOLE"));
     }
 
     private File getFile(String key) throws PersistencyErrorException{
