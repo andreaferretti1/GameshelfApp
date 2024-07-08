@@ -1,9 +1,11 @@
 package org.application.gameshelfapp.login.controller;
 
 import org.application.gameshelfapp.login.bean.LogInBean;
-import org.application.gameshelfapp.registration.bean.RegistrationBean;
 import org.application.gameshelfapp.login.bean.UserBean;
-import org.application.gameshelfapp.login.exception.*;
+import org.application.gameshelfapp.login.exception.CheckFailedException;
+import org.application.gameshelfapp.login.exception.NullPasswordException;
+import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,48 +49,6 @@ class LogInControllerTest {
             assertThrows(CheckFailedException.class, () -> logInController.logIn(logInBean));
         } catch(SyntaxErrorException  e){
             fail();
-        }
-    }
-
-    @Test
-    void registrationTest(){
-        LogInController logInController = new LogInController();
-        RegistrationBean registrationBean = new RegistrationBean();
-        try{
-            registrationBean.setUsernameBean("nameTest");
-            registrationBean.setEmailBean("fer.andrea35@gmail.com");
-            registrationBean.setPasswordBean("testPassword");
-            logInController.registration(registrationBean);
-        } catch(SyntaxErrorException | NullPasswordException | CheckFailedException | PersistencyErrorException | GmailException e){
-            fail();
-        }
-    }
-
-    @Test
-    void regsitrationSameUsernameTest(){        //In the database there was tuple ('nameTest', 'email@gmail.com', 'testPassword', 'Customer')
-        LogInController logInController = new LogInController();
-        RegistrationBean registrationBean = new RegistrationBean();
-        try{
-            registrationBean.setUsernameBean("nameTest");
-            registrationBean.setEmailBean("email2@gmail.com");
-            registrationBean.setPasswordBean("passwordTest");
-            assertThrows(CheckFailedException.class, () -> logInController.registration(registrationBean));
-        } catch(SyntaxErrorException e){
-            fail();
-        }
-    }
-
-    @Test
-    void registrationSameEmailTest(){       //In the database there was tuple ('nameTest', 'email@gmail.com', 'testPassword', 'Customer')
-        LogInController logInController = new LogInController();
-        RegistrationBean registrationBean = new RegistrationBean();
-        try{
-            registrationBean.setUsernameBean("nameTest2");
-            registrationBean.setEmailBean("email@gmail.com");
-            registrationBean.setPasswordBean("testPassword");
-            assertThrows(CheckFailedException.class, () -> logInController.registration(registrationBean));
-        } catch(SyntaxErrorException e){
-             fail();
         }
     }
 }
