@@ -10,11 +10,8 @@ import org.application.gameshelfapp.login.entities.AccessThroughLogIn;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.NullPasswordException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
-import org.application.gameshelfapp.registration.controller.RegistrationController;
 
 public class LogInController {
-    private RegistrationController regController;
-
     public UserBean logIn(LogInBean logBean) throws PersistencyErrorException, CheckFailedException, NullPasswordException {
 
         String logEmail = logBean.getEmailBean();

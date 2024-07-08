@@ -1,9 +1,8 @@
 package org.application.gameshelfapp.confirmsale.dao;
 
-import org.application.gameshelfapp.confirmsale.entities.Sale;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
+import org.application.gameshelfapp.confirmsale.entities.Sale;
 import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
-import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
 import org.application.gameshelfapp.login.dao.CSVFactory;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.junit.jupiter.api.Test;
@@ -180,7 +179,7 @@ class SaleDAOCSVTest {
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -197,7 +196,7 @@ class SaleDAOCSVTest {
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -214,7 +213,7 @@ class SaleDAOCSVTest {
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -231,7 +230,7 @@ class SaleDAOCSVTest {
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -249,7 +248,7 @@ class SaleDAOCSVTest {
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -266,7 +265,7 @@ class SaleDAOCSVTest {
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -283,7 +282,7 @@ class SaleDAOCSVTest {
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -300,7 +299,7 @@ class SaleDAOCSVTest {
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -317,7 +316,7 @@ class SaleDAOCSVTest {
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();

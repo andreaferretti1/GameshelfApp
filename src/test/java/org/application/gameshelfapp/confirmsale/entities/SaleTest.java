@@ -1,7 +1,6 @@
 package org.application.gameshelfapp.confirmsale.entities;
 
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
-import org.application.gameshelfapp.confirmsale.entities.Sale;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

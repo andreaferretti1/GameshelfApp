@@ -3,7 +3,6 @@ package org.application.gameshelfapp.confirmsale.dao;
 import org.application.gameshelfapp.confirmsale.entities.Sale;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
-import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
 import org.application.gameshelfapp.login.dao.JDBCFactory;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.junit.jupiter.api.Test;

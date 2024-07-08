@@ -5,7 +5,6 @@ import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
 import org.application.gameshelfapp.confirmsale.entities.Sale;
 import org.application.gameshelfapp.confirmsale.exceptions.ConfirmDeliveryException;
 import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
-import org.application.gameshelfapp.confirmsale.boundary.SellerBoundary;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.exception.GmailException;
