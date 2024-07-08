@@ -1,11 +1,11 @@
-package org.application.gameshelfapp.buyvideogames.dao;
+package org.application.gameshelfapp.confirmsale.dao;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
-import org.application.gameshelfapp.buyvideogames.exception.WrongSaleException;
+import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
 import org.application.gameshelfapp.login.dao.CSVFactory;
-import org.application.gameshelfapp.buyvideogames.entities.Sale;
+import org.application.gameshelfapp.confirmsale.entities.Sale;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 

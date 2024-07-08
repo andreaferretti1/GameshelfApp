@@ -1,4 +1,4 @@
-package org.application.gameshelfapp.buyvideogames.exception;
+package org.application.gameshelfapp.confirmsale.exceptions;
 
 public class ConfirmDeliveryException extends Exception{
     public ConfirmDeliveryException(String message){

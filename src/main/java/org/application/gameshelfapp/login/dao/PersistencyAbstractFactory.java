@@ -2,7 +2,7 @@ package org.application.gameshelfapp.login.dao;
 
 import org.application.gameshelfapp.buyvideogames.dao.CatalogueDAO;
 import org.application.gameshelfapp.buyvideogames.dao.ItemDAO;
-import org.application.gameshelfapp.buyvideogames.dao.SaleDAO;
+import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
 import java.io.FileInputStream;

@@ -11,16 +11,13 @@ CREATE TABLE IF NOT EXISTS ObjectOnSale(
     PRIMARY KEY (Name, Platform)
 );
 
-CREATE TABLE IF NOT EXISTS Filters(
+CREATE TABLE IF NOT EXISTS Category(
     Type varchar(40) PRIMARY KEY
 );
 
-INSERT IGNORE INTO Filters(Type) VALUES
-('Action'),
-('Adventure'),
-('Shooting'),
-('Arcade'),
-('Simulation');
+CREATE TABLE IF NOT EXISTS Console(
+  Console varchar(50) PRIMARY KEY
+);
 
 CREATE TABLE IF NOT EXISTS User(
     Username varchar(50) NOT NULL UNIQUE,

@@ -1,4 +1,4 @@
-package org.application.gameshelfapp.buyvideogames.exception;
+package org.application.gameshelfapp.confirmsale.exceptions;
 
 public class WrongSaleException extends Exception{
     public WrongSaleException(String message){

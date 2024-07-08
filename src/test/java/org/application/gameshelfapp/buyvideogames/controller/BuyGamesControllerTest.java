@@ -1,18 +1,19 @@
 package org.application.gameshelfapp.buyvideogames.controller;
 
-import org.application.gameshelfapp.buyvideogames.bean.*;
-import org.application.gameshelfapp.buyvideogames.dao.SaleDAO;
-import org.application.gameshelfapp.buyvideogames.exception.*;
+import org.application.gameshelfapp.buyvideogames.bean.CredentialsBean;
+import org.application.gameshelfapp.buyvideogames.bean.FiltersBean;
+import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
+import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
+import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
+import org.application.gameshelfapp.buyvideogames.exception.RefundException;
+import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
-import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -142,41 +143,5 @@ class BuyGamesControllerTest{
         } catch(SyntaxErrorException e){
             fail();
         }
-    }
-
-    @Test
-    void getSalesDifferentSalesTest(){      //In the Sale table there are tuples ('1', 'nameTest1', 'gameNameTest1', '3', '10', 'consoleTest', 'To confirm', 'addressTest', 'emailTest'), ('2', 'nameTest2', 'gameNameTest2', '1', '15', 'consoleTest2', 'Confirmed', 'addressTest', 'emailTest')
-        BuyGamesController controller = new BuyGamesController();
-        try{
-            List<SaleBean> sales = controller.getSales();
-            assertEquals(1, (long) sales.size());
-        } catch(PersistencyErrorException e){
-            fail();
-        }
-    }
-
-    @Test
-    void confirmDeliveryTest(){     //In the Sale table there is tuple ('1', 'nameTest1', 'gameNameTest1', '3', '10', 'consoleTest', 'To confirm', 'addressTest', 'fer.andrea35@gmail.com')
-        BuyGamesController controller = new BuyGamesController();
-        try{
-            controller.confirmDelivery(1);
-
-            SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
-            assertEquals(1, (long) saleDAO.getConfirmedSales().size());
-        } catch(PersistencyErrorException | ConfirmDeliveryException | WrongSaleException | GmailException e){
-            fail();
-        }
-    }
-
-    @Test
-    void confirmDeliveryWrongSaleExceptionTest(){       //database was empty
-        BuyGamesController controller = new BuyGamesController();
-        assertThrows(WrongSaleException.class, () -> controller.confirmDelivery(2));
-    }
-
-    @Test
-    void confirmedDeliveryWrongStateExceptionTest(){        //In the database there was tuple ('1', 'testName', 'gameName', '2', '22', 'platformTest', 'Comfirmed', 'addressTest', 'emailTest')
-        BuyGamesController controller = new BuyGamesController();
-        assertThrows(WrongSaleException.class, () -> controller.confirmDelivery(1));
     }
 }

@@ -1,6 +1,6 @@
-package org.application.gameshelfapp.buyvideogames.dao.queries;
+package org.application.gameshelfapp.confirmsale.dao.queries;
 
-import org.application.gameshelfapp.buyvideogames.entities.Sale;
+import org.application.gameshelfapp.confirmsale.entities.Sale;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

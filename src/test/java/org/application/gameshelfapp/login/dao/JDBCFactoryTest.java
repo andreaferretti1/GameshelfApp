@@ -2,7 +2,7 @@ package org.application.gameshelfapp.login.dao;
 
 import org.application.gameshelfapp.buyvideogames.dao.CatalogueDAOJDBC;
 import org.application.gameshelfapp.buyvideogames.dao.ItemDAOJDBC;
-import org.application.gameshelfapp.buyvideogames.dao.SaleDAOJDBC;
+import org.application.gameshelfapp.confirmsale.dao.SaleDAOJDBC;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

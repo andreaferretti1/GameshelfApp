@@ -1,10 +1,10 @@
-package org.application.gameshelfapp.buyvideogames.boundary2;
+package org.application.gameshelfapp.confirmsale.boundary2;
 
-import org.application.gameshelfapp.buyvideogames.bean.SaleBean;
-import org.application.gameshelfapp.buyvideogames.boundary2.adapter.SellerAdapter;
-import org.application.gameshelfapp.buyvideogames.boundary2.adapter.SellerBoundaryInterface;
-import org.application.gameshelfapp.buyvideogames.exception.ConfirmDeliveryException;
-import org.application.gameshelfapp.buyvideogames.exception.WrongSaleException;
+import org.application.gameshelfapp.confirmsale.bean.SaleBean;
+import org.application.gameshelfapp.confirmsale.boundary2.adapter.SellerAdapter;
+import org.application.gameshelfapp.confirmsale.boundary2.adapter.SellerBoundaryInterface;
+import org.application.gameshelfapp.confirmsale.exceptions.ConfirmDeliveryException;
+import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.boundary2.TerminalBoundary;
 import org.application.gameshelfapp.login.exception.GmailException;

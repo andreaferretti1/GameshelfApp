@@ -1,7 +1,7 @@
 package org.application.gameshelfapp.buyvideogames.boundary2;
 
-import org.application.gameshelfapp.buyvideogames.dao.SaleDAO;
-import org.application.gameshelfapp.buyvideogames.entities.Sale;
+import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
+import org.application.gameshelfapp.confirmsale.entities.Sale;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;

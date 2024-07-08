@@ -41,4 +41,10 @@ module org.application.gameshelfapp {
     opens org.application.gameshelfapp.registration.grapichcontroller to javafx.fxml;
     exports org.application.gameshelfapp.registration.boundary;
     exports org.application.gameshelfapp.sellvideogames.bean;
+    exports org.application.gameshelfapp.confirmsale.bean;
+    opens org.application.gameshelfapp.confirmsale.bean to com.google.gson;
+    exports org.application.gameshelfapp.confirmsale.boundary;
+    exports org.application.gameshelfapp.confirmsale.entities;
+    opens org.application.gameshelfapp.confirmsale.entities to com.google.gson;
+    exports org.application.gameshelfapp.confirmsale.exceptions;
 }

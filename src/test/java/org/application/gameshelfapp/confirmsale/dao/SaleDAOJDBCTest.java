@@ -1,9 +1,10 @@
-package org.application.gameshelfapp.buyvideogames.dao;
+package org.application.gameshelfapp.confirmsale.dao;
 
-import org.application.gameshelfapp.buyvideogames.entities.Sale;
+import org.application.gameshelfapp.confirmsale.entities.Sale;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
-import org.application.gameshelfapp.buyvideogames.exception.WrongSaleException;
-import org.application.gameshelfapp.login.dao.CSVFactory;
+import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
+import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
+import org.application.gameshelfapp.login.dao.JDBCFactory;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.junit.jupiter.api.Test;
 
@@ -11,13 +12,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SaleDAOCSVTest {
-
+class SaleDAOJDBCTest {
     @Test
-    void getToconfirmSalesArraySizeTest(){      //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
+    void getToConfirmSalesArraySizeTest(){      //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
         try {
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             List<Sale> sales = saleDAO.getToConfirmSales();
             assertEquals(1, (long) sales.size());
         } catch(PersistencyErrorException e){
@@ -27,8 +27,8 @@ class SaleDAOCSVTest {
     @Test
     void getToConfirmSalesIdTest(){        //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             List<Sale> sales = saleDAO.getToConfirmSales();
 
             Sale sale1 = sales.getFirst();
@@ -40,8 +40,8 @@ class SaleDAOCSVTest {
     @Test
     void getToConfirmSalesNameTest(){        //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             List<Sale> sales = saleDAO.getToConfirmSales();
 
             Sale sale1 = sales.getFirst();
@@ -54,8 +54,8 @@ class SaleDAOCSVTest {
     @Test
     void getToConfirmSalesGameNameTest(){        //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             List<Sale> sales = saleDAO.getToConfirmSales();
 
             Sale sale1 = sales.getFirst();
@@ -68,8 +68,8 @@ class SaleDAOCSVTest {
     @Test
     void getToConfirmSalesCopiesTest(){        //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             List<Sale> sales = saleDAO.getToConfirmSales();
 
             Sale sale1 = sales.getFirst();
@@ -82,8 +82,8 @@ class SaleDAOCSVTest {
     @Test
     void getToConfirmSalesPriceTest(){        //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             List<Sale> sales = saleDAO.getToConfirmSales();
 
             Sale sale1 = sales.getFirst();
@@ -96,8 +96,8 @@ class SaleDAOCSVTest {
     @Test
     void getToConfirmSalesConsoleTest(){        //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             List<Sale> sales = saleDAO.getToConfirmSales();
 
             Sale sale1 = sales.getFirst();
@@ -111,8 +111,8 @@ class SaleDAOCSVTest {
     @Test
     void getToConfirmSalesStateTest(){        //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             List<Sale> sales = saleDAO.getToConfirmSales();
 
             Sale sale1 = sales.getFirst();
@@ -124,8 +124,8 @@ class SaleDAOCSVTest {
     @Test
     void getToConfirmSalesAddressTest(){        //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             List<Sale> sales = saleDAO.getToConfirmSales();
 
             Sale sale1 = sales.getFirst();
@@ -137,8 +137,8 @@ class SaleDAOCSVTest {
     @Test
     void getToConfirmSalesEmailTest(){        //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             List<Sale> sales = saleDAO.getToConfirmSales();
 
             Sale sale1 = sales.getFirst();
@@ -151,8 +151,8 @@ class SaleDAOCSVTest {
     @Test
     void getConfirmedSalesArraySizeTest(){      //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             List<Sale> sales = saleDAO.getConfirmedSales();
             assertEquals(1, (long) sales.size());
         } catch(PersistencyErrorException e){
@@ -162,8 +162,8 @@ class SaleDAOCSVTest {
     @Test
     void getConfirmedSalesStateTest(){       //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             List<Sale> sales = saleDAO.getConfirmedSales();
 
             Sale sale = sales.getFirst();
@@ -176,15 +176,15 @@ class SaleDAOCSVTest {
     @Test
     void saveSaleIdTest(){
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
             Sale sale1 = sales.getFirst();
-            assertEquals(3, sale1.getId());
+            assertEquals(1, sale1.getId());
         } catch(PersistencyErrorException e){
             fail();
         }
@@ -193,10 +193,10 @@ class SaleDAOCSVTest {
     @Test
     void saveSaleNameTest(){
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -210,10 +210,10 @@ class SaleDAOCSVTest {
     @Test
     void saveSaleGameNameTest(){
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -227,10 +227,10 @@ class SaleDAOCSVTest {
     @Test
     void saveSaleCopiesTest(){
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -245,10 +245,10 @@ class SaleDAOCSVTest {
     @Test
     void saveSalePriceTest(){
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -262,10 +262,10 @@ class SaleDAOCSVTest {
     @Test
     void saveSaleConsoleTest(){
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -279,10 +279,10 @@ class SaleDAOCSVTest {
     @Test
     void saveSaleStateTest(){
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -296,10 +296,10 @@ class SaleDAOCSVTest {
     @Test
     void saveSaleAddressTest(){
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+           JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -313,10 +313,10 @@ class SaleDAOCSVTest {
     @Test
     void saveSaleEmailTest(){
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -330,8 +330,8 @@ class SaleDAOCSVTest {
     @Test
     void updateSaleTest(){      //In the database there was tuple ('1', 'nameTest', 'gameNameTest', '3', '10', 'consoleTest', 'To confirm', 'addressTest', 'emailTest')
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             List<Sale> sales = saleDAO.getToConfirmSales();
             saleDAO.updateSale(sales.getFirst());
 
@@ -346,8 +346,8 @@ class SaleDAOCSVTest {
     @Test
     void getSaleToConfirmByIdTest(){     //In the database there was tuple (1, 'nameTest', 'gameName', '2', '40', 'platformTest', 'To confirm', 'addressTest', 'emailTest')
         try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            SaleDAO saleDAO = jdbcFactory.createSaleDAO();
             Sale sale = saleDAO.getSaleToConfirmById(1);
             assertNotNull(sale);
         } catch(PersistencyErrorException | WrongSaleException e){
@@ -357,23 +357,8 @@ class SaleDAOCSVTest {
 
     @Test
     void getSaleToConfirmWrongSaleExceptionTest(){      //database was empty
-        try {
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
-            assertThrows(WrongSaleException.class, () -> saleDAO.getSaleToConfirmById(1));
-        } catch(PersistencyErrorException e){
-            fail();
-        }
-    }
-
-    @Test
-    void getSaleToConfirmWrongStateExceptionTest(){     //in the database there was tuple (1, 'nameTest', 'gameName', '2', '40', 'platformTest', 'Confirmed', 'addressTest', 'emailTest')
-        try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
-            assertThrows(WrongSaleException.class, () -> saleDAO.getSaleToConfirmById(1));
-        } catch(PersistencyErrorException e){
-            fail();
-        }
+        JDBCFactory jdbcFactory = new JDBCFactory();
+        SaleDAO saleDAO = jdbcFactory.createSaleDAO();
+        assertThrows(WrongSaleException.class, () -> saleDAO.getSaleToConfirmById(1));
     }
 }

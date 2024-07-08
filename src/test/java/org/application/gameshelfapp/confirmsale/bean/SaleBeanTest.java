@@ -1,7 +1,9 @@
-package org.application.gameshelfapp.buyvideogames.bean;
+package org.application.gameshelfapp.confirmsale.bean;
 
-import org.application.gameshelfapp.buyvideogames.entities.Sale;
+import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
+import org.application.gameshelfapp.confirmsale.entities.Sale;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
+import org.application.gameshelfapp.confirmsale.bean.SaleBean;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,14 +1,20 @@
 package org.application.gameshelfapp.buyvideogames.controller;
 
-import org.application.gameshelfapp.buyvideogames.bean.*;
+import org.application.gameshelfapp.buyvideogames.bean.CredentialsBean;
+import org.application.gameshelfapp.buyvideogames.bean.FiltersBean;
+import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.boundary.Braintree;
 import org.application.gameshelfapp.buyvideogames.boundary.Geocoder;
-import org.application.gameshelfapp.buyvideogames.boundary.FedEx;
-import org.application.gameshelfapp.buyvideogames.dao.CatalogueDAO;
 import org.application.gameshelfapp.buyvideogames.dao.ItemDAO;
-import org.application.gameshelfapp.buyvideogames.dao.SaleDAO;
-import org.application.gameshelfapp.buyvideogames.entities.*;
+import org.application.gameshelfapp.buyvideogames.entities.Filters;
+import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.buyvideogames.exception.*;
+import org.application.gameshelfapp.confirmsale.bean.SaleBean;
+import org.application.gameshelfapp.confirmsale.controller.ConfirmSaleController;
+import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
+import org.application.gameshelfapp.confirmsale.entities.Sale;
+import org.application.gameshelfapp.confirmsale.exceptions.ConfirmDeliveryException;
+import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.boundary.GoogleBoundary;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
@@ -19,10 +25,10 @@ import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBea
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BuyGamesController {
+    private ConfirmSaleController controller;
     public SellingGamesCatalogueBean searchVideogame(FiltersBean filtersBean) throws PersistencyErrorException, NoGameInCatalogueException {
         SeeGameCatalogueController controller = new SeeGameCatalogueController();
         return controller.displaySellingGamesCatalogue(filtersBean);
@@ -66,36 +72,12 @@ public class BuyGamesController {
     }
 
     public List<SaleBean> getSales() throws PersistencyErrorException{
-        SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
-        List<Sale> sales = saleDAO.getToConfirmSales();
-        List<SaleBean> salesBean = new ArrayList<>();
-        for(Sale sale: sales){
-            SaleBean saleBean = new SaleBean();
-            saleBean.setSale(sale);
-            salesBean.add(saleBean);
-        }
-        return salesBean;
+        this.controller = new ConfirmSaleController();
+        return this.controller.getSales();
     }
 
     public void confirmDelivery(long id) throws GmailException, ConfirmDeliveryException, PersistencyErrorException, WrongSaleException {
-        FedEx shipmentCompany = new FedEx();
-        GoogleBoundary googleBoundary = new GoogleBoundary();
-
-        SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
-        Sale sale = saleDAO.getSaleToConfirmById(id);
-        try{
-            CatalogueDAO catalogueDAO = PersistencyAbstractFactory.getFactory().createCatalogueDAO();
-            catalogueDAO.addVideogame(sale.getEmail(), sale.getVideogameSold());
-            saleDAO.updateSale(sale);
-            shipmentCompany.confirmDelivery(sale.getAddress());
-
-            String message = "Your order has been confirmed.";
-            googleBoundary.setMessageToSend(message);
-            googleBoundary.sendMail("delivery CONFIRMED", sale.getEmail());
-
-        } catch (PersistencyErrorException e) {
-            throw new ConfirmDeliveryException("Couldn't confirm delivery. Try later");
-        }
+        this.controller.confirmDelivery(id);
     }
 }
 

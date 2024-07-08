@@ -1,6 +1,8 @@
 package org.application.gameshelfapp.login.dao;
 
 import org.application.gameshelfapp.buyvideogames.dao.*;
+import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
+import org.application.gameshelfapp.confirmsale.dao.SaleDAOJDBC;
 
 public class JDBCFactory extends PersistencyAbstractFactory {
     @Override

@@ -2,7 +2,7 @@ package org.application.gameshelfapp.login.dao;
 
 import org.application.gameshelfapp.buyvideogames.dao.CatalogueDAOCSV;
 import org.application.gameshelfapp.buyvideogames.dao.ItemDAOCSV;
-import org.application.gameshelfapp.buyvideogames.dao.SaleDAOCSV;
+import org.application.gameshelfapp.confirmsale.dao.SaleDAOCSV;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.junit.jupiter.api.Test;
 

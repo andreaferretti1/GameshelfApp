@@ -25,7 +25,7 @@ public class HomePageController {
     }
 
     public static void start(Stage myStage, UserBean userBean) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HomePageController.class.getResource("/org/application/gameshelfapp/GUI/Home-Page.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HomePageController.class.getResource("/org/application/gameshelfapp/GUI/Home-Page-Customer.fxml"));
         Parent root = fxmlLoader.load();
         HomePageController controller = fxmlLoader.getController();
         controller.setUserBean(userBean);

@@ -1,4 +1,4 @@
-package org.application.gameshelfapp.buyvideogames.boundary;
+package org.application.gameshelfapp.confirmsale.boundary;
 
 public class FedEx {
     public String confirmDelivery(String address){

@@ -1,8 +1,8 @@
-package org.application.gameshelfapp.buyvideogames.dao;
+package org.application.gameshelfapp.confirmsale.dao;
 
-import org.application.gameshelfapp.buyvideogames.dao.queries.SaleDAOQueries;
-import org.application.gameshelfapp.buyvideogames.entities.Sale;
-import org.application.gameshelfapp.buyvideogames.exception.WrongSaleException;
+import org.application.gameshelfapp.confirmsale.dao.queries.SaleDAOQueries;
+import org.application.gameshelfapp.confirmsale.entities.Sale;
+import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
 import org.application.gameshelfapp.login.dao.SingletonConnectionPool;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;

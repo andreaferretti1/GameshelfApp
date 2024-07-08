@@ -1,4 +1,6 @@
-package org.application.gameshelfapp.buyvideogames.entities;
+package org.application.gameshelfapp.confirmsale.entities;
+
+import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 
 public class Sale {
     private int id;

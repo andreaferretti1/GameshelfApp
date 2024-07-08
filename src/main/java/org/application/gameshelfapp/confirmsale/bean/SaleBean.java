@@ -1,6 +1,7 @@
-package org.application.gameshelfapp.buyvideogames.bean;
+package org.application.gameshelfapp.confirmsale.bean;
 
-import org.application.gameshelfapp.buyvideogames.entities.Sale;
+import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
+import org.application.gameshelfapp.confirmsale.entities.Sale;
 
 public class SaleBean {
     private long idBean;
