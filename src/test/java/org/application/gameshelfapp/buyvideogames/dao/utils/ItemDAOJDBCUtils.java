@@ -17,17 +17,17 @@ public class ItemDAOJDBCUtils {
         fail();
     }
     }
-    public static void insertRecord(String[][] record){
+    public static void insertRecord(String[][] records){
         try(Connection connection = SingletonConnectionPool.getInstance().getConnection()){
             String query = "INSERT INTO ObjectOnSale(Name, Platform, Price, Type, Description, Copies) VALUES (?, ?, ?, ?, ?, ?)";
-            for(String[] game: record) {
+            for(String[] game: records) {
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
                 preparedStatement.setString(1, game[0]);
                 preparedStatement.setString(2, game[1]);
-                preparedStatement.setFloat(3, Float.parseFloat(game[2]));
-                preparedStatement.setString(4, game[3]);
+                preparedStatement.setFloat(3, Float.parseFloat(game[5]));
+                preparedStatement.setString(4, game[2]);
                 preparedStatement.setInt(5, Integer.parseInt(game[4]));
-                preparedStatement.setString(6, game[5]);
+                preparedStatement.setString(6, game[3]);
                 preparedStatement.execute();
             }
         } catch(PersistencyErrorException | SQLException e){
