@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class ItemDAOCSVUtils {
     public static final String DATABASE_FILE = "src/main/resources/org/application/gameshelfapp/persistency/FileSystem/videogames_on_sale.csv";
     public static void insertRecord(String[][] records){
-        try(CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(DATABASE_FILE)));){
+        try(CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(DATABASE_FILE)))){
             for(String[] recrodToWrite: records) {
                 csvWriter.writeNext(recrodToWrite);
             }

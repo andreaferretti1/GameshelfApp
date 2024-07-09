@@ -22,7 +22,7 @@ public class AccessDAOCSVUtils {
     }
 
     public static void truncateFile(){
-        try(FileOutputStream out = new FileOutputStream(new File(DATABASE_FILE));
+        try(FileOutputStream out = new FileOutputStream(DATABASE_FILE);
             FileChannel channel = out.getChannel()){
             channel.truncate(0);
         } catch(IOException e){
