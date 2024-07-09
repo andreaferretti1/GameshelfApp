@@ -21,11 +21,6 @@ public class CSVFactory extends PersistencyAbstractFactory {
     public ItemDAO createItemDAO() throws PersistencyErrorException{
         return new ItemDAOCSV(this.getFile("CSV_GAMES_ON_SALE"));
     }
-
-    @Override
-    public CatalogueDAO createCatalogueDAO() throws PersistencyErrorException{
-        return new CatalogueDAOCSV(this.getFile("CSV_CATALOGUE"));
-    }
     @Override
     public AccessDAO createAccessDAO() throws PersistencyErrorException {
         return new AccessDAOCSV(this.getFile("CSV_ACCOUNTS"));

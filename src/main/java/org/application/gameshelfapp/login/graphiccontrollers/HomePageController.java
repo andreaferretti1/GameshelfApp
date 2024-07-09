@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import org.application.gameshelfapp.StartingPageController;
+import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
 import org.application.gameshelfapp.buyvideogames.graphiccontrollers.SearchPageController;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.WrongUserTypeException;
@@ -68,8 +69,8 @@ public class HomePageController implements Initializable {
     @FXML
     private void goToSearchPage(MouseEvent event){
         try{
-            SearchPageController.start(this.stage, this.userBean);
-        } catch (IOException e){
+            SearchPageController.start(this.stage, new CustomerBoundary(this.userBean));
+        } catch (IOException | WrongUserTypeException e){
             System.exit(1);
         }
     }

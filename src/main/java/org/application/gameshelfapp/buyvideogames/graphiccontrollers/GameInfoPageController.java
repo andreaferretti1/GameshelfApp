@@ -12,6 +12,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
+import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 
 import java.io.IOException;
@@ -51,8 +52,8 @@ public class GameInfoPageController implements Initializable {
     @FXML
     private void goToGameList(MouseEvent event){
         try {
-            SearchPageController.start(this.stage, this.customerBoundary.getUserBean());
-        } catch (IOException e) {
+            SearchPageController.start(this.stage, this.customerBoundary);
+        } catch (IOException | WrongUserTypeException e) {
             System.exit(1);
         }
     }

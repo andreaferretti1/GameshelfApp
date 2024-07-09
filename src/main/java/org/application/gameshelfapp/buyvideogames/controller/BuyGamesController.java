@@ -8,7 +8,9 @@ import org.application.gameshelfapp.buyvideogames.boundary.Geocoder;
 import org.application.gameshelfapp.buyvideogames.dao.ItemDAO;
 import org.application.gameshelfapp.buyvideogames.entities.Filters;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
-import org.application.gameshelfapp.buyvideogames.exception.*;
+import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
+import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
+import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.confirmsale.bean.SaleBean;
 import org.application.gameshelfapp.confirmsale.controller.ConfirmSaleController;
 import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
@@ -20,6 +22,7 @@ import org.application.gameshelfapp.login.boundary.GoogleBoundary;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.seevideogamecatalogue.SeeGameCatalogueController;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
@@ -29,6 +32,9 @@ import java.util.List;
 
 public class BuyGamesController {
     private ConfirmSaleController confirmSaleController;
+    public BuyGamesController(UserBean userBean) throws WrongUserTypeException{
+        if(userBean == null) throw new WrongUserTypeException("Access not allowed");
+    }
     public SellingGamesCatalogueBean searchVideogame(FiltersBean filtersBean) throws PersistencyErrorException, NoGameInCatalogueException {
         SeeGameCatalogueController seeGameCatalogueController = new SeeGameCatalogueController();
         return seeGameCatalogueController.displaySellingGamesCatalogue(filtersBean);
@@ -57,6 +63,9 @@ public class BuyGamesController {
                 braintree.pay(amountToPay, credentialsBean.getPaymentKeyBean(), credentialsBean.getTypeOfPaymentBean());
 
                 GoogleBoundary googleBoundary = new GoogleBoundary();
+                String receipt = "You have bought " + quantity + " of " + game.getName() + " for " + amountToPay;
+                googleBoundary.setMessageToSend(receipt);
+                googleBoundary.sendMail("Receipt", userBean.getEmail());
                 String messageToSend = userBean.getUsername() + " bought " + quantity + " of " + game.getName() + " for " + amountToPay;
                 googleBoundary.setMessageToSend(messageToSend);
                 googleBoundary.sendMail("Videogame bought", "fer.andrea35@gmail.com");
@@ -71,8 +80,8 @@ public class BuyGamesController {
             }
     }
 
-    public List<SaleBean> getSales() throws PersistencyErrorException{
-        this.confirmSaleController = new ConfirmSaleController();
+    public List<SaleBean> getSales(UserBean userBean) throws PersistencyErrorException, WrongUserTypeException{
+        this.confirmSaleController = new ConfirmSaleController(userBean);
         return this.confirmSaleController.getSales();
     }
 

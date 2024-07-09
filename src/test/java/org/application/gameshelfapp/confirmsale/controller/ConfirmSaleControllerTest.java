@@ -6,10 +6,12 @@ import org.application.gameshelfapp.confirmsale.dao.utils.SaleDAOCSVUtils;
 import org.application.gameshelfapp.confirmsale.dao.utils.SaleDAOJDBCUtils;
 import org.application.gameshelfapp.confirmsale.exceptions.ConfirmDeliveryException;
 import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
+import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.dao.utils.GetPersistencyTypeUtils;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,11 +33,14 @@ class ConfirmSaleControllerTest {
         String[][] records = {{"3", "10", "To confirm", "gameNameTest1", "consoleTest", "nameTest1", "emailTest", "addressTest"}, {"1", "15", "Confirmed", "gameNameTest2", "consoleTest2", "nameTest2", "emailTest", "addressTest"}};
         if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) SaleDAOCSVUtils.insertRecord(records);
         else SaleDAOJDBCUtils.insertRecord(records);
-        ConfirmSaleController controller = new ConfirmSaleController();
         try{
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Seller");
+            ConfirmSaleController controller = new ConfirmSaleController(userBean);
+
             List<SaleBean> sales = controller.getSales();
             assertEquals(1, (long) sales.size());
-        } catch(PersistencyErrorException e){
+        } catch(PersistencyErrorException | WrongUserTypeException e){
             fail();
         }
     }
@@ -45,21 +50,30 @@ class ConfirmSaleControllerTest {
         String[][] records = {{"3", "10", "To confirm", "gameNameTest1", "consoleTest", "nameTest1", "fer.andrea35@gmail.com", "addressTest"}};
         if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) SaleDAOCSVUtils.insertRecord(records);
         else SaleDAOJDBCUtils.insertRecord(records);
-        ConfirmSaleController controller = new ConfirmSaleController();
         try{
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Seller");
+            ConfirmSaleController controller = new ConfirmSaleController(userBean);
+
             controller.confirmDelivery(1);
 
             SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
             assertEquals(1, (long) saleDAO.getConfirmedSales().size());
-        } catch(PersistencyErrorException | ConfirmDeliveryException | WrongSaleException | GmailException e){
+        } catch(PersistencyErrorException | ConfirmDeliveryException | WrongSaleException | GmailException | WrongUserTypeException e){
             fail();
         }
     }
 
     @Test
     void confirmDeliveryWrongSaleExceptionTest(){       //database was empty
-        ConfirmSaleController controller = new ConfirmSaleController();
-        assertThrows(WrongSaleException.class, () -> controller.confirmDelivery(2));
+        try {
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Seller");
+            ConfirmSaleController controller = new ConfirmSaleController(userBean);
+            assertThrows(WrongSaleException.class, () -> controller.confirmDelivery(2));
+        } catch(WrongUserTypeException e){
+            fail();
+        }
     }
 
     @Test
@@ -67,7 +81,13 @@ class ConfirmSaleControllerTest {
         String[][] records = {{"2", "22", "Confirmed", "gameName", "platformTest", "testName", "emailTest", "addressTest"}};
         if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) SaleDAOCSVUtils.insertRecord(records);
         else SaleDAOJDBCUtils.insertRecord(records);
-        ConfirmSaleController controller = new ConfirmSaleController();
-        assertThrows(WrongSaleException.class, () -> controller.confirmDelivery(1));
+        try {
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Seller");
+            ConfirmSaleController controller = new ConfirmSaleController(userBean);
+            assertThrows(WrongSaleException.class, () -> controller.confirmDelivery(1));
+        } catch(WrongUserTypeException e){
+            fail();
+        }
     }
 }

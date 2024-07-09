@@ -15,6 +15,7 @@ import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.dao.utils.GetPersistencyTypeUtils;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
+import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -38,15 +39,26 @@ class CustomerAdapterTest {
     }
     @Test
     void getUserBeanTest(){
-        CustomerAdapter adapter = new CustomerAdapter(new UserBean());
-        assertNotNull(adapter.getUserBean());
+        try {
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Customer");
+            CustomerAdapter adapter = new CustomerAdapter(userBean);
+            assertNotNull(adapter.getUserBean());
+        } catch(WrongUserTypeException e){
+            fail();
+        }
     }
 
     @Test
     void insertFiltersNoGamesFoundTest(){       //Database was empty
-        CustomerAdapter adapter = new CustomerAdapter(new UserBean());
-        assertThrows(NoGameInCatalogueException.class, ()->adapter.searchVideogame("nameTest", "consoleTest", "categoryTest"));
-
+        try {
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Customer");
+            CustomerAdapter adapter = new CustomerAdapter(userBean);
+            assertThrows(NoGameInCatalogueException.class, () -> adapter.searchVideogame("nameTest", "consoleTest", "categoryTest"));
+        } catch(WrongUserTypeException e){
+            fail();
+        }
     }
 
     @Test
@@ -54,11 +66,14 @@ class CustomerAdapterTest {
         String[][] records = {{"nameTest1", "consoleTest", "categoryTest", "descriptionTest1", "2", "11"}, {"nameTest2", "consoleTest", "categoryTest", "descriptionTest", "3", "20"}};
         if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) ItemDAOCSVUtils.insertRecord(records);
         else ItemDAOJDBCUtils.insertRecord(records);
-        CustomerAdapter adapter = new CustomerAdapter(new UserBean());
         try{
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Customer");
+            CustomerAdapter adapter = new CustomerAdapter(userBean);
+
             List<VideogameBean> gamesBean =  adapter.searchVideogame("nameTest1", "consoleTest", "categoryTest").getSellingGamesBean();
             assertEquals(1, (long) gamesBean.size());
-        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException e){
             fail();
         }
     }
@@ -68,38 +83,48 @@ class CustomerAdapterTest {
         String[][] records = {{"nameTest1", "consoleTest", "categoryTest", "descriptionTest1", "2", "11"}, {"nameTest2", "consoleTest", "categoryTest", "descriptionTest", "3", "20"}, {"nameTest3", "consoleTest1", "categoryTest1", "descriptionTest2", "5", "10"}};
         if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) ItemDAOCSVUtils.insertRecord(records);
         else ItemDAOJDBCUtils.insertRecord(records);
-        CustomerAdapter adapter = new CustomerAdapter(new UserBean());
         try{
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Customer");
+            CustomerAdapter adapter = new CustomerAdapter(userBean);
+
             List<VideogameBean> gamesBean = adapter.searchVideogame("null", "consoleTest", "categoryTest").getSellingGamesBean();
             assertEquals(2, (long) gamesBean.size());
-        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException e){
             fail();
         }
     }
 
     @Test
     void insertCredentialsAndPayTest(){
+        try{
+            UserBean userBean = new UserBean();
+            userBean.setEmail("fer.andrea35@gmail.com");
+            userBean.setTypeOfUser("Customer");
+            CustomerAdapter adapter = new CustomerAdapter(userBean);
+            adapter.chooseGameToBuy("gameNameTest", "consoleTest", "categoryTest", 2, 40);
 
-        UserBean userBean = new UserBean();
-        userBean.setEmail("fer.andrea35@gmail.com");
-        CustomerAdapter adapter = new CustomerAdapter(userBean);
-        adapter.chooseGameToBuy("gameNameTest", "consoleTest", "categoryTest", 2, 40);
-        try {
             adapter.pay("Name","card", "key", "Via Cambridge", "Roma", "Italy");
             SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
             List<Sale> sales = saleDAO.getToConfirmSales();
             assertEquals(1, (long) sales.size());
         } catch (PersistencyErrorException | RefundException | GameSoldOutException |
-                 SyntaxErrorException | InvalidAddressException | NoGameInCatalogueException e) {
+                 SyntaxErrorException | InvalidAddressException | NoGameInCatalogueException | WrongUserTypeException e) {
             fail();
         }
     }
 
     @Test
     void insertCredentialsAndPayNoGameInCatalogueExceptionTest(){       //database was empty
-        CustomerAdapter adapter = new CustomerAdapter(new UserBean());
-        adapter.chooseGameToBuy(null, null, null, 0, 0);
-        assertThrows(NoGameInCatalogueException.class, () -> adapter.pay("testName", "test", "test", "via cmabridge", "Roma", "Italia"));
+        try {
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Customer");
+            CustomerAdapter adapter = new CustomerAdapter(userBean);
+            adapter.chooseGameToBuy(null, null, null, 0, 0);
+            assertThrows(NoGameInCatalogueException.class, () -> adapter.pay("testName", "test", "test", "via cmabridge", "Roma", "Italia"));
+        } catch(WrongUserTypeException e){
+            fail();
+        }
     }
 
     @Test
@@ -107,15 +132,27 @@ class CustomerAdapterTest {
         String[][] records = {{"gameNameTest", "consoleTest", "categoryTest", "descriptionTest", "1", "20"}};
         if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) ItemDAOCSVUtils.insertRecord(records);
         else ItemDAOJDBCUtils.insertRecord(records);
-        CustomerAdapter adapter = new CustomerAdapter(new UserBean());
-        adapter.chooseGameToBuy("gameNameTest", "consoleTest", "categoryTest", 2, 20);
-        assertThrows(GameSoldOutException.class, () -> adapter.pay("Name", "card", "key", "Via Cambridge", "Roma", "Italy"));
+        try {
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Customer");
+            CustomerAdapter adapter = new CustomerAdapter(userBean);
+            adapter.chooseGameToBuy("gameNameTest", "consoleTest", "categoryTest", 2, 20);
+            assertThrows(GameSoldOutException.class, () -> adapter.pay("Name", "card", "key", "Via Cambridge", "Roma", "Italy"));
+        } catch(WrongUserTypeException e){
+            fail();
+        }
     }
 
     @Test
     void insertCredentialsAndPayInvalidAddressTest(){
-        CustomerAdapter adapter = new CustomerAdapter(new UserBean());
-        adapter.chooseGameToBuy(null, null, null, 0, 0);
-        assertThrows(InvalidAddressException.class, () -> adapter.pay("Name","card", "key", "Viasbagliata", "Roma", "Italy"));
+        try{
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Customer");
+            CustomerAdapter adapter = new CustomerAdapter(userBean);
+            adapter.chooseGameToBuy(null, null, null, 0, 0);
+            assertThrows(InvalidAddressException.class, () -> adapter.pay("Name","card", "key", "Viasbagliata", "Roma", "Italy"));
+        } catch (WrongUserTypeException e){
+            fail();
+        }
     }
 }

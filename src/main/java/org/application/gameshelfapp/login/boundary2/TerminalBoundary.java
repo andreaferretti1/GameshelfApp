@@ -10,6 +10,6 @@ import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleExcepti
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
 public interface TerminalBoundary {
-    String executeCommand(String[] command) throws PersistencyErrorException, CheckFailedException, SyntaxErrorException, NullPasswordException, GmailException, ArrayIndexOutOfBoundsException, NoGameInCatalogueException, InvalidTitleException, AlreadyExistingVideogameException, GameSoldOutException, RefundException, InvalidAddressException, ConfirmDeliveryException, WrongSaleException;
+    String executeCommand(String[] command) throws PersistencyErrorException, CheckFailedException, SyntaxErrorException, NullPasswordException, GmailException, ArrayIndexOutOfBoundsException, NoGameInCatalogueException, InvalidTitleException, AlreadyExistingVideogameException, GameSoldOutException, RefundException, InvalidAddressException, ConfirmDeliveryException, WrongSaleException, WrongUserTypeException;
     UserBean getUserBean();
 }

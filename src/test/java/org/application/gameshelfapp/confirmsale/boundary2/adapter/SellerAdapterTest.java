@@ -12,6 +12,7 @@ import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.dao.utils.GetPersistencyTypeUtils;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,8 +32,12 @@ class SellerAdapterTest{
     }
     @Test
     void getUserBeanTest(){
-        SellerAdapter adapter = new SellerAdapter(new UserBean());
-        assertNotNull(adapter.getUserBean());
+        try {
+            SellerAdapter adapter = new SellerAdapter(new UserBean());
+            assertNotNull(adapter.getUserBean());
+        } catch (WrongUserTypeException e){
+            fail();
+        }
     }
 
     @Test
@@ -41,11 +46,14 @@ class SellerAdapterTest{
         String[][] records = {{"2", "40", "To confirm", "gameNameTest1", "platform1", "nameTest1", "emailTest", "address"}, {"1", "20", "Confirmed", "gameNameTest2", "platform2", "nameTest2", "emailTest2", "address2"}};
         if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) SaleDAOCSVUtils.insertRecord(records);
         else SaleDAOJDBCUtils.insertRecord(records);
-        SellerAdapter adapter = new SellerAdapter(new UserBean());
-        try {
+        try{
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Seller");
+            SellerAdapter adapter = new SellerAdapter(userBean);
+
             List<SaleBean> sales = adapter.getSalesToConfirm();
             assertEquals(1, (long) sales.size());
-        } catch(PersistencyErrorException e){
+        } catch(PersistencyErrorException | WrongUserTypeException e){
             fail();
         }
     }
@@ -56,21 +64,28 @@ class SellerAdapterTest{
         String[][] records = {{"2", "40", "To confirm", "gameNameTest1", "platform1", "nameTest1", "fer.andrea35@gmail.com", "address"}, {"1", "20", "Confirmed", "gameNameTest2", "platform2", "nameTest2", "fer.andrea35@gmail.com", "address2"}};
         if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) SaleDAOCSVUtils.insertRecord(records);
         else SaleDAOJDBCUtils.insertRecord(records);
-        SellerAdapter adapter = new SellerAdapter(new UserBean());
         try{
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Seller");
+            SellerAdapter adapter = new SellerAdapter(userBean);
+
             adapter.confirmSale("1");
 
             SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
             List<Sale> salesConfirmed = saleDAO.getConfirmedSales();
             assertEquals(2, (long) salesConfirmed.size());
-        } catch(PersistencyErrorException | GmailException | ConfirmDeliveryException | WrongSaleException e){
+        } catch(PersistencyErrorException | GmailException | ConfirmDeliveryException | WrongSaleException | WrongUserTypeException e){
             fail();
         }
     }
 
     @Test
-    void condirmSaleWrongSaleExceptionTest(){      //database was empty
-        SellerAdapter adapter = new SellerAdapter(new UserBean());
-        assertThrows(WrongSaleException.class, () -> adapter.confirmSale("1"));
+    void confirmSaleWrongSaleExceptionTest(){      //database was empty
+        try {
+            SellerAdapter adapter = new SellerAdapter(new UserBean());
+            assertThrows(WrongSaleException.class, () -> adapter.confirmSale("1"));
+        } catch (WrongUserTypeException e){
+            fail();
+        }
     }
 }

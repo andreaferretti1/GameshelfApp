@@ -15,6 +15,7 @@ import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.dao.utils.GetPersistencyTypeUtils;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
+import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 import org.junit.jupiter.api.AfterEach;
@@ -37,23 +38,40 @@ class CustomerBoundaryTest {
         }
     }
     @Test
-    void getandSetSellingGamesCatalogueBeanTest(){
-        CustomerBoundary boundary = new CustomerBoundary(null);
-        boundary.setSellingGamesCatalogueBean(new SellingGamesCatalogueBean());
-        assertNotNull(boundary.getSellingGamesCatalogueBean());
+    void getAndSetSellingGamesCatalogueBeanTest(){
+        try {
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Customer");
+            CustomerBoundary boundary = new CustomerBoundary(userBean);
+            boundary.setSellingGamesCatalogueBean(new SellingGamesCatalogueBean());
+            assertNotNull(boundary.getSellingGamesCatalogueBean());
+        } catch(WrongUserTypeException e){
+            fail();
+        }
     }
 
     @Test
     void getUserBeanTest(){
-        CustomerBoundary customerBoundary = new CustomerBoundary(new UserBean());
-        assertNotNull(customerBoundary.getUserBean());
+        try {
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Customer");
+            CustomerBoundary customerBoundary = new CustomerBoundary(userBean);
+            assertNotNull(customerBoundary.getUserBean());
+        } catch(WrongUserTypeException e){
+            fail();
+        }
     }
 
     @Test
     void insertFiltersNoGamesFoundTest(){       //Database was empty
-        CustomerBoundary customerBoundary = new CustomerBoundary(new UserBean());
-        assertThrows(NoGameInCatalogueException.class, ()->customerBoundary.insertFilters("nameTest", "consoleTest", "categoryTest"));
-
+        try {
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Customer");
+            CustomerBoundary customerBoundary = new CustomerBoundary(userBean);
+            assertThrows(NoGameInCatalogueException.class, () -> customerBoundary.insertFilters("nameTest", "consoleTest", "categoryTest"));
+        } catch(WrongUserTypeException e){
+            fail();
+        }
     }
 
     @Test
@@ -61,12 +79,15 @@ class CustomerBoundaryTest {
         String[][] records = {{"nameTest1", "consoleTest", "categoryTest", "descriptionTest1", "2", "11"}, {"nameTest2", "consoleTest", "categoryTest", "dscriptionTest", "3", "20"}};
         if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) ItemDAOCSVUtils.insertRecord(records);
         else SaleDAOJDBCUtils.insertRecord(records);
-        CustomerBoundary customerBoundary = new CustomerBoundary(new UserBean());
         try{
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Customer");
+            CustomerBoundary customerBoundary = new CustomerBoundary(userBean);
+
             customerBoundary.insertFilters("nameTest1", "consoleTest", "categoryTest");
             List<VideogameBean> gamesBean = customerBoundary.getSellingGamesCatalogueBean().getSellingGamesBean();
             assertEquals(1, (long) gamesBean.size());
-        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException e){
             fail();
         }
     }
@@ -76,12 +97,16 @@ class CustomerBoundaryTest {
         String[][] records = {{"nameTest1", "consoleTest", "categoryTest", "descriptionTest1", "2", "11"}, {"nameTest2", "consoleTest", "categoryTest", "descriptionTest", "3", "20"}, {"nameTest3", "consoleTest1", "categoryTest1", "descriptionTest2", "5", "30"}};
         if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) ItemDAOCSVUtils.insertRecord(records);
         else ItemDAOJDBCUtils.insertRecord(records);
-        CustomerBoundary customerBoundary = new CustomerBoundary(new UserBean());
+
         try{
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Customer");
+            CustomerBoundary customerBoundary = new CustomerBoundary(userBean);
+
             customerBoundary.insertFilters(null, "consoleTest", "categoryTest");
             List<VideogameBean> gamesBean = customerBoundary.getSellingGamesCatalogueBean().getSellingGamesBean();
             assertEquals(2, (long) gamesBean.size());
-        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException e){
             fail();
         }
     }
@@ -93,30 +118,38 @@ class CustomerBoundaryTest {
         videogameBean.setCopiesBean(2);
         videogameBean.setPriceBean(40);
         videogameBean.setPlatformBean("consoleTest");
-        UserBean userBean = new UserBean();
-        userBean.setEmail("fer.andrea35@gmail.com");
-        CustomerBoundary customerBoundary = new CustomerBoundary(userBean);
-        customerBoundary.setGameToBuy(videogameBean);
-        try {
+        try{
+            UserBean userBean = new UserBean();
+            userBean.setEmail("fer.andrea35@gmail.com");
+            userBean.setTypeOfUser("Customer");
+            CustomerBoundary customerBoundary = new CustomerBoundary(userBean);
+            customerBoundary.setGameToBuy(videogameBean);
+
             customerBoundary.insertCredentialsAndPay("Name","card", "key", "Via Cambridge", "Roma", "Italy");
             SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
             List<Sale> sales = saleDAO.getToConfirmSales();
             assertEquals(1, (long) sales.size());
         } catch (PersistencyErrorException | RefundException | GameSoldOutException |
-                 SyntaxErrorException | InvalidAddressException | NoGameInCatalogueException e) {
+                 SyntaxErrorException | InvalidAddressException | NoGameInCatalogueException | WrongUserTypeException e) {
            fail();
         }
     }
 
     @Test
     void insertCredentialsAndPayNoGameInCatalogueExceptionTest(){       //database was empty
-        CustomerBoundary boundary = new CustomerBoundary(new UserBean());
-        VideogameBean videogameBean = new VideogameBean();
-        videogameBean.setName("nameTest");
-        videogameBean.setPlatformBean("platformTest");
-        videogameBean.setCategoryBean("categoryTest");
-        boundary.setGameToBuy(videogameBean);
-        assertThrows(NoGameInCatalogueException.class, () -> boundary.insertCredentialsAndPay("testName", "test", "test", "via cmabridge", "Roma", "Italia"));
+        try{
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Customer");
+            CustomerBoundary boundary = new CustomerBoundary(userBean);
+            VideogameBean videogameBean = new VideogameBean();
+            videogameBean.setName("nameTest");
+            videogameBean.setPlatformBean("platformTest");
+            videogameBean.setCategoryBean("categoryTest");
+            boundary.setGameToBuy(videogameBean);
+            assertThrows(NoGameInCatalogueException.class, () -> boundary.insertCredentialsAndPay("testName", "test", "test", "via cmabridge", "Roma", "Italia"));
+        } catch(WrongUserTypeException e){
+            fail();
+        }
     }
 
     @Test
@@ -124,21 +157,32 @@ class CustomerBoundaryTest {
         String[][] records = {{"gameNameTest1", "consoleTest", "categoryTest", "descriptionTest", "1", "20"}};
         if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) ItemDAOCSVUtils.insertRecord(records);
         else ItemDAOJDBCUtils.insertRecord(records);
-        VideogameBean videogameBean = new VideogameBean();
-        videogameBean.setName("gameNameTest");
-        videogameBean.setCopiesBean(2);
-        videogameBean.setPriceBean(20);
-        UserBean userBean = new UserBean();
-        CustomerBoundary customerBoundary = new CustomerBoundary(userBean);
-        customerBoundary.setGameToBuy(videogameBean);
-        assertThrows(GameSoldOutException.class, () -> customerBoundary.insertCredentialsAndPay("Name", "card", "key", "Via Cambridge", "Roma", "Italy"));
+        try {
+            VideogameBean videogameBean = new VideogameBean();
+            videogameBean.setName("gameNameTest");
+            videogameBean.setCopiesBean(2);
+            videogameBean.setPriceBean(20);
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Customer");
+            CustomerBoundary customerBoundary = new CustomerBoundary(userBean);
+            customerBoundary.setGameToBuy(videogameBean);
+            assertThrows(GameSoldOutException.class, () -> customerBoundary.insertCredentialsAndPay("Name", "card", "key", "Via Cambridge", "Roma", "Italy"));
+        } catch(WrongUserTypeException e){
+            fail();
+        }
     }
 
     @Test
     void insertCredentialsAndPayInvalidAddressTest(){
-        VideogameBean videogameBean = new VideogameBean();
-        CustomerBoundary customerBoundary = new CustomerBoundary(new UserBean());
-        customerBoundary.setGameToBuy(videogameBean);
-        assertThrows(InvalidAddressException.class, () -> customerBoundary.insertCredentialsAndPay("Name","card", "key", "Viasbagliata", "Roma", "Italy"));
+        try {
+            VideogameBean videogameBean = new VideogameBean();
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Customer");
+            CustomerBoundary customerBoundary = new CustomerBoundary(userBean);
+            customerBoundary.setGameToBuy(videogameBean);
+            assertThrows(InvalidAddressException.class, () -> customerBoundary.insertCredentialsAndPay("Name", "card", "key", "Viasbagliata", "Roma", "Italy"));
+        } catch(WrongUserTypeException e){
+            fail();
+        }
     }
 }

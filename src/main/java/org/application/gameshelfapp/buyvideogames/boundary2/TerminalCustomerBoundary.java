@@ -10,6 +10,7 @@ import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.boundary2.TerminalBoundary;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
+import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
@@ -18,7 +19,7 @@ public class TerminalCustomerBoundary implements TerminalBoundary {
     private final CustomerBoundaryInterface customer;
     public static final String START_COMMAND = "Type <see catalogue, gameName/null, console/null, category/null>";
 
-    public TerminalCustomerBoundary(UserBean userBean){
+    public TerminalCustomerBoundary(UserBean userBean) throws WrongUserTypeException {
         this.customer = new CustomerAdapter(userBean);
     }
     @Override

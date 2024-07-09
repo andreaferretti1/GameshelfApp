@@ -8,6 +8,7 @@ import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
+import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
@@ -15,7 +16,7 @@ public class CustomerAdapter implements CustomerBoundaryInterface {
 
     private final CustomerBoundary customerBoundary;
 
-    public CustomerAdapter(UserBean userBean){
+    public CustomerAdapter(UserBean userBean) throws WrongUserTypeException {
         this.customerBoundary = new CustomerBoundary(userBean);
     }
 

@@ -11,6 +11,7 @@ import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.dao.utils.GetPersistencyTypeUtils;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,8 +30,12 @@ class TerminalSellerBoundaryTest {
     }
     @Test
     void getUserBeanTest(){
-        TerminalSellerBoundary boundary = new TerminalSellerBoundary(new UserBean());
-        assertNotNull(boundary.getUserBean());
+        try {
+            TerminalSellerBoundary boundary = new TerminalSellerBoundary(new UserBean());
+            assertNotNull(boundary.getUserBean());
+        } catch (WrongUserTypeException e){
+            fail();
+        }
     }
 
     @Test
@@ -39,13 +44,16 @@ class TerminalSellerBoundaryTest {
         String[][] records = {{"2", "40", "To confirm", "gameNameTest1", "platform1", "nameTest1", "emailTest", "address"}, {"1", "20", "Confirmed", "gameNameTest2", "platform2", "nameTest2", "emailTest2", "address2"}};
         if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) SaleDAOCSVUtils.insertRecord(records);
         else SaleDAOJDBCUtils.insertRecord(records);
-        TerminalSellerBoundary boundary = new TerminalSellerBoundary(new UserBean());
-        try {
+        try{
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Seller");
+            TerminalSellerBoundary boundary = new TerminalSellerBoundary(userBean);
+
             String[] command = {"see sales"};
             String expectedString = String.format("Id: %d, game name: %s, platform: %s copies: %d, price: %f, user name: %s, user email: %s, delivery address: %s%n", 1, "gameNameTest1", "platform1", 2, 40f, "nameTest1", "emailTest", "address") + "\n\n<Type confirm gameId>\n";
             String returnedString = boundary.executeCommand(command);
             assertEquals(expectedString, returnedString);
-        } catch(PersistencyErrorException | ConfirmDeliveryException | GmailException | WrongSaleException e){
+        } catch(PersistencyErrorException | ConfirmDeliveryException | GmailException | WrongSaleException | WrongUserTypeException e){
             fail();
         }
     }
@@ -56,23 +64,30 @@ class TerminalSellerBoundaryTest {
         String[][] records = {{"2", "40", "To confirm", "gameNameTest1", "platform1", "nameTest1", "fer.andrea35@gmail.com", "address"}, {"1", "20", "Confirmed", "gameNameTest2", "platform2", "nameTest2", "fer.andrea35@gmail.com", "address2"}};
         if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) SaleDAOCSVUtils.insertRecord(records);
         else SaleDAOJDBCUtils.insertRecord(records);
-        TerminalSellerBoundary boundary = new TerminalSellerBoundary(new UserBean());
         try{
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Seller");
+            TerminalSellerBoundary boundary = new TerminalSellerBoundary(userBean);
+
             String[] command = {"confirm", "1"};
             boundary.executeCommand(command);
 
             SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
             List<Sale> salesConfirmed = saleDAO.getConfirmedSales();
             assertEquals(2, (long) salesConfirmed.size());
-        } catch(PersistencyErrorException | GmailException | ConfirmDeliveryException | WrongSaleException e){
+        } catch(PersistencyErrorException | GmailException | ConfirmDeliveryException | WrongSaleException | WrongUserTypeException e){
             fail();
         }
     }
 
     @Test
     void executeCommandConfirmSaleWrongSaleExceptionTest(){      //database was empty
-        TerminalSellerBoundary boundary = new TerminalSellerBoundary(new UserBean());
-        String[] command = {"confirm", "1"};
-        assertThrows(WrongSaleException.class, () -> boundary.executeCommand(command));
+        try {
+            TerminalSellerBoundary boundary = new TerminalSellerBoundary(new UserBean());
+            String[] command = {"confirm", "1"};
+            assertThrows(WrongSaleException.class, () -> boundary.executeCommand(command));
+        } catch (WrongUserTypeException e){
+            fail();
+        }
     }
 }

@@ -1,6 +1,5 @@
 package org.application.gameshelfapp.login.dao;
 
-import org.application.gameshelfapp.buyvideogames.dao.CatalogueDAO;
 import org.application.gameshelfapp.buyvideogames.dao.ItemDAO;
 import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
@@ -32,7 +31,6 @@ public abstract class PersistencyAbstractFactory {
         }
 
         public abstract ItemDAO createItemDAO() throws PersistencyErrorException;
-        public abstract CatalogueDAO createCatalogueDAO() throws PersistencyErrorException;
         public abstract AccessDAO createAccessDAO() throws PersistencyErrorException;
         public abstract SaleDAO createSaleDAO() throws PersistencyErrorException;
         public abstract CategoryDAO createCategoryDAO() throws PersistencyErrorException;

@@ -10,6 +10,7 @@ import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
+import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
@@ -19,9 +20,9 @@ public class CustomerBoundary {
     private final UserBean userBean;
     private VideogameBean gameToBuy;
 
-    public CustomerBoundary(UserBean userBean){
+    public CustomerBoundary(UserBean userBean) throws WrongUserTypeException {
         this.userBean = userBean;
-        this.buyGamesController = new BuyGamesController();
+        this.buyGamesController = new BuyGamesController(userBean);
     }
 
     public UserBean getUserBean(){

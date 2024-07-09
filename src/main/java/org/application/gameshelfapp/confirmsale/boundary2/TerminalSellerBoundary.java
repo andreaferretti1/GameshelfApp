@@ -9,13 +9,14 @@ import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.boundary2.TerminalBoundary;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 
 import java.util.List;
 
 public class TerminalSellerBoundary implements TerminalBoundary {
     private final SellerBoundaryInterface adapter;
     public static final String START_COMMAND = "Type <see sales>";
-    public TerminalSellerBoundary(UserBean userBean){
+    public TerminalSellerBoundary(UserBean userBean) throws WrongUserTypeException {
         this.adapter = new SellerAdapter(userBean);
     }
 
@@ -25,7 +26,7 @@ public class TerminalSellerBoundary implements TerminalBoundary {
     }
 
     @Override
-    public String executeCommand(String[] command) throws PersistencyErrorException, ConfirmDeliveryException, GmailException, WrongSaleException, ArrayIndexOutOfBoundsException {
+    public String executeCommand(String[] command) throws PersistencyErrorException, ConfirmDeliveryException, GmailException, WrongSaleException, ArrayIndexOutOfBoundsException, WrongUserTypeException {
         switch(command[0]){
             case "see sales" -> {
                 return this.showSalesToConfirm(this.adapter.getSalesToConfirm());

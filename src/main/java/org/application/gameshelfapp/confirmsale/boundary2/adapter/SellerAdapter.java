@@ -7,12 +7,13 @@ import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 
 import java.util.List;
 
 public class SellerAdapter implements SellerBoundaryInterface {
     private final SellerBoundary boundary;
-    public SellerAdapter(UserBean userBean){
+    public SellerAdapter(UserBean userBean) throws WrongUserTypeException {
         this.boundary = new SellerBoundary(userBean);
     }
 
@@ -22,7 +23,7 @@ public class SellerAdapter implements SellerBoundaryInterface {
     }
 
     @Override
-    public List<SaleBean> getSalesToConfirm() throws PersistencyErrorException {
+    public List<SaleBean> getSalesToConfirm() throws PersistencyErrorException, WrongUserTypeException {
         this.boundary.getGamesToSend();
         return this.boundary.getSalesBean();
     }

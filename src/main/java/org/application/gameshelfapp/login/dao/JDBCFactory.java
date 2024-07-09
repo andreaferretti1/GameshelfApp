@@ -14,10 +14,6 @@ public class JDBCFactory extends PersistencyAbstractFactory {
         return new ItemDAOJDBC();
     }
     @Override
-    public CatalogueDAO createCatalogueDAO(){
-        return new CatalogueDAOJDBC();
-    }
-    @Override
     public AccessDAO createAccessDAO(){
         return new AccessDAOJDBC();
     }

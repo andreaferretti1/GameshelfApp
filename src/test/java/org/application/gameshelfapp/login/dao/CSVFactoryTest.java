@@ -1,6 +1,5 @@
 package org.application.gameshelfapp.login.dao;
 
-import org.application.gameshelfapp.buyvideogames.dao.CatalogueDAOCSV;
 import org.application.gameshelfapp.buyvideogames.dao.ItemDAOCSV;
 import org.application.gameshelfapp.confirmsale.dao.SaleDAOCSV;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
@@ -10,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.fail;
 
 class CSVFactoryTest {
-// getFile non è stato testato perchè viene chiamato ogni volta che creo un DAO.
+
 @Test
 void createItemDAOTest() {
     try {
@@ -21,17 +20,7 @@ void createItemDAOTest() {
     }
 }
 
-    @Test
-    void createCatalogueDAOTest() {
-        try {
-            CSVFactory csvFactory = new CSVFactory();
-            assertInstanceOf(CatalogueDAOCSV.class, csvFactory.createCatalogueDAO());
-        } catch(PersistencyErrorException e){
-            fail();
-        }
-}
-
-    @Test
+@Test
     void createAccessDAOTest() {
         try {
             CSVFactory csvFactory = new CSVFactory();

@@ -1,4 +1,4 @@
-package org.application.gameshelfapp.buyvideogames.graphiccontrollers;
+package org.application.gameshelfapp.confirmsale.graphiccontrollers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +20,7 @@ import org.application.gameshelfapp.confirmsale.exceptions.ConfirmDeliveryExcept
 import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
 
@@ -81,7 +82,7 @@ public class SalePageController implements Initializable {
                 objects.add(this.createHBox(saleBean));
             }
             gamesSold.setItems(objects);
-        } catch(PersistencyErrorException e){
+        } catch(PersistencyErrorException | WrongUserTypeException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
         } catch(IOException e){
             ErrorPageController.displayErrorWindow("Couldn't show sales.");

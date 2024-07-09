@@ -7,6 +7,7 @@ import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 
 import java.util.List;
 
@@ -14,8 +15,8 @@ public class SellerBoundary {
     private List<SaleBean> salesBean;
     private final BuyGamesController buyGamesController;
     private final UserBean userBean;
-    public SellerBoundary(UserBean userBean ){
-        this.buyGamesController = new BuyGamesController();
+    public SellerBoundary(UserBean userBean) throws WrongUserTypeException {
+        this.buyGamesController = new BuyGamesController(userBean);
         this.userBean = userBean;
     }
 
@@ -31,8 +32,8 @@ public class SellerBoundary {
         this.salesBean = salesBean;
     }
 
-    public void getGamesToSend() throws PersistencyErrorException {
-        this.salesBean = this.buyGamesController.getSales();
+    public void getGamesToSend() throws PersistencyErrorException, WrongUserTypeException {
+        this.salesBean = this.buyGamesController.getSales(this.userBean);
     }
 
     public void sendGame(long id) throws ConfirmDeliveryException, GmailException, PersistencyErrorException, WrongSaleException {

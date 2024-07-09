@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1440.0" style="-fx-background-color: #433f3f;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gameshelfapp.buyvideogames.graphiccontrollers.SalePageController">
+<AnchorPane prefHeight="768.0" prefWidth="1440.0" style="-fx-background-color: #433f3f;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gameshelfapp.confirmsale.graphiccontrollers.SalePageController">
    <children>
       <Region prefHeight="27.0" prefWidth="1440.0" style="-fx-background-color: #2E60E1;" />
       <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="40.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="7.0" />
