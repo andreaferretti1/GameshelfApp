@@ -11,7 +11,6 @@ import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleExcepti
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;

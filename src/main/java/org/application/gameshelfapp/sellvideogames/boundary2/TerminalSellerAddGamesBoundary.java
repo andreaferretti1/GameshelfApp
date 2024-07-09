@@ -32,8 +32,8 @@ public class TerminalSellerAddGamesBoundary implements TerminalBoundary {
     }
     private String mapToString(Map<String, String[]> map){
         StringBuilder filters = new StringBuilder();
-        for(String str: map.keySet()){
-            filters.append(str).append(": ").append(String.join(", ", map.get(str))).append("\n");
+        for(Map.Entry<String, String[]> entry: map.entrySet()){
+            filters.append(entry.getKey()).append(": ").append(String.join(", ", entry.getValue())).append("\n");
         }
         return filters + "\nType <search, gameTitle, console, category>\n\n";
     }
