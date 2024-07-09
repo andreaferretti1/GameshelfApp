@@ -3,8 +3,6 @@ package org.application.gameshelfapp.registration.entities;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.junit.jupiter.api.Test;
 
-import java.util.Timer;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class AccessThroughRegistrationTest {
