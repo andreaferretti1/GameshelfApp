@@ -1,18 +1,15 @@
 package org.application.gameshelfapp.signemployee.boundary;
 
+import org.application.gameshelfapp.login.exception.*;
 import org.application.gameshelfapp.registration.bean.RegistrationBean;
 import org.application.gameshelfapp.login.bean.UserBean;
-import org.application.gameshelfapp.login.exception.CheckFailedException;
-import org.application.gameshelfapp.login.exception.NullPasswordException;
-import org.application.gameshelfapp.login.exception.PersistencyErrorException;
-import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.signemployee.controller.SignEmployeeController;
 
 public class AdminBoundary {
     SignEmployeeController controller;
     UserBean userBean;
-    public AdminBoundary(UserBean userBean){
-        this.controller = new SignEmployeeController();
+    public AdminBoundary(UserBean userBean) throws WrongUserTypeException {
+        this.controller = new SignEmployeeController(userBean);
         this.userBean = userBean;
     }
 

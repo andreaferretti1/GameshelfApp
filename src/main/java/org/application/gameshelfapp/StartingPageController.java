@@ -1,6 +1,5 @@
 package org.application.gameshelfapp;
 
-import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,7 +20,7 @@ import org.application.gameshelfapp.registration.grapichcontroller.RegistrationP
 import java.io.IOException;
 
 
-public class StartingPageController extends Application {
+public class StartingPageController{
 
     @FXML
     private PasswordField passwordField;
@@ -59,8 +58,7 @@ public class StartingPageController extends Application {
         }
     }
 
-    @Override
-    public void start(Stage stage) throws IOException{
+    public static void start(Stage stage) throws IOException{
 
         FXMLLoader fxmlLoader = new FXMLLoader(StartingPageController.class.getResource("/org/application/gameshelfapp/GUI/Starting-Page.fxml"));
         Parent root = fxmlLoader.load();
@@ -76,6 +74,10 @@ public class StartingPageController extends Application {
     }
 
     public static void main(String[] args){
-        launch();
+        try{
+            StartingPageController.start(new Stage());
+        } catch (IOException e){
+            System.exit(1);
+        }
     }
 }

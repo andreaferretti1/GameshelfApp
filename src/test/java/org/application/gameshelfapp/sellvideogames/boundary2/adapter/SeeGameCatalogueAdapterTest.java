@@ -11,6 +11,8 @@ import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleExcepti
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 import org.junit.jupiter.api.Test;
 
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -144,6 +146,32 @@ class SeeGameCatalogueAdapterTest {
             SeeGameCatalogueAdapter test = new SeeGameCatalogueAdapter(userBean);
             assertNotNull(test.getUserBean());
         }catch (WrongUserTypeException e){
+            fail();
+        }
+    }
+
+    @Test
+    void getFiltersCategoriesTest(){
+        try {
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Seller");
+            SeeGameCatalogueAdapter test = new SeeGameCatalogueAdapter(userBean);
+            Map<String, String[]> filters = test.getFilters();
+            assertNotNull(filters.get("Category"));
+        } catch (PersistencyErrorException | WrongUserTypeException e){
+            fail();
+        }
+    }
+
+    @Test
+    void getFiltersConsolesTest(){
+        try {
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Seller");
+            SeeGameCatalogueAdapter test = new SeeGameCatalogueAdapter(userBean);
+            Map<String, String[]> filters = test.getFilters();
+            assertNotNull(filters.get("Console"));
+        } catch (PersistencyErrorException | WrongUserTypeException e){
             fail();
         }
     }

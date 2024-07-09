@@ -11,6 +11,7 @@ import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
 import org.application.gameshelfapp.sellvideogames.boundary.SellerAddGamesBoundary;
@@ -66,7 +67,7 @@ public class AddGameInfoPageController implements Initializable {
             this.sellerBoundary.addSellingGames(gameBean);
             SellingGameCataloguePageController.start(this.stage, this.sellerBoundary);
         } catch (PersistencyErrorException | CheckFailedException | InvalidTitleException | NoGameInCatalogueException |
-                 GmailException | AlreadyExistingVideogameException e){
+                 GmailException | AlreadyExistingVideogameException | WrongUserTypeException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
         } catch (IOException e){
             ErrorPageController.displayErrorWindow("Couldn't show updated catalogue");
@@ -77,7 +78,7 @@ public class AddGameInfoPageController implements Initializable {
     private void backToCatalogue(MouseEvent event) {
         try {
             SellingGameCataloguePageController.start(stage, sellerBoundary);
-        } catch (IOException e){
+        } catch (IOException | WrongUserTypeException e){
             ErrorPageController.displayErrorWindow("Couldn't load catalogue");
         }
     }

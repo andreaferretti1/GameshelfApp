@@ -30,6 +30,7 @@ public class RegistrationController {
         String message = "Your code is " + this.regAccess.getCodeGenerated() + ".";
         googleBoundary.setMessageToSend(message);
         googleBoundary.sendMail("check email", regAccess.getEmail());
+        this.regAccess.validationTimer();
     }
 
     public UserBean checkCode(int code) throws CheckFailedException, PersistencyErrorException{

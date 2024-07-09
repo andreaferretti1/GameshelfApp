@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
+import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
@@ -74,13 +75,13 @@ public class SearchPageController implements Initializable{
             System.exit(1);
         }
     }
-    public static void start(Stage myStage, CustomerBoundary boundary) throws IOException {
+    public static void start(Stage myStage, UserBean userBean) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SearchPageController.class.getResource("/org/application/gameshelfapp/GUI/Search-Page.fxml"));
         Parent root = fxmlLoader.load();
 
         SearchPageController controller = fxmlLoader.getController();
         controller.setStage(myStage);
-        controller.setCustomerBoundary(boundary);
+        controller.setCustomerBoundary(new CustomerBoundary(userBean));
         Scene scene = new Scene(root, 1440, 768);
         myStage.setScene(scene);
         myStage.show();

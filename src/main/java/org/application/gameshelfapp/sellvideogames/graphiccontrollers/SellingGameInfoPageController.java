@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
 import org.application.gameshelfapp.sellvideogames.boundary.SellerAddGamesBoundary;
@@ -53,7 +54,7 @@ public class SellingGameInfoPageController {
     private void backToCatalogue(MouseEvent event) {
         try {
             SellingGameCataloguePageController.start(stage, sellerBoundary);
-        } catch (IOException e){
+        } catch (IOException | WrongUserTypeException e){
             ErrorPageController.displayErrorWindow("Couldn't load catalogue");
         }
     }
@@ -70,7 +71,7 @@ public class SellingGameInfoPageController {
             gameBean.setDescriptionBean(this.descriptionArea.getText());
             this.sellerBoundary.updateSellingGame(gameBean);
             SellingGameCataloguePageController.start(this.stage, this.sellerBoundary);
-        } catch(PersistencyErrorException e){
+        } catch(PersistencyErrorException | WrongUserTypeException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
         } catch(NoGameInCatalogueException e){
             ErrorPageController.displayErrorWindow("Couldn't find the game in catalogue");
@@ -91,7 +92,7 @@ public class SellingGameInfoPageController {
             gameBean.setPriceBean(Float.parseFloat(this.priceTextField.getText()));
             this.sellerBoundary.removeSellingGames(gameBean);
             SellingGameCataloguePageController.start(this.stage, this.sellerBoundary);
-        } catch(PersistencyErrorException | GameSoldOutException e){
+        } catch(PersistencyErrorException | GameSoldOutException | WrongUserTypeException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
         } catch(NoGameInCatalogueException e){
             ErrorPageController.displayErrorWindow("Couldn't find the game");

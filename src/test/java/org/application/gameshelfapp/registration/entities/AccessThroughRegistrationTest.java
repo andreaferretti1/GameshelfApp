@@ -2,6 +2,7 @@ package org.application.gameshelfapp.registration.entities;
 
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AccessThroughRegistrationTest {
@@ -23,4 +24,5 @@ class AccessThroughRegistrationTest {
         regAccess.generateCode();
         assertThrows(CheckFailedException.class, () -> regAccess.checkCode(regAccess.getCodeGenerated() + 1));
     }
+
 }
