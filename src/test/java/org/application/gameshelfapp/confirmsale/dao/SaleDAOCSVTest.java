@@ -1,10 +1,12 @@
 package org.application.gameshelfapp.confirmsale.dao;
 
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
+import org.application.gameshelfapp.confirmsale.dao.utils.SaleDAOCSVUtils;
 import org.application.gameshelfapp.confirmsale.entities.Sale;
 import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
 import org.application.gameshelfapp.login.dao.CSVFactory;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -13,8 +15,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SaleDAOCSVTest {
 
+    @AfterEach
+    void truncateFile(){
+        SaleDAOCSVUtils.truncateFile();
+    }
+
     @Test
-    void getToconfirmSalesArraySizeTest(){      //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
+    void getToConfirmSalesArraySizeTest(){      //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
+        SaleDAOCSVUtils.insertRecord(new String[][]{{"2", "11", "To confirm", "gameNameTest1", "consoleTest1", "nameTest1", "emailTest1", "addressTest1"}, {"1", "10", "Confirmed", "gameNameTest2", "consoleTest2", "nameTest2", "emailTest2", "addressTest2"}});
         try {
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
@@ -26,6 +34,7 @@ class SaleDAOCSVTest {
     }
     @Test
     void getToConfirmSalesIdTest(){        //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
+        SaleDAOCSVUtils.insertRecord(new String[][]{{"2", "11", "To confirm", "gameNameTest1", "consoleTest1", "nameTest1", "emailTest1", "addressTest1"}, {"1", "10", "Confirmed", "gameNameTest2", "consoleTest2", "nameTest2", "emailTest2", "addressTest2"}});
         try{
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
@@ -39,6 +48,7 @@ class SaleDAOCSVTest {
     }
     @Test
     void getToConfirmSalesNameTest(){        //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
+        SaleDAOCSVUtils.insertRecord(new String[][]{{"2", "11", "To confirm", "gameNameTest1", "consoleTest1", "nameTest1", "emailTest1", "addressTest1"}, {"1", "10", "Confirmed", "gameNameTest2", "consoleTest2", "nameTest2", "emailTest2", "addressTest2"}});
         try{
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
@@ -53,6 +63,7 @@ class SaleDAOCSVTest {
 
     @Test
     void getToConfirmSalesGameNameTest(){        //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
+        SaleDAOCSVUtils.insertRecord(new String[][]{{"2", "11", "To confirm", "gameNameTest1", "consoleTest1", "nameTest1", "emailTest1", "addressTest1"}, {"1", "10", "Confirmed", "gameNameTest2", "consoleTest2", "nameTest2", "emailTest2", "addressTest2"}});
         try{
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
@@ -67,6 +78,7 @@ class SaleDAOCSVTest {
 
     @Test
     void getToConfirmSalesCopiesTest(){        //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
+        SaleDAOCSVUtils.insertRecord(new String[][]{{"2", "11", "To confirm", "gameNameTest1", "consoleTest1", "nameTest1", "emailTest1", "addressTest1"}, {"1", "10", "Confirmed", "gameNameTest2", "consoleTest2", "nameTest2", "emailTest2", "addressTest2"}});
         try{
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
@@ -81,6 +93,7 @@ class SaleDAOCSVTest {
 
     @Test
     void getToConfirmSalesPriceTest(){        //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
+        SaleDAOCSVUtils.insertRecord(new String[][]{{"2", "11", "To confirm", "gameNameTest1", "consoleTest1", "nameTest1", "emailTest1", "addressTest1"}, {"1", "10", "Confirmed", "gameNameTest2", "consoleTest2", "nameTest2", "emailTest2", "addressTest2"}});
         try{
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
@@ -95,6 +108,7 @@ class SaleDAOCSVTest {
 
     @Test
     void getToConfirmSalesConsoleTest(){        //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
+        SaleDAOCSVUtils.insertRecord(new String[][]{{"2", "11", "To confirm", "gameNameTest1", "consoleTest1", "nameTest1", "emailTest1", "addressTest1"}, {"1", "10", "Confirmed", "gameNameTest2", "consoleTest2", "nameTest2", "emailTest2", "addressTest2"}});
         try{
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
@@ -110,6 +124,7 @@ class SaleDAOCSVTest {
 
     @Test
     void getToConfirmSalesStateTest(){        //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
+        SaleDAOCSVUtils.insertRecord(new String[][]{{"2", "11", "To confirm", "gameNameTest1", "consoleTest1", "nameTest1", "emailTest1", "addressTest1"}, {"1", "10", "Confirmed", "gameNameTest2", "consoleTest2", "nameTest2", "emailTest2", "addressTest2"}});
         try{
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
@@ -123,6 +138,7 @@ class SaleDAOCSVTest {
     }
     @Test
     void getToConfirmSalesAddressTest(){        //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
+        SaleDAOCSVUtils.insertRecord(new String[][]{{"2", "11", "To confirm", "gameNameTest1", "consoleTest1", "nameTest1", "emailTest1", "addressTest1"}, {"1", "10", "Confirmed", "gameNameTest2", "consoleTest2", "nameTest2", "emailTest2", "addressTest2"}});
         try{
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
@@ -136,6 +152,7 @@ class SaleDAOCSVTest {
     }
     @Test
     void getToConfirmSalesEmailTest(){        //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
+        SaleDAOCSVUtils.insertRecord(new String[][]{{"2", "11", "To confirm", "gameNameTest1", "consoleTest1", "nameTest1", "emailTest1", "addressTest1"}, {"1", "10", "Confirmed", "gameNameTest2", "consoleTest2", "nameTest2", "emailTest2", "addressTest2"}});
         try{
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
@@ -150,6 +167,7 @@ class SaleDAOCSVTest {
 
     @Test
     void getConfirmedSalesArraySizeTest(){      //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
+        SaleDAOCSVUtils.insertRecord(new String[][]{{"2", "11", "To confirm", "gameNameTest1", "consoleTest1", "nameTest1", "emailTest1", "addressTest1"}, {"1", "10", "Confirmed", "gameNameTest2", "consoleTest2", "nameTest2", "emailTest2", "addressTest2"}});
         try{
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
@@ -161,6 +179,7 @@ class SaleDAOCSVTest {
     }
     @Test
     void getConfirmedSalesStateTest(){       //In the database there were tuples ('1', 'nameTest1', 'gameNameTest1', '2', '11', 'consoleTest1', 'To confirm', 'addressTest1', 'emailTest1'), ('2', 'nameTest2', 'gameNameTest2', '1', '10', 'consoleTest2', 'Confirmed', 'addressTest2', emailTest2')
+        SaleDAOCSVUtils.insertRecord(new String[][]{{"2", "11", "To confirm", "gameNameTest1", "consoleTest1", "nameTest1", "emailTest1", "addressTest1"}, {"1", "10", "Confirmed", "gameNameTest2", "consoleTest2", "nameTest2", "emailTest2", "addressTest2"}});
         try{
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
@@ -329,6 +348,7 @@ class SaleDAOCSVTest {
 
     @Test
     void updateSaleTest(){      //In the database there was tuple ('1', 'nameTest', 'gameNameTest', '3', '10', 'consoleTest', 'To confirm', 'addressTest', 'emailTest')
+        SaleDAOCSVUtils.insertRecord(new String[][]{{"3", "10", "To confirm", "gameNameTest", "consoleTest", "nameTest", "emailTest", "addressTest"}});
         try{
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
@@ -345,6 +365,7 @@ class SaleDAOCSVTest {
 
     @Test
     void getSaleToConfirmByIdTest(){     //In the database there was tuple (1, 'nameTest', 'gameName', '2', '40', 'platformTest', 'To confirm', 'addressTest', 'emailTest')
+        SaleDAOCSVUtils.insertRecord(new String[][]{{"2", "40", "To confirm", "gameNameTest", "consoleTest", "nameTest", "emailTest", "addressTest"}});
         try{
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
@@ -368,6 +389,7 @@ class SaleDAOCSVTest {
 
     @Test
     void getSaleToConfirmWrongStateExceptionTest(){     //in the database there was tuple (1, 'nameTest', 'gameName', '2', '40', 'platformTest', 'Confirmed', 'addressTest', 'emailTest')
+        SaleDAOCSVUtils.insertRecord(new String[][]{{"2", "40", "To confirm", "gameNameTest", "consoleTest", "nameTest", "emailTest", "addressTest"}});
         try{
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();

@@ -24,10 +24,10 @@ public class ItemDAOJDBCUtils {
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
                 preparedStatement.setString(1, game[0]);
                 preparedStatement.setString(2, game[1]);
-                preparedStatement.setFloat(3, Float.parseFloat(game[2]));
-                preparedStatement.setString(4, game[3]);
+                preparedStatement.setFloat(3, Float.parseFloat(game[5]));
+                preparedStatement.setString(4, game[2]);
                 preparedStatement.setInt(5, Integer.parseInt(game[4]));
-                preparedStatement.setString(6, game[5]);
+                preparedStatement.setString(6, game[3]);
                 preparedStatement.execute();
             }
         } catch(PersistencyErrorException | SQLException e){

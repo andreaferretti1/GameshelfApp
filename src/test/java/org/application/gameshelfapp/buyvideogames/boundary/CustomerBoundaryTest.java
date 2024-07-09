@@ -4,6 +4,8 @@ import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.dao.utils.ItemDAOCSVUtils;
 import org.application.gameshelfapp.buyvideogames.dao.utils.ItemDAOJDBCUtils;
 import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
+import org.application.gameshelfapp.confirmsale.dao.utils.SaleDAOCSVUtils;
+import org.application.gameshelfapp.confirmsale.dao.utils.SaleDAOJDBCUtils;
 import org.application.gameshelfapp.confirmsale.entities.Sale;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
@@ -28,8 +30,10 @@ class CustomerBoundaryTest {
     void truncateTable(){
         if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")){
             ItemDAOCSVUtils.truncateFile();
+            SaleDAOCSVUtils.truncateFile();
         } else{
             ItemDAOJDBCUtils.truncateTable();
+            SaleDAOJDBCUtils.truncateTable();
         }
     }
     @Test
@@ -54,11 +58,9 @@ class CustomerBoundaryTest {
 
     @Test
     void inertFiltersByNameTest(){      //In the database there were tuples ('nameTest1', 'consoleTest', 'categoryTest', 'descriptionTest1', '2', '11'), ('nameTest2', 'consoleTest', 'categoryTest', 'descriptionTest', '3', '20')
-        if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")){
-            ItemDAOCSVUtils.insertRecord(new String[][]{{"nameTest1", "consoleTest", "categoryTest", "descriptionTest1", "2", "11"}, {"nameTest2", "consoleTest", "categoryTest", "dscriptionTest", "3", "20"}});
-        } else{
-            ItemDAOJDBCUtils.insertRecord(new String[][]{{"nametest1", "consoleTest", "11", "categoryTest", "descriptionTest1", "2"}, {"nameTest2", "consoleTest", "20", "categoryTest", "descriptionTest", "3"}});
-        }
+        String[][] records = {{"nameTest1", "consoleTest", "categoryTest", "descriptionTest1", "2", "11"}, {"nameTest2", "consoleTest", "categoryTest", "dscriptionTest", "3", "20"}};
+        if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) ItemDAOCSVUtils.insertRecord(records);
+        else SaleDAOJDBCUtils.insertRecord(records);
         CustomerBoundary customerBoundary = new CustomerBoundary(new UserBean());
         try{
             customerBoundary.insertFilters("nameTest1", "consoleTest", "categoryTest");
@@ -71,6 +73,9 @@ class CustomerBoundaryTest {
 
     @Test
     void insertFiltersWithoutNameTest(){        //In the database there were tuples ('nameTest1', 'consoleTest', 'categoryTest', 'descriptionTest1', '2', '11'), ('nameTest2', 'consoleTest', 'categoryTest', 'descriptionTest', '3', '20'), ('nameTest3', 'consoleTest1', 'categoryTest1', 'descriptionTest2', '5', '30')
+        String[][] records = {{"nameTest1", "consoleTest", "categoryTest", "descriptionTest1", "2", "11"}, {"nameTest2", "consoleTest", "categoryTest", "descriptionTest", "3", "20"}, {"nameTest3", "consoleTest1", "categoryTest1", "descriptionTest2", "5", "30"}};
+        if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) ItemDAOCSVUtils.insertRecord(records);
+        else ItemDAOJDBCUtils.insertRecord(records);
         CustomerBoundary customerBoundary = new CustomerBoundary(new UserBean());
         try{
             customerBoundary.insertFilters(null, "consoleTest", "categoryTest");
@@ -116,6 +121,9 @@ class CustomerBoundaryTest {
 
     @Test
     void insertCredentialsAndPayGameSoldOutTest(){      //In the VideogameTable there was game ('gameNameTest', '1', '20', 'descriptionTest', 'consoleTest','categoryTest')
+        String[][] records = {{"gameNameTest1", "consoleTest", "categoryTest", "descriptionTest", "1", "20"}};
+        if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) ItemDAOCSVUtils.insertRecord(records);
+        else ItemDAOJDBCUtils.insertRecord(records);
         VideogameBean videogameBean = new VideogameBean();
         videogameBean.setName("gameNameTest");
         videogameBean.setCopiesBean(2);
