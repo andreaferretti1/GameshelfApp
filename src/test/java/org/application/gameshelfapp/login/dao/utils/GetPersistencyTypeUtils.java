@@ -9,13 +9,14 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class GetPersistencyTypeUtils {
 
     public static String getPersistencyType(){
-        try(FileInputStream in = new FileInputStream("src/main/resources/org/application/gameshelfapp/configuration/configuration.properties")){
-            Properties properties = new Properties();
+        Properties properties = new Properties();
+        try {
+            FileInputStream in = new FileInputStream("src/main/resources/org/application/gameshelfapp/configuration/configuration.properties");
 
             properties.load(in);
-            return properties.getProperty("PERSISTENCE");
         }catch(IOException e){
             fail();
         }
+        return properties.getProperty("PERSISTENCE");
     }
 }
