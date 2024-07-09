@@ -11,10 +11,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.application.gameshelfapp.login.bean.UserBean;
-import org.application.gameshelfapp.login.exception.CheckFailedException;
-import org.application.gameshelfapp.login.exception.NullPasswordException;
-import org.application.gameshelfapp.login.exception.PersistencyErrorException;
-import org.application.gameshelfapp.login.exception.SyntaxErrorException;
+import org.application.gameshelfapp.login.exception.*;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
 import org.application.gameshelfapp.signemployee.boundary.AdminBoundary;
@@ -46,7 +43,7 @@ public class SignEmployeePageController implements Initializable{
         this.stage = stage;
     }
 
-    public static void start(Stage stage, UserBean userBean) throws IOException {
+    public static void start(Stage stage, UserBean userBean) throws IOException, WrongUserTypeException {
         FXMLLoader fxmlLoader = new FXMLLoader(SignEmployeePageController.class.getResource("/org/application/gameshelfapp/GUI/Starting-Page.fxml"));
         Parent root = fxmlLoader.load();
 
