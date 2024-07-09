@@ -23,7 +23,7 @@ class TerminalSellerAddGamesBoundaryTest {
             userBean.setTypeOfUser("Seller");
             TerminalSellerAddGamesBoundary test = new TerminalSellerAddGamesBoundary(userBean);
             String[] command = {"filters"};
-            String testReturn = String.format("Category: %s, %s, %s, %s, %s\nConsole: %s, %s, %s, %s, %s\n", "Action", "Adventure", "Arcade", "Simulation", "Sport", "Playstation 4", "Playstation 5", "Xbox Series X", "Xbox Series S", "Pc") + "\nType <search, gameTitle, console, category>\n\n";
+            String testReturn = String.format("Category: %s, %s, %s, %s, %s%nConsole: %s, %s, %s, %s, %s%n", "Action", "Adventure", "Arcade", "Simulation", "Sport", "Playstation 4", "Playstation 5", "Xbox Series X", "Xbox Series S", "Pc") + "\nType <search, gameTitle, console, category>\n\n";
             String testString = test.executeCommand(command);
             assertEquals(testReturn, testString);
         } catch (PersistencyErrorException | NoGameInCatalogueException | CheckFailedException | GmailException |
