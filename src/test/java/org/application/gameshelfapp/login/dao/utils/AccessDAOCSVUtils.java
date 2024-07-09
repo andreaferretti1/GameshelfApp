@@ -13,8 +13,8 @@ public class AccessDAOCSVUtils {
 
     public static void insertRecord(String[][] records){
         try(CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(DATABASE_FILE)))){
-            for(String[] record: records){
-                csvWriter.writeNext(record);
+            for(String[] myRecord : records){
+                csvWriter.writeNext(myRecord);
             }
         } catch(IOException e){
             fail();

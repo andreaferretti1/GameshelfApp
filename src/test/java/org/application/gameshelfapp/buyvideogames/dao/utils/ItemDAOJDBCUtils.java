@@ -17,10 +17,10 @@ public class ItemDAOJDBCUtils {
         fail();
     }
     }
-    public static void insertRecord(String[][] record){
+    public static void insertRecord(String[][] records){
         try(Connection connection = SingletonConnectionPool.getInstance().getConnection()){
             String query = "INSERT INTO ObjectOnSale(Name, Platform, Price, Type, Description, Copies) VALUES (?, ?, ?, ?, ?, ?)";
-            for(String[] game: record) {
+            for(String[] game: records) {
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
                 preparedStatement.setString(1, game[0]);
                 preparedStatement.setString(2, game[1]);
