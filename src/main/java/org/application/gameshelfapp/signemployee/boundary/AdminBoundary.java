@@ -9,7 +9,7 @@ public class AdminBoundary {
     SignEmployeeController controller;
     UserBean userBean;
     public AdminBoundary(UserBean userBean) throws WrongUserTypeException {
-        this.controller = new SignEmployeeController(this.userBean);
+        this.controller = new SignEmployeeController(userBean);
         this.userBean = userBean;
     }
 
