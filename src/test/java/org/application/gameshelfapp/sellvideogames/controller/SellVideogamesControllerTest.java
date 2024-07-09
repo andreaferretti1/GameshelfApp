@@ -52,6 +52,30 @@ class SellVideogamesControllerTest {
     }
 
     @Test
+    void obtainCategoriesTest(){            //List of Categories exist in database
+        try{
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Seller");
+            SellVideogamesController test = new SellVideogamesController(userBean);
+            assertNotNull(test.obtainCategories());
+        } catch (PersistencyErrorException | WrongUserTypeException e){
+            fail();
+        }
+    }
+
+    @Test
+    void obtainConsolesTest(){          //List of Categories exist in database
+        try{
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Seller");
+            SellVideogamesController test = new SellVideogamesController(userBean);
+            assertNotNull(test.obtainConsoles());
+        } catch (PersistencyErrorException | WrongUserTypeException e){
+            fail();
+        }
+    }
+
+    @Test
     void addGameToCatalogueTest(){          //Database is empty
         try{
             UserBean userBean = new UserBean();

@@ -15,13 +15,31 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TerminalSellerAddGamesBoundaryTest {
+
+    @Test
+    void executeCommandGetFiltersTest(){
+        try {
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Seller");
+            TerminalSellerAddGamesBoundary test = new TerminalSellerAddGamesBoundary(userBean);
+            String[] command = {"filters"};
+            String testReturn = String.format("Category: %s, %s, %s, %s, %s\nConsole: %s, %s, %s, %s, %s\n", "Action", "Adventure", "Arcade", "Simulation", "Sport", "Playstation 4", "Playstation 5", "Xbox Series X", "Xbox Series S", "Pc") + "\nType <search, gameTitle, console, category>\n\n";
+            String testString = test.executeCommand(command);
+            assertEquals(testReturn, testString);
+        } catch (PersistencyErrorException | NoGameInCatalogueException | CheckFailedException | GmailException |
+                 InvalidTitleException | AlreadyExistingVideogameException | GameSoldOutException |
+                 WrongUserTypeException e){
+            fail();
+        }
+    }
+
     @Test
     void executeCommandGetSellingCatalogueTest(){             //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
         try{
             UserBean userBean = new UserBean();
             userBean.setTypeOfUser("Seller");
             TerminalSellerAddGamesBoundary test = new TerminalSellerAddGamesBoundary(userBean);
-            String[] testCommand = {"show", "Dark Souls", "TestConsole2", "TestCategory2"};
+            String[] testCommand = {"search", "Dark Souls", "TestConsole2", "TestCategory2"};
             String testReturn = String.format("name: %s, console: %s, category: %s, copies: %d, price: %f, description: %s%n", "Dark Souls", "TestConsole2", "TestCategory2", 1, 10f, "This is another test") + "\nType <add/remove/update, gameTitle, console, category, description, copies, price>\n\n";
             String testString = test.executeCommand(testCommand);
             assertEquals(testReturn, testString);
@@ -38,7 +56,7 @@ class TerminalSellerAddGamesBoundaryTest {
             UserBean userBean = new UserBean();
             userBean.setTypeOfUser("Seller");
             TerminalSellerAddGamesBoundary test = new TerminalSellerAddGamesBoundary(userBean);
-            String[] testCommand = {"show", "Dark Souls", "TestConsole2", "TestCategory2"};
+            String[] testCommand = {"search", "Dark Souls", "TestConsole2", "TestCategory2"};
             assertThrows(NoGameInCatalogueException.class, () -> test.executeCommand(testCommand));
         } catch (WrongUserTypeException e){
             fail();

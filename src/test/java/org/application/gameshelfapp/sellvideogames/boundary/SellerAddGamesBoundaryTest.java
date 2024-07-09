@@ -218,4 +218,28 @@ class SellerAddGamesBoundaryTest {
             fail();
         }
     }
+
+    @Test
+    void getCategoriesTest(){
+        try {
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Seller");
+            SellerAddGamesBoundary test = new SellerAddGamesBoundary(userBean);
+            assertNotNull(test.getCategories());
+        } catch (PersistencyErrorException | WrongUserTypeException e){
+            fail();
+        }
+    }
+
+    @Test
+    void getConsolesTest(){
+        try {
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Seller");
+            SellerAddGamesBoundary test = new SellerAddGamesBoundary(userBean);
+            assertNotNull(test.getConsoles());
+        } catch (PersistencyErrorException | WrongUserTypeException e){
+            fail();
+        }
+    }
 }
