@@ -12,6 +12,7 @@ import org.application.gameshelfapp.StartingPageController;
 import org.application.gameshelfapp.buyvideogames.graphiccontrollers.SearchPageController;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.WrongUserTypeException;
+import org.application.gameshelfapp.sellvideogames.boundary.SellerAddGamesBoundary;
 import org.application.gameshelfapp.sellvideogames.graphiccontrollers.SellingGameCataloguePageController;
 import org.application.gameshelfapp.signemployee.graphiccontrollers.SignEmployeePageController;
 
@@ -75,7 +76,7 @@ public class HomePageController implements Initializable {
     @FXML
     private void goToSellingCatalogue(MouseEvent event){
         try{
-            SellingGameCataloguePageController.start(this.stage, this.userBean);
+            SellingGameCataloguePageController.start(this.stage,new SellerAddGamesBoundary(this.userBean));
         } catch (WrongUserTypeException | IOException e){
             System.exit(1);
         }
@@ -84,7 +85,7 @@ public class HomePageController implements Initializable {
     private void goToSignEmployeePage(MouseEvent event){
         try{
             SignEmployeePageController.start(this.stage, this.userBean);
-        } catch (IOException e){
+        } catch (IOException | WrongUserTypeException e){
             System.exit(1);
         }
     }

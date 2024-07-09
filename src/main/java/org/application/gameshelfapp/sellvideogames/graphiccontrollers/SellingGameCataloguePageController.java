@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.application.gameshelfapp.buyvideogames.bean.FiltersBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
-import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
@@ -76,13 +75,13 @@ public class SellingGameCataloguePageController implements Initializable{
             ErrorPageController.displayErrorWindow("No game found");
         }
     }
-    public static void start(Stage myStage, UserBean userBean) throws IOException, WrongUserTypeException {
+    public static void start(Stage myStage, SellerAddGamesBoundary sellerBoundary) throws IOException, WrongUserTypeException {
         FXMLLoader fxmlLoader = new FXMLLoader(SellingGameCataloguePageController.class.getResource("/org/application/gameshelfapp/GUI/Selling-Catalogue-Page.fxml"));
         Parent root = fxmlLoader.load();
 
         SellingGameCataloguePageController controller = fxmlLoader.getController();
         controller.setStage(myStage);
-        controller.setSellerAddGamesBoundary(new SellerAddGamesBoundary(userBean));
+        controller.setSellerAddGamesBoundary(sellerBoundary);
         Scene scene = new Scene(root,1440,768);
         myStage.setScene(scene);
         myStage.show();
