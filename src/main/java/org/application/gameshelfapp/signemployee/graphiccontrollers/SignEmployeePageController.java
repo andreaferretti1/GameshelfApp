@@ -14,6 +14,8 @@ import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.*;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
+import org.application.gameshelfapp.sellvideogames.boundary.SellerAddGamesBoundary;
+import org.application.gameshelfapp.sellvideogames.graphiccontrollers.SellingGameCataloguePageController;
 import org.application.gameshelfapp.signemployee.boundary.AdminBoundary;
 
 import java.io.IOException;
@@ -62,6 +64,15 @@ public class SignEmployeePageController implements Initializable{
             HomePageController.start(this.stage, this.adminBoundary.getUserBean());
         } catch(IOException e){
             System.exit(1);
+        }
+    }
+
+    @FXML
+    private void goToSellingCataloguePage(MouseEvent event){
+        try{
+            SellingGameCataloguePageController.start(stage, new SellerAddGamesBoundary(this.adminBoundary.getUserBean()));
+        } catch (IOException | WrongUserTypeException e){
+            ErrorPageController.displayErrorWindow("Couldn't load catalogue");
         }
     }
 

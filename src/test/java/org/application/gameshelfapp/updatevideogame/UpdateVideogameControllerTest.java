@@ -90,4 +90,5 @@ class UpdateVideogameControllerTest {
         gameBeanTest.setDescriptionBean("This is a new description");
         assertThrows(NoGameInCatalogueException.class, ()->test.updateGameInCatalogue(gameBeanTest));
     }
+
 }
