@@ -42,8 +42,6 @@ public class SearchPageController implements Initializable{
     private TableColumn<VideogameBean, String> gameCost;
     @FXML
     private TableColumn<VideogameBean, String> seeGame;
-    private final String[] category = {"Action", "Adventure", "Arcade", "Simulation", "Sport"};
-    private final String[] platform = {"Playstation 4", "Playstation 5", "Xbox Series X", "Xbox Series S", "Pc"};
 
     private CustomerBoundary customerBoundary;
     private Stage stage;
@@ -88,11 +86,15 @@ public class SearchPageController implements Initializable{
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.categoryChoiceBox.getItems().setAll(category);
-        this.platformChoiceBox.getItems().setAll(platform);
-        SellingGamesCatalogueBean sellingGamesCatalogueBean = this.customerBoundary.getSellingGamesCatalogueBean();
-        if(sellingGamesCatalogueBean != null) this.showGamesFound(sellingGamesCatalogueBean.getSellingGamesBean());
+    public void initialize(URL url, ResourceBundle resourceBundle){
+        try{
+            this.categoryChoiceBox.getItems().setAll(this.customerBoundary.getCategoriesFilters());
+            this.platformChoiceBox.getItems().setAll(this.customerBoundary.getConsoleFilters());
+            SellingGamesCatalogueBean sellingGamesCatalogueBean = this.customerBoundary.getSellingGamesCatalogueBean();
+            if(sellingGamesCatalogueBean != null) this.showGamesFound(sellingGamesCatalogueBean.getSellingGamesBean());
+        } catch(PersistencyErrorException e){
+            System.exit(1);
+        }
     }
 
     private void showGamesFound(List<VideogameBean> games){

@@ -32,12 +32,24 @@ import java.util.List;
 
 public class BuyGamesController {
     private ConfirmSaleController confirmSaleController;
+
     public BuyGamesController(UserBean userBean) throws WrongUserTypeException{
         if(userBean == null) throw new WrongUserTypeException("Access not allowed");
     }
+
     public SellingGamesCatalogueBean searchVideogame(FiltersBean filtersBean) throws PersistencyErrorException, NoGameInCatalogueException {
         SeeGameCatalogueController seeGameCatalogueController = new SeeGameCatalogueController();
         return seeGameCatalogueController.displaySellingGamesCatalogue(filtersBean);
+    }
+
+    public List<String> getCategories() throws PersistencyErrorException{
+        SeeGameCatalogueController controller = new SeeGameCatalogueController();
+        return controller.getCategoriesValue();
+    }
+
+    public List<String> getConsoles() throws PersistencyErrorException{
+        SeeGameCatalogueController controller = new SeeGameCatalogueController();
+        return controller.getConsolesValue();
     }
 
     public void sendMoney(CredentialsBean credentialsBean, VideogameBean videogameBean, UserBean userBean) throws RefundException, GameSoldOutException, PersistencyErrorException, InvalidAddressException, NoGameInCatalogueException {

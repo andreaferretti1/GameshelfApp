@@ -1,6 +1,5 @@
 package org.application.gameshelfapp.buyvideogames.boundary2;
 
-import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.boundary2.adapter.CustomerAdapter;
 import org.application.gameshelfapp.buyvideogames.boundary2.adapter.CustomerBoundaryInterface;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
@@ -11,6 +10,7 @@ import org.application.gameshelfapp.login.boundary2.TerminalBoundary;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.login.exception.WrongUserTypeException;
+import org.application.gameshelfapp.seevideogamecatalogue.utilityboundary2.ConvertToStringUtility;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
@@ -26,6 +26,9 @@ public class TerminalCustomerBoundary implements TerminalBoundary {
     public String executeCommand(String[] command) throws PersistencyErrorException, NoGameInCatalogueException, ArrayIndexOutOfBoundsException, RefundException, GameSoldOutException, SyntaxErrorException, InvalidAddressException {
         switch(command[0]){
             case"see catalogue" -> {
+                return ConvertToStringUtility.mapToString(this.customer.getFilters());
+            }
+            case "search" ->{
                 return this.catalogueBeanToString(this.customer.searchVideogame(command[1], command[2], command[3]));
             }
             case "select gameToBuy" -> {
@@ -48,10 +51,6 @@ public class TerminalCustomerBoundary implements TerminalBoundary {
     }
 
     private String catalogueBeanToString(SellingGamesCatalogueBean catalogueBean){
-        StringBuilder game = new StringBuilder();
-        for(VideogameBean gameBean: catalogueBean.getSellingGamesBean()){
-            game.append(String.format("name: %s, console: %s, category: %s, copies: %d, price: %f, description: %s%n", gameBean.getName(), gameBean.getPlatformBean(), gameBean.getCategoryBean(), gameBean.getCopiesBean(), gameBean.getPriceBean(), gameBean.getDescriptionBean())) ;
-        }
-        return game + "\nType <select game, gameTitle, console, category, copies, price>\n\n";
+        return ConvertToStringUtility.catalogueBeanToString(catalogueBean) + "\nType <select game, gameTitle, console, category, copies, price>\n\n";
     }
 }

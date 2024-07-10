@@ -12,6 +12,10 @@ import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class CustomerAdapter implements CustomerBoundaryInterface {
 
     private final CustomerBoundary customerBoundary;
@@ -50,4 +54,13 @@ public class CustomerAdapter implements CustomerBoundaryInterface {
         this.customerBoundary.insertCredentialsAndPay(nameBean, typeOfCardBean, paymentKeyBean, streetBean, regionBean, countryBean);
     }
 
+    @Override
+    public Map<String, String[]> getFilters() throws PersistencyErrorException{
+        Map<String, String[]> filters = new HashMap<>();
+        List<String> cat = this.customerBoundary.getCategoriesFilters();
+        filters.put("Category", cat.toArray(cat.toArray(new String[0])));
+        List<String> con = this.customerBoundary.getConsoleFilters();
+        filters.put("Console", con.toArray(new String[0]));
+        return filters;
+    }
 }

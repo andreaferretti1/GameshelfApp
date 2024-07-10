@@ -14,6 +14,8 @@ import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
+import java.util.List;
+
 public class CustomerBoundary {
     private final BuyGamesController buyGamesController;
     private SellingGamesCatalogueBean sellingGamesCatalogueBean;
@@ -51,5 +53,13 @@ public class CustomerBoundary {
         credentialsBean.setPaymentKeyBean(paymentKey);
         credentialsBean.setAddressBean(street, region, country);
         this.buyGamesController.sendMoney(credentialsBean, this.gameToBuy, this.userBean);
+    }
+
+    public List<String> getConsoleFilters() throws PersistencyErrorException{
+        return this.buyGamesController.getConsoles();
+    }
+
+    public List<String> getCategoriesFilters() throws PersistencyErrorException{
+        return this.buyGamesController.getCategories();
     }
 }

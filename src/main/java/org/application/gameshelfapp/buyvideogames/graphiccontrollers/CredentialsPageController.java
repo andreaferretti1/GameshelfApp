@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
@@ -12,6 +13,7 @@ import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressExcept
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
+import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
@@ -33,11 +35,23 @@ public class CredentialsPageController {
     private TextField regionField;
     @FXML
     private TextField countryField;
+    private Stage stage;
+    public void setStage(Stage stage){
+        this.stage = stage;
+    }
 
     public void setCustomerBoundary(CustomerBoundary customerBoundary) {
         this.customerBoundary = customerBoundary;
     }
 
+    @FXML
+    private void goBack(MouseEvent event){
+        try{
+            SearchPageController.start(this.stage, this.customerBoundary);
+        } catch(IOException | WrongUserTypeException e){
+            System.exit(1);
+        }
+    }
     @FXML
     private void insertCredentials(){
         try {
@@ -53,6 +67,7 @@ public class CredentialsPageController {
 
         CredentialsPageController controller = fxmlLoader.getController();
         controller.setCustomerBoundary(boundary);
+        controller.setStage(myStage);
         Scene scene = new Scene(root, 700, 500);
         myStage.setScene(scene);
         myStage.show();
