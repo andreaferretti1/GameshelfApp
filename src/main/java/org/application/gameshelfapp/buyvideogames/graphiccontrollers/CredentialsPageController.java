@@ -15,6 +15,7 @@ import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
+import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
 import java.io.IOException;
@@ -44,6 +45,14 @@ public class CredentialsPageController {
         this.customerBoundary = customerBoundary;
     }
 
+    @FXML
+    private void goToHomePage(MouseEvent event){
+        try{
+            HomePageController.start(this.stage, this.customerBoundary.getUserBean());
+        } catch(IOException e){
+            System.exit(1);
+        }
+    }
     @FXML
     private void goBack(MouseEvent event){
         try{
