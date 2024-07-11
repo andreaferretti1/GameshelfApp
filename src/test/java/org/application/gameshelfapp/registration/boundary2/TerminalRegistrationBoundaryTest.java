@@ -1,21 +1,12 @@
 package org.application.gameshelfapp.registration.boundary2;
 
-import org.application.gameshelfapp.login.dao.utils.AccessDAOCSVUtils;
-import org.application.gameshelfapp.login.dao.utils.AccessDAOJDBCUtils;
-import org.application.gameshelfapp.login.dao.utils.GetPersistencyTypeUtils;
 import org.application.gameshelfapp.login.exception.*;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TerminalRegistrationBoundaryTest {
 
-    @AfterEach
-    void clean(){
-        if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) AccessDAOCSVUtils.truncateFile();
-        else AccessDAOJDBCUtils.truncateTable();
-    }
     @Test
     void executeCommandRegisterSuccessfulTest(){
         try {
@@ -43,9 +34,6 @@ class TerminalRegistrationBoundaryTest {
 
     @Test
     void executeCommandRegisterUsernameCheckFailedExceptionTest(){
-        String[][] records = {{"andrea", "testEmail@gmail.com", "test", "Customer"}};
-        if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) AccessDAOCSVUtils.insertRecord(records);
-        else AccessDAOJDBCUtils.insertRecords(records);
         TerminalRegistrationBoundary boundary = new TerminalRegistrationBoundary();
         String[] command = {"register", "andrea", "testEmail1@gmail.com", "test"};
         assertThrows(CheckFailedException.class, () -> boundary.executeCommand(command));
@@ -53,9 +41,6 @@ class TerminalRegistrationBoundaryTest {
 
     @Test
     void executeCommandRegisterEmailCheckFailedExceptionTest(){
-        String[][] records = {{"andrea", "testEmail@gmail.com", "test", "Customer"}};
-        if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) AccessDAOCSVUtils.insertRecord(records);
-        else AccessDAOJDBCUtils.insertRecords(records);
         TerminalRegistrationBoundary boundary = new TerminalRegistrationBoundary();
         String[] command = {"register", "testName", "testEmail@gmail.com", "testPassword"};
         assertThrows(CheckFailedException.class, () -> boundary.executeCommand(command));

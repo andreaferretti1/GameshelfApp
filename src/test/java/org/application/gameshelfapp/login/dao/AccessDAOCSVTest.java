@@ -1,12 +1,10 @@
 package org.application.gameshelfapp.login.dao;
 
-import org.application.gameshelfapp.login.dao.utils.AccessDAOCSVUtils;
 import org.application.gameshelfapp.login.entities.Access;
 import org.application.gameshelfapp.login.entities.AccessThroughLogIn;
 import org.application.gameshelfapp.login.exception.NullPasswordException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.registration.entities.AccessThroughRegistration;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -16,14 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AccessDAOCSVTest {
 
-    @AfterEach
-    void clean(){
-        AccessDAOCSVUtils.truncateFile();
-    }
-
     @Test
     void retrieveAccountNameTest(){  //database was populated with tuple ('testName', 'testEmail', 'testPassword', 'Customer') before running the test
-        AccessDAOCSVUtils.insertRecord(new String[][]{{"testName", "testEmail", "testPassword", "Customer"}});
         try{
             JDBCFactory jdbcFactory = new JDBCFactory();
             AccessDAO accessDAO = jdbcFactory.createAccessDAO();
@@ -36,7 +28,6 @@ class AccessDAOCSVTest {
 
     @Test
     void retrieveAccountEmailTest(){  //database was populated with tuple ('testName', 'testEmail', 'testPassword', 'Customer') before running the test
-        AccessDAOCSVUtils.insertRecord(new String[][]{{"testName", "testEmail", "testPassword", "Customer"}});
         try{
             JDBCFactory jdbcFactory = new JDBCFactory();
             AccessDAO accessDAO = jdbcFactory.createAccessDAO();
@@ -52,7 +43,6 @@ class AccessDAOCSVTest {
         try{
             Access testAccess = new AccessThroughLogIn("testEmail","testPassword" ,"Customer");
             testAccess.encodePassword();
-            AccessDAOCSVUtils.insertRecord(new String[][]{{"testName", "testEmail", testAccess.getEncodedPassword(), "Customer"}});
 
             JDBCFactory jdbcFactory = new JDBCFactory();
             AccessDAO accessDAO = jdbcFactory.createAccessDAO();
@@ -65,7 +55,6 @@ class AccessDAOCSVTest {
 
     @Test
     void retrieveAccountTypeTest(){  //database was populated with tuple ('testName', 'testEmail', 'testPassword', 'Customer') before running the test
-        AccessDAOCSVUtils.insertRecord(new String[][]{{"testName", "testEmail", "testPassword", "Customer"}});
         try{
             JDBCFactory jdbcFactory = new JDBCFactory();
             AccessDAO accessDAO = jdbcFactory.createAccessDAO();
@@ -132,7 +121,6 @@ class AccessDAOCSVTest {
 
     @Test
     void retrieveAccountReturnsNullTest(){
-        AccessDAOCSVUtils.insertRecord(new String[][]{{"testName1", "testEmail2", "passwordTest2", "typeTest2"}, {"testName2", "testEmail2", "testPassword2", "typeTest2"}, {"testName3", "emailTest3", "passwordTest3", "typeTest3"}});
         try{
             AccessDAOCSV accessDAOCSV = new AccessDAOCSV(new File("src/main/resources/org/application/gameshelfapp/persistency/FileSystem/accounts.csv"));
             Access access = accessDAOCSV.retrieveAccountByEmail(new AccessThroughLogIn("testName", "testEmail@example.com", null));
@@ -144,7 +132,6 @@ class AccessDAOCSVTest {
 
     @Test  //test executed with the same values inserted in retrieveAccountReturnsNullTest
     void retrieveAccountTest(){
-        AccessDAOCSVUtils.insertRecord(new String[][]{{"testName1", "testEmail2", "passwordTest2", "typeTest2"}, {"testName2", "testEmail2", "testPassword2", "typeTest2"}, {"testName3", "emailTest3", "passwordTest3", "typeTest3"}});
         try{
             AccessDAOCSV accessDAOCSV = new AccessDAOCSV(new File("src/main/resources/org/application/gameshelfapp/persistency/FileSystem/accounts.csv"));
             Access access = accessDAOCSV.retrieveAccountByEmail(new AccessThroughLogIn("testName2", "testEmail2@example.com", null));

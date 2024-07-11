@@ -1,23 +1,13 @@
 package org.application.gameshelfapp.registration.controller;
 
-import org.application.gameshelfapp.login.dao.utils.AccessDAOCSVUtils;
-import org.application.gameshelfapp.login.dao.utils.AccessDAOJDBCUtils;
-import org.application.gameshelfapp.login.dao.utils.GetPersistencyTypeUtils;
 import org.application.gameshelfapp.login.exception.*;
 import org.application.gameshelfapp.registration.bean.RegistrationBean;
 import org.application.gameshelfapp.registration.entities.AccessThroughRegistration;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class RegistrationControllerTest {
-
-    @AfterEach
-    void clean(){
-        if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) AccessDAOCSVUtils.truncateFile();
-        else AccessDAOJDBCUtils.truncateTable();
-    }
 
     @Test
     void registrationTest(){
@@ -35,9 +25,6 @@ class RegistrationControllerTest {
     }
     @Test
     void regsitrationSameUsernameTest(){        //In the database there was tuple ('nameTest', 'email@gmail.com', 'testPassword', 'Customer')
-        String[][] records = {{"nameTest", "email@gmail.com", "testPassword", "Customer"}};
-        if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) AccessDAOCSVUtils.insertRecord(records);
-        else AccessDAOJDBCUtils.insertRecords(records);
         RegistrationController regController = new RegistrationController();
         RegistrationBean registrationBean = new RegistrationBean();
         try{
@@ -52,9 +39,6 @@ class RegistrationControllerTest {
 
     @Test
     void registrationSameEmailTest(){       //In the database there was tuple ('nameTest', 'email@gmail.com', 'testPassword', 'Customer')
-        String[][] records = {{"nameTest", "email@gmail.com", "testPassword", "Customer"}};
-        if(GetPersistencyTypeUtils.getPersistencyType().equals("CSV")) AccessDAOCSVUtils.insertRecord(records);
-        else AccessDAOJDBCUtils.insertRecords(records);
         RegistrationController regController = new RegistrationController();
         RegistrationBean registrationBean = new RegistrationBean();
         try{
