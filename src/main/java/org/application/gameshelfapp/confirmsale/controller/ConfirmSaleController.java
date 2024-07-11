@@ -20,7 +20,7 @@ public class ConfirmSaleController{
     public ConfirmSaleController(UserBean userBean) throws WrongUserTypeException{
         if(userBean == null || userBean.getTypeOfUser().equals("Customer")) throw new WrongUserTypeException("You are not allowed to access.");
     }
-    public List<SaleBean> getSales() throws PersistencyErrorException {
+    public List<SaleBean> getSalesToSend() throws PersistencyErrorException {
         SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
         List<Sale> sales = saleDAO.getToConfirmSales();
         List<SaleBean> salesBean = new ArrayList<>();
@@ -32,7 +32,7 @@ public class ConfirmSaleController{
         return salesBean;
     }
 
-    public void confirmDelivery(long id) throws GmailException, ConfirmDeliveryException, PersistencyErrorException, WrongSaleException {
+    public void confirmSale(long id) throws GmailException, ConfirmDeliveryException, PersistencyErrorException, WrongSaleException {
         FedEx shipmentCompany = new FedEx();
         GoogleBoundary googleBoundary = new GoogleBoundary();
 

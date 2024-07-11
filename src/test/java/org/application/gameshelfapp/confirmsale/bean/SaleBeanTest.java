@@ -47,13 +47,6 @@ class SaleBeanTest {
         assertEquals(Sale.CONFIRMED, saleBean.getStateBean());
     }
     @Test
-    void getAndSetSaleTest(){
-        SaleBean saleBean = new SaleBean();
-        Sale sale = new Sale(0, null, null, null, null, null);
-        saleBean.setSale(sale);
-        assertEquals(sale,saleBean.getSale());
-    }
-    @Test
     void getInformationFromModelTestVideogameTest(){
         SaleBean saleBean = new SaleBean();
         Videogame videogame = new Videogame("gameName", 1, 10, "description", null, null);

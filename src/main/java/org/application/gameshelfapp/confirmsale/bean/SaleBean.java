@@ -60,10 +60,6 @@ public class SaleBean {
         this.stateBean = stateBean;
     }
 
-    public Sale getSale() {
-        return sale;
-    }
-
     public void setSale(Sale sale) {
         this.sale = sale;
     }

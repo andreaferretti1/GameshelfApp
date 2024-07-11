@@ -30,9 +30,6 @@ public class UserBean {
     public String getTypeOfUser() {
         return typeOfUser;
     }
-    public User getUser(){
-        return this.user;
-    }
     public void setUser(User user){
         this.user = user;
     }

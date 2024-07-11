@@ -94,11 +94,11 @@ public class BuyGamesController {
 
     public List<SaleBean> getSales(UserBean userBean) throws PersistencyErrorException, WrongUserTypeException{
         this.confirmSaleController = new ConfirmSaleController(userBean);
-        return this.confirmSaleController.getSales();
+        return this.confirmSaleController.getSalesToSend();
     }
 
     public void confirmDelivery(long id) throws GmailException, ConfirmDeliveryException, PersistencyErrorException, WrongSaleException {
-        this.confirmSaleController.confirmDelivery(id);
+        this.confirmSaleController.confirmSale(id);
     }
 }
 
