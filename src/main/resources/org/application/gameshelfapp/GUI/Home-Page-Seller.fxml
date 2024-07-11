@@ -45,7 +45,7 @@
                   <Insets top="27.0" />
                </VBox.margin>
                <children>
-                  <Button alignment="TOP_LEFT" contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#goToSellingCatalogue" style="-fx-background-color: transaprent;" text="Buy Games" textFill="#2e60e1">
+                  <Button alignment="TOP_LEFT" contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#goToSellingCatalogue" style="-fx-background-color: transaprent;" text="Add Games" textFill="#2e60e1">
                      <graphic>
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
