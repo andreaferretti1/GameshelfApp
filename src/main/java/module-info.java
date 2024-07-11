@@ -49,4 +49,5 @@ module org.application.gameshelfapp {
     exports org.application.gameshelfapp.confirmsale.exceptions;
     exports org.application.gameshelfapp.confirmsale.graphiccontrollers;
     opens org.application.gameshelfapp.confirmsale.graphiccontrollers to javafx.fxml;
+    exports org.application.gameshelfapp.sellvideogames.entities;
 }
