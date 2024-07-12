@@ -13,21 +13,26 @@ import java.net.URL;
 import java.util.Properties;
 
 public class Geocoder {
-    private String getURL(String address) throws IOException{
+
+    private String url;
+
+    public Geocoder(String address) throws IOException {
+        this.setURL(address);
+    }
+    private void setURL(String address) throws IOException{
         try(FileInputStream in = new FileInputStream("src/main/resources/org/application/gameshelfapp/configuration/configuration.properties")){
             Properties properties = new Properties();
             properties.load(in);
 
             String key = properties.getProperty("GEOCODER");
-            return String.format("https://geocode.maps.co/search?q=%s&api_key=%s", address, key);
+            this.url = String.format("https://geocode.maps.co/search?q=%s&api_key=%s", address, key);
         } catch(IOException e){
             throw new IOException("Couldn't send credentials");
         }
     }
 
-    public void checkAddress(String address) throws InvalidAddressException, IOException{
-        String addressToCheck = this.getURL(address);
-        URL url = new URL(addressToCheck);
+    public void checkAddress() throws InvalidAddressException, IOException{
+        URL url = new URL(this.url);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         int responseCode = connection.getResponseCode();

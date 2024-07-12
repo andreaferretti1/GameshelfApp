@@ -16,6 +16,7 @@ import org.application.gameshelfapp.confirmsale.bean.SaleBean;
 import org.application.gameshelfapp.confirmsale.controller.ConfirmSaleController;
 import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
 import org.application.gameshelfapp.confirmsale.entities.Sale;
+import org.application.gameshelfapp.confirmsale.entities.SingletonSalesToConfirm;
 import org.application.gameshelfapp.confirmsale.exceptions.ConfirmDeliveryException;
 import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
 import org.application.gameshelfapp.login.bean.UserBean;
@@ -53,7 +54,7 @@ public class BuyGamesController {
 
     public void sendMoney(CredentialsBean credentialsBean, VideogameBean videogameBean) throws RefundException, GameSoldOutException, PersistencyErrorException, InvalidAddressException, NoGameInCatalogueException {
         Braintree braintree = new Braintree();
-        Geocoder geocoder = new Geocoder();
+
 
         PersistencyAbstractFactory factory = PersistencyAbstractFactory.getFactory();
         ItemDAO itemDAO = factory.createItemDAO();
@@ -69,7 +70,8 @@ public class BuyGamesController {
         Sale sale = new Sale(game,  credentials, Sale.TO_CONFIRM);
         itemDAO.removeGameForSale(game);
             try{
-                geocoder.checkAddress(credentialsBean.getAddressBean());
+                Geocoder geocoder = new Geocoder(credentialsBean.getAddressBean());
+                geocoder.checkAddress();
 
                 int quantity = game.getCopies();
                 float amountToPay = game.getPrice() * quantity;
@@ -85,9 +87,10 @@ public class BuyGamesController {
                 googleBoundary.sendMail("Videogame bought", "fer.andrea35@gmail.com");
 
                 saleDAO.saveSale(sale);
+                SingletonSalesToConfirm.getInstance().addSaleToConfirm(sale);
             }catch(GmailException | PersistencyErrorException e){
-                game.setCopies(game.getCopies() + 1);
-                itemDAO.addGameForSale(game);
+                game.setCopies(game.getCopies() + videogameBean.getCopiesBean());
+                itemDAO.updateGameForSale(game);
                 braintree.refund();
                 throw new RefundException("Transaction has been refunded due to problems.");
             } catch(IOException e){

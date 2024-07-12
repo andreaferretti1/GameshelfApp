@@ -54,8 +54,8 @@ public class Videogame {
     public void setCategory(String category) {
         this.category = category;
     }
-    public void buyVideogame(int copiesToBuy, float priceToBuy) throws GameSoldOutException {
-        if(this.copies < copiesToBuy || this.price != priceToBuy) throw new GameSoldOutException("Price or copies are not correct");
+    public void buyVideogame(int copiesToBuy, float price) throws GameSoldOutException {
+        if(this.copies < copiesToBuy || this.price != price) throw new GameSoldOutException("Price or copies are not correct");
         this.copies = copiesToBuy;
     }
 }

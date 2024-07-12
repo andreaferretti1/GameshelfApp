@@ -11,8 +11,8 @@ class GeocoderTest {
     @Test
     void checkAddressSuccessfulTest(){
         try {
-            Geocoder geocoder = new Geocoder();
-            geocoder.checkAddress("via Cambridge, Roma, Italia");
+            Geocoder geocoder = new Geocoder("via Cambridge, Roma, Italia");
+            geocoder.checkAddress();
         } catch(InvalidAddressException | IOException e){
             fail();
         }
@@ -20,13 +20,21 @@ class GeocoderTest {
 
     @Test
     void checkInvalidAddressTest(){
-        Geocoder geocoder = new Geocoder();
-        assertThrows(InvalidAddressException.class, () -> geocoder.checkAddress("addressTest"));
+        try {
+            Geocoder geocoder = new Geocoder("addressTest");
+            assertThrows(InvalidAddressException.class, geocoder::checkAddress);
+        } catch(IOException e){
+            fail();
+        }
     }
 
     @Test
     void checkAddressIOExceptionTest(){     //test was executed without connection
-        Geocoder geocoder = new Geocoder();
-        assertThrows(IOException.class, () -> geocoder.checkAddress("addressTest"));
+        try{
+            Geocoder geocoder = new Geocoder("addressTest");
+            assertThrows(IOException.class, geocoder::checkAddress);
+        } catch (IOException e){
+            fail();
+        }
     }
 }
