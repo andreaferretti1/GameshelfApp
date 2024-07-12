@@ -7,6 +7,7 @@ import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressExcept
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
+import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.login.exception.WrongUserTypeException;
@@ -41,7 +42,7 @@ class TerminalCustomerBoundaryTest {
             String[] command = {"search", "nameTest", "consoleTest", "categoryTest"};
             assertThrows(NoGameInCatalogueException.class, () -> boundary.executeCommand(command));
         } catch (WrongUserTypeException | PersistencyErrorException | NoGameInCatalogueException | RefundException |
-                 GameSoldOutException | SyntaxErrorException | InvalidAddressException e){
+                 GameSoldOutException | SyntaxErrorException | InvalidAddressException | GmailException e){
             fail();
         }
     }
@@ -57,7 +58,8 @@ class TerminalCustomerBoundaryTest {
             String returnString = String.format("name: %s, console: %s, category: %s, copies: %d, price: %f€, description: %s%n", "nameTest1", "consoleTest", "categoryTest", 2, 11f, "descriptionTest1") + "\nType <select game, gameTitle, console, category, copies, price>\n\n";
             String testString =  boundary.executeCommand(command);
             assertEquals(returnString, testString);
-        } catch(PersistencyErrorException | NoGameInCatalogueException | RefundException | GameSoldOutException | SyntaxErrorException | InvalidAddressException | WrongUserTypeException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | RefundException | GameSoldOutException |
+                SyntaxErrorException | InvalidAddressException | WrongUserTypeException | GmailException e){
             fail();
         }
     }
@@ -75,7 +77,8 @@ class TerminalCustomerBoundaryTest {
             String expectedString = expectedStringGame1 + expectedStringGame2 + "\nType <select game, gameTitle, console, category, copies, price>\n\n";
             String returnString = boundary.executeCommand(command);
             assertEquals(expectedString, returnString);
-        } catch(PersistencyErrorException | NoGameInCatalogueException | RefundException | GameSoldOutException | SyntaxErrorException | InvalidAddressException | WrongUserTypeException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | RefundException | GameSoldOutException |
+                SyntaxErrorException | InvalidAddressException | WrongUserTypeException | GmailException e){
             fail();
         }
     }
@@ -96,8 +99,8 @@ class TerminalCustomerBoundaryTest {
             SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
             List<Sale> sales = saleDAO.getToConfirmSales();
             assertEquals(1, (long) sales.size());
-        } catch (PersistencyErrorException | RefundException | GameSoldOutException |
-                 SyntaxErrorException | InvalidAddressException | NoGameInCatalogueException | WrongUserTypeException e) {
+        } catch (PersistencyErrorException | RefundException | GameSoldOutException | SyntaxErrorException |
+                 InvalidAddressException | NoGameInCatalogueException | WrongUserTypeException | GmailException e) {
             fail();
         }
     }
@@ -114,7 +117,8 @@ class TerminalCustomerBoundaryTest {
             boundary.executeCommand(command);
             String[] finalCommand = {"pay", "testName", "test", "test", "via cmabridge", "Roma", "Italia"};
             assertThrows(NoGameInCatalogueException.class, () -> boundary.executeCommand(finalCommand));
-        } catch(PersistencyErrorException | NoGameInCatalogueException | RefundException | GameSoldOutException | SyntaxErrorException | InvalidAddressException | WrongUserTypeException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | RefundException | GameSoldOutException |
+                SyntaxErrorException | InvalidAddressException | WrongUserTypeException | GmailException e){
             fail();
         }
     }
@@ -131,7 +135,8 @@ class TerminalCustomerBoundaryTest {
             boundary.executeCommand(command);
             String[] finalCommand = {"pay", "Name", "card", "key", "Via Cambridge", "Roma", "Italy"};
             assertThrows(GameSoldOutException.class, () -> boundary.executeCommand(finalCommand));
-        } catch(PersistencyErrorException | NoGameInCatalogueException | RefundException | GameSoldOutException | SyntaxErrorException | InvalidAddressException | WrongUserTypeException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | RefundException | GameSoldOutException |
+                SyntaxErrorException | InvalidAddressException | WrongUserTypeException | GmailException e){
             fail();
         }
     }
@@ -148,7 +153,8 @@ class TerminalCustomerBoundaryTest {
             boundary.executeCommand(command);
             String[] finalCommand = {"pay", "Name", "card", "key", "asas", "Roma", "Italy"};
             assertThrows(InvalidAddressException.class, () -> boundary.executeCommand(finalCommand));
-        } catch(PersistencyErrorException | NoGameInCatalogueException | RefundException | GameSoldOutException | SyntaxErrorException | InvalidAddressException | WrongUserTypeException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | RefundException | GameSoldOutException |
+                SyntaxErrorException | InvalidAddressException | WrongUserTypeException | GmailException e){
             fail();
         }
     }
