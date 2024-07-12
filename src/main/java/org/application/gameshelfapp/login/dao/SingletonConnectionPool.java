@@ -65,11 +65,4 @@ public class SingletonConnectionPool{
             throw new PersistencyErrorException("Couldn't access to data");
         }
     }
-
-    public void cleanUp() throws SQLException{
-        for(Connection connection: this.availableConnections){
-            connection.close();
-        }
-        this.availableConnections.clear();
-    }
 }
