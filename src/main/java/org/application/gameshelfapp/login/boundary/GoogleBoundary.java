@@ -71,16 +71,16 @@ public class GoogleBoundary {
 
         Properties props = new Properties();
         Session session = Session.getDefaultInstance(props, null);
-        MimeMessage email = new MimeMessage(session);
+        MimeMessage mimeMessage = new MimeMessage(session);
         try {
-            email.setFrom(new InternetAddress("fer.andrea35@gmail.com"));
-            email.addRecipient(javax.mail.Message.RecipientType.TO,
+            mimeMessage.setFrom(new InternetAddress("fer.andrea35@gmail.com"));
+            mimeMessage.addRecipient(javax.mail.Message.RecipientType.TO,
                     new InternetAddress(this.email));
-            email.setSubject(this.subject);
-            email.setText(this.messageToSend);
+            mimeMessage.setSubject(this.subject);
+            mimeMessage.setText(this.messageToSend);
 
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            email.writeTo(buffer);
+            mimeMessage.writeTo(buffer);
             byte[] rawMessageBytes = buffer.toByteArray();
             String encodedEmail = Base64.encodeBase64URLSafeString(rawMessageBytes);
             Message message = new Message();
