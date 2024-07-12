@@ -1,24 +1,23 @@
 package org.application.gameshelfapp.confirmsale.entities;
 
+import org.application.gameshelfapp.buyvideogames.entities.Credentials;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 
 public class Sale {
     private int id;
     private Videogame gameSold;
-    private String email;
-    private String address;
+    private Credentials credentials;
     private String state;
-    private String name;
+
 
     public static final String TO_CONFIRM = "To confirm";
     public static final String CONFIRMED = "Confirmed";
-    public Sale(int id, Videogame game, String email, String address, String state, String name) {
+    public Sale (Videogame game, Credentials credentials, String state){this(-1, game, credentials, state);}
+    public Sale(int id, Videogame game, Credentials credentials, String state) {
         this.id = id;
         this.gameSold = game;
-        this.email = email;
-        this.address = address;
+        this.credentials = credentials;
         this.state = state;
-        this.name = name;
     }
     public int getId() {
         return this.id;
@@ -32,28 +31,17 @@ public class Sale {
     public void setVideogameSold(Videogame game){
         this.gameSold = game;
     }
-    public String getAddress() {
-        return this.address;
-    }
-    public void setAddress(String address) {
-        this.address = address;
-    }
     public String getState() {
         return this.state;
     }
     public void setState(String state) {
         this.state = state;
     }
-    public String getName() {
-        return this.name;
+    public Credentials getCredentials() {
+        return this.credentials;
     }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getEmail() {
-        return this.email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
+
+    public void setCredentials(Credentials credentials) {
+        this.credentials = credentials;
     }
 }

@@ -4,6 +4,7 @@ import org.application.gameshelfapp.confirmsale.bean.SaleBean;
 import org.application.gameshelfapp.confirmsale.boundary.FedEx;
 import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
 import org.application.gameshelfapp.confirmsale.entities.Sale;
+import org.application.gameshelfapp.confirmsale.entities.SingletonSalesToConfirm;
 import org.application.gameshelfapp.confirmsale.exceptions.ConfirmDeliveryException;
 import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
 import org.application.gameshelfapp.login.bean.UserBean;
@@ -23,6 +24,8 @@ public class ConfirmSaleController{
     public List<SaleBean> getSalesToSend() throws PersistencyErrorException {
         SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
         List<Sale> sales = saleDAO.getToConfirmSales();
+        SingletonSalesToConfirm salesToConfirm = SingletonSalesToConfirm.getInstance();
+        salesToConfirm.setSalesToConfirm(sales);
         List<SaleBean> salesBean = new ArrayList<>();
         for(Sale sale: sales){
             SaleBean saleBean = new SaleBean();
@@ -37,14 +40,15 @@ public class ConfirmSaleController{
         GoogleBoundary googleBoundary = new GoogleBoundary();
 
         SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
-        Sale sale = saleDAO.getSaleToConfirmById(id);
+        SingletonSalesToConfirm salesToConfirm = SingletonSalesToConfirm.getInstance();
+        Sale saleConfirmed = salesToConfirm.confirmSale(id);
         try{
-            saleDAO.updateSale(sale);
-            shipmentCompany.confirmDelivery(sale.getAddress());
+            saleDAO.updateSale(id);
+            shipmentCompany.confirmDelivery(saleConfirmed.getCredentials().getAddress());
 
             String message = "Your order has been confirmed.";
             googleBoundary.setMessageToSend(message);
-            googleBoundary.sendMail("delivery CONFIRMED", sale.getEmail());
+            googleBoundary.sendMail("delivery CONFIRMED", saleConfirmed.getCredentials().getEmail());
 
         } catch (PersistencyErrorException e) {
             throw new ConfirmDeliveryException("Couldn't confirm delivery. Try later");

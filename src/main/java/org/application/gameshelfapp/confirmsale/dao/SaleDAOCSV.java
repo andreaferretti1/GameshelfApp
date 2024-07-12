@@ -3,10 +3,10 @@ package org.application.gameshelfapp.confirmsale.dao;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
-import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
-import org.application.gameshelfapp.login.dao.CSVFactory;
-import org.application.gameshelfapp.confirmsale.entities.Sale;
+import org.application.gameshelfapp.buyvideogames.entities.Credentials;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
+import org.application.gameshelfapp.confirmsale.entities.Sale;
+import org.application.gameshelfapp.login.dao.CSVFactory;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 
 import java.io.*;
@@ -37,14 +37,14 @@ public class SaleDAOCSV implements SaleDAO {
         String[] gameSold = new String[9];
 
         gameSold[VideogamesSoldAttributes.GAME_ID.ordinal()] = String.valueOf(this.id);
-        gameSold[VideogamesSoldAttributes.CUSTOMER_NAME.ordinal()] = sale.getName();
+        gameSold[VideogamesSoldAttributes.CUSTOMER_NAME.ordinal()] = sale.getCredentials().getName();
         gameSold[VideogamesSoldAttributes.GAME_NAME.ordinal()] = sale.getVideogameSold().getName();
         gameSold[VideogamesSoldAttributes.COPIES.ordinal()] = String.valueOf(sale.getVideogameSold().getCopies());
         gameSold[VideogamesSoldAttributes.PRICE.ordinal()] = String.valueOf(sale.getVideogameSold().getPrice());
         gameSold[VideogamesSoldAttributes.PLATFORM.ordinal()] = sale.getVideogameSold().getPlatform();
         gameSold[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()] = sale.getState();
-        gameSold[VideogamesSoldAttributes.CUSTOMER_ADDRESS.ordinal()] = sale.getAddress();
-        gameSold[VideogamesSoldAttributes.CUSTOMER_EMAIL.ordinal()] = sale.getEmail();
+        gameSold[VideogamesSoldAttributes.CUSTOMER_ADDRESS.ordinal()] = sale.getCredentials().getAddress();
+        gameSold[VideogamesSoldAttributes.CUSTOMER_EMAIL.ordinal()] = sale.getCredentials().getEmail();
 
         try(CSVWriter cvsWriter = new CSVWriter(new BufferedWriter(new FileWriter(this.fd, true)))){
             cvsWriter.writeNext(gameSold);
@@ -65,7 +65,7 @@ public class SaleDAOCSV implements SaleDAO {
     }
 
     @Override
-    public void updateSale(Sale sale) throws PersistencyErrorException {
+    public void updateSale(long id) throws PersistencyErrorException {
         File tempFile = new File(TEMP_FILE);
         this.lock.lock();
 
@@ -74,7 +74,7 @@ public class SaleDAOCSV implements SaleDAO {
         ){
             String[] myRecord;
             while((myRecord = csvReader.readNext()) != null){
-                if(myRecord[VideogamesSoldAttributes.GAME_ID.ordinal()].equals(String.valueOf(sale.getId()))){
+                if(myRecord[VideogamesSoldAttributes.GAME_ID.ordinal()].equals(String.valueOf(id))){
                     myRecord[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()] = Sale.CONFIRMED;
                 }
                 csvWriter.writeNext(myRecord);
@@ -87,17 +87,6 @@ public class SaleDAOCSV implements SaleDAO {
         } catch (IOException e){
             throw new PersistencyErrorException("Couldn't confirm delivery");
         }
-    }
-
-    @Override
-    public Sale getSaleToConfirmById(long id) throws PersistencyErrorException, WrongSaleException {
-        List<Sale> sales = this.getToConfirmSales();
-        Sale saleToConfirm = null;
-        for(Sale sale: sales){
-            if(sale.getId() == id && sale.getState().equals(Sale.TO_CONFIRM)) saleToConfirm = sale;
-        }
-        if(saleToConfirm == null) throw new WrongSaleException("Sale has been already cofirmed or doesn't exists");
-        return saleToConfirm;
     }
     private long getId() throws PersistencyErrorException{
         try(FileInputStream in = new FileInputStream(CSVFactory.PROPERTIES)){
@@ -132,7 +121,8 @@ public class SaleDAOCSV implements SaleDAO {
             while((myRecord = csvReader.readNext()) != null){
                 if(myRecord[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()].equals(state)){
                     Videogame gameSold = new Videogame(myRecord[VideogamesSoldAttributes.GAME_NAME.ordinal()], Integer.parseInt(myRecord[VideogamesSoldAttributes.COPIES.ordinal()]), Float.parseFloat(myRecord[VideogamesSoldAttributes.PRICE.ordinal()]), null, myRecord[VideogamesSoldAttributes.PLATFORM.ordinal()], null);
-                    Sale sale = new Sale(Integer.parseInt(myRecord[VideogamesSoldAttributes.GAME_ID.ordinal()]), gameSold, myRecord[VideogamesSoldAttributes.CUSTOMER_EMAIL.ordinal()], myRecord[VideogamesSoldAttributes.CUSTOMER_ADDRESS.ordinal()], state, myRecord[VideogamesSoldAttributes.CUSTOMER_NAME.ordinal()]);
+                    Credentials credentials = new Credentials(myRecord[VideogamesSoldAttributes.CUSTOMER_NAME.ordinal()], myRecord[VideogamesSoldAttributes.CUSTOMER_ADDRESS.ordinal()], myRecord[VideogamesSoldAttributes.CUSTOMER_EMAIL.ordinal()]);
+                    Sale sale = new Sale(Integer.parseInt(myRecord[VideogamesSoldAttributes.GAME_ID.ordinal()]), gameSold, credentials, state);
                     sales.add(sale);
                 }
             }
@@ -142,6 +132,6 @@ public class SaleDAOCSV implements SaleDAO {
         return sales;
     }
     private enum VideogamesSoldAttributes{
-        GAME_ID, COPIES, PRICE, STATE_OF_DELIVERY, GAME_NAME , PLATFORM, CUSTOMER_NAME, CUSTOMER_EMAIL, CUSTOMER_ADDRESS
+        GAME_ID, CUSTOMER_NAME, GAME_NAME, COPIES, PRICE, PLATFORM, STATE_OF_DELIVERY, CUSTOMER_ADDRESS, CUSTOMER_EMAIL
     }
 }

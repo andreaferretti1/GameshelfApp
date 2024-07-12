@@ -45,7 +45,8 @@ public class TerminalSellerBoundary implements TerminalBoundary {
     private String showSalesToConfirm(List<SaleBean> sales){
         StringBuilder stringSales = new StringBuilder();
         for(SaleBean saleBean: sales){
-            stringSales.append(String.format("Id: %d, game name: %s, platform: %s copies: %d, price: %f, user name: %s, user email: %s, delivery address: %s%n", saleBean.getIdBean(), saleBean.getGameSoldBean().getName(), saleBean.getGameSoldBean().getPlatformBean(), saleBean.getGameSoldBean().getCopiesBean(), saleBean.getGameSoldBean().getPriceBean(), saleBean.getNameBean(), saleBean.getEmailBean(), saleBean.getAddressBean()));
+            saleBean.getInformationFromModel();
+            stringSales.append(String.format("Id: %d, game name: %s, platform: %s copies: %d, price: %f€, user name: %s, user email: %s, delivery address: %s%n", saleBean.getIdBean(), saleBean.getGameSoldBean().getName(), saleBean.getGameSoldBean().getPlatformBean(), saleBean.getGameSoldBean().getCopiesBean(), saleBean.getGameSoldBean().getPriceBean(), saleBean.getCredentialsBean().getNameBean(), saleBean.getCredentialsBean().getEmailBean(), saleBean.getCredentialsBean().getAddressBean()));
         }
         return  stringSales + "\n\n<Type confirm gameId>\n";
     }

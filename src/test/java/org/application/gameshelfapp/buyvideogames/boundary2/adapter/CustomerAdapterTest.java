@@ -96,6 +96,7 @@ class CustomerAdapterTest {
         try {
             UserBean userBean = new UserBean();
             userBean.setTypeOfUser("Customer");
+            userBean.setEmail("emailTest@gmail.com");
             CustomerAdapter adapter = new CustomerAdapter(userBean);
             adapter.chooseGameToBuy(null, null, null, 0, 0);
             assertThrows(NoGameInCatalogueException.class, () -> adapter.pay("testName", "test", "test", "via cmabridge", "Roma", "Italia"));
@@ -109,23 +110,11 @@ class CustomerAdapterTest {
         try {
             UserBean userBean = new UserBean();
             userBean.setTypeOfUser("Customer");
+            userBean.setEmail("emailTest@gmail.com");
             CustomerAdapter adapter = new CustomerAdapter(userBean);
             adapter.chooseGameToBuy("gameNameTest", "consoleTest", "categoryTest", 2, 20);
             assertThrows(GameSoldOutException.class, () -> adapter.pay("Name", "card", "key", "Via Cambridge", "Roma", "Italy"));
         } catch(WrongUserTypeException e){
-            fail();
-        }
-    }
-
-    @Test
-    void insertCredentialsAndPayInvalidAddressTest(){
-        try{
-            UserBean userBean = new UserBean();
-            userBean.setTypeOfUser("Customer");
-            CustomerAdapter adapter = new CustomerAdapter(userBean);
-            adapter.chooseGameToBuy(null, null, null, 0, 0);
-            assertThrows(InvalidAddressException.class, () -> adapter.pay("Name","card", "key", "Viasbagliata", "Roma", "Italy"));
-        } catch (WrongUserTypeException e){
             fail();
         }
     }

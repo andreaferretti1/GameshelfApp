@@ -17,13 +17,15 @@ public class ItemDAOJDBC implements ItemDAO {
 
     private List<Videogame> getVideogamesForSale(Filters filters) throws PersistencyErrorException{
         List<Videogame> videogamesFound = new ArrayList<>();
-        try(Connection conn = SingletonConnectionPool.getInstance().getConnection()){
+        try{
+            Connection conn = SingletonConnectionPool.getInstance().getConnection();
             ResultSet rs = ItemDAOQueries.getVideogameOnSaleQuery(conn, filters);
             while(rs.next()){
                 Videogame game = new Videogame(rs.getString("Name"), rs.getInt("Copies"), rs.getFloat("Price"), rs.getString("Description"), filters.getConsole(), filters.getCategory());
                 videogamesFound.add(game);
             }
             rs.close();
+            SingletonConnectionPool.getInstance().releaseConnection(conn);
         } catch(SQLException e){
             throw new PersistencyErrorException("Couldn't find videogames");
         }
@@ -47,8 +49,10 @@ public class ItemDAOJDBC implements ItemDAO {
     @Override
     public void addGameForSale(Videogame game) throws PersistencyErrorException{
 
-            try(Connection conn = SingletonConnectionPool.getInstance().getConnection()){
+            try{
+                Connection conn = SingletonConnectionPool.getInstance().getConnection();
                 ItemDAOQueries.addGameForSaleQuery(conn, game);
+                SingletonConnectionPool.getInstance().releaseConnection(conn);
             } catch(SQLException e){
                 throw new PersistencyErrorException("Couldn't add videogame on sale");
             }
@@ -57,13 +61,15 @@ public class ItemDAOJDBC implements ItemDAO {
     @Override
     public void removeGameForSale(Videogame game) throws PersistencyErrorException, GameSoldOutException{
 
-        try(Connection conn = SingletonConnectionPool.getInstance().getConnection()){
+        try{
+            Connection conn = SingletonConnectionPool.getInstance().getConnection();
             ResultSet rs = ItemDAOQueries.getVideogameCopiesQuery(conn, game);
             int copies = 0;
             while(rs.next()){
                 copies = rs.getInt("Copies");
             }
             rs.close();
+            SingletonConnectionPool.getInstance().releaseConnection(conn);
             if(copies < game.getCopies()) throw new GameSoldOutException("Game is sold out");
            ItemDAOQueries.removeGameForSaleQuery(conn, game);
         } catch(SQLException e){
@@ -73,8 +79,10 @@ public class ItemDAOJDBC implements ItemDAO {
 
     @Override
     public void updateGameForSale(Videogame game) throws PersistencyErrorException{
-        try(Connection conn = SingletonConnectionPool.getInstance().getConnection()){
+        try{
+            Connection conn = SingletonConnectionPool.getInstance().getConnection();
             ItemDAOQueries.updateGameForSaleQuery(conn, game);
+            SingletonConnectionPool.getInstance().releaseConnection(conn);
         }catch (SQLException e){
             throw new PersistencyErrorException("Couldn't update chosen game");
         }

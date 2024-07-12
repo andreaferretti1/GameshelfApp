@@ -6,12 +6,18 @@ public class Credentials {
     private String typeOfPayment;
     private String paymentKey;
     private String address;
+    private String email;
 
-    public Credentials(String name, String typeOfPayment, String paymentKey, String address){
+    public Credentials(String name, String address, String email){
+        this(name, null, null, address, email);
+    }
+
+    public Credentials(String name, String typeOfPayment, String paymentKey, String address, String email){
         this.name = name;
         this.typeOfPayment = typeOfPayment;
         this.paymentKey = paymentKey;
         this.address = address;
+        this.email = email;
     }
 
     public String getTypeOfPayment() {
@@ -39,5 +45,11 @@ public class Credentials {
     }
     public void setAddress(String address){
         this.address = address;
+    }
+    public String getEmail() {
+        return this.email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

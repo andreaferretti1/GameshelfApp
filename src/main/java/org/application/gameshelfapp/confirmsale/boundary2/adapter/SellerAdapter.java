@@ -29,7 +29,7 @@ public class SellerAdapter implements SellerBoundaryInterface {
     }
 
     @Override
-    public void confirmSale(String id) throws PersistencyErrorException, ConfirmDeliveryException, GmailException, WrongSaleException {
+    public void confirmSale(String id) throws PersistencyErrorException, ConfirmDeliveryException, GmailException, WrongSaleException, WrongUserTypeException {
         this.boundary.sendGame(Integer.parseInt(id));
     }
 }

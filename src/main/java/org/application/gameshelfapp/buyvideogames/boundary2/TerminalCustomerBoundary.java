@@ -51,6 +51,6 @@ public class TerminalCustomerBoundary implements TerminalBoundary {
     }
 
     private String catalogueBeanToString(SellingGamesCatalogueBean catalogueBean){
-        return ConvertToStringUtility.catalogueBeanToString(catalogueBean) + "\nType <select game, gameTitle, console, category, copies, price>\n\n";
+        return ConvertToStringUtility.catalogueBeanToString(catalogueBean) + "\nType <select gameToBuy, gameTitle, console, category, copies, price>\n\n";
     }
 }

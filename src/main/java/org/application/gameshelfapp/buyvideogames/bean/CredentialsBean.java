@@ -1,6 +1,10 @@
 package org.application.gameshelfapp.buyvideogames.bean;
 
+import org.application.gameshelfapp.buyvideogames.entities.Credentials;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CredentialsBean {
 
@@ -8,6 +12,8 @@ public class CredentialsBean {
     private String typeOfPaymentBean;
     private String paymentKeyBean;
     private String addressBean;
+    private String emailBean;
+    private Credentials credentials;
 
     public void setNameBean(String nameBean) throws SyntaxErrorException{
         if(nameBean == null || nameBean.isEmpty()) throw new SyntaxErrorException("Insert your name and surname");
@@ -43,5 +49,25 @@ public class CredentialsBean {
 
     public String getAddressBean() {
         return this.addressBean;
+    }
+
+    public void setCredentials(Credentials credentials) {
+        this.credentials = credentials;
+    }
+
+    public String getEmailBean(){
+        return this.emailBean;
+    }
+    public void setEmailBean(String emailBean) throws SyntaxErrorException{
+        Pattern p = Pattern.compile("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+        Matcher m = p.matcher(emailBean);
+        boolean b = m.matches();
+        if(!b) throw new SyntaxErrorException("Wrong email");
+        this.emailBean = emailBean;
+    }
+    public void getInformationFromModel(){
+        this.nameBean = this.credentials.getName();
+        this.addressBean = this.credentials.getAddress();
+        this.emailBean = this.credentials.getEmail();
     }
 }

@@ -64,7 +64,9 @@ class SellerAdapterTest{
     @Test
     void confirmSaleWrongSaleExceptionTest(){      //database was empty
         try {
-            SellerAdapter adapter = new SellerAdapter(new UserBean());
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Seller");
+            SellerAdapter adapter = new SellerAdapter(userBean);
             assertThrows(WrongSaleException.class, () -> adapter.confirmSale("1"));
         } catch (WrongUserTypeException e){
             fail();

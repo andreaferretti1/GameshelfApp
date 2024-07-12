@@ -13,11 +13,13 @@ import java.util.List;
 public class ConsoleDAOJDBC implements ConsoleDAO{
     public List<String> getConsoles() throws PersistencyErrorException{
         List<String> consoles = new ArrayList<>();
-        try(Connection conn = SingletonConnectionPool.getInstance().getConnection()){
+        try{
+            Connection conn = SingletonConnectionPool.getInstance().getConnection();
             ResultSet rs = ConsoleDAOQueries.getConsolesQuery(conn);
             while (rs.next()){
                 consoles.add(rs.getString("Console"));
             }
+            SingletonConnectionPool.getInstance().releaseConnection(conn);
         } catch (SQLException e){
             throw new PersistencyErrorException("Couldn't access database");
         }

@@ -1,14 +1,13 @@
 package org.application.gameshelfapp.confirmsale.bean;
 
+import org.application.gameshelfapp.buyvideogames.bean.CredentialsBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.confirmsale.entities.Sale;
 
 public class SaleBean {
     private long idBean;
     private VideogameBean gameSoldBean;
-    private String emailBean;
-    private String addressBean;
-    private String nameBean;
+    private CredentialsBean credentialsBean;
     private String stateBean;
     private Sale sale;
 
@@ -28,30 +27,12 @@ public class SaleBean {
         this.gameSoldBean = gameSoldBean;
     }
 
-    public String getEmailBean() {
-        return emailBean;
+    public CredentialsBean getCredentialsBean() {
+        return this.credentialsBean;
     }
-
-    public void setEmailBean(String emailBean) {
-        this.emailBean = emailBean;
+    public void setCredentialsBean(CredentialsBean credentialsBean) {
+        this.credentialsBean = credentialsBean;
     }
-
-    public String getAddressBean() {
-        return addressBean;
-    }
-
-    public void setAddressBean(String addressBean) {
-        this.addressBean = addressBean;
-    }
-
-    public String getNameBean() {
-        return nameBean;
-    }
-
-    public void setNameBean(String nameBean) {
-        this.nameBean = nameBean;
-    }
-
     public String getStateBean() {
         return stateBean;
     }
@@ -69,9 +50,9 @@ public class SaleBean {
         this.gameSoldBean = new VideogameBean();
         this.gameSoldBean.setVideogame(this.sale.getVideogameSold());
         this.gameSoldBean.getVideogameFromModel();
-        this.emailBean = this.sale.getEmail();
-        this.addressBean = this.sale.getAddress();
-        this.nameBean = this.sale.getName();
+        this.credentialsBean = new CredentialsBean();
+        this.credentialsBean.setCredentials(this.sale.getCredentials());
+        this.credentialsBean.getInformationFromModel();
         this.stateBean = this.sale.getState();
     }
 }

@@ -36,7 +36,7 @@ public class SellerBoundary {
         this.salesBean = this.buyGamesController.getSales(this.userBean);
     }
 
-    public void sendGame(long id) throws ConfirmDeliveryException, GmailException, PersistencyErrorException, WrongSaleException {
-        this.buyGamesController.confirmDelivery(id);
+    public void sendGame(long id) throws ConfirmDeliveryException, GmailException, PersistencyErrorException, WrongSaleException, WrongUserTypeException {
+        this.buyGamesController.confirmDelivery(id, this.userBean);
     }
 }

@@ -1,15 +1,16 @@
 package org.application.gameshelfapp.confirmsale.dao;
 
+import org.application.gameshelfapp.buyvideogames.entities.Credentials;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.confirmsale.entities.Sale;
-import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
 import org.application.gameshelfapp.login.dao.CSVFactory;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class SaleDAOCSVTest {
 
@@ -45,7 +46,7 @@ class SaleDAOCSVTest {
             List<Sale> sales = saleDAO.getToConfirmSales();
 
             Sale sale1 = sales.getFirst();
-            assertEquals("nameTest1", sale1.getName());
+            assertEquals("nameTest1", sale1.getCredentials().getName());
         } catch(PersistencyErrorException e){
             fail();
         }
@@ -129,7 +130,7 @@ class SaleDAOCSVTest {
             List<Sale> sales = saleDAO.getToConfirmSales();
 
             Sale sale1 = sales.getFirst();
-            assertEquals("addressTest1", sale1.getAddress());
+            assertEquals("addressTest1", sale1.getCredentials().getAddress());
         } catch(PersistencyErrorException e){
             fail();
         }
@@ -142,7 +143,7 @@ class SaleDAOCSVTest {
             List<Sale> sales = saleDAO.getToConfirmSales();
 
             Sale sale1 = sales.getFirst();
-            assertEquals("emailTest1", sale1.getEmail());
+            assertEquals("emailTest1", sale1.getCredentials().getEmail());
         } catch(PersistencyErrorException e){
             fail();
         }
@@ -179,7 +180,8 @@ class SaleDAOCSVTest {
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Credentials credentials = new Credentials("nameTest", "addresTest", "emailTest");
+            Sale sale = new Sale(0, gameSold, credentials, Sale.TO_CONFIRM);
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -196,12 +198,13 @@ class SaleDAOCSVTest {
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Credentials credentials = new Credentials("nameTest", "addresTest", "emailTest");
+            Sale sale = new Sale(0, gameSold, credentials, Sale.TO_CONFIRM);
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
             Sale sale1 = sales.getFirst();
-            assertEquals("nameTest", sale1.getName());
+            assertEquals("nameTest", sale1.getCredentials().getName());
         } catch(PersistencyErrorException e){
             fail();
         }
@@ -213,7 +216,8 @@ class SaleDAOCSVTest {
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Credentials credentials = new Credentials("nameTest", "addresTest", "emailTest");
+            Sale sale = new Sale(0, gameSold, credentials, Sale.TO_CONFIRM);
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -230,7 +234,8 @@ class SaleDAOCSVTest {
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Credentials credentials = new Credentials("nameTest", "addresTest", "emailTest");
+            Sale sale = new Sale(0, gameSold, credentials, Sale.TO_CONFIRM);
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -248,7 +253,8 @@ class SaleDAOCSVTest {
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Credentials credentials = new Credentials("nameTest", "addresTest", "emailTest");
+            Sale sale = new Sale(0, gameSold, credentials, Sale.TO_CONFIRM);
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -265,7 +271,8 @@ class SaleDAOCSVTest {
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Credentials credentials = new Credentials("nameTest", "addresTest", "emailTest");
+            Sale sale = new Sale(0, gameSold, credentials, Sale.TO_CONFIRM);
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -282,7 +289,8 @@ class SaleDAOCSVTest {
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Credentials credentials = new Credentials("nameTest", "addresTest", "emailTest");
+            Sale sale = new Sale(0, gameSold, credentials, Sale.TO_CONFIRM);
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
@@ -299,12 +307,13 @@ class SaleDAOCSVTest {
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Credentials credentials = new Credentials("nameTest", "addressTest", "emailTest");
+            Sale sale = new Sale(0, gameSold, credentials, Sale.TO_CONFIRM);
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
             Sale sale1 = sales.getFirst();
-            assertEquals("addressTest", sale1.getAddress());
+            assertEquals("addressTest", sale1.getCredentials().getAddress());
         } catch(PersistencyErrorException e){
             fail();
         }
@@ -316,12 +325,13 @@ class SaleDAOCSVTest {
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             Videogame gameSold = new Videogame("gameNameTest", 2, 10, "descriptionTest", "consoleTest", null);
-            Sale sale = new Sale(0, gameSold, "emailTest", "addressTest", Sale.TO_CONFIRM, "nameTest");
+            Credentials credentials = new Credentials("nameTest", "addresTest", "emailTest");
+            Sale sale = new Sale(0, gameSold, credentials, Sale.TO_CONFIRM);
             saleDAO.saveSale(sale);
 
             List<Sale> sales = saleDAO.getToConfirmSales();
             Sale sale1 = sales.getFirst();
-            assertEquals("emailTest", sale1.getEmail());
+            assertEquals("emailTest", sale1.getCredentials().getEmail());
         } catch(PersistencyErrorException e){
             fail();
         }
@@ -333,45 +343,11 @@ class SaleDAOCSVTest {
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             List<Sale> sales = saleDAO.getToConfirmSales();
-            saleDAO.updateSale(sales.getFirst());
+            saleDAO.updateSale(sales.getFirst().getId());
 
             sales = saleDAO.getConfirmedSales();
             Sale sale = sales.getFirst();
             assertEquals("Confirmed", sale.getState());
-        } catch(PersistencyErrorException e){
-            fail();
-        }
-    }
-
-    @Test
-    void getSaleToConfirmByIdTest(){     //In the database there was tuple (1, 'nameTest', 'gameName', '2', '40', 'platformTest', 'To confirm', 'addressTest', 'emailTest')
-        try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
-            Sale sale = saleDAO.getSaleToConfirmById(1);
-            assertNotNull(sale);
-        } catch(PersistencyErrorException | WrongSaleException e){
-            fail();
-        }
-    }
-
-    @Test
-    void getSaleToConfirmWrongSaleExceptionTest(){      //database was empty
-        try {
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
-            assertThrows(WrongSaleException.class, () -> saleDAO.getSaleToConfirmById(1));
-        } catch(PersistencyErrorException e){
-            fail();
-        }
-    }
-
-    @Test
-    void getSaleToConfirmWrongStateExceptionTest(){     //in the database there was tuple (1, 'nameTest', 'gameName', '2', '40', 'platformTest', 'Confirmed', 'addressTest', 'emailTest')
-        try{
-            CSVFactory csvFactory = new CSVFactory();
-            SaleDAO saleDAO = csvFactory.createSaleDAO();
-            assertThrows(WrongSaleException.class, () -> saleDAO.getSaleToConfirmById(1));
         } catch(PersistencyErrorException e){
             fail();
         }

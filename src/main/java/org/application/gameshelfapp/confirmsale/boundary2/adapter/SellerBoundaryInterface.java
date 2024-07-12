@@ -13,5 +13,5 @@ import java.util.List;
 public interface SellerBoundaryInterface {
     UserBean getUserBean();
     List<SaleBean> getSalesToConfirm() throws PersistencyErrorException, WrongUserTypeException;
-    void confirmSale(String id) throws PersistencyErrorException, ConfirmDeliveryException, GmailException, WrongSaleException;
+    void confirmSale(String id) throws PersistencyErrorException, ConfirmDeliveryException, GmailException, WrongSaleException, WrongUserTypeException;
 }

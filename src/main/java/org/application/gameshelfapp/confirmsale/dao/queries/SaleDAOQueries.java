@@ -19,9 +19,9 @@ public class SaleDAOQueries {
         pstmt.setString(3, sale.getState());
         pstmt.setString(4, sale.getVideogameSold().getName());
         pstmt.setString(5, sale.getVideogameSold().getPlatform());
-        pstmt.setString(6, sale.getName());
-        pstmt.setString(7, sale.getEmail());
-        pstmt.setString(8, sale.getAddress());
+        pstmt.setString(6, sale.getCredentials().getName());
+        pstmt.setString(7, sale.getCredentials().getEmail());
+        pstmt.setString(8, sale.getCredentials().getAddress());
 
         pstmt.execute();
     }
@@ -35,11 +35,11 @@ public class SaleDAOQueries {
         return pstmt.getResultSet();
     }
 
-    public static void updateSaleQuery(Connection conn, Sale sale) throws SQLException{
+    public static void updateSaleQuery(Connection conn, long id) throws SQLException{
         String query = "UPDATE Sale SET State = 'Confirmed' WHERE Id = ?;";
 
         PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setInt(1, sale.getId());
+        pstmt.setLong(1, id);
         pstmt.execute();
     }
 }

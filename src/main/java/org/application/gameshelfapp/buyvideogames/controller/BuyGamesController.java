@@ -6,6 +6,7 @@ import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.boundary.Braintree;
 import org.application.gameshelfapp.buyvideogames.boundary.Geocoder;
 import org.application.gameshelfapp.buyvideogames.dao.ItemDAO;
+import org.application.gameshelfapp.buyvideogames.entities.Credentials;
 import org.application.gameshelfapp.buyvideogames.entities.Filters;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
@@ -31,8 +32,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class BuyGamesController {
-    private ConfirmSaleController confirmSaleController;
-
     public BuyGamesController(UserBean userBean) throws WrongUserTypeException{
         if(userBean == null) throw new WrongUserTypeException("Access not allowed");
     }
@@ -52,7 +51,7 @@ public class BuyGamesController {
         return controller.getConsolesValue();
     }
 
-    public void sendMoney(CredentialsBean credentialsBean, VideogameBean videogameBean, UserBean userBean) throws RefundException, GameSoldOutException, PersistencyErrorException, InvalidAddressException, NoGameInCatalogueException {
+    public void sendMoney(CredentialsBean credentialsBean, VideogameBean videogameBean) throws RefundException, GameSoldOutException, PersistencyErrorException, InvalidAddressException, NoGameInCatalogueException {
         Braintree braintree = new Braintree();
         Geocoder geocoder = new Geocoder();
 
@@ -63,9 +62,11 @@ public class BuyGamesController {
         Filters filters = new Filters(videogameBean.getName(), videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
         List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
         Videogame game = games.getFirst();
-        if(game.getPrice() != videogameBean.getPriceBean()) throw new RefundException("Price has been changed");
-        game.setCopies(videogameBean.getCopiesBean());
-        Sale sale = new Sale(-1, game, userBean.getEmail(), credentialsBean.getAddressBean(), Sale.TO_CONFIRM, credentialsBean.getNameBean());
+        game.buyVideogame(videogameBean.getCopiesBean(), videogameBean.getPriceBean());
+
+        Credentials credentials = new Credentials(credentialsBean.getNameBean(), credentialsBean.getAddressBean(), credentialsBean.getEmailBean());
+
+        Sale sale = new Sale(game,  credentials, Sale.TO_CONFIRM);
         itemDAO.removeGameForSale(game);
             try{
                 geocoder.checkAddress(credentialsBean.getAddressBean());
@@ -77,13 +78,15 @@ public class BuyGamesController {
                 GoogleBoundary googleBoundary = new GoogleBoundary();
                 String receipt = "You have bought " + quantity + " of " + game.getName() + " for " + amountToPay;
                 googleBoundary.setMessageToSend(receipt);
-                googleBoundary.sendMail("Receipt", userBean.getEmail());
-                String messageToSend = userBean.getUsername() + " bought " + quantity + " of " + game.getName() + " for " + amountToPay;
+                googleBoundary.sendMail("Receipt", credentialsBean.getEmailBean());
+
+                String messageToSend = credentialsBean.getEmailBean() + " bought " + quantity + " of " + game.getName() + " for " + amountToPay;
                 googleBoundary.setMessageToSend(messageToSend);
                 googleBoundary.sendMail("Videogame bought", "fer.andrea35@gmail.com");
 
                 saleDAO.saveSale(sale);
             }catch(GmailException | PersistencyErrorException e){
+                game.setCopies(game.getCopies() + 1);
                 itemDAO.addGameForSale(game);
                 braintree.refund();
                 throw new RefundException("Transaction has been refunded due to problems.");
@@ -93,12 +96,13 @@ public class BuyGamesController {
     }
 
     public List<SaleBean> getSales(UserBean userBean) throws PersistencyErrorException, WrongUserTypeException{
-        this.confirmSaleController = new ConfirmSaleController(userBean);
-        return this.confirmSaleController.getSalesToSend();
+        ConfirmSaleController confirmSaleController = new ConfirmSaleController(userBean);
+        return confirmSaleController.getSalesToSend();
     }
 
-    public void confirmDelivery(long id) throws GmailException, ConfirmDeliveryException, PersistencyErrorException, WrongSaleException {
-        this.confirmSaleController.confirmSale(id);
+    public void confirmDelivery(long id, UserBean userBean) throws GmailException, ConfirmDeliveryException, PersistencyErrorException, WrongSaleException, WrongUserTypeException {
+        ConfirmSaleController controller = new ConfirmSaleController(userBean);
+        controller.confirmSale(id);
     }
 }
 

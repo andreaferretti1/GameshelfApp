@@ -1,5 +1,7 @@
 package org.application.gameshelfapp.buyvideogames.entities;
 
+import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
+
 public class Videogame {
 
     private String name;
@@ -51,5 +53,9 @@ public class Videogame {
     }
     public void setCategory(String category) {
         this.category = category;
+    }
+    public void buyVideogame(int copiesToBuy, float priceToBuy) throws GameSoldOutException {
+        if(this.copies < copiesToBuy || this.price != priceToBuy) throw new GameSoldOutException("Price or copies are not correct");
+        this.copies = copiesToBuy;
     }
 }

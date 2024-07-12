@@ -95,15 +95,15 @@ public class SalePageController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("hbox-salePage.fxml"));
             HBox hBox = fxmlLoader.load();
             ((Label) fxmlLoader.getNamespace().get("gameName")).setText(saleBean.getGameSoldBean().getName());
-            ((Label) fxmlLoader.getNamespace().get("gamePlatform")).setText(saleBean.getNameBean());
+            ((Label) fxmlLoader.getNamespace().get("gamePlatform")).setText(saleBean.getGameSoldBean().getPlatformBean());
             ((Label) fxmlLoader.getNamespace().get("copies")).setText(String.valueOf(saleBean.getGameSoldBean().getCopiesBean()));
-            ((Label) fxmlLoader.getNamespace().get("name")).setText(saleBean.getNameBean());
-            ((Label) fxmlLoader.getNamespace().get("address")).setText(saleBean.getAddressBean());
-            ((Label) fxmlLoader.getNamespace().get("email")).setText(saleBean.getEmailBean());
+            ((Label) fxmlLoader.getNamespace().get("name")).setText(saleBean.getCredentialsBean().getNameBean());
+            ((Label) fxmlLoader.getNamespace().get("address")).setText(saleBean.getCredentialsBean().getAddressBean());
+            ((Label) fxmlLoader.getNamespace().get("email")).setText(saleBean.getCredentialsBean().getEmailBean());
             ((Button) fxmlLoader.getNamespace().get("button")).setOnMouseClicked(event -> {
                     try {
                         this.sellerBoundary.sendGame(gamesSold.getSelectionModel().getSelectedIndex());
-                    } catch (ConfirmDeliveryException | GmailException | WrongSaleException | PersistencyErrorException e) {
+                    } catch (ConfirmDeliveryException | GmailException | WrongSaleException | PersistencyErrorException | WrongUserTypeException e) {
                         ErrorPageController.displayErrorWindow(e.getMessage());
                     }
                 });

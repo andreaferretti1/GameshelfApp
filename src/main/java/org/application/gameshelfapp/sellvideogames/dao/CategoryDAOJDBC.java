@@ -14,11 +14,13 @@ public class CategoryDAOJDBC implements CategoryDAO{
     @Override
     public List<String> getCategories() throws PersistencyErrorException{
         List<String> categories = new ArrayList<>();
-        try(Connection conn = SingletonConnectionPool.getInstance().getConnection()){
+        try{
+            Connection conn = SingletonConnectionPool.getInstance().getConnection();
             ResultSet rs = CategoryDAOQueries.getCategoryQuery(conn);
             while (rs.next()){
                 categories.add(rs.getString("Type"));
             }
+            SingletonConnectionPool.getInstance().releaseConnection(conn);
         } catch (SQLException e){
             throw new PersistencyErrorException("Couldn't access database");
         }

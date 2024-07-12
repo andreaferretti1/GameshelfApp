@@ -171,7 +171,7 @@ public class ItemDAOCSV implements ItemDAO {
     }
 
     private enum VideogamesOnSaleAttributes{
-        GAMENAME, CONSOLE, CATEGORY, DESCRIPTION, COPIES, PRICE
+        GAMENAME, CONSOLE, CATEGORY, COPIES, PRICE, DESCRIPTION
     }
 
 }

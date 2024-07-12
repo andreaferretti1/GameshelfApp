@@ -35,7 +35,7 @@ class TerminalSellerBoundaryTest {
             TerminalSellerBoundary boundary = new TerminalSellerBoundary(userBean);
 
             String[] command = {"see sales"};
-            String expectedString = String.format("Id: %d, game name: %s, platform: %s copies: %d, price: %f, user name: %s, user email: %s, delivery address: %s%n", 1, "gameNameTest1", "platform1", 2, 40f, "nameTest1", "emailTest", "address") + "\n\n<Type confirm gameId>\n";
+            String expectedString = String.format("Id: %d, game name: %s, platform: %s copies: %d, price: %f€, user name: %s, user email: %s, delivery address: %s%n", 1, "gameNameTest1", "platform1", 2, 40f, "nameTest1", "emailTest", "address") + "\n\n<Type confirm gameId>\n";
             String returnedString = boundary.executeCommand(command);
             assertEquals(expectedString, returnedString);
         } catch(PersistencyErrorException | ConfirmDeliveryException | GmailException | WrongSaleException | WrongUserTypeException e){
@@ -65,7 +65,9 @@ class TerminalSellerBoundaryTest {
     @Test
     void executeCommandConfirmSaleWrongSaleExceptionTest(){      //database was empty
         try {
-            TerminalSellerBoundary boundary = new TerminalSellerBoundary(new UserBean());
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Seller");
+            TerminalSellerBoundary boundary = new TerminalSellerBoundary(userBean);
             String[] command = {"confirm", "1"};
             assertThrows(WrongSaleException.class, () -> boundary.executeCommand(command));
         } catch (WrongUserTypeException e){

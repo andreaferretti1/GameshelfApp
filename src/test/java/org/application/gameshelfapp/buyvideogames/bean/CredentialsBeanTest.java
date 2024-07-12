@@ -58,7 +58,7 @@ class CredentialsBeanTest {
         try {
             CredentialsBean credentialsBean = new CredentialsBean();
             credentialsBean.setAddressBean("testAddress", "testCity", "testCountry");
-            assertEquals("testAddress, testCity, testCountry", credentialsBean.getAddressBean());
+            assertEquals("testAddress,testCity,testCountry", credentialsBean.getAddressBean());
         } catch(SyntaxErrorException e){
             fail();
         }

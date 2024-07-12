@@ -79,6 +79,7 @@ class BuyGamesControllerTest{
             credentialsBean.setNameBean("Name");
             credentialsBean.setPaymentKeyBean("key");
             credentialsBean.setTypeOfPaymentBean("payment");
+            credentialsBean.setEmailBean("fer.andrea35@gmail.com");
             credentialsBean.setAddressBean("Via Cambridge", "Rome", "Italy");
             VideogameBean videogameBean = new VideogameBean();
             videogameBean.setName("nameTest");
@@ -86,7 +87,7 @@ class BuyGamesControllerTest{
             videogameBean.setCopiesBean(1);
             videogameBean.setPlatformBean("consoleTest");
             videogameBean.setCategoryBean("categoryTest");
-            controller.sendMoney(credentialsBean, videogameBean, userBean);
+            controller.sendMoney(credentialsBean, videogameBean);
 
             SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
             assertEquals(1, (long) saleDAO.getToConfirmSales().size());
@@ -103,7 +104,7 @@ class BuyGamesControllerTest{
             gameBean.setName("nameTest");
             gameBean.setPlatformBean("platformTest");
             gameBean.setCategoryBean("categoryTest");
-            assertThrows(NoGameInCatalogueException.class, () -> controller.sendMoney(new CredentialsBean(), gameBean, new UserBean()));
+            assertThrows(NoGameInCatalogueException.class, () -> controller.sendMoney(new CredentialsBean(), gameBean));
         } catch(WrongUserTypeException e){
             fail();
         }
@@ -121,6 +122,7 @@ class BuyGamesControllerTest{
             credentialsBean.setNameBean("Name");
             credentialsBean.setPaymentKeyBean("key");
             credentialsBean.setTypeOfPaymentBean("payment");
+            credentialsBean.setEmailBean("fer.andrea35@gmail.com");
             credentialsBean.setAddressBean("testAddress", "Rome", "Italy");
             VideogameBean videogameBean = new VideogameBean();
             videogameBean.setName("nameTest");
@@ -128,7 +130,7 @@ class BuyGamesControllerTest{
             videogameBean.setCopiesBean(1);
             videogameBean.setPlatformBean("consoleTest");
             videogameBean.setCategoryBean("categoryTest");
-            assertThrows(InvalidAddressException.class, () -> controller.sendMoney(credentialsBean, videogameBean, userBean));
+            assertThrows(InvalidAddressException.class, () -> controller.sendMoney(credentialsBean, videogameBean));
         } catch(SyntaxErrorException | WrongUserTypeException e){
             fail();
         }
@@ -146,6 +148,7 @@ class BuyGamesControllerTest{
             credentialsBean.setNameBean("Name");
             credentialsBean.setPaymentKeyBean("key");
             credentialsBean.setTypeOfPaymentBean("payment");
+            credentialsBean.setEmailBean("fer.andrea35@gmail.com");
             credentialsBean.setAddressBean("Via Cambridge", "Rome", "Italy");
             VideogameBean videogameBean = new VideogameBean();
             videogameBean.setName("nameTest");
@@ -153,7 +156,7 @@ class BuyGamesControllerTest{
             videogameBean.setCopiesBean(3);
             videogameBean.setPlatformBean("consoleTest");
             videogameBean.setCategoryBean("categoryTest");
-            assertThrows(GameSoldOutException.class, () -> controller.sendMoney(credentialsBean, videogameBean, userBean));
+            assertThrows(GameSoldOutException.class, () -> controller.sendMoney(credentialsBean, videogameBean));
         } catch(SyntaxErrorException | WrongUserTypeException e){
             fail();
         }
@@ -175,32 +178,14 @@ class BuyGamesControllerTest{
     @Test
     void confirmDeliveryTest(){     //In the Sale table there is tuple ('1', 'nameTest1', 'gameNameTest1', '3', '10', 'consoleTest', 'To confirm', 'addressTest', 'fer.andrea35@gmail.com')
         try{
-            BuyGamesController controller = new BuyGamesController(new UserBean());
-            controller.confirmDelivery(1);
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Seller");
+            BuyGamesController controller = new BuyGamesController(userBean);
+            controller.confirmDelivery(1, userBean);
 
             SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
             assertEquals(1, (long) saleDAO.getConfirmedSales().size());
         } catch(PersistencyErrorException | ConfirmDeliveryException | WrongSaleException | GmailException | WrongUserTypeException e){
-            fail();
-        }
-    }
-
-    @Test
-    void confirmDeliveryWrongSaleExceptionTest(){       //database was empty
-        try {
-            BuyGamesController controller = new BuyGamesController(new UserBean());
-            assertThrows(WrongSaleException.class, () -> controller.confirmDelivery(2));
-        } catch(WrongUserTypeException e){
-            fail();
-        }
-    }
-
-    @Test
-    void confirmedDeliveryWrongStateExceptionTest(){        //In the database there was tuple ('1', 'testName', 'gameName', '2', '22', 'platformTest', 'Comfirmed', 'addressTest', 'emailTest')
-        try {
-            BuyGamesController controller = new BuyGamesController(new UserBean());
-            assertThrows(WrongSaleException.class, () -> controller.confirmDelivery(1));
-        } catch(WrongUserTypeException e){
             fail();
         }
     }
