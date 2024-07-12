@@ -18,7 +18,7 @@ class AccessDAOJDBCTest {
         try{
             JDBCFactory jdbcFactory = new JDBCFactory();
             AccessDAO accessDAO = jdbcFactory.createAccessDAO();
-            Access access = accessDAO.retrieveAccountByEmail(new AccessThroughLogIn("testEmail", null,"Customer"));
+            Access access = accessDAO.retrieveAccountByEmail("testEmail");
             assertEquals("testName", access.getUsername());
         } catch(PersistencyErrorException e){
             fail();
@@ -30,7 +30,7 @@ class AccessDAOJDBCTest {
         try{
             JDBCFactory jdbcFactory = new JDBCFactory();
             AccessDAO accessDAO = jdbcFactory.createAccessDAO();
-            Access access = accessDAO.retrieveAccountByEmail(new AccessThroughLogIn("testEmail", null,"Customer"));
+            Access access = accessDAO.retrieveAccountByEmail("testEmail");
             assertEquals("testEmail", access.getEmail());
         } catch(PersistencyErrorException e){
             fail();
@@ -44,7 +44,7 @@ class AccessDAOJDBCTest {
             testAccess.encodePassword();
             JDBCFactory jdbcFactory = new JDBCFactory();
             AccessDAO accessDAO = jdbcFactory.createAccessDAO();
-            Access access = accessDAO.retrieveAccountByEmail(testAccess);
+            Access access = accessDAO.retrieveAccountByEmail("testEmail");
             testAccess.encodePassword();
             assertEquals(testAccess.getEncodedPassword(), access.getEncodedPassword());
         } catch(PersistencyErrorException | NullPasswordException e){
@@ -57,7 +57,7 @@ class AccessDAOJDBCTest {
         try{
             JDBCFactory jdbcFactory = new JDBCFactory();
             AccessDAO accessDAO = jdbcFactory.createAccessDAO();
-            Access access = accessDAO.retrieveAccountByEmail(new AccessThroughLogIn("testEmail", null,"Customer"));
+            Access access = accessDAO.retrieveAccountByEmail("testEmail");
             assertEquals("Customer", access.getTypeOfUser());
         } catch(PersistencyErrorException e){
             fail();
@@ -68,7 +68,7 @@ class AccessDAOJDBCTest {
     void retrieveAccountReturnsNullTest(){
         try{
             AccessDAOJDBC accessDAOJDBC = new AccessDAOJDBC();
-            Access access = accessDAOJDBC.retrieveAccountByEmail(new AccessThroughLogIn("testEmail@example.com", null, null));
+            Access access = accessDAOJDBC.retrieveAccountByEmail("testEmail");
             assertNull(access);
         } catch(PersistencyErrorException e){
             fail();
@@ -83,7 +83,7 @@ class AccessDAOJDBCTest {
             AccessThroughRegistration registration = new AccessThroughRegistration("testName", "testEmail", "passwordTest", "Customer");
             registration.encodePassword();
             accessDAO.saveAccount(registration);
-            Access access = accessDAO.retrieveAccountByEmail(registration);
+            Access access = accessDAO.retrieveAccountByEmail("testEmail");
             assertEquals("testName", access.getUsername());
         } catch(PersistencyErrorException |NullPasswordException e){
             fail();
@@ -98,7 +98,7 @@ class AccessDAOJDBCTest {
             AccessThroughRegistration registration = new AccessThroughRegistration("testName", "testEmail", "passwordTest", "Customer");
             registration.encodePassword();
             accessDAO.saveAccount(registration);
-            Access access = accessDAO.retrieveAccountByEmail(registration);
+            Access access = accessDAO.retrieveAccountByEmail("testEmail");
             assertEquals("testEmail", access.getEmail());
         } catch(PersistencyErrorException | NullPasswordException e){
             fail();
@@ -113,7 +113,7 @@ class AccessDAOJDBCTest {
             AccessThroughRegistration registration = new AccessThroughRegistration("testName", "testEmail", "passwordTest", "Customer");
             registration.encodePassword();
             accessDAO.saveAccount(registration);
-            Access access = accessDAO.retrieveAccountByEmail(registration);
+            Access access = accessDAO.retrieveAccountByEmail("testEmail");
             assertEquals(registration.getEncodedPassword(), access.getEncodedPassword());
         } catch(PersistencyErrorException | NullPasswordException e){
             fail();
@@ -128,7 +128,7 @@ class AccessDAOJDBCTest {
             AccessThroughRegistration registration = new AccessThroughRegistration("testName", "testEmail", "passwordTest", "Customer");
             registration.encodePassword();
             accessDAO.saveAccount(registration);
-            Access access = accessDAO.retrieveAccountByEmail(registration);
+            Access access = accessDAO.retrieveAccountByEmail("testEmail");
             assertEquals("Customer", access.getTypeOfUser());
         } catch(PersistencyErrorException | NullPasswordException e){
             fail();

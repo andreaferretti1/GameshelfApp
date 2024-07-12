@@ -21,7 +21,7 @@ public class ItemDAOJDBC implements ItemDAO {
             Connection conn = SingletonConnectionPool.getInstance().getConnection();
             ResultSet rs = ItemDAOQueries.getVideogameOnSaleQuery(conn, filters);
             while(rs.next()){
-                Videogame game = new Videogame(rs.getString("Name"), rs.getInt("Copies"), rs.getFloat("Price"), rs.getString("Description"), filters.getConsole(), filters.getCategory());
+                Videogame game = new Videogame(rs.getString("Name"), rs.getInt("Copies"), rs.getFloat("Price"), rs.getString("Description"), rs.getString("Platform"), rs.getString("Category"));
                 videogamesFound.add(game);
             }
             rs.close();

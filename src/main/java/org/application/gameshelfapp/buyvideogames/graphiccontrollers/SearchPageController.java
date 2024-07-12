@@ -1,16 +1,17 @@
 package org.application.gameshelfapp.buyvideogames.graphiccontrollers;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
@@ -35,51 +36,60 @@ public class SearchPageController implements Initializable{
     @FXML
     private ChoiceBox<String> platformChoiceBox;
     @FXML
-    private TableView<VideogameBean> gamesFound;
-    @FXML
-    private TableColumn<VideogameBean, String> gameName;
-    @FXML
-    private TableColumn<VideogameBean, String> gameCost;
-    @FXML
-    private TableColumn<VideogameBean, String> seeGame;
+    private VBox gamesInCatalogue;
 
-    private CustomerBoundary customerBoundary;
+    private static CustomerBoundary customerBoundary;
     private Stage stage;
 
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
-    public void setCustomerBoundary(CustomerBoundary customerBoundary) {
-        this.customerBoundary = customerBoundary;
+    public static void setCustomerBoundary(CustomerBoundary customerBoundary) {
+        SearchPageController.customerBoundary = customerBoundary;
     }
 
     @FXML
     private void searchVideogame(MouseEvent event){
-        String game = nameField.getText();
+        String game = this.nameField.getText();
+        if(game.isEmpty()) game = null;
         try{
-            this.customerBoundary.insertFilters(game, this.platformChoiceBox.getValue(), this.categoryChoiceBox.getValue());
-        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+            SearchPageController.customerBoundary.insertFilters(game, this.platformChoiceBox.getValue(), this.categoryChoiceBox.getValue());
+            this.showGamesFound(SearchPageController.customerBoundary.getSellingGamesCatalogueBean().getSellingGamesBean());
+        } catch(PersistencyErrorException | NoGameInCatalogueException | IOException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
         }
-        this.showGamesFound(this.customerBoundary.getSellingGamesCatalogueBean().getSellingGamesBean());
     }
 
     @FXML
     private void goToHomePage(MouseEvent event){
         try{
-            HomePageController.start(this.stage, this.customerBoundary.getUserBean());
+            HomePageController.start(this.stage, SearchPageController.customerBoundary.getUserBean());
         } catch(IOException e){
             System.exit(1);
         }
     }
+
+    private void seeGameInfo(MouseEvent event){
+        try {
+            Button button = (Button) event.getSource();
+            HBox hBox = (HBox)button.getParent();
+            for(VideogameBean videogameBean: SearchPageController.customerBoundary.getSellingGamesCatalogueBean().getSellingGamesBean()){
+                if(videogameBean.getName().equals(((Label) hBox.lookup("#gameName")).getText()) && videogameBean.getPlatformBean().equals(((Label)hBox.lookup("#platform")).getText())){
+                    GameInfoPageController.seeVideogame(SearchPageController.this.stage, SearchPageController.customerBoundary, videogameBean);
+                }
+            }
+        } catch (IOException e) {
+            ErrorPageController.displayErrorWindow("Couldn't access to videogame information");
+        }
+    }
     public static void start(Stage myStage, CustomerBoundary customerBoundary) throws IOException, WrongUserTypeException {
+        SearchPageController.setCustomerBoundary(customerBoundary);
         FXMLLoader fxmlLoader = new FXMLLoader(SearchPageController.class.getResource("/org/application/gameshelfapp/GUI/Search-Page.fxml"));
         Parent root = fxmlLoader.load();
 
         SearchPageController controller = fxmlLoader.getController();
         controller.setStage(myStage);
-        controller.setCustomerBoundary(customerBoundary);
         Scene scene = new Scene(root, 1440, 768);
         myStage.setScene(scene);
         myStage.show();
@@ -88,39 +98,25 @@ public class SearchPageController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         try{
-            this.categoryChoiceBox.getItems().setAll(this.customerBoundary.getCategoriesFilters());
-            this.platformChoiceBox.getItems().setAll(this.customerBoundary.getConsoleFilters());
-            SellingGamesCatalogueBean sellingGamesCatalogueBean = this.customerBoundary.getSellingGamesCatalogueBean();
+            this.categoryChoiceBox.getItems().setAll(SearchPageController.customerBoundary.getCategoriesFilters());
+            this.platformChoiceBox.getItems().setAll(SearchPageController.customerBoundary.getConsoleFilters());
+            SellingGamesCatalogueBean sellingGamesCatalogueBean = SearchPageController.customerBoundary.getSellingGamesCatalogueBean();
             if(sellingGamesCatalogueBean != null) this.showGamesFound(sellingGamesCatalogueBean.getSellingGamesBean());
-        } catch(PersistencyErrorException e){
+        } catch(PersistencyErrorException | IOException e){
             System.exit(1);
         }
     }
 
-    private void showGamesFound(List<VideogameBean> games){
-        ObservableList<VideogameBean> gamesToShow = FXCollections.observableList(games);
-
-        this.gameName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        this.gameCost.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPriceBean() + "€"));
-
-        this.seeGame.setCellFactory( param -> new SearchPageController.CustomTableCellButton(gamesToShow));
-        this.gamesFound.setItems(gamesToShow);
-    }
-
-    private class CustomTableCellButton extends TableCell<VideogameBean, String> {
-        private final Button button;
-
-        public CustomTableCellButton(ObservableList<VideogameBean> gamesToShow){
-            button = new Button("See description");
-            button.setPrefWidth(134);
-            button.setStyle("-fx-background-color:  #2E60E1; -fx-text-fill: white; -fx-background-radius: 60");
-            button.setOnMouseClicked(event -> {
-                try {
-                    GameInfoPageController.seeVideogame(SearchPageController.this.stage, SearchPageController.this.customerBoundary, gamesToShow.get(getIndex()));
-                } catch (IOException e) {
-                    ErrorPageController.displayErrorWindow("Couldn't access to videogame information");
-                }
-            });
+    private void showGamesFound(List<VideogameBean> games) throws IOException{
+        for(VideogameBean videogameBean: games){
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/GUI/Hbox-gameOnSale.fxml"));
+            HBox hBox = fxmlLoader.load();
+            ((Label) hBox.lookup("#gameName")).setText(videogameBean.getName());
+            ((Label) hBox.lookup("#platform")).setText(videogameBean.getPlatformBean());
+            ((Label) hBox.lookup("#price")).setText(String.valueOf(videogameBean.getPriceBean()) + " €");
+            (hBox.lookup("#seeGame")).setOnMouseClicked(event -> this.seeGameInfo(event));
+            hBox.prefWidthProperty().bind(this.gamesInCatalogue.widthProperty());
+            this.gamesInCatalogue.getChildren().add(hBox);
         }
     }
 }

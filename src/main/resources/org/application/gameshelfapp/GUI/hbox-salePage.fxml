@@ -7,10 +7,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="186.0" prefWidth="1330.0" style="-fx-background-color: #433f3f;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0" prefWidth="1330.0" style="-fx-background-color: #433f3f; -fx-border-color: grey;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox prefHeight="189.0" prefWidth="497.0">
          <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Id: " textFill="#2e60e1">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="id" text="Label" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
             <HBox prefHeight="27.0" prefWidth="253.0">
                <children>
                   <Label text="Videogame:" textFill="#2e60e1">
@@ -134,7 +148,7 @@
       </VBox>
       <Button fx:id="button" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" style="-fx-background-color: #2E60E1; -fx-background-radius: 60;" text="Confirm" textFill="WHITE">
          <HBox.margin>
-            <Insets left="760.0" right="2.0" top="153.0" />
+            <Insets left="760.0" right="2.0" top="180.0" />
          </HBox.margin>
          <font>
             <Font size="14.0" />

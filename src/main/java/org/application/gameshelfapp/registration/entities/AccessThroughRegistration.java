@@ -3,10 +3,10 @@ package org.application.gameshelfapp.registration.entities;
 
 import org.application.gameshelfapp.login.entities.Access;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
+
 import java.security.SecureRandom;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 public class AccessThroughRegistration extends Access {
     private int codeGenerated;
@@ -22,6 +22,9 @@ public class AccessThroughRegistration extends Access {
         this.codeGenerated = secureRandom.nextInt(1000000);
         this.codeGenerated = Math.abs(this.codeGenerated);
         this.isValid = true;
+    }
+    public void setUserType(String userType) throws CheckFailedException {
+        if(!userType.equals("Customer") && !userType.equals("Seller") && !userType.equals("Admin")) throw new CheckFailedException("Wrong user");
     }
     public void checkCode(int insertedCode) throws CheckFailedException {
         if(this.codeGenerated != insertedCode || !isValid){
@@ -44,6 +47,6 @@ public class AccessThroughRegistration extends Access {
                 AccessThroughRegistration.this.setValid(false);
             }
         };
-        timer.schedule(task, 30, TimeUnit.SECONDS.ordinal());
+        timer.schedule(task, 60000);
     }
 }

@@ -1,6 +1,5 @@
 package org.application.gameshelfapp.login.dao.queries;
 
-import org.application.gameshelfapp.login.entities.Access;
 import org.application.gameshelfapp.registration.entities.AccessThroughRegistration;
 
 import java.sql.Connection;
@@ -23,11 +22,11 @@ public class AccessDAOQueries {
         pstmt.execute();
     }
 
-    public static ResultSet getAccountQuery(Connection conn, Access access) throws SQLException{
+    public static ResultSet getAccountQuery(Connection conn, String email) throws SQLException{
         String query = "SELECT Username, Email, Password, Type FROM User WHERE Email = ?;";
 
         PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setString(1, access.getEmail());
+        pstmt.setString(1, email);
 
         pstmt.execute();
         return pstmt.getResultSet();

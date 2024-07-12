@@ -5,8 +5,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -114,15 +112,9 @@
                   </Button>
                </children>
             </HBox>
-            <ScrollPane hbarPolicy="NEVER" prefHeight="701.0" prefWidth="1340.0" style="-fx-background-color: #433f3f;">
+            <ScrollPane hbarPolicy="NEVER" prefHeight="696.0" prefWidth="1330.0" style="-fx-background-color: #433f3f;">
                <content>
-                  <TableView fx:id="gamesFound" prefHeight="696.0" prefWidth="1337.0" style="-fx-background-color: #433f3f;">
-                    <columns>
-                      <TableColumn fx:id="gameName" prefWidth="560.0" style="-fx-background-color: #433f3f; -fx-border-color: #433f3f; -fx-text-fill: white;" />
-                      <TableColumn fx:id="gameCost" prefWidth="630.0" style="-fx-background-color: #433f3f; -fx-border-color: #433f3f; -fx-text-fill: white;" />
-                        <TableColumn fx:id="seeGame" prefWidth="134.0" style="-fx-background-color: #433f3f; -fx-border-color: #433f3f; -fx-text-fill: white;" />
-                    </columns>
-                  </TableView>
+                  <VBox fx:id="gamesInCatalogue" maxWidth="1330.0" prefHeight="694.0" prefWidth="1330.0" style="-fx-background-color: #433f3f;" />
                </content>
             </ScrollPane>
          </children>

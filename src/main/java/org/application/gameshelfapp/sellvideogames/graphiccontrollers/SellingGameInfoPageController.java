@@ -41,7 +41,7 @@ public class SellingGameInfoPageController {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-    public void setSellerAddGamesBoundary(SellerAddGamesBoundary sellerBoundary){ this.sellerBoundary = sellerBoundary;}
+    public void setSellerAddGamesBoundary(SellerAddGamesBoundary sellerBoundary){this.sellerBoundary = sellerBoundary;}
     @FXML
     private void goToHomePage(MouseEvent event){
         try{

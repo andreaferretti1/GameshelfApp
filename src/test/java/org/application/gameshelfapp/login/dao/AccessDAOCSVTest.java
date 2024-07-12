@@ -19,7 +19,7 @@ class AccessDAOCSVTest {
         try{
             JDBCFactory jdbcFactory = new JDBCFactory();
             AccessDAO accessDAO = jdbcFactory.createAccessDAO();
-            Access access = accessDAO.retrieveAccountByEmail(new AccessThroughLogIn("testEmail", null,"Customer"));
+            Access access = accessDAO.retrieveAccountByEmail("testEmail");
             assertEquals("testName", access.getUsername());
         } catch(PersistencyErrorException e){
             fail();
@@ -31,7 +31,7 @@ class AccessDAOCSVTest {
         try{
             JDBCFactory jdbcFactory = new JDBCFactory();
             AccessDAO accessDAO = jdbcFactory.createAccessDAO();
-            Access access = accessDAO.retrieveAccountByEmail(new AccessThroughLogIn("testEmail", null,"Customer"));
+            Access access = accessDAO.retrieveAccountByEmail("testEmail");
             assertEquals("testEmail", access.getEmail());
         } catch(PersistencyErrorException e){
             fail();
@@ -46,7 +46,7 @@ class AccessDAOCSVTest {
 
             JDBCFactory jdbcFactory = new JDBCFactory();
             AccessDAO accessDAO = jdbcFactory.createAccessDAO();
-            Access access = accessDAO.retrieveAccountByEmail(testAccess);
+            Access access = accessDAO.retrieveAccountByEmail("testEmail");
             assertEquals(testAccess.getEncodedPassword(), access.getEncodedPassword());
         } catch(PersistencyErrorException | NullPasswordException e){
             fail();
@@ -58,7 +58,7 @@ class AccessDAOCSVTest {
         try{
             JDBCFactory jdbcFactory = new JDBCFactory();
             AccessDAO accessDAO = jdbcFactory.createAccessDAO();
-            Access access = accessDAO.retrieveAccountByEmail(new AccessThroughLogIn("testEmail", null,"Customer"));
+            Access access = accessDAO.retrieveAccountByEmail("testEmail");
             assertEquals("Customer", access.getTypeOfUser());
         } catch(PersistencyErrorException e){
             fail();
@@ -71,7 +71,7 @@ class AccessDAOCSVTest {
             regAccess.encodePassword();
             AccessDAOCSV accessDAOCSV = new AccessDAOCSV(new File("src/main/resources/org/application/gameshelfapp/persistency/FileSystem/accounts.csv"));
             accessDAOCSV.saveAccount(regAccess);
-            Access access = accessDAOCSV.retrieveAccountByEmail(regAccess);
+            Access access = accessDAOCSV.retrieveAccountByEmail("testEmail");
             assertEquals("test", access.getUsername());
         } catch(NullPasswordException | PersistencyErrorException e){
             fail();
@@ -84,7 +84,7 @@ class AccessDAOCSVTest {
             regAccess.encodePassword();
             AccessDAOCSV accessDAOCSV = new AccessDAOCSV(new File("src/main/resources/org/application/gameshelfapp/persistency/FileSystem/accounts.csv"));
             accessDAOCSV.saveAccount(regAccess);
-            Access access = accessDAOCSV.retrieveAccountByEmail(regAccess);
+            Access access = accessDAOCSV.retrieveAccountByEmail("testEmail");
             assertEquals("testEmail@example.com", access.getEmail());
         } catch(NullPasswordException | PersistencyErrorException e){
             fail();
@@ -98,7 +98,7 @@ class AccessDAOCSVTest {
             regAccess.encodePassword();
             AccessDAOCSV accessDAOCSV = new AccessDAOCSV(new File("src/main/resources/org/application/gameshelfapp/persistency/FileSystem/accounts.csv"));
             accessDAOCSV.saveAccount(regAccess);
-            Access access = accessDAOCSV.retrieveAccountByEmail(regAccess);
+            Access access = accessDAOCSV.retrieveAccountByEmail("testEmail");
             assertEquals(regAccess.getEncodedPassword(), access.getEncodedPassword());
         } catch(NullPasswordException | PersistencyErrorException e){
             fail();
@@ -112,7 +112,7 @@ class AccessDAOCSVTest {
             regAccess.encodePassword();
             AccessDAOCSV accessDAOCSV = new AccessDAOCSV(new File("src/main/resources/org/application/gameshelfapp/persistency/FileSystem/accounts.csv"));
             accessDAOCSV.saveAccount(regAccess);
-            Access access = accessDAOCSV.retrieveAccountByEmail(regAccess);
+            Access access = accessDAOCSV.retrieveAccountByEmail("testEmail");
             assertEquals("customer", access.getTypeOfUser());
         } catch(NullPasswordException | PersistencyErrorException e){
             fail();
@@ -123,7 +123,7 @@ class AccessDAOCSVTest {
     void retrieveAccountReturnsNullTest(){
         try{
             AccessDAOCSV accessDAOCSV = new AccessDAOCSV(new File("src/main/resources/org/application/gameshelfapp/persistency/FileSystem/accounts.csv"));
-            Access access = accessDAOCSV.retrieveAccountByEmail(new AccessThroughLogIn("testName", "testEmail@example.com", null));
+            Access access = accessDAOCSV.retrieveAccountByEmail("testEmail");
             assertNull(access);
         } catch(PersistencyErrorException e){
             fail();
@@ -134,7 +134,7 @@ class AccessDAOCSVTest {
     void retrieveAccountTest(){
         try{
             AccessDAOCSV accessDAOCSV = new AccessDAOCSV(new File("src/main/resources/org/application/gameshelfapp/persistency/FileSystem/accounts.csv"));
-            Access access = accessDAOCSV.retrieveAccountByEmail(new AccessThroughLogIn("testName2", "testEmail2@example.com", null));
+            Access access = accessDAOCSV.retrieveAccountByEmail("testEmail");
             assertNotNull(access);
             assertEquals("testEmail2@example.com", access.getEmail());
         } catch(PersistencyErrorException e){

@@ -18,7 +18,8 @@ public class SignEmployeeController {
         }
     }
     public void registerEmployee(RegistrationBean regBean) throws NullPasswordException, PersistencyErrorException, CheckFailedException {
-        AccessThroughRegistration regAccess = new AccessThroughRegistration(regBean.getUsernameBean(), regBean.getEmailBean(), regBean.getPasswordBean(), regBean.getTypeOfUser());
+        AccessThroughRegistration regAccess = new AccessThroughRegistration(regBean.getUsernameBean(), regBean.getEmailBean(), regBean.getPasswordBean(), null);
+        regAccess.setUserType(regAccess.getTypeOfUser());
         regAccess.encodePassword();
         AccessDAO accessDAO = PersistencyAbstractFactory.getFactory().createAccessDAO();
         accessDAO.checkAccount(regAccess);

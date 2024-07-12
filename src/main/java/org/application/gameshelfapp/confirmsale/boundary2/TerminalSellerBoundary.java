@@ -15,7 +15,7 @@ import java.util.List;
 
 public class TerminalSellerBoundary implements TerminalBoundary {
     private final SellerBoundaryInterface adapter;
-    public static final String START_COMMAND = "Type <see sales>";
+    public static final String START_COMMAND = "\nType <see sales>\n";
     public TerminalSellerBoundary(UserBean userBean) throws WrongUserTypeException {
         this.adapter = new SellerAdapter(userBean);
     }

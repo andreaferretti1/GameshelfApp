@@ -41,16 +41,14 @@ public class AccessDAOCSV implements AccessDAO {
 
 
     @Override
-    public Access retrieveAccountByEmail(Access access) throws PersistencyErrorException{
+    public AccessThroughRegistration retrieveAccountByEmail(String email) throws PersistencyErrorException{
         String[] tuple;
-        Access user = null;
-
-        String email = access.getEmail();
+        AccessThroughRegistration user = null;
 
         try (CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)))){
              while((tuple = csvReader.readNext()) != null){
                     if(tuple[AccountAttributes.EMAIL.ordinal()].equals(email)){
-                        user = new AccessThroughLogIn(tuple[AccountAttributes.USERNAME.ordinal()], tuple[AccountAttributes.EMAIL.ordinal()], tuple[AccountAttributes.TYPE_OF_USER.ordinal()]);
+                        user = new AccessThroughRegistration(tuple[AccountAttributes.USERNAME.ordinal()], tuple[AccountAttributes.EMAIL.ordinal()], null, tuple[AccountAttributes.TYPE_OF_USER.ordinal()]);
                         user.setEncodedPassword(tuple[AccountAttributes.PASSWORD.ordinal()]);
                     }
              }

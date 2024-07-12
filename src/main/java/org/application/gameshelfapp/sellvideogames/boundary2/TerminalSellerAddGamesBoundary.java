@@ -20,7 +20,7 @@ public class TerminalSellerAddGamesBoundary implements TerminalBoundary {
 
     SeeGameCatalogue seeGameCatalogueAdapter;
 
-    public static final String START_COMMAND = "Type <show>";
+    public static final String START_COMMAND = "\nType <filters>\n";
 
     public TerminalSellerAddGamesBoundary(UserBean userBean) throws WrongUserTypeException { this.seeGameCatalogueAdapter = new SeeGameCatalogueAdapter(userBean);}
 

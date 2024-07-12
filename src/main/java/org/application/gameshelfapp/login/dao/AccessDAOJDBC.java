@@ -25,12 +25,12 @@ public class AccessDAOJDBC implements AccessDAO {
     }
 
     @Override
-    public Access retrieveAccountByEmail(Access access) throws PersistencyErrorException {
-        Access checkAccess = null;
+    public AccessThroughRegistration retrieveAccountByEmail(String email) throws PersistencyErrorException {
+        AccessThroughRegistration checkAccess = null;
 
         try{
             Connection conn = SingletonConnectionPool.getInstance().getConnection();
-            ResultSet rs = AccessDAOQueries.getAccountQuery(conn, access);
+            ResultSet rs = AccessDAOQueries.getAccountQuery(conn, email);
             while(rs.next()) {
                 checkAccess = new AccessThroughRegistration(rs.getString("Username"), rs.getString("Email"), null, rs.getString("Type"));
                 checkAccess.setEncodedPassword(rs.getString("password"));

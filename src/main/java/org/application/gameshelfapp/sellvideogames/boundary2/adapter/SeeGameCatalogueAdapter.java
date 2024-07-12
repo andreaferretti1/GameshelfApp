@@ -34,6 +34,9 @@ public class SeeGameCatalogueAdapter implements SeeGameCatalogue {
     @Override
     public SellingGamesCatalogueBean getSellingGamesCatalogue(String gameTitle, String console, String category) throws PersistencyErrorException, NoGameInCatalogueException {
         FiltersBean filtersBean = new FiltersBean();
+        if(gameTitle.equals("null")) gameTitle = null;
+        if(console.equals("null")) console = null;
+        if(category.equals("null")) category = null;
         filtersBean.setNameBean(gameTitle);
         filtersBean.setConsoleBean(console);
         filtersBean.setCategoryBean(category);

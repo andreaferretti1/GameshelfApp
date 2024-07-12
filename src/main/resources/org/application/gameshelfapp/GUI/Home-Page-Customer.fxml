@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gameshelfapp.login.graphiccontrollers.HomePageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gameshelfapp.login.graphiccontrollers.HomePageController">
    <Region prefHeight="27.0" prefWidth="1440.0" style="-fx-background-color: #2E60E1;" />
    <VBox prefHeight="741.0" prefWidth="1440.0" style="-fx-background-color: #433f3f;" AnchorPane.topAnchor="27.0">
       <children>
@@ -44,7 +44,7 @@
                <Insets top="27.0" />
             </VBox.margin>
             <children>
-               <Button alignment="TOP_LEFT" contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#goToSearchPage" style="-fx-background-color: transaprent;" text="Buy Games" textFill="#2e60e1">
+               <Button alignment="TOP_LEFT" contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#goToSearchPage" style="-fx-background-color: #433f3f;" text="Buy Games" textFill="#2e60e1">
                   <graphic>
                      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                         <image>
@@ -59,7 +59,7 @@
                      <Insets left="352.0" />
                   </HBox.margin>
                </Button>
-               <Button contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#logout" style="-fx-background-color: transparent;" text="Logout" textFill="#2e60e1">
+               <Button contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#logout" style="-fx-background-color: #433f3f;" text="Logout" textFill="#2e60e1">
                   <graphic>
                      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                         <image>

@@ -21,7 +21,7 @@ public class LogInController {
         logAccess.encodePassword();
 
         AccessDAO accessDAO = PersistencyAbstractFactory.getFactory().createAccessDAO();
-        Access access = accessDAO.retrieveAccountByEmail(logAccess);
+        Access access = accessDAO.retrieveAccountByEmail(logBean.getEmailBean());
         logAccess.checkAccount(access);
         User user = new User(access.getUsername(), access.getEmail(), access.getTypeOfUser());
         UserBean userBean = new UserBean();

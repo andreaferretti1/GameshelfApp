@@ -29,6 +29,14 @@ public class InsertCodeController  {
     }
 
     @FXML
+    private void goToRegistrationPage(MouseEvent event){
+        try{
+            RegistrationPageController.start(this.getStage());
+        } catch(IOException e){
+            System.exit(1);
+        }
+    }
+    @FXML
     private void verifyCode(MouseEvent event){
         int code = Integer.parseInt(this.codeField.getText());
         try{

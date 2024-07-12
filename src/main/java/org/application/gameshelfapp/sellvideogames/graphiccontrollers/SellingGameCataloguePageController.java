@@ -117,7 +117,7 @@ public class SellingGameCataloguePageController implements Initializable{
     }
 
     private HBox createHBox(VideogameBean videogameBean) throws IOException{
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("hbox-sellingGamePage.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/GUI/hbox-sellingGamePage.fxml"));
         HBox hBox = fxmlLoader.load();
         ((Label) fxmlLoader.getNamespace().get("titleLabel")).setText(videogameBean.getName());
         ((Label) fxmlLoader.getNamespace().get("platformLabel")).setText(videogameBean.getPlatformBean());

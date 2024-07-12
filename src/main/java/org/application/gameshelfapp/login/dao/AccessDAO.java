@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface AccessDAO {
     void saveAccount(AccessThroughRegistration regAccess) throws PersistencyErrorException;
-    Access retrieveAccountByEmail(Access access) throws PersistencyErrorException;
+    AccessThroughRegistration retrieveAccountByEmail(String email) throws PersistencyErrorException;
     void checkAccount(AccessThroughRegistration access) throws PersistencyErrorException, CheckFailedException;
     List<Access> getRandomCustomers() throws PersistencyErrorException;
 }

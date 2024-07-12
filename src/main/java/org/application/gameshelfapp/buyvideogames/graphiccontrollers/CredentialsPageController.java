@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -37,6 +38,8 @@ public class CredentialsPageController {
     private TextField regionField;
     @FXML
     private TextField countryField;
+    @FXML
+    private Label paymentSuccess;
     private Stage stage;
     public void setStage(Stage stage){
         this.stage = stage;
@@ -66,6 +69,7 @@ public class CredentialsPageController {
     private void insertCredentials(){
         try {
             this.customerBoundary.insertCredentialsAndPay(name.getText(), typeOfCard.getText(), paymentKey.getText(), address.getText(), regionField.getText(), countryField.getText());
+            this.paymentSuccess.setVisible(true);
         } catch (SyntaxErrorException | RefundException | GameSoldOutException | PersistencyErrorException | InvalidAddressException | NoGameInCatalogueException | GmailException e) {
             ErrorPageController.displayErrorWindow(e.getMessage());
         }
@@ -78,7 +82,7 @@ public class CredentialsPageController {
         CredentialsPageController controller = fxmlLoader.getController();
         controller.setCustomerBoundary(boundary);
         controller.setStage(myStage);
-        Scene scene = new Scene(root, 700, 500);
+        Scene scene = new Scene(root, 1440, 768);
         myStage.setScene(scene);
         myStage.show();
     }

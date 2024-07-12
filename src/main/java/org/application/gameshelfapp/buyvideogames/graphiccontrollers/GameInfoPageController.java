@@ -37,26 +37,26 @@ public class GameInfoPageController implements Initializable {
    @FXML
    private TextField copiesToBuy;
 
-    private Stage stage;
-    private CustomerBoundary customerBoundary;
-    private VideogameBean gameBean;
+   private Stage stage;
+   private static CustomerBoundary customerBoundary;
+   private static VideogameBean gameBean;
 
-    private void setGameBean(VideogameBean gameBean){
-        this.gameBean = gameBean;
+   public static void setGameBean(VideogameBean gameBean){
+        GameInfoPageController.gameBean = gameBean;
     }
 
     private void setStage(Stage stage) {
         this.stage = stage;
     }
 
-    private void setCustomerBoundary(CustomerBoundary customerBoundary) {
-        this.customerBoundary = customerBoundary;
+    public static void setCustomerBoundary(CustomerBoundary customerBoundary) {
+        GameInfoPageController.customerBoundary = customerBoundary;
     }
 
     @FXML
     private void goToGameList(MouseEvent event){
         try {
-            SearchPageController.start(this.stage, this.customerBoundary);
+            SearchPageController.start(this.stage, GameInfoPageController.customerBoundary);
         } catch (IOException | WrongUserTypeException e) {
             System.exit(-1);
         }
@@ -65,29 +65,29 @@ public class GameInfoPageController implements Initializable {
     @FXML
     private void goToHomePage(MouseEvent event){
         try{
-            HomePageController.start(this.stage, this.customerBoundary.getUserBean());
+            HomePageController.start(this.stage, GameInfoPageController.customerBoundary.getUserBean());
         } catch(IOException e){
             System.exit(-1);
         }
     }
     @FXML
     private void buy(){
-        this.gameBean.setCopiesBean(Integer.parseInt(this.copiesToBuy.getText()));
-        this.customerBoundary.setGameToBuy(this.gameBean);
+        GameInfoPageController.gameBean.setCopiesBean(Integer.parseInt(this.copiesToBuy.getText()));
+        GameInfoPageController.customerBoundary.setGameToBuy(GameInfoPageController.gameBean);
         try{
-            CredentialsPageController.start(this.stage, this.customerBoundary);
+            CredentialsPageController.start(this.stage, GameInfoPageController.customerBoundary);
         } catch(IOException e){
             ErrorPageController.displayErrorWindow("Couldn't buy videogame");
         }
     }
     public static void seeVideogame(Stage stage, CustomerBoundary boundary, VideogameBean gameBean) throws IOException {
+        GameInfoPageController.setCustomerBoundary(boundary);
+        GameInfoPageController.setGameBean(gameBean);
         FXMLLoader fxmlLoader = new FXMLLoader(GameInfoPageController.class.getResource("/org/application/gameshelfapp/GUI/Game-Info-Page.fxml"));
         Parent root = fxmlLoader.load();
 
         GameInfoPageController controller = fxmlLoader.getController();
         controller.setStage(stage);
-        controller.setCustomerBoundary(boundary);
-        controller.setGameBean(gameBean);
         Scene scene = new Scene(root, 1440, 768);
         stage.setScene(scene);
         stage.show();
@@ -95,11 +95,11 @@ public class GameInfoPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.console.setText(this.gameBean.getPlatformBean());
-        this.category.setText(this.gameBean.getCategoryBean());
-        this.price.setText(String.valueOf(this.gameBean.getPriceBean()));
-        this.availableCopies.setText(String.valueOf(this.gameBean.getCopiesBean()));
-        this.gameName.setText(this.gameBean.getName());
-        this.description.setText(this.gameBean.getDescriptionBean());
+        this.console.setText(GameInfoPageController.gameBean.getPlatformBean());
+        this.category.setText(GameInfoPageController.gameBean.getCategoryBean());
+        this.price.setText(String.valueOf(GameInfoPageController.gameBean.getPriceBean()) + " €");
+        this.availableCopies.setText(String.valueOf(GameInfoPageController.gameBean.getCopiesBean()));
+        this.gameName.setText(GameInfoPageController.gameBean.getName());
+        this.description.setText(GameInfoPageController.gameBean.getDescriptionBean());
     }
 }

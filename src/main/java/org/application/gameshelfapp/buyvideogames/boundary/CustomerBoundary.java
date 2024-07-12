@@ -55,6 +55,7 @@ public class CustomerBoundary {
         credentialsBean.setAddressBean(street, region, country);
         credentialsBean.setEmailBean(this.userBean.getEmail());
         this.buyGamesController.sendMoney(credentialsBean, this.gameToBuy);
+        this.sellingGamesCatalogueBean = null;
     }
 
     public List<String> getConsoleFilters() throws PersistencyErrorException{
