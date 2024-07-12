@@ -64,6 +64,7 @@ public class AddGameInfoPageController implements Initializable {
             gameBean.setCategoryBean(this.categoryChoiceBox.getValue());
             gameBean.setCopiesBean(Integer.parseInt(this.copiesField.getText()));
             gameBean.setDescriptionBean(this.descriptionArea.getText());
+            gameBean.setPriceBean(Float.parseFloat(this.priceField.getText()));
             this.sellerBoundary.addSellingGames(gameBean);
             SellingGameCataloguePageController.start(this.stage, this.sellerBoundary);
         } catch (PersistencyErrorException | CheckFailedException | InvalidTitleException | NoGameInCatalogueException |

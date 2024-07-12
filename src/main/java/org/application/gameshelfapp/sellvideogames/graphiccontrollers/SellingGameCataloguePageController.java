@@ -37,18 +37,16 @@ public class SellingGameCataloguePageController implements Initializable{
     private ChoiceBox<String> platformChoiceBox;
     @FXML
     private ListView<HBox> gameInCatalogue;
-    private final String[] category = {"Action", "Adventure", "Arcade", "Simulation", "Sport"};
-    private final String[] platform = {"Playstation 4", "Playstation 5", "Xbox Series X", "Xbox Series S", "Pc"};
-    private SellerAddGamesBoundary sellerBoundary;
+    private static SellerAddGamesBoundary sellerBoundary;
     private Stage stage;
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-    public void setSellerAddGamesBoundary(SellerAddGamesBoundary sellerBoundary){ this.sellerBoundary = sellerBoundary;}
+    public static void setSellerAddGamesBoundary(SellerAddGamesBoundary sellerBoundary){ SellingGameCataloguePageController.sellerBoundary = sellerBoundary;}
     @FXML
     private void goToHomePage(MouseEvent event){
         try{
-            HomePageController.start(this.stage, this.sellerBoundary.getUserBean());
+            HomePageController.start(this.stage, SellingGameCataloguePageController.sellerBoundary.getUserBean());
         } catch(IOException e){
             System.exit(1);
         }
@@ -56,7 +54,7 @@ public class SellingGameCataloguePageController implements Initializable{
 
     @FXML
     private void addNewGameForSale(MouseEvent event){
-            AddGameInfoPageController.start(this.stage, this.sellerBoundary);
+            AddGameInfoPageController.start(this.stage, SellingGameCataloguePageController.sellerBoundary);
     }
 
     @FXML
@@ -66,32 +64,32 @@ public class SellingGameCataloguePageController implements Initializable{
             filtersBean.setNameBean(this.titleField.getText());
             filtersBean.setCategoryBean(this.categoryChoiceBox.getValue());
             filtersBean.setConsoleBean(this.platformChoiceBox.getValue());
-            this.sellerBoundary.getSellingCatalogue(filtersBean);
+            SellingGameCataloguePageController.sellerBoundary.getSellingCatalogue(filtersBean);
             this.fillCatalogue();
         } catch (PersistencyErrorException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
         } catch (NoGameInCatalogueException e){
-            AddGameInfoPageController.start(this.stage, this.sellerBoundary);
+            AddGameInfoPageController.start(this.stage, SellingGameCataloguePageController.sellerBoundary);
             ErrorPageController.displayErrorWindow("No game found");
         }
     }
     public static void start(Stage myStage, SellerAddGamesBoundary sellerBoundary) throws IOException, WrongUserTypeException {
+        SellingGameCataloguePageController.setSellerAddGamesBoundary(sellerBoundary);
         FXMLLoader fxmlLoader = new FXMLLoader(SellingGameCataloguePageController.class.getResource("/org/application/gameshelfapp/GUI/Selling-Catalogue-Page.fxml"));
         Parent root = fxmlLoader.load();
 
         SellingGameCataloguePageController controller = fxmlLoader.getController();
         controller.setStage(myStage);
-        controller.setSellerAddGamesBoundary(sellerBoundary);
         Scene scene = new Scene(root,1440,768);
         myStage.setScene(scene);
         myStage.show();
     }
 
     private void fillCatalogue(){
-        if (this.sellerBoundary.getSellingGamesCatalogueBean() == null) return;
+        if (SellingGameCataloguePageController.sellerBoundary.getSellingGamesCatalogueBean() == null) return;
         try {
             ObservableList<HBox> objects = FXCollections.observableArrayList();
-            List<VideogameBean> catalogue = this.sellerBoundary.getSellingGamesCatalogueBean().getSellingGamesBean();
+            List<VideogameBean> catalogue = SellingGameCataloguePageController.sellerBoundary.getSellingGamesCatalogueBean().getSellingGamesBean();
             for (VideogameBean gameBean : catalogue) {
                 objects.add(createHBox(gameBean));
             }
@@ -109,8 +107,12 @@ public class SellingGameCataloguePageController implements Initializable{
                 return new InfoCell();
             }
         });
-        this.categoryChoiceBox.getItems().setAll(this.category);
-        this.platformChoiceBox.getItems().setAll(this.platform);
+        try {
+            this.categoryChoiceBox.getItems().setAll(SellingGameCataloguePageController.sellerBoundary.getCategories());
+            this.platformChoiceBox.getItems().setAll(SellingGameCataloguePageController.sellerBoundary.getConsoles());
+        } catch (PersistencyErrorException e) {
+            System.exit(1);
+        }
         this.fillCatalogue();
     }
 
@@ -122,7 +124,7 @@ public class SellingGameCataloguePageController implements Initializable{
         ((Label) fxmlLoader.getNamespace().get("copiesLabel")).setText(String.valueOf(videogameBean.getCopiesBean()));
         ((Button) fxmlLoader.getNamespace().get("showInfoButton")).setOnMouseClicked(event -> {
             try {
-                SellingGameInfoPageController.start(this.stage, this.sellerBoundary);
+                SellingGameInfoPageController.start(this.stage, SellingGameCataloguePageController.sellerBoundary);
             } catch (IOException e) {
                 ErrorPageController.displayErrorWindow("Couldn't show the videogame");
             }

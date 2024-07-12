@@ -50,4 +50,5 @@ module org.application.gameshelfapp {
     exports org.application.gameshelfapp.confirmsale.graphiccontrollers;
     opens org.application.gameshelfapp.confirmsale.graphiccontrollers to javafx.fxml;
     exports org.application.gameshelfapp.sellvideogames.entities;
+    opens org.application.gameshelfapp.sellvideogames.graphiccontrollers to javafx.fxml;
 }

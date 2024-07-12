@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -34,7 +35,9 @@ public class SignEmployeePageController implements Initializable{
     @FXML
     private RadioButton adminButton;
     @FXML
-    ToggleGroup radioButtonGroup;
+    private ToggleGroup radioButtonGroup;
+    @FXML
+    private Label succRegLabel;
     private AdminBoundary adminBoundary;
     private Stage stage;
     public void setAdminBoundary(AdminBoundary adminBoundary) {
@@ -46,7 +49,7 @@ public class SignEmployeePageController implements Initializable{
     }
 
     public static void start(Stage stage, UserBean userBean) throws IOException, WrongUserTypeException {
-        FXMLLoader fxmlLoader = new FXMLLoader(SignEmployeePageController.class.getResource("/org/application/gameshelfapp/GUI/Starting-Page.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(SignEmployeePageController.class.getResource("/org/application/gameshelfapp/GUI/SignEmployee-Page.fxml"));
         Parent root = fxmlLoader.load();
 
         SignEmployeePageController controller = fxmlLoader.getController();
@@ -80,6 +83,7 @@ public class SignEmployeePageController implements Initializable{
     private void registerEmployee(MouseEvent event){
        try {
            this.adminBoundary.register(usernameField.getText(), emailField.getText(), passwordField.getText(), ((RadioButton) radioButtonGroup.getSelectedToggle()).getText());
+           this.succRegLabel.setText("Seller successfully registered");
        }catch(SyntaxErrorException | PersistencyErrorException | CheckFailedException | NullPasswordException e){
            ErrorPageController.displayErrorWindow(e.getMessage());
        }

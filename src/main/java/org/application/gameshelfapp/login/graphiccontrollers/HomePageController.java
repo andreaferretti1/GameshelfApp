@@ -26,17 +26,18 @@ public class HomePageController implements Initializable {
     @FXML
     private Label accountName;
     private Stage stage;
-    private UserBean userBean;
+    private static UserBean userBean;
 
     public void setStage(Stage stage){
         this.stage = stage;
     }
 
-    public void setUserBean(UserBean userBean) {
-        this.userBean = userBean;
+    public static void setUserBean(UserBean userBean) {
+        HomePageController.userBean = userBean;
     }
 
     public static void start(Stage myStage, UserBean userBean) throws IOException {
+        HomePageController.setUserBean(userBean);
         FXMLLoader fxmlLoader;
         switch (userBean.getTypeOfUser()){
             case("Customer") -> fxmlLoader = new FXMLLoader(HomePageController.class.getResource("/org/application/gameshelfapp/GUI/Home-Page-Customer.fxml"));
@@ -48,7 +49,6 @@ public class HomePageController implements Initializable {
         }
         Parent root = fxmlLoader.load();
         HomePageController controller = fxmlLoader.getController();
-        controller.setUserBean(userBean);
         controller.setStage(myStage);
         Scene scene = new Scene(root, 1440, 768);
         myStage.setScene(scene);
@@ -56,7 +56,7 @@ public class HomePageController implements Initializable {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) { this.accountName.setText(this.userBean.getUsername());}
+    public void initialize(URL url, ResourceBundle resourceBundle) { this.accountName.setText(HomePageController.userBean.getUsername());}
 
     @FXML
     private void logout(MouseEvent event){
@@ -66,7 +66,7 @@ public class HomePageController implements Initializable {
     @FXML
     private void goToSearchPage(MouseEvent event){
         try{
-            SearchPageController.start(this.stage, new CustomerBoundary(this.userBean));
+            SearchPageController.start(this.stage, new CustomerBoundary(HomePageController.userBean));
         } catch (IOException | WrongUserTypeException e){
             System.exit(1);
         }
@@ -74,7 +74,7 @@ public class HomePageController implements Initializable {
     @FXML
     private void goToSellingCatalogue(MouseEvent event){
         try{
-            SellingGameCataloguePageController.start(this.stage,new SellerAddGamesBoundary(this.userBean));
+            SellingGameCataloguePageController.start(this.stage,new SellerAddGamesBoundary(HomePageController.userBean));
         } catch (WrongUserTypeException | IOException e){
             System.exit(1);
         }
@@ -82,7 +82,7 @@ public class HomePageController implements Initializable {
     @FXML
     private void goToSignEmployeePage(MouseEvent event){
         try{
-            SignEmployeePageController.start(this.stage, this.userBean);
+            SignEmployeePageController.start(this.stage, HomePageController.userBean);
         } catch (IOException | WrongUserTypeException e){
             System.exit(1);
         }
