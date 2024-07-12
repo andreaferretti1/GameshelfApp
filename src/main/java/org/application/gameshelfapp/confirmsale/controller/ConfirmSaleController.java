@@ -22,8 +22,14 @@ public class ConfirmSaleController{
         if(userBean == null || userBean.getTypeOfUser().equals("Customer")) throw new WrongUserTypeException("You are not allowed to access.");
     }
     public List<SaleBean> getSalesToSend() throws PersistencyErrorException {
-        List<Sale> sales = SingletonSalesToConfirm.getInstance().getSales();
+        SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
+        List<Sale> sales = saleDAO.getToConfirmSales();
+        SingletonSalesToConfirm singletonSalesToConfirm = SingletonSalesToConfirm.getInstance();
+        singletonSalesToConfirm.setSales(sales);
+        sales = singletonSalesToConfirm.getSales();
         List<SaleBean> salesBean = new ArrayList<>();
+
+
         for(Sale sale: sales){
             SaleBean saleBean = new SaleBean();
             saleBean.setSale(sale);

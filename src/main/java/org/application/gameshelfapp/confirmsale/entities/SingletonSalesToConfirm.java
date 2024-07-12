@@ -9,15 +9,24 @@ public class SingletonSalesToConfirm {
 
     private static SingletonSalesToConfirm salesToConfirm = null;
     private List<Sale> sales;
+    private boolean initialized;
 
     protected SingletonSalesToConfirm(){
         sales = new ArrayList<>();
+        initialized = false;
     }
     public static SingletonSalesToConfirm getInstance(){
-        if(salesToConfirm == null) {
+        if(salesToConfirm == null){
             salesToConfirm = new SingletonSalesToConfirm();
         }
         return salesToConfirm;
+    }
+
+    public void setSales(List<Sale> sales){
+        if(!initialized){
+            this.sales = sales;
+            this.initialized = true;
+        }
     }
     public List<Sale> getSales(){
         return this.sales;
