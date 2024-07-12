@@ -6,14 +6,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
 import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
+import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,18 +22,21 @@ import java.util.ResourceBundle;
 
 public class GameInfoPageController implements Initializable {
 
-    @FXML
-    private Label category;
-    @FXML
-    private Label console;
-    @FXML
-    private Text description;
-    @FXML
-    private Label gameName;
-    @FXML
-    private Label price;
-    @FXML
-    private TextField copiesSelected;
+   @FXML
+   private Label gameName;
+   @FXML
+   private Label console;
+   @FXML
+   private Label category;
+   @FXML
+   private Label availableCopies;
+   @FXML
+   private Label price;
+   @FXML
+   private TextArea description;
+   @FXML
+   private TextField copiesToBuy;
+
     private Stage stage;
     private CustomerBoundary customerBoundary;
     private VideogameBean gameBean;
@@ -54,12 +58,21 @@ public class GameInfoPageController implements Initializable {
         try {
             SearchPageController.start(this.stage, this.customerBoundary);
         } catch (IOException | WrongUserTypeException e) {
-            System.exit(1);
+            System.exit(-1);
         }
     }
 
     @FXML
+    private void goTpHomePage(MouseEvent event){
+        try{
+            HomePageController.start(this.stage, this.customerBoundary.getUserBean());
+        } catch(IOException e){
+            System.exit(-1);
+        }
+    }
+    @FXML
     private void buy(){
+        this.gameBean.setCopiesBean(Integer.parseInt(this.copiesToBuy.getText()));
         this.customerBoundary.setGameToBuy(this.gameBean);
         try{
             CredentialsPageController.start(this.stage, this.customerBoundary);
@@ -85,6 +98,7 @@ public class GameInfoPageController implements Initializable {
         this.console.setText(this.gameBean.getPlatformBean());
         this.category.setText(this.gameBean.getCategoryBean());
         this.price.setText(String.valueOf(this.gameBean.getPriceBean()));
+        this.availableCopies.setText(String.valueOf(this.gameBean.getCopiesBean()));
         this.gameName.setText(this.gameBean.getName());
         this.description.setText(this.gameBean.getDescriptionBean());
     }

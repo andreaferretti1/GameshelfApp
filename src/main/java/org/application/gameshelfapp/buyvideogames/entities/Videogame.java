@@ -55,7 +55,7 @@ public class Videogame {
         this.category = category;
     }
     public void buyVideogame(int copiesToBuy, float price) throws GameSoldOutException {
-        if(this.copies < copiesToBuy || this.price != price) throw new GameSoldOutException("Price or copies are not correct");
+        if(copiesToBuy < 0 || this.copies < copiesToBuy || this.price != price) throw new GameSoldOutException("Price or copies are not correct");
         this.copies = copiesToBuy;
     }
 }
