@@ -7,20 +7,21 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
-import java.util.Vector;
 
 public class SingletonConnectionPool{
 
     private static SingletonConnectionPool instance = null;
-    private final Vector<Connection> activeConnections;
-    private final Vector<Connection> availableConnections;
+    private final List<Connection> activeConnections;
+    private final List<Connection> availableConnections;
     private String user;
     private String password;
     private String dbUrl;
     protected SingletonConnectionPool() throws PersistencyErrorException{
-        this.activeConnections = new Vector<>();
-        this.availableConnections = new Vector<>();
+        this.activeConnections = new ArrayList<>();
+        this.availableConnections = new ArrayList<>();
         loadDriver();
     }
 
@@ -31,7 +32,7 @@ public class SingletonConnectionPool{
         return SingletonConnectionPool.instance;
     }
 
-    public Connection getConnection() throws PersistencyErrorException, SQLException{
+    public Connection getConnection() throws SQLException{
         Connection connection;
         if(this.availableConnections.isEmpty()){
             connection = DriverManager.getConnection(this.dbUrl, this.user, this.password);
