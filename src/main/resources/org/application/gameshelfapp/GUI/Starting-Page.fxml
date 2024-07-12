@@ -22,7 +22,7 @@
             <VBox.margin>
                 <Insets left="653.0" top="109.0" />
             </VBox.margin>
-            <Image url="@../icons/profile_icon.png" />
+            <Image url="@/org/application/gameshelfapp/icons/profile_icon.png" />
         </ImageView>
         <Label alignment="CENTER" prefHeight="38.0" prefWidth="340.0" text="Log In to your Account" textFill="#2e60e1">
             <font>

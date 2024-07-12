@@ -58,7 +58,7 @@ public class StartingPageController{
         }
     }
 
-    public static void start(Stage stage) throws IOException{
+    public static void start() throws IOException{
 
         FXMLLoader fxmlLoader = new FXMLLoader(StartingPageController.class.getResource("/org/application/gameshelfapp/GUI/Starting-Page.fxml"));
         Parent root = fxmlLoader.load();
@@ -66,16 +66,17 @@ public class StartingPageController{
         StartingPageController startingPageController = fxmlLoader.getController();
         startingPageController.setUserBoundary(new UserLogInBoundary());
         Scene scene = new Scene(root, 1440, 768);
-        stage.setScene(scene);
+        Stage myStage = new Stage();
+        myStage.setScene(scene);
 
-        stage.setTitle("GameShelf");
+        myStage.setTitle("GameShelf");
 
-        stage.show();
+        myStage.show();
     }
 
     public static void main(String[] args){
         try{
-            StartingPageController.start(new Stage());
+            StartingPageController.start();
         } catch (IOException e){
             System.exit(1);
         }
