@@ -33,8 +33,8 @@ public class Geocoder {
 
     public void checkAddress() throws InvalidAddressException{
         try{
-            URL url = new URL(this.url);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            URL addr = new URL(this.url);
+            HttpURLConnection connection = (HttpURLConnection) addr.openConnection();
             connection.setRequestMethod("GET");
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
