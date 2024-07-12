@@ -13,7 +13,7 @@ class GeocoderTest {
         try {
             Geocoder geocoder = new Geocoder("via Cambridge, Roma, Italia");
             geocoder.checkAddress();
-        } catch(InvalidAddressException | IOException e){
+        } catch(InvalidAddressException e){
             fail();
         }
     }
@@ -23,7 +23,7 @@ class GeocoderTest {
         try {
             Geocoder geocoder = new Geocoder("addressTest");
             assertThrows(InvalidAddressException.class, geocoder::checkAddress);
-        } catch(IOException e){
+        } catch(InvalidAddressException e){
             fail();
         }
     }
@@ -33,7 +33,7 @@ class GeocoderTest {
         try{
             Geocoder geocoder = new Geocoder("addressTest");
             assertThrows(IOException.class, geocoder::checkAddress);
-        } catch (IOException e){
+        } catch (InvalidAddressException e){
             fail();
         }
     }

@@ -43,10 +43,7 @@ public class ConfirmSaleController{
             saleDAO.updateSale(id);
             shipmentCompany.confirmDelivery(saleConfirmed.getCredentials().getAddress());
 
-            String message = "Your order has been confirmed.";
-            googleBoundary.setMessageToSend(message);
-            googleBoundary.sendMail("delivery CONFIRMED", saleConfirmed.getCredentials().getEmail());
-
+            googleBoundary.sendSaleConfirmationMessage(saleConfirmed.getCredentials().getEmail(), saleConfirmed.getVideogameSold().getName());
         } catch (PersistencyErrorException e) {
             throw new ConfirmDeliveryException("Couldn't confirm delivery. Try later");
         }

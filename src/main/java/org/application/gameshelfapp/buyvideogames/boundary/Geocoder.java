@@ -16,10 +16,10 @@ public class Geocoder {
 
     private String url;
 
-    public Geocoder(String address) throws IOException {
+    public Geocoder(String address) throws InvalidAddressException {
         this.setURL(address);
     }
-    private void setURL(String address) throws IOException{
+    private void setURL(String address) throws InvalidAddressException{
         try(FileInputStream in = new FileInputStream("src/main/resources/org/application/gameshelfapp/configuration/configuration.properties")){
             Properties properties = new Properties();
             properties.load(in);
@@ -27,22 +27,26 @@ public class Geocoder {
             String key = properties.getProperty("GEOCODER");
             this.url = String.format("https://geocode.maps.co/search?q=%s&api_key=%s", address, key);
         } catch(IOException e){
-            throw new IOException("Couldn't send credentials");
+            throw new InvalidAddressException("Couldn't send credentials");
         }
     }
 
-    public void checkAddress() throws InvalidAddressException, IOException{
-        URL url = new URL(this.url);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        int responseCode = connection.getResponseCode();
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String inputLine = in.readLine();
+    public void checkAddress() throws InvalidAddressException{
+        try{
+            URL url = new URL(this.url);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine = in.readLine();
 
-            JsonArray jsonArray = JsonParser.parseString(inputLine).getAsJsonArray();
-            if(jsonArray.isEmpty()) throw new InvalidAddressException("Address inserted is invalid");
-            in.close();
+                JsonArray jsonArray = JsonParser.parseString(inputLine).getAsJsonArray();
+                if(jsonArray.isEmpty()) throw new InvalidAddressException("Address inserted is invalid");
+                in.close();
+            }
+        } catch(IOException e){
+            throw new InvalidAddressException("Couldn't check address.");
         }
     }
 }

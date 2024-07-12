@@ -6,6 +6,7 @@ import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException
 import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.bean.UserBean;
+import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.login.exception.WrongUserTypeException;
@@ -50,7 +51,7 @@ public class CustomerAdapter implements CustomerBoundaryInterface {
     }
 
     @Override
-    public void pay(String nameBean, String typeOfCardBean, String paymentKeyBean, String streetBean, String regionBean, String countryBean) throws PersistencyErrorException, RefundException, NoGameInCatalogueException, GameSoldOutException, SyntaxErrorException, InvalidAddressException {
+    public void pay(String nameBean, String typeOfCardBean, String paymentKeyBean, String streetBean, String regionBean, String countryBean) throws PersistencyErrorException, RefundException, NoGameInCatalogueException, GameSoldOutException, SyntaxErrorException, InvalidAddressException, GmailException {
         this.customerBoundary.insertCredentialsAndPay(nameBean, typeOfCardBean, paymentKeyBean, streetBean, regionBean, countryBean);
     }
 

@@ -7,34 +7,48 @@ import static org.junit.jupiter.api.Assertions.*;
 class GoogleBoundaryTest {
 
     @Test
-    void setAndGetMessageToSend(){
-        try {
+    void sendReceiptMessage(){
+        try{
             GoogleBoundary googleBoundary = new GoogleBoundary();
-            googleBoundary.setMessageToSend("messageTest");
-            assertEquals("messageTest", googleBoundary.getMessageToSend());
-        } catch (GmailException e) {
+            googleBoundary.sendReceiptMessage("nameTest", 2, 30, "fer.andrea35@gmail.com");
+        } catch (GmailException e){
             fail();
         }
     }
     @Test
-    void sendMailTest(){
+    void sendNewSaleMailTest(){
         try{
             GoogleBoundary googleBoundary = new GoogleBoundary();
-            String message = "test passed";
-            googleBoundary.setMessageToSend(message);
-            googleBoundary.sendMail("test", "fer.andrea35@gmail.com");
+            googleBoundary.sendNewSaleMessage("testMail", "nameTest", 3, 30);
         } catch(GmailException e){
             fail();
         }
     }
 
     @Test
-    void invalidEmailAddressTest(){
+    void sendSaleConfirmationMessageTest(){
         try{
             GoogleBoundary googleBoundary = new GoogleBoundary();
-            String message = "test passed";
-            googleBoundary.setMessageToSend(message);
-            assertThrows(GmailException.class, () -> googleBoundary.sendMail("test", "invalidemail"));
+            googleBoundary.sendSaleConfirmationMessage("fer.andrea35@gmail.com", "gameNameTest");
+        } catch(GmailException e){
+            fail();
+        }
+    }
+
+    @Test
+    void sendCheckCodeMessageTest(){
+        try{
+            GoogleBoundary googleBoundary = new GoogleBoundary();
+            googleBoundary.sendCheckCodeMessage("fer.andrea35@gmail.com", 300);
+        } catch(GmailException e){
+            fail();
+        }
+    }
+    @Test
+    void sendMailToRandomCustomerTest(){
+        try{
+            GoogleBoundary googleBoundary = new GoogleBoundary();
+            googleBoundary.sendMailToRandomCustomer("fer.andrea35@gmail.com", "gameNameTest", "platformTest");
         } catch(GmailException e){
             fail();
         }

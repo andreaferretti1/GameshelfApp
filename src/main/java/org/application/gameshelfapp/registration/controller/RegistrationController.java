@@ -27,9 +27,7 @@ public class RegistrationController {
         accessDAO.checkAccount(this.regAccess);
         this.regAccess.generateCode();
         GoogleBoundary googleBoundary = new GoogleBoundary();
-        String message = "Your code is " + this.regAccess.getCodeGenerated() + ".";
-        googleBoundary.setMessageToSend(message);
-        googleBoundary.sendMail("check email", regAccess.getEmail());
+        googleBoundary.sendCheckCodeMessage(this.regAccess.getEmail(), this.regAccess.getCodeGenerated());
         this.regAccess.validationTimer();
     }
 

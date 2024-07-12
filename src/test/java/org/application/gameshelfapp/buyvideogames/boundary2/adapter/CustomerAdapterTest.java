@@ -8,6 +8,7 @@ import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressExcept
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
+import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.login.exception.WrongUserTypeException;
@@ -85,7 +86,7 @@ class CustomerAdapterTest {
             SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
             List<Sale> sales = saleDAO.getToConfirmSales();
             assertEquals(1, (long) sales.size());
-        } catch (PersistencyErrorException | RefundException | GameSoldOutException |
+        } catch (PersistencyErrorException | RefundException | GameSoldOutException | GmailException |
                  SyntaxErrorException | InvalidAddressException | NoGameInCatalogueException | WrongUserTypeException e) {
             fail();
         }

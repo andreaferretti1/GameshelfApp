@@ -91,7 +91,7 @@ class BuyGamesControllerTest{
 
             SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
             assertEquals(1, (long) saleDAO.getToConfirmSales().size());
-        } catch (PersistencyErrorException | SyntaxErrorException | RefundException | GameSoldOutException | InvalidAddressException | NoGameInCatalogueException | WrongUserTypeException e){
+        } catch (PersistencyErrorException | SyntaxErrorException | RefundException | GameSoldOutException | InvalidAddressException | NoGameInCatalogueException | WrongUserTypeException | GmailException e){
             fail();
         }
     }

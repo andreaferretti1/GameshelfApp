@@ -8,6 +8,7 @@ import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException
 import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.bean.UserBean;
+import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.login.exception.WrongUserTypeException;
@@ -46,7 +47,7 @@ public class CustomerBoundary {
     public void setGameToBuy(VideogameBean videogameBean){
         this.gameToBuy = videogameBean;
     }
-    public void insertCredentialsAndPay(String name, String typeOfCard, String paymentKey, String street, String region, String country) throws RefundException, GameSoldOutException, SyntaxErrorException, PersistencyErrorException, InvalidAddressException, NoGameInCatalogueException{
+    public void insertCredentialsAndPay(String name, String typeOfCard, String paymentKey, String street, String region, String country) throws RefundException, GameSoldOutException, SyntaxErrorException, PersistencyErrorException, InvalidAddressException, NoGameInCatalogueException, GmailException {
         CredentialsBean credentialsBean = new CredentialsBean();
         credentialsBean.setNameBean(name);
         credentialsBean.setTypeOfPaymentBean(typeOfCard);

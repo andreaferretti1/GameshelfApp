@@ -30,6 +30,8 @@ import java.util.Set;
 
 public class GoogleBoundary {
     private final Gmail service;
+    private String email;
+    private String subject;
     private String messageToSend;
     public GoogleBoundary() throws GmailException {
         final NetHttpTransport httpTransport;
@@ -39,12 +41,12 @@ public class GoogleBoundary {
             throw new GmailException("Couldn't send email");
         }
         GsonFactory jsonFactory = GsonFactory.getDefaultInstance();
-        this.service = new Gmail.Builder(httpTransport, jsonFactory, getCredentials(httpTransport, jsonFactory))
+        this.service = new Gmail.Builder(httpTransport, jsonFactory, this.getCredentials(httpTransport, jsonFactory))
                 .setApplicationName("Gameshelfapp")
                 .build();
     }
 
-    private static Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory) throws GmailException{
+    private Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory) throws GmailException{
         // Load client secrets.
         InputStream in = GoogleBoundary.class.getResourceAsStream("/org/application/gameshelfapp/client_secret_862393017889-3e1kmgmdq3jmgltkc0rg0g4svvsl7lej.apps.googleusercontent.com.json");
         if (in == null) {
@@ -65,7 +67,7 @@ public class GoogleBoundary {
         }
     }
 
-    public void sendMail(String subject, String toEmailAddress) throws GmailException{
+    private void sendMail() throws GmailException{
 
         Properties props = new Properties();
         Session session = Session.getDefaultInstance(props, null);
@@ -73,8 +75,8 @@ public class GoogleBoundary {
         try {
             email.setFrom(new InternetAddress("fer.andrea35@gmail.com"));
             email.addRecipient(javax.mail.Message.RecipientType.TO,
-                    new InternetAddress(toEmailAddress));
-            email.setSubject(subject);
+                    new InternetAddress(this.email));
+            email.setSubject(this.subject);
             email.setText(this.messageToSend);
 
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -88,10 +90,38 @@ public class GoogleBoundary {
             throw new GmailException("Couldn't send mail");
         }
     }
-    public void setMessageToSend(String message){
-        this.messageToSend = message;
+    public void sendReceiptMessage(String gameName, int copies, float totalPrice, String customerEmail) throws GmailException{
+        this.messageToSend = "You have bought " + copies + " of " + gameName + " for " + totalPrice;
+        this.subject = "Receipt";
+        this.email = customerEmail;
+        this.sendMail();
     }
-    public String getMessageToSend(){
-        return this.messageToSend;
+
+    public void sendNewSaleMessage(String userEmail, String gameName, int quantity, float totalPrice) throws GmailException{
+        this.messageToSend = userEmail + " bought " + quantity + " of " + gameName + " for " + totalPrice;
+        this.subject = "Videogame bought";
+        this.email = "fer.andrea35@gmail.com";
+        this.sendMail();
+    }
+
+    public void sendSaleConfirmationMessage(String customerEmail, String gameName) throws GmailException{
+        this.messageToSend = "Your " + gameName + " order has been confirmed.";
+        this.subject = "Delivery confirmed";
+        this.email = customerEmail;
+        this.sendMail();
+    }
+
+    public void sendCheckCodeMessage(String email, int code) throws GmailException{
+        this.messageToSend = "Your code is " + code + ".";
+        this.email = email;
+        this.subject = "Check email";
+        this.sendMail();
+    }
+
+    public void sendMailToRandomCustomer(String customerEmail, String gameName, String platform) throws GmailException{
+        this.messageToSend = String.format("New Sale: %s for %s", gameName, platform);
+        this.subject = "New sale";
+        this.email = customerEmail;
+        this.sendMail();
     }
 }

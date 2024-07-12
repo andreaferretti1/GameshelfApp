@@ -72,8 +72,7 @@ public class SellVideogamesController {
         List<Access> customers = accessDAO.getRandomCustomers();
         GoogleBoundary mailSender = new GoogleBoundary();
         for (Access cust: customers){
-            mailSender.setMessageToSend(String.format("New Sale: %s for %s", videogameBean.getName(), videogameBean.getPlatformBean()));
-            mailSender.sendMail(null, cust.getEmail());
+            mailSender.sendMailToRandomCustomer(cust.getEmail(), videogameBean.getName(), videogameBean.getPlatformBean());
         }
         FiltersBean filtersBean = new FiltersBean();
         filtersBean.setCategoryBean(videogameBean.getCategoryBean());
