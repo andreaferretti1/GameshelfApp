@@ -63,7 +63,7 @@ public class GameInfoPageController implements Initializable {
     }
 
     @FXML
-    private void goTpHomePage(MouseEvent event){
+    private void goToHomePage(MouseEvent event){
         try{
             HomePageController.start(this.stage, this.customerBoundary.getUserBean());
         } catch(IOException e){
