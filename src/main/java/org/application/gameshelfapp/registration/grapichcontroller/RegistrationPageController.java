@@ -44,11 +44,8 @@ public class RegistrationPageController {
 
     @FXML
     private void goToStartPage(MouseEvent event) {
-        try {
-            StartingPageController.start();
-        } catch (IOException e){
-            System.exit(1);
-        }
+        StartingPageController startingPageController = new StartingPageController();
+        startingPageController.start(this.getStage());
     }
     public void switchToInsertCodeScene(){
         try{

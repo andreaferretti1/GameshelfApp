@@ -60,11 +60,8 @@ public class HomePageController implements Initializable {
 
     @FXML
     private void logout(MouseEvent event){
-        try{
-            StartingPageController.start();
-        } catch (IOException e){
-            System.exit(1);
-        }
+        StartingPageController startingPageController = new StartingPageController();
+        startingPageController.start(this.stage);
     }
     @FXML
     private void goToSearchPage(MouseEvent event){

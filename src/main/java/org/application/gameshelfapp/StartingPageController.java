@@ -1,5 +1,6 @@
 package org.application.gameshelfapp;
 
+import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,7 +21,7 @@ import org.application.gameshelfapp.registration.grapichcontroller.RegistrationP
 import java.io.IOException;
 
 
-public class StartingPageController{
+public class StartingPageController extends Application {
 
     @FXML
     private PasswordField passwordField;
@@ -57,28 +58,27 @@ public class StartingPageController{
             System.exit(1);
         }
     }
+    @Override
+    public void start(Stage myStage){
 
-    public static void start() throws IOException{
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(StartingPageController.class.getResource("/org/application/gameshelfapp/GUI/Starting-Page.fxml"));
+            Parent root = fxmlLoader.load();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(StartingPageController.class.getResource("/org/application/gameshelfapp/GUI/Starting-Page.fxml"));
-        Parent root = fxmlLoader.load();
+            StartingPageController startingPageController = fxmlLoader.getController();
+            startingPageController.setUserBoundary(new UserLogInBoundary());
+            Scene scene = new Scene(root, 1440, 768);
+            myStage.setScene(scene);
 
-        StartingPageController startingPageController = fxmlLoader.getController();
-        startingPageController.setUserBoundary(new UserLogInBoundary());
-        Scene scene = new Scene(root, 1440, 768);
-        Stage myStage = new Stage();
-        myStage.setScene(scene);
+            myStage.setTitle("GameShelf");
 
-        myStage.setTitle("GameShelf");
-
-        myStage.show();
+            myStage.show();
+        } catch(IOException e){
+            System.exit(1);
+        }
     }
 
     public static void main(String[] args){
-        try{
-            StartingPageController.start();
-        } catch (IOException e){
-            System.exit(1);
-        }
+       launch(args);
     }
 }
