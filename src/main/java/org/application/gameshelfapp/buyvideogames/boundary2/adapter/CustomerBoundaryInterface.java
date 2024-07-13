@@ -4,6 +4,7 @@ import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException
 import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.bean.UserBean;
+import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
@@ -15,8 +16,8 @@ import java.util.Map;
 public interface CustomerBoundaryInterface{
 
     UserBean getUserBean();
-    SellingGamesCatalogueBean searchVideogame(String gameNameBean, String consoleBean, String categoryBean) throws PersistencyErrorException, NoGameInCatalogueException;
+    SellingGamesCatalogueBean searchVideogame(String gameNameBean, String consoleBean, String categoryBean) throws PersistencyErrorException, NoGameInCatalogueException, CheckFailedException;
     void chooseGameToBuy(String gameNameBean, String consoleBean, String categoryBean, int copiesBean, float priceBean);
-    void pay(String nameBean, String typeOfCardBean, String paymentKeyBean, String streetBean, String regionBean, String countryBean) throws PersistencyErrorException, RefundException, NoGameInCatalogueException, GameSoldOutException, SyntaxErrorException, InvalidAddressException, GmailException;
+    void pay(String nameBean, String typeOfCardBean, String paymentKeyBean, String streetBean, String regionBean, String countryBean) throws PersistencyErrorException, RefundException, NoGameInCatalogueException, GameSoldOutException, SyntaxErrorException, InvalidAddressException, GmailException, CheckFailedException;
     Map<String, String[]> getFilters() throws PersistencyErrorException;
 }

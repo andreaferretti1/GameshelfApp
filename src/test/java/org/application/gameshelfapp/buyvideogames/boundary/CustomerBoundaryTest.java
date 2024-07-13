@@ -1,21 +1,33 @@
 package org.application.gameshelfapp.buyvideogames.boundary;
 
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
+import org.application.gameshelfapp.buyvideogames.entities.Filters;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
 import org.application.gameshelfapp.login.bean.UserBean;
+import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerBoundaryTest {
 //test written by Andrea Ferretti
+
+    @BeforeEach
+    void setFilters(){
+        Filters.consoles = new ArrayList<>();
+        Filters.categories = new ArrayList<>();
+        Filters.consoles.add("consoleTest");
+        Filters.categories.add("categoryTest");
+    }
     @Test
     void getAndSetSellingGamesCatalogueBeanTest(){
         try {
@@ -63,7 +75,7 @@ class CustomerBoundaryTest {
             customerBoundary.insertFilters("nameTest1", "consoleTest", "categoryTest");
             List<VideogameBean> gamesBean = customerBoundary.getSellingGamesCatalogueBean().getSellingGamesBean();
             assertEquals(1, (long) gamesBean.size());
-        } catch(PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException | CheckFailedException e){
             fail();
         }
     }
@@ -78,7 +90,7 @@ class CustomerBoundaryTest {
             customerBoundary.insertFilters(null, "consoleTest", "categoryTest");
             List<VideogameBean> gamesBean = customerBoundary.getSellingGamesCatalogueBean().getSellingGamesBean();
             assertEquals(2, (long) gamesBean.size());
-        } catch(PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException | CheckFailedException e){
             fail();
         }
     }
@@ -91,7 +103,7 @@ class CustomerBoundaryTest {
             CustomerBoundary boundary = new CustomerBoundary(userBean);
             VideogameBean videogameBean = new VideogameBean();
             videogameBean.setName("nameTest");
-            videogameBean.setPlatformBean("platformTest");
+            videogameBean.setPlatformBean("consoleTest");
             videogameBean.setCategoryBean("categoryTest");
             boundary.setGameToBuy(videogameBean);
             assertThrows(NoGameInCatalogueException.class, () -> boundary.insertCredentialsAndPay("testName", "test", "test", "via cmabridge", "Roma", "Italia"));

@@ -1,5 +1,6 @@
 package org.application.gameshelfapp.buyvideogames.boundary2;
 
+import org.application.gameshelfapp.buyvideogames.entities.Filters;
 import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
 import org.application.gameshelfapp.confirmsale.entities.Sale;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
@@ -7,18 +8,26 @@ import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressExcept
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
-import org.application.gameshelfapp.login.exception.GmailException;
-import org.application.gameshelfapp.login.exception.PersistencyErrorException;
-import org.application.gameshelfapp.login.exception.SyntaxErrorException;
-import org.application.gameshelfapp.login.exception.WrongUserTypeException;
+import org.application.gameshelfapp.login.exception.*;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TerminalCustomerBoundaryTest {
+
+    @BeforeEach
+    void setFilters(){
+        Filters.consoles = new ArrayList<>();
+        Filters.categories = new ArrayList<>();
+        Filters.consoles.add("consoleTest");
+        Filters.consoles.add("consoleTest1");
+        Filters.categories.add("categoryTest");
+    }
     @Test
     void getUserBeanTest(){
         try {
@@ -42,7 +51,8 @@ class TerminalCustomerBoundaryTest {
             String[] command = {"search", "nameTest", "consoleTest", "categoryTest"};
             assertThrows(NoGameInCatalogueException.class, () -> boundary.executeCommand(command));
         } catch (WrongUserTypeException | PersistencyErrorException | NoGameInCatalogueException | RefundException |
-                 GameSoldOutException | SyntaxErrorException | InvalidAddressException | GmailException e){
+                 GameSoldOutException | SyntaxErrorException | InvalidAddressException | GmailException |
+                 CheckFailedException e){
             fail();
         }
     }
@@ -59,7 +69,8 @@ class TerminalCustomerBoundaryTest {
             String testString =  boundary.executeCommand(command);
             assertEquals(returnString, testString);
         } catch(PersistencyErrorException | NoGameInCatalogueException | RefundException | GameSoldOutException |
-                SyntaxErrorException | InvalidAddressException | WrongUserTypeException | GmailException e){
+                SyntaxErrorException | InvalidAddressException | WrongUserTypeException | GmailException |
+                CheckFailedException e){
             fail();
         }
     }
@@ -78,7 +89,8 @@ class TerminalCustomerBoundaryTest {
             String returnString = boundary.executeCommand(command);
             assertEquals(expectedString, returnString);
         } catch(PersistencyErrorException | NoGameInCatalogueException | RefundException | GameSoldOutException |
-                SyntaxErrorException | InvalidAddressException | WrongUserTypeException | GmailException e){
+                SyntaxErrorException | InvalidAddressException | WrongUserTypeException | GmailException |
+                CheckFailedException e){
             fail();
         }
     }
@@ -100,7 +112,8 @@ class TerminalCustomerBoundaryTest {
             List<Sale> sales = saleDAO.getToConfirmSales();
             assertEquals(1, (long) sales.size());
         } catch (PersistencyErrorException | RefundException | GameSoldOutException | SyntaxErrorException |
-                 InvalidAddressException | NoGameInCatalogueException | WrongUserTypeException | GmailException e) {
+                 InvalidAddressException | NoGameInCatalogueException | WrongUserTypeException | GmailException |
+                 CheckFailedException e) {
             fail();
         }
     }
@@ -118,7 +131,8 @@ class TerminalCustomerBoundaryTest {
             String[] finalCommand = {"pay", "testName", "test", "test", "via cmabridge", "Roma", "Italia"};
             assertThrows(NoGameInCatalogueException.class, () -> boundary.executeCommand(finalCommand));
         } catch(PersistencyErrorException | NoGameInCatalogueException | RefundException | GameSoldOutException |
-                SyntaxErrorException | InvalidAddressException | WrongUserTypeException | GmailException e){
+                SyntaxErrorException | InvalidAddressException | WrongUserTypeException | GmailException |
+                CheckFailedException e){
             fail();
         }
     }
@@ -136,7 +150,8 @@ class TerminalCustomerBoundaryTest {
             String[] finalCommand = {"pay", "Name", "card", "key", "Via Cambridge", "Roma", "Italy"};
             assertThrows(GameSoldOutException.class, () -> boundary.executeCommand(finalCommand));
         } catch(PersistencyErrorException | NoGameInCatalogueException | RefundException | GameSoldOutException |
-                SyntaxErrorException | InvalidAddressException | WrongUserTypeException | GmailException e){
+                SyntaxErrorException | InvalidAddressException | WrongUserTypeException | GmailException |
+                CheckFailedException e){
             fail();
         }
     }
@@ -154,7 +169,8 @@ class TerminalCustomerBoundaryTest {
             String[] finalCommand = {"pay", "Name", "card", "key", "asas", "Roma", "Italy"};
             assertThrows(InvalidAddressException.class, () -> boundary.executeCommand(finalCommand));
         } catch(PersistencyErrorException | NoGameInCatalogueException | RefundException | GameSoldOutException |
-                SyntaxErrorException | InvalidAddressException | WrongUserTypeException | GmailException e){
+                SyntaxErrorException | InvalidAddressException | WrongUserTypeException | GmailException |
+                CheckFailedException e){
             fail();
         }
     }

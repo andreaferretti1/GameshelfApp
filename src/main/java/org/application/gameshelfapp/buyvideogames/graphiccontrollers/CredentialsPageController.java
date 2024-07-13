@@ -12,10 +12,7 @@ import org.application.gameshelfapp.buyvideogames.boundary.CustomerBoundary;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
-import org.application.gameshelfapp.login.exception.GmailException;
-import org.application.gameshelfapp.login.exception.PersistencyErrorException;
-import org.application.gameshelfapp.login.exception.SyntaxErrorException;
-import org.application.gameshelfapp.login.exception.WrongUserTypeException;
+import org.application.gameshelfapp.login.exception.*;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
 import org.application.gameshelfapp.login.graphiccontrollers.HomePageController;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
@@ -70,7 +67,7 @@ public class CredentialsPageController {
         try {
             this.customerBoundary.insertCredentialsAndPay(name.getText(), typeOfCard.getText(), paymentKey.getText(), address.getText(), regionField.getText(), countryField.getText());
             this.paymentSuccess.setVisible(true);
-        } catch (SyntaxErrorException | RefundException | GameSoldOutException | PersistencyErrorException | InvalidAddressException | NoGameInCatalogueException | GmailException e) {
+        } catch (SyntaxErrorException | RefundException | GameSoldOutException | PersistencyErrorException | InvalidAddressException | NoGameInCatalogueException | GmailException | CheckFailedException e) {
             ErrorPageController.displayErrorWindow(e.getMessage());
         }
     }

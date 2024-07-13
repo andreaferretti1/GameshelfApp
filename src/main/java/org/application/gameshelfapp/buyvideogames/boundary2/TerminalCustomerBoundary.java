@@ -7,10 +7,7 @@ import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressExcept
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.boundary2.TerminalBoundary;
-import org.application.gameshelfapp.login.exception.GmailException;
-import org.application.gameshelfapp.login.exception.PersistencyErrorException;
-import org.application.gameshelfapp.login.exception.SyntaxErrorException;
-import org.application.gameshelfapp.login.exception.WrongUserTypeException;
+import org.application.gameshelfapp.login.exception.*;
 import org.application.gameshelfapp.seevideogamecatalogue.utilityboundary2.ConvertToStringUtility;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
@@ -24,7 +21,7 @@ public class TerminalCustomerBoundary implements TerminalBoundary {
         this.customer = new CustomerAdapter(userBean);
     }
     @Override
-    public String executeCommand(String[] command) throws PersistencyErrorException, NoGameInCatalogueException, ArrayIndexOutOfBoundsException, RefundException, GameSoldOutException, SyntaxErrorException, InvalidAddressException, GmailException{
+    public String executeCommand(String[] command) throws PersistencyErrorException, NoGameInCatalogueException, ArrayIndexOutOfBoundsException, RefundException, GameSoldOutException, SyntaxErrorException, InvalidAddressException, GmailException, CheckFailedException{
         switch(command[0]){
             case"see catalogue" -> {
                 return ConvertToStringUtility.mapToString(this.customer.getFilters());

@@ -9,7 +9,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.application.gameshelfapp.buyvideogames.entities.Filters;
 import org.application.gameshelfapp.login.boundary.UserLogInBoundary;
+import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.NullPasswordException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
@@ -79,6 +81,12 @@ public class StartingPageController extends Application {
     }
 
     public static void main(String[] args){
-       launch(args);
+        try {
+            Filters.consoles = PersistencyAbstractFactory.getFactory().createConsoleDAO().getConsoles();
+            Filters.categories = PersistencyAbstractFactory.getFactory().createCategoryDAO().getCategories();
+            launch();
+        } catch (PersistencyErrorException e){
+            System.exit(1);
+        }
     }
 }

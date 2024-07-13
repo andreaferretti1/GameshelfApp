@@ -16,5 +16,6 @@ public interface ItemDAO {
      void addGameForSale(Videogame game) throws PersistencyErrorException;
      void removeGameForSale(Videogame game) throws PersistencyErrorException, GameSoldOutException;
      void updateGameForSale(Videogame game) throws PersistencyErrorException;
+     Videogame getVideogame(Filters filters) throws NoGameInCatalogueException, PersistencyErrorException;
 
 }

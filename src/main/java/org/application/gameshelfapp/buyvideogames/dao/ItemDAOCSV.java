@@ -170,6 +170,13 @@ public class ItemDAOCSV implements ItemDAO {
         }
     }
 
+    @Override
+    public Videogame getVideogame(Filters filters) throws PersistencyErrorException, NoGameInCatalogueException{
+        List<Videogame> gamesFound = this.getVideogamesForSale(filters);
+        if(gamesFound.size() != 1) throw new NoGameInCatalogueException("You inserted the wrong videogame");
+        return gamesFound.getFirst();
+    }
+
     private enum VideogamesOnSaleAttributes{
         GAMENAME, CONSOLE, CATEGORY, COPIES, PRICE, DESCRIPTION
     }

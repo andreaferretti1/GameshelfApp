@@ -1,6 +1,7 @@
 package org.application.gameshelfapp.buyvideogames.boundary2.adapter;
 
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
+import org.application.gameshelfapp.buyvideogames.entities.Filters;
 import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
 import org.application.gameshelfapp.confirmsale.entities.Sale;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
@@ -8,19 +9,25 @@ import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressExcept
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
-import org.application.gameshelfapp.login.exception.GmailException;
-import org.application.gameshelfapp.login.exception.PersistencyErrorException;
-import org.application.gameshelfapp.login.exception.SyntaxErrorException;
-import org.application.gameshelfapp.login.exception.WrongUserTypeException;
+import org.application.gameshelfapp.login.exception.*;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerAdapterTest {
 
+    @BeforeEach
+    void setFilters(){
+        Filters.consoles = new ArrayList<>();
+        Filters.categories = new ArrayList<>();
+        Filters.consoles.add("consoleTest");
+        Filters.categories.add("categoryTest");
+    }
     @Test
     void getUserBeanTest(){
         try {
@@ -54,7 +61,7 @@ class CustomerAdapterTest {
 
             List<VideogameBean> gamesBean =  adapter.searchVideogame("nameTest1", "consoleTest", "categoryTest").getSellingGamesBean();
             assertEquals(1, (long) gamesBean.size());
-        } catch(PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException | CheckFailedException e){
             fail();
         }
     }
@@ -68,7 +75,7 @@ class CustomerAdapterTest {
 
             List<VideogameBean> gamesBean = adapter.searchVideogame("null", "consoleTest", "categoryTest").getSellingGamesBean();
             assertEquals(2, (long) gamesBean.size());
-        } catch(PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException | CheckFailedException e){
             fail();
         }
     }
@@ -87,7 +94,8 @@ class CustomerAdapterTest {
             List<Sale> sales = saleDAO.getToConfirmSales();
             assertEquals(1, (long) sales.size());
         } catch (PersistencyErrorException | RefundException | GameSoldOutException | GmailException |
-                 SyntaxErrorException | InvalidAddressException | NoGameInCatalogueException | WrongUserTypeException e) {
+                 SyntaxErrorException | InvalidAddressException | NoGameInCatalogueException | WrongUserTypeException |
+                 CheckFailedException e) {
             fail();
         }
     }

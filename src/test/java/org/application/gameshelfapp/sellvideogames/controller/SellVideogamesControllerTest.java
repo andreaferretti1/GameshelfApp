@@ -2,6 +2,7 @@ package org.application.gameshelfapp.sellvideogames.controller;
 
 import org.application.gameshelfapp.buyvideogames.bean.FiltersBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
+import org.application.gameshelfapp.buyvideogames.entities.Filters;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
@@ -12,11 +13,22 @@ import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBea
 import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVideogameException;
 import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 class SellVideogamesControllerTest {
-
+    @BeforeEach
+    void setFilters(){
+        Filters.consoles = new ArrayList<>();
+        Filters.categories = new ArrayList<>();
+        Filters.consoles.add("TestConsole2");
+        Filters.consoles.add("TestConsole1");
+        Filters.categories.add("TestCategory2");
+        Filters.categories.add("TestCategory1");
+    }
     @Test
     void showSellingGameCatalogueTest(){            //Videogame(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
         try{
@@ -30,7 +42,7 @@ class SellVideogamesControllerTest {
             SellingGamesCatalogueBean testCatalogueBean = test.showSellingGamesCatalogue(testFiltersBean);
             assertNotNull(testCatalogueBean);
             assertEquals(1, testCatalogueBean.getSellingGamesBean().size());
-        } catch (PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException e){
+        } catch (PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException | CheckFailedException e){
             fail();
         }
     }
@@ -131,7 +143,8 @@ class SellVideogamesControllerTest {
             SellingGamesCatalogueBean testBean = test.cancelGameFromCatalogue(gameBeanTest);
             gameBeanTest = testBean.getSellingGamesBean().getFirst();
             assertEquals(0, gameBeanTest.getCopiesBean());
-        } catch (PersistencyErrorException | NoGameInCatalogueException | GameSoldOutException | WrongUserTypeException e){
+        } catch (PersistencyErrorException | NoGameInCatalogueException | GameSoldOutException |
+                 WrongUserTypeException | CheckFailedException e){
             fail();
         }
     }
@@ -192,7 +205,7 @@ class SellVideogamesControllerTest {
             assertEquals(3, gameBeanTest.getCopiesBean());
             assertEquals(15, gameBeanTest.getPriceBean());
             assertEquals("This is a new description", gameBeanTest.getDescriptionBean());
-        } catch(PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException | CheckFailedException e){
             fail();
         }
     }

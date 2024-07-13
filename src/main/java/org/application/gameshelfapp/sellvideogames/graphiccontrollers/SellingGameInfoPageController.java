@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
+import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
@@ -83,7 +84,7 @@ public class SellingGameInfoPageController implements Initializable {
             VideogameBean videogameBean = this.createVideogameBean();
             this.sellerBoundary.updateSellingGame(videogameBean);
             SellingGameCataloguePageController.start(this.stage, this.sellerBoundary);
-        } catch(PersistencyErrorException | WrongUserTypeException e){
+        } catch(PersistencyErrorException | WrongUserTypeException | CheckFailedException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
         } catch(NoGameInCatalogueException e){
             ErrorPageController.displayErrorWindow("Couldn't find the game in catalogue");
@@ -98,7 +99,7 @@ public class SellingGameInfoPageController implements Initializable {
             VideogameBean videogameBean = this.createVideogameBean();
             this.sellerBoundary.removeSellingGames(videogameBean);
             SellingGameCataloguePageController.start(this.stage, this.sellerBoundary);
-        } catch(PersistencyErrorException | GameSoldOutException | WrongUserTypeException e){
+        } catch(PersistencyErrorException | GameSoldOutException | WrongUserTypeException | CheckFailedException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
         } catch(NoGameInCatalogueException e){
             ErrorPageController.displayErrorWindow("Couldn't find the game");

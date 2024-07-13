@@ -8,10 +8,7 @@ import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException
 import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
 import org.application.gameshelfapp.login.bean.UserBean;
-import org.application.gameshelfapp.login.exception.GmailException;
-import org.application.gameshelfapp.login.exception.PersistencyErrorException;
-import org.application.gameshelfapp.login.exception.SyntaxErrorException;
-import org.application.gameshelfapp.login.exception.WrongUserTypeException;
+import org.application.gameshelfapp.login.exception.*;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
@@ -37,7 +34,7 @@ public class CustomerBoundary {
     public SellingGamesCatalogueBean getSellingGamesCatalogueBean() {
         return this.sellingGamesCatalogueBean;
     }
-    public void insertFilters(String name, String console, String category) throws PersistencyErrorException, NoGameInCatalogueException {
+    public void insertFilters(String name, String console, String category) throws PersistencyErrorException, NoGameInCatalogueException, CheckFailedException {
         FiltersBean filtersBean = new FiltersBean();
         filtersBean.setNameBean(name);
         filtersBean.setConsoleBean(console);
@@ -47,7 +44,7 @@ public class CustomerBoundary {
     public void setGameToBuy(VideogameBean videogameBean){
         this.gameToBuy = videogameBean;
     }
-    public void insertCredentialsAndPay(String name, String typeOfCard, String paymentKey, String street, String region, String country) throws RefundException, GameSoldOutException, SyntaxErrorException, PersistencyErrorException, InvalidAddressException, NoGameInCatalogueException, GmailException {
+    public void insertCredentialsAndPay(String name, String typeOfCard, String paymentKey, String street, String region, String country) throws RefundException, GameSoldOutException, SyntaxErrorException, PersistencyErrorException, InvalidAddressException, NoGameInCatalogueException, GmailException, CheckFailedException {
         CredentialsBean credentialsBean = new CredentialsBean();
         credentialsBean.setNameBean(name);
         credentialsBean.setTypeOfPaymentBean(typeOfCard);

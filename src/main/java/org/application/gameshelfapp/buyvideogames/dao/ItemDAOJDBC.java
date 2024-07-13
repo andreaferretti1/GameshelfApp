@@ -87,4 +87,11 @@ public class ItemDAOJDBC implements ItemDAO {
             throw new PersistencyErrorException("Couldn't update chosen game");
         }
     }
+
+    @Override
+    public Videogame getVideogame(Filters filters) throws PersistencyErrorException, NoGameInCatalogueException{
+        List<Videogame> gamesFound = this.getVideogamesForSale(filters);
+        if(gamesFound.size() != 1) throw new NoGameInCatalogueException("You inserted the wrong videogame");
+        return gamesFound.getFirst();
+    }
 }

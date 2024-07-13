@@ -21,6 +21,7 @@ import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.boundary.GoogleBoundary;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
+import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.WrongUserTypeException;
@@ -35,7 +36,7 @@ public class BuyGamesController {
         if(userBean == null) throw new WrongUserTypeException("Access not allowed");
     }
 
-    public SellingGamesCatalogueBean searchVideogame(FiltersBean filtersBean) throws PersistencyErrorException, NoGameInCatalogueException {
+    public SellingGamesCatalogueBean searchVideogame(FiltersBean filtersBean) throws PersistencyErrorException, NoGameInCatalogueException, CheckFailedException {
         SeeGameCatalogueController seeGameCatalogueController = new SeeGameCatalogueController();
         return seeGameCatalogueController.displaySellingGamesCatalogue(filtersBean);
     }
@@ -50,7 +51,7 @@ public class BuyGamesController {
         return controller.getConsolesValue();
     }
 
-    public void sendMoney(CredentialsBean credentialsBean, VideogameBean videogameBean) throws RefundException, GameSoldOutException, PersistencyErrorException, InvalidAddressException, NoGameInCatalogueException, GmailException {
+    public void sendMoney(CredentialsBean credentialsBean, VideogameBean videogameBean) throws RefundException, GameSoldOutException, PersistencyErrorException, InvalidAddressException, NoGameInCatalogueException, GmailException, CheckFailedException {
         Braintree braintree = new Braintree();
 
 
@@ -58,9 +59,10 @@ public class BuyGamesController {
         ItemDAO itemDAO = factory.createItemDAO();
         SaleDAO saleDAO = factory.createSaleDAO();
 
-        Filters filters = new Filters(videogameBean.getName(), videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
-        List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
-        Videogame game = games.getFirst();
+        Filters filters = new Filters(videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
+        filters.setName(videogameBean.getName());
+
+        Videogame game = itemDAO.getVideogame(filters);
         game.buyVideogame(videogameBean.getCopiesBean(), videogameBean.getPriceBean());
 
         Geocoder geocoder = new Geocoder(credentialsBean.getAddressBean());

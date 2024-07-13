@@ -1,5 +1,6 @@
 package org.application.gameshelfapp.sellvideogames.boundary2.adapter;
 
+import org.application.gameshelfapp.buyvideogames.entities.Filters;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
@@ -9,14 +10,23 @@ import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVideogameException;
 import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class SeeGameCatalogueAdapterTest {
+    @BeforeEach
+    void setFilters(){
+        Filters.consoles = new ArrayList<>();
+        Filters.categories = new ArrayList<>();
+        Filters.consoles.add("TestConsole2");
+        Filters.categories.add("TestCategory2");
+    }
     @Test
     void getSellingCatalogueTest(){             //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
         try{
@@ -24,7 +34,7 @@ class SeeGameCatalogueAdapterTest {
             userBean.setTypeOfUser("Seller");
             SeeGameCatalogueAdapter test = new SeeGameCatalogueAdapter(userBean);
             assertNotNull(test.getSellingGamesCatalogue("Dark Souls", "TestConsole2", "TestCategory2"));
-        } catch (PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException e){
+        } catch (PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException | CheckFailedException e){
             fail();
         }
     }
@@ -85,7 +95,8 @@ class SeeGameCatalogueAdapterTest {
             userBean.setTypeOfUser("Seller");
             SeeGameCatalogueAdapter test = new SeeGameCatalogueAdapter(userBean);
             assertNotNull(test.removeSellingGames("Dark Souls", "TestConsole2", "TestCategory2", "This is another test", 1, 10f));
-        } catch(PersistencyErrorException | NoGameInCatalogueException | GameSoldOutException | WrongUserTypeException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | GameSoldOutException | WrongUserTypeException |
+                CheckFailedException e){
             fail();
         }
     }
@@ -121,7 +132,7 @@ class SeeGameCatalogueAdapterTest {
             userBean.setTypeOfUser("Seller");
             SeeGameCatalogueAdapter test = new SeeGameCatalogueAdapter(userBean);
             assertNotNull(test.updateSellingGames("Dark Souls", "TestConsole2", "TestCategory2", "This is another test", 2, 10f));
-        } catch(PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException | CheckFailedException e){
             fail();
         }
     }

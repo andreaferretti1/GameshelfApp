@@ -32,7 +32,7 @@ public class SeeGameCatalogueAdapter implements SeeGameCatalogue {
         return gameBean;
     }
     @Override
-    public SellingGamesCatalogueBean getSellingGamesCatalogue(String gameTitle, String console, String category) throws PersistencyErrorException, NoGameInCatalogueException {
+    public SellingGamesCatalogueBean getSellingGamesCatalogue(String gameTitle, String console, String category) throws PersistencyErrorException, NoGameInCatalogueException, CheckFailedException {
         FiltersBean filtersBean = new FiltersBean();
         if(gameTitle.equals("null")) gameTitle = null;
         if(console.equals("null")) console = null;
@@ -50,13 +50,13 @@ public class SeeGameCatalogueAdapter implements SeeGameCatalogue {
         return this.boundary.getSellingGamesCatalogueBean();
     }
     @Override
-    public SellingGamesCatalogueBean removeSellingGames(String gameTitle, String console, String category, String description, int copies, float price) throws PersistencyErrorException, NoGameInCatalogueException, GameSoldOutException {
+    public SellingGamesCatalogueBean removeSellingGames(String gameTitle, String console, String category, String description, int copies, float price) throws PersistencyErrorException, NoGameInCatalogueException, GameSoldOutException, CheckFailedException {
         VideogameBean gameBean = this.createVideogameBean(gameTitle, console, category, description, copies, price);
         this.boundary.removeSellingGames(gameBean);
         return this.boundary.getSellingGamesCatalogueBean();
     }
     @Override
-    public SellingGamesCatalogueBean updateSellingGames(String gameTitle, String console, String category, String description, int copies, float price) throws PersistencyErrorException, NoGameInCatalogueException {
+    public SellingGamesCatalogueBean updateSellingGames(String gameTitle, String console, String category, String description, int copies, float price) throws PersistencyErrorException, NoGameInCatalogueException, CheckFailedException {
         VideogameBean gameBean = this.createVideogameBean(gameTitle, console, category, description, copies, price);
         this.boundary.updateSellingGame(gameBean);
         return this.boundary.getSellingGamesCatalogueBean();

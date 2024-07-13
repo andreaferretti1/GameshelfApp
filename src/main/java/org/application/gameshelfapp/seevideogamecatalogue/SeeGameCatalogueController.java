@@ -5,17 +5,16 @@ import org.application.gameshelfapp.buyvideogames.dao.ItemDAO;
 import org.application.gameshelfapp.buyvideogames.entities.Filters;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
+import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
-import org.application.gameshelfapp.sellvideogames.dao.CategoryDAO;
-import org.application.gameshelfapp.sellvideogames.dao.ConsoleDAO;
 import org.application.gameshelfapp.sellvideogames.entities.SellingGamesCatalogue;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
 import java.util.List;
 
 public class SeeGameCatalogueController {
-    public SellingGamesCatalogueBean displaySellingGamesCatalogue(FiltersBean filtersBean) throws PersistencyErrorException, NoGameInCatalogueException {
+    public SellingGamesCatalogueBean displaySellingGamesCatalogue(FiltersBean filtersBean) throws PersistencyErrorException, NoGameInCatalogueException, CheckFailedException {
         ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
         Filters filters = new Filters(filtersBean.getNameBean(), filtersBean.getConsoleBean(), filtersBean.getCategoryBean());
         SellingGamesCatalogueBean sellingGamesCatalogueBean = new SellingGamesCatalogueBean();
@@ -31,11 +30,9 @@ public class SeeGameCatalogueController {
         return sellingGamesCatalogueBean;
     }
     public List<String> getCategoriesValue() throws PersistencyErrorException {
-        CategoryDAO categoryDAO = PersistencyAbstractFactory.getFactory().createCategoryDAO();
-        return categoryDAO.getCategories();
+        return Filters.categories;
     }
     public List<String> getConsolesValue() throws PersistencyErrorException {
-        ConsoleDAO consoleDAO = PersistencyAbstractFactory.getFactory().createConsoleDAO();
-        return consoleDAO.getConsoles();
+        return Filters.consoles;
     }
 }

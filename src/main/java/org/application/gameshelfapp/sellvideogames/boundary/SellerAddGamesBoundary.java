@@ -30,7 +30,7 @@ public class SellerAddGamesBoundary {
         this.userBean = userBean;
     }
 
-    public void getSellingCatalogue (FiltersBean filtersBean) throws PersistencyErrorException, NoGameInCatalogueException {
+    public void getSellingCatalogue (FiltersBean filtersBean) throws PersistencyErrorException, NoGameInCatalogueException, CheckFailedException {
         this.sellingGamesCatalogueBean = this.sellVideogamesController.showSellingGamesCatalogue(filtersBean);
     }
 
@@ -38,11 +38,11 @@ public class SellerAddGamesBoundary {
         this.sellingGamesCatalogueBean = this.sellVideogamesController.addGameToCatalogue(videogameBean);
     }
 
-    public void removeSellingGames(VideogameBean videogameBean) throws PersistencyErrorException, NoGameInCatalogueException, GameSoldOutException {
+    public void removeSellingGames(VideogameBean videogameBean) throws PersistencyErrorException, NoGameInCatalogueException, GameSoldOutException, CheckFailedException {
         this.sellingGamesCatalogueBean = this.sellVideogamesController.cancelGameFromCatalogue(videogameBean);
     }
 
-    public void updateSellingGame(VideogameBean videogameBean) throws PersistencyErrorException, NoGameInCatalogueException{
+    public void updateSellingGame(VideogameBean videogameBean) throws PersistencyErrorException, NoGameInCatalogueException, CheckFailedException {
         this.sellingGamesCatalogueBean = this.sellVideogamesController.modifyGameInCatalogue(videogameBean);
     }
 

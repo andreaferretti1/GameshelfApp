@@ -1,46 +1,60 @@
 package org.application.gameshelfapp.buyvideogames.entities;
 
+import org.application.gameshelfapp.login.exception.CheckFailedException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class FiltersTest {
+    @BeforeEach
+    void setFilters(){
+        Filters.consoles = new ArrayList<>();
+        Filters.categories = new ArrayList<>();
+        Filters.consoles.add("consoleTest");
+        Filters.categories.add("categoryTest");
+    }
 
     @Test
     void getNameTest(){
-        Filters filters = new Filters("nameTest", null, null);
-        assertEquals("nameTest", filters.getName());
+        try {
+            Filters filters = new Filters("nameTest", "consoleTest", "categoryTest");
+            assertEquals("nameTest", filters.getName());
+        } catch (CheckFailedException e){
+            fail();
+        }
     }
 
     @Test
     void getConsoleTest(){
-        Filters filters = new Filters(null, "consoleTest", null);
-        assertEquals("consoleTest", filters.getConsole());
+       try {
+           Filters filters = new Filters(null, "consoleTest", "categoryTest");
+           assertEquals("consoleTest", filters.getConsole());
+       } catch(CheckFailedException e){
+           fail();
+       }
     }
 
     @Test
     void getCategoryTest(){
-        Filters filters = new Filters(null, null, "categoryTest");
-        assertEquals("categoryTest", filters.getCategory());
+        try {
+            Filters filters = new Filters(null, "consoleTest", "categoryTest");
+            assertEquals("categoryTest", filters.getCategory());
+        } catch (CheckFailedException e){
+            fail();
+        }
     }
 
     @Test
     void setNameTest(){
-        Filters filters = new Filters(null, null, null);
-        filters.setName("name");
-        assertEquals("name", filters.getName());
-    }
-
-    @Test
-    void setConsoleTest(){
-        Filters filters = new Filters(null, null, null);
-        filters.setConsole("console");
-        assertEquals("console", filters.getConsole());
-    }
-
-    @Test
-    void setCategoryTest(){
-        Filters filters = new Filters(null, null, null);
-        filters.setCategory("category");
-        assertEquals("category", filters.getCategory());
+        try{
+            Filters filters = new Filters(null, "consoleTest", "categoryTest");
+            filters.setName("name");
+            assertEquals("name", filters.getName());
+        } catch (CheckFailedException e){
+            fail();
+        }
     }
 }

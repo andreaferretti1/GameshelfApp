@@ -21,6 +21,6 @@ public class ConvertToStringUtility {
         for (Map.Entry<String, String[]> entry : map.entrySet()) {
             filters.append(entry.getKey()).append(": ").append(String.join(", ", entry.getValue())).append("\n");
         }
-        return filters + "\nType <search, gameTitle/null, console/null, category/null>\n\n";
+        return filters + "\nType <search, gameTitle/null, console, category>\n\n";
     }
 }

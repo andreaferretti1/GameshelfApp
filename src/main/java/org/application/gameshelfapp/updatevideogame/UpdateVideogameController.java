@@ -5,18 +5,17 @@ import org.application.gameshelfapp.buyvideogames.dao.ItemDAO;
 import org.application.gameshelfapp.buyvideogames.entities.Filters;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
+import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
-import java.util.List;
-
 public class UpdateVideogameController {
-    public void updateGameInCatalogue(VideogameBean videogameBean) throws PersistencyErrorException, NoGameInCatalogueException {
+    public void updateGameInCatalogue(VideogameBean videogameBean) throws PersistencyErrorException, NoGameInCatalogueException, CheckFailedException {
         ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
-        Filters filters = new Filters(videogameBean.getName(), videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
+        Filters filters = new Filters(videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
+        filters.setName(videogameBean.getName());
 
-        List<Videogame> updating = itemDAO.getVideogamesFiltered(filters);
-        Videogame game = updating.getFirst();
+        Videogame game = itemDAO.getVideogame(filters);
         game.updateVideogame(videogameBean.getCopiesBean(), videogameBean.getPriceBean(), videogameBean.getDescriptionBean());
         itemDAO.updateGameForSale(game);
     }

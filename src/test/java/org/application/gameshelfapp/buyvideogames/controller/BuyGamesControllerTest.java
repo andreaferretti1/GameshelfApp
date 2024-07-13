@@ -3,6 +3,7 @@ package org.application.gameshelfapp.buyvideogames.controller;
 import org.application.gameshelfapp.buyvideogames.bean.CredentialsBean;
 import org.application.gameshelfapp.buyvideogames.bean.FiltersBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
+import org.application.gameshelfapp.buyvideogames.entities.Filters;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
@@ -15,14 +16,26 @@ import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.exception.*;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BuyGamesControllerTest{
 //test written by Andrea Ferretti
+
+    @BeforeEach
+    void setFilters(){
+        Filters.consoles = new ArrayList<>();
+        Filters.categories = new ArrayList<>();
+        Filters.consoles.add("consoleTest");
+        Filters.consoles.add("consoleTest1");
+        Filters.categories.add("categoryTest");
+        Filters.categories.add("TestCategory1");
+    }
     @Test
     void searchVideogameTest(){     //In the Videogame table there was tuple ('nameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '20')
         try{
@@ -33,7 +46,7 @@ class BuyGamesControllerTest{
             filtersBean.setConsoleBean("consoleTest");
             SellingGamesCatalogueBean sellingGamesCatalogueBean = controller.searchVideogame(filtersBean);
             assertEquals(1, (long) sellingGamesCatalogueBean.getSellingGamesBean().size());
-        } catch (PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException e){
+        } catch (PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException | CheckFailedException e){
             fail();
         }
     }
@@ -48,7 +61,7 @@ class BuyGamesControllerTest{
             filtersBean.setCategoryBean("categoryTest1");
             SellingGamesCatalogueBean sellingGamesCatalogueBean = controller.searchVideogame(filtersBean);
             assertEquals(1, (long) sellingGamesCatalogueBean.getSellingGamesBean().size());
-        } catch(PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException | CheckFailedException e){
             fail();
         }
     }
@@ -91,7 +104,9 @@ class BuyGamesControllerTest{
 
             SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
             assertEquals(1, (long) saleDAO.getToConfirmSales().size());
-        } catch (PersistencyErrorException | SyntaxErrorException | RefundException | GameSoldOutException | InvalidAddressException | NoGameInCatalogueException | WrongUserTypeException | GmailException e){
+        } catch (PersistencyErrorException | SyntaxErrorException | RefundException | GameSoldOutException |
+                 InvalidAddressException | NoGameInCatalogueException | WrongUserTypeException | GmailException |
+                 CheckFailedException e){
             fail();
         }
     }

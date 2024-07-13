@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.application.gameshelfapp.buyvideogames.bean.FiltersBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
+import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.login.graphiccontrollers.ErrorPageController;
@@ -66,7 +67,7 @@ public class SellingGameCataloguePageController implements Initializable{
             filtersBean.setConsoleBean(this.platformChoiceBox.getValue());
             SellingGameCataloguePageController.sellerBoundary.getSellingCatalogue(filtersBean);
             this.fillCatalogue();
-        } catch (PersistencyErrorException e){
+        } catch (PersistencyErrorException | CheckFailedException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
         } catch (NoGameInCatalogueException e){
             AddGameInfoPageController.start(this.stage, SellingGameCataloguePageController.sellerBoundary);

@@ -1,5 +1,6 @@
 package org.application.gameshelfapp.sellvideogames.boundary2;
 
+import org.application.gameshelfapp.buyvideogames.entities.Filters;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
@@ -9,13 +10,22 @@ import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVideogameException;
 import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TerminalSellerAddGamesBoundaryTest {
-
+    @BeforeEach
+    void setFilters(){
+        Filters.consoles = new ArrayList<>();
+        Filters.categories = new ArrayList<>();
+        Filters.consoles.add("TestConsole2");
+        Filters.categories.add("TestCategory2");
+    }
     @Test
     void executeCommandGetFiltersTest(){
         try {
@@ -23,7 +33,7 @@ class TerminalSellerAddGamesBoundaryTest {
             userBean.setTypeOfUser("Seller");
             TerminalSellerAddGamesBoundary test = new TerminalSellerAddGamesBoundary(userBean);
             String[] command = {"filters"};
-            String testReturn = String.format("Category: %s, %s, %s, %s, %s%nConsole: %s, %s, %s, %s, %s%n", "Action", "Adventure", "Arcade", "Simulation", "Sport", "Playstation 4", "Playstation 5", "Xbox Series X", "Xbox Series S", "Pc") + "\nType <search, gameTitle, console, category>\n\n";
+            String testReturn = String.format("Category: %s%nConsole: %s%n", "TestCategory2", "TestConsole2") + "\nType <search, gameTitle, console, category>\n\n";
             String testString = test.executeCommand(command);
             assertEquals(testReturn, testString);
         } catch (PersistencyErrorException | NoGameInCatalogueException | CheckFailedException | GmailException |

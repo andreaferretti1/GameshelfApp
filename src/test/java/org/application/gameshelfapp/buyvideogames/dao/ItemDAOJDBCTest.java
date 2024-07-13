@@ -5,16 +5,34 @@ import org.application.gameshelfapp.buyvideogames.entities.Filters;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.login.dao.JDBCFactory;
+import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVideogameException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ItemDAOJDBCTest {
+
+    @BeforeEach
+    void setFilters(){
+        Filters.consoles = new ArrayList<>();
+        Filters.categories = new ArrayList<>();
+        Filters.consoles.add("consoleTest");
+        Filters.consoles.add("consoleTest1");
+        Filters.consoles.add("consoleTest2");
+        Filters.consoles.add("platformTest");
+        Filters.consoles.add("TestConsole");
+        Filters.consoles.add("Test Console");
+        Filters.categories.add("categoryTest");
+        Filters.categories.add("TestCategory");
+        Filters.categories.add("Test Category");
+    }
 
     @Test
     void getVideogamesForSaleGameNameTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
@@ -25,7 +43,7 @@ class ItemDAOJDBCTest {
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             Videogame gameForSale = games.getFirst();
             assertEquals("gameTest", gameForSale.getName());
-        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | CheckFailedException e){
             fail();
         }
     }
@@ -39,7 +57,7 @@ class ItemDAOJDBCTest {
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             Videogame gameForSale = games.getFirst();
             assertEquals(2, gameForSale.getCopies());
-        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | CheckFailedException e){
             fail();
         }
     }
@@ -53,7 +71,7 @@ class ItemDAOJDBCTest {
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             Videogame gameForSale = games.getFirst();
             assertEquals(10, gameForSale.getPrice());
-        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | CheckFailedException e){
             fail();
         }
     }
@@ -67,7 +85,7 @@ class ItemDAOJDBCTest {
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             Videogame gameForSale = games.getFirst();
             assertEquals("descriptionTest", gameForSale.getDescription());
-        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | CheckFailedException e){
             fail();
         }
     }
@@ -82,7 +100,7 @@ class ItemDAOJDBCTest {
             Videogame gameForSale = games.getFirst();
             assertEquals("consoleTest", gameForSale.getPlatform());
             assertEquals("categoryTest", gameForSale.getCategory());
-        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | CheckFailedException e){
             fail();
         }
     }
@@ -96,7 +114,7 @@ class ItemDAOJDBCTest {
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             Videogame gameForSale = games.getFirst();
             assertEquals("categoryTest", gameForSale.getCategory());
-        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | CheckFailedException e){
             fail();
         }
     }
@@ -109,7 +127,7 @@ class ItemDAOJDBCTest {
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             assertEquals(2, (long) games.size());
-        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | CheckFailedException e){
             fail();
         }
     }
@@ -122,7 +140,7 @@ class ItemDAOJDBCTest {
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             assertEquals(1, (long) games.size());
-        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | CheckFailedException e){
             fail();
         }
     }
@@ -137,7 +155,7 @@ class ItemDAOJDBCTest {
             Filters filters = new Filters("nameTest", "platformTest", "categoryTest");
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             assertEquals(1, (long) games.size());
-        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | CheckFailedException e){
             fail();
         }
     }
@@ -157,7 +175,7 @@ class ItemDAOJDBCTest {
             filters.setCategory("categoryTest");
             games = itemDAO.getVideogamesFiltered(filters);
             assertEquals(1, (long) games.size());
-        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | CheckFailedException e){
             fail();
         }
     }
@@ -174,7 +192,7 @@ class ItemDAOJDBCTest {
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             Videogame gameForSale = games.getFirst();
             assertEquals(1, gameForSale.getCopies());
-        } catch(PersistencyErrorException | GameSoldOutException | NoGameInCatalogueException e){
+        } catch(PersistencyErrorException | GameSoldOutException | NoGameInCatalogueException | CheckFailedException e){
             fail();
         }
     }
@@ -191,7 +209,7 @@ class ItemDAOJDBCTest {
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             Videogame gameForSale = games.getFirst();
             assertEquals(10, gameForSale.getPrice());
-        } catch (PersistencyErrorException | GameSoldOutException | NoGameInCatalogueException e) {
+        } catch (PersistencyErrorException | GameSoldOutException | NoGameInCatalogueException | CheckFailedException e) {
             fail();
         }
     }
@@ -208,7 +226,7 @@ class ItemDAOJDBCTest {
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             Videogame gameForSale = games.getFirst();
             assertEquals("descriptionTest", gameForSale.getDescription());
-        } catch (PersistencyErrorException | GameSoldOutException | NoGameInCatalogueException e) {
+        } catch (PersistencyErrorException | GameSoldOutException | NoGameInCatalogueException | CheckFailedException e) {
             fail();
         }
     }
@@ -232,7 +250,7 @@ class ItemDAOJDBCTest {
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             Videogame gameForSale = games.getFirst();
             assertEquals(0, gameForSale.getCopies());
-        } catch(PersistencyErrorException | GameSoldOutException | NoGameInCatalogueException e){
+        } catch(PersistencyErrorException | GameSoldOutException | NoGameInCatalogueException | CheckFailedException e){
             fail();
         }
     }
@@ -244,17 +262,21 @@ class ItemDAOJDBCTest {
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
             itemDAO.checkVideogameExistence(testFilters);
-        } catch (AlreadyExistingVideogameException | PersistencyErrorException e){
+        } catch (AlreadyExistingVideogameException | PersistencyErrorException | CheckFailedException e){
             fail();
         }
     }
 
     @Test
     void checkVideogameExistenceExceptionLaunchedTest(){                //In the database there exist tuple('Test1', 1, 1, 'TestConsole', 'TestCategory', 'Description Test')
-        Filters testFilters = new Filters("Test1", "TestConsole", "TestCategory");
-        JDBCFactory jdbcFactory = new JDBCFactory();
-        ItemDAO itemDAO = jdbcFactory.createItemDAO();
-        assertThrows(AlreadyExistingVideogameException.class, ()-> itemDAO.checkVideogameExistence(testFilters));
+        try {
+            Filters testFilters = new Filters("Test1", "TestConsole", "TestCategory");
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            ItemDAO itemDAO = jdbcFactory.createItemDAO();
+            assertThrows(AlreadyExistingVideogameException.class, () -> itemDAO.checkVideogameExistence(testFilters));
+        } catch (CheckFailedException e){
+            fail();
+        }
     }
 
     @Test
@@ -270,7 +292,19 @@ class ItemDAOJDBCTest {
             assertEquals(3, testUpdate.getCopies());
             assertEquals(5, testUpdate.getPrice());
             assertEquals("Description Test", testUpdate.getDescription());
-        } catch(PersistencyErrorException | NoGameInCatalogueException e){
+        } catch(PersistencyErrorException | NoGameInCatalogueException | CheckFailedException e){
+            fail();
+        }
+    }
+
+    @Test
+    void getVideogameTest(){        //In the database there was tuple('nameTest', 'consoleTest', 'categoryTest', '1', '10', 'description')
+        try{
+            JDBCFactory jdbcFactory = new JDBCFactory();
+            ItemDAO itemDAO = jdbcFactory.createItemDAO();
+            Filters filters = new Filters("nameTest", "consoleTest", "categoryTest");
+            assertNotNull(itemDAO.getVideogame(filters));
+        } catch(PersistencyErrorException | NoGameInCatalogueException | CheckFailedException e){
             fail();
         }
     }

@@ -12,12 +12,14 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import org.application.gameshelfapp.buyvideogames.boundary2.TerminalCustomerBoundary;
+import org.application.gameshelfapp.buyvideogames.entities.Filters;
 import org.application.gameshelfapp.confirmsale.boundary2.TerminalSellerBoundary;
 import org.application.gameshelfapp.buyvideogames.exception.*;
 import org.application.gameshelfapp.confirmsale.exceptions.ConfirmDeliveryException;
 import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
 import org.application.gameshelfapp.login.boundary2.TerminalBoundary;
 import org.application.gameshelfapp.login.boundary2.TerminalUserLogInBoundary;
+import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.exception.*;
 import org.application.gameshelfapp.registration.boundary2.TerminalRegistrationBoundary;
 import org.application.gameshelfapp.sellvideogames.boundary2.TerminalSellerAddGamesBoundary;
@@ -98,7 +100,13 @@ public class TerminalController extends Application implements Initializable{
     }
 
     public static void main(String[] args){
-        launch();
+        try {
+            Filters.consoles = PersistencyAbstractFactory.getFactory().createConsoleDAO().getConsoles();
+            Filters.categories = PersistencyAbstractFactory.getFactory().createCategoryDAO().getCategories();
+            launch();
+        } catch (PersistencyErrorException e){
+            System.exit(1);
+        }
     }
 }
 
