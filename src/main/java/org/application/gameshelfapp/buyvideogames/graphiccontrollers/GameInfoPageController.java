@@ -97,7 +97,7 @@ public class GameInfoPageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.console.setText(GameInfoPageController.gameBean.getPlatformBean());
         this.category.setText(GameInfoPageController.gameBean.getCategoryBean());
-        this.price.setText(String.valueOf(GameInfoPageController.gameBean.getPriceBean()) + " €");
+        this.price.setText(String.valueOf(GameInfoPageController.gameBean.getPriceBean()));
         this.availableCopies.setText(String.valueOf(GameInfoPageController.gameBean.getCopiesBean()));
         this.gameName.setText(GameInfoPageController.gameBean.getName());
         this.description.setText(GameInfoPageController.gameBean.getDescriptionBean());
