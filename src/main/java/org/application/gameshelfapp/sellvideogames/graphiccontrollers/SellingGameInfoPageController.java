@@ -2,6 +2,7 @@ package org.application.gameshelfapp.sellvideogames.graphiccontrollers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -19,8 +20,10 @@ import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueEx
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class SellingGameInfoPageController {
+public class SellingGameInfoPageController implements Initializable {
 
     @FXML
     private Label titleLabel;
@@ -37,11 +40,26 @@ public class SellingGameInfoPageController {
     @FXML
     private TextField copiesNumberField;
     private SellerAddGamesBoundary sellerBoundary;
+
+    private static VideogameBean gameBean;
     private Stage stage;
     public void setStage(Stage stage) {
         this.stage = stage;
     }
     public void setSellerAddGamesBoundary(SellerAddGamesBoundary sellerBoundary){this.sellerBoundary = sellerBoundary;}
+
+    public static void setGameBean(VideogameBean bean){ SellingGameInfoPageController.gameBean = bean; }
+
+    private VideogameBean createVideogameBean(){
+        VideogameBean videogameBean = new VideogameBean();
+        videogameBean.setName(this.titleLabel.getText());
+        videogameBean.setCategoryBean(this.categoryLabel.getText());
+        videogameBean.setPlatformBean(this.platformLabel.getText());
+        videogameBean.setCopiesBean(Integer.parseInt(this.copiesTextField.getText()));
+        videogameBean.setPriceBean(Float.parseFloat(this.priceTextField.getText()));
+        videogameBean.setDescriptionBean(this.descriptionArea.getText());
+        return videogameBean;
+    }
     @FXML
     private void goToHomePage(MouseEvent event){
         try{
@@ -62,14 +80,8 @@ public class SellingGameInfoPageController {
     @FXML
     private void modifyVideogameInfo(MouseEvent event){
         try{
-            VideogameBean gameBean = new VideogameBean();
-            gameBean.setName(this.titleLabel.getText());
-            gameBean.setCategoryBean(this.categoryLabel.getText());
-            gameBean.setPlatformBean(this.platformLabel.getText());
-            gameBean.setCopiesBean(Integer.parseInt(this.copiesTextField.getText()));
-            gameBean.setPriceBean(Float.parseFloat(this.priceTextField.getText()));
-            gameBean.setDescriptionBean(this.descriptionArea.getText());
-            this.sellerBoundary.updateSellingGame(gameBean);
+            VideogameBean videogameBean = this.createVideogameBean();
+            this.sellerBoundary.updateSellingGame(videogameBean);
             SellingGameCataloguePageController.start(this.stage, this.sellerBoundary);
         } catch(PersistencyErrorException | WrongUserTypeException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
@@ -83,14 +95,8 @@ public class SellingGameInfoPageController {
     @FXML
     private void removeCopies(MouseEvent event){
         try{
-            VideogameBean gameBean = new VideogameBean();
-            gameBean.setName(this.titleLabel.getText());
-            gameBean.setCopiesBean(Integer.parseInt(this.copiesNumberField.getText()));
-            gameBean.setPlatformBean(this.platformLabel.getText());
-            gameBean.setCategoryBean(this.categoryLabel.getText());
-            gameBean.setDescriptionBean(this.descriptionArea.getText());
-            gameBean.setPriceBean(Float.parseFloat(this.priceTextField.getText()));
-            this.sellerBoundary.removeSellingGames(gameBean);
+            VideogameBean videogameBean = this.createVideogameBean();
+            this.sellerBoundary.removeSellingGames(videogameBean);
             SellingGameCataloguePageController.start(this.stage, this.sellerBoundary);
         } catch(PersistencyErrorException | GameSoldOutException | WrongUserTypeException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
@@ -101,7 +107,8 @@ public class SellingGameInfoPageController {
         }
     }
 
-    public static void start(Stage myStage, SellerAddGamesBoundary sellerBoundary) throws IOException{
+    public static void start(Stage myStage, SellerAddGamesBoundary sellerBoundary, VideogameBean videogameBean) throws IOException{
+        SellingGameInfoPageController.setGameBean(videogameBean);
         FXMLLoader fxmlLoader = new FXMLLoader(SellingGameCataloguePageController.class.getResource("/org/application/gameshelfapp/GUI/Selling-Game-Info-Page.fxml"));
         Parent root = fxmlLoader.load();
 
@@ -113,4 +120,13 @@ public class SellingGameInfoPageController {
         myStage.show();
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.titleLabel.setText(SellingGameInfoPageController.gameBean.getName());
+        this.categoryLabel.setText(SellingGameInfoPageController.gameBean.getCategoryBean());
+        this.platformLabel.setText(SellingGameInfoPageController.gameBean.getPlatformBean());
+        this.descriptionArea.setText(SellingGameInfoPageController.gameBean.getDescriptionBean());
+        this.copiesTextField.setText(String.valueOf(SellingGameInfoPageController.gameBean.getCopiesBean()));
+        this.priceTextField.setText(String.valueOf(SellingGameInfoPageController.gameBean.getPriceBean()));
+    }
 }

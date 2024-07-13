@@ -52,17 +52,15 @@ public class SellVideogamesController {
 
     public SellingGamesCatalogueBean addGameToCatalogue (VideogameBean videogameBean) throws PersistencyErrorException, InvalidTitleException, CheckFailedException, NoGameInCatalogueException, GmailException, AlreadyExistingVideogameException {
         ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
-        Videogame videogame = new Videogame(videogameBean.getName(), videogameBean.getCopiesBean(),videogameBean.getPriceBean(), videogameBean.getDescriptionBean(), videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
-
-        MobyGames mobyGames = new MobyGames();
-        mobyGames.verifyVideogame(videogame.getName());
-
+        Videogame videogame = new Videogame(videogameBean.getName(), videogameBean.getCopiesBean(), videogameBean.getPriceBean(), videogameBean.getDescriptionBean(), videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
         CategoryDAO categoryDAO = PersistencyAbstractFactory.getFactory().createCategoryDAO();
         ConsoleDAO consoleDAO = PersistencyAbstractFactory.getFactory().createConsoleDAO();
         List<String> actualCat = categoryDAO.getCategories();
         List<String> actualCon = consoleDAO.getConsoles();
+        videogame.checkAddedVideogameData(actualCat, actualCon);
 
-        if (!actualCat.contains(videogame.getCategory()) || !actualCon.contains(videogame.getPlatform())) throw new CheckFailedException("Invalid Category or Console");
+        MobyGames mobyGames = new MobyGames();
+        mobyGames.verifyVideogame(videogameBean.getName());
 
         itemDAO.checkVideogameExistence(new Filters(videogameBean.getName(), videogameBean.getPlatformBean(), videogameBean.getCategoryBean()));
         itemDAO.addGameForSale(videogame);

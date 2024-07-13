@@ -17,9 +17,7 @@ public class UpdateVideogameController {
 
         List<Videogame> updating = itemDAO.getVideogamesFiltered(filters);
         Videogame game = updating.getFirst();
-        game.setCopies(videogameBean.getCopiesBean());
-        game.setPrice(videogameBean.getPriceBean());
-        game.setDescription(videogameBean.getDescriptionBean());
+        game.updateVideogame(videogameBean.getCopiesBean(), videogameBean.getPriceBean(), videogameBean.getDescriptionBean());
         itemDAO.updateGameForSale(game);
     }
 }
