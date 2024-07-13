@@ -1,7 +1,5 @@
 package org.application.gameshelfapp.sellvideogames.graphiccontrollers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
@@ -10,8 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import org.application.gameshelfapp.buyvideogames.bean.FiltersBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
@@ -36,7 +34,7 @@ public class SellingGameCataloguePageController implements Initializable{
     @FXML
     private ChoiceBox<String> platformChoiceBox;
     @FXML
-    private ListView<HBox> gameInCatalogue;
+    private VBox gameInCatalogue;
     private static SellerAddGamesBoundary sellerBoundary;
     private Stage stage;
     public void setStage(Stage stage) {
@@ -60,8 +58,10 @@ public class SellingGameCataloguePageController implements Initializable{
     @FXML
     private void searchGameByFilters(MouseEvent event){
         try {
+            String title = this.titleField.getText();
             FiltersBean filtersBean = new FiltersBean();
-            filtersBean.setNameBean(this.titleField.getText());
+            if (title.isEmpty()){ title = null; }
+            filtersBean.setNameBean(title);
             filtersBean.setCategoryBean(this.categoryChoiceBox.getValue());
             filtersBean.setConsoleBean(this.platformChoiceBox.getValue());
             SellingGameCataloguePageController.sellerBoundary.getSellingCatalogue(filtersBean);
@@ -88,12 +88,10 @@ public class SellingGameCataloguePageController implements Initializable{
     private void fillCatalogue(){
         if (SellingGameCataloguePageController.sellerBoundary.getSellingGamesCatalogueBean() == null) return;
         try {
-            ObservableList<HBox> objects = FXCollections.observableArrayList();
             List<VideogameBean> catalogue = SellingGameCataloguePageController.sellerBoundary.getSellingGamesCatalogueBean().getSellingGamesBean();
             for (VideogameBean gameBean : catalogue) {
-                objects.add(createHBox(gameBean));
+                this.gameInCatalogue.getChildren().add(this.createHBox(gameBean));
             }
-            this.gameInCatalogue.setItems(objects);
         } catch (IOException e){
             ErrorPageController.displayErrorWindow("Couldn't show catalogue");
         }
@@ -101,12 +99,7 @@ public class SellingGameCataloguePageController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-        this.gameInCatalogue.setCellFactory(new Callback<ListView<HBox>, ListCell<HBox>>() {
-            @Override
-            public ListCell<HBox> call(ListView<HBox> hBoxListView) {
-                return new InfoCell();
-            }
-        });
+
         try {
             this.categoryChoiceBox.getItems().setAll(SellingGameCataloguePageController.sellerBoundary.getCategories());
             this.platformChoiceBox.getItems().setAll(SellingGameCataloguePageController.sellerBoundary.getConsoles());
@@ -119,30 +112,21 @@ public class SellingGameCataloguePageController implements Initializable{
     private HBox createHBox(VideogameBean videogameBean) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/GUI/hbox-sellingGamePage.fxml"));
         HBox hBox = fxmlLoader.load();
-        ((Label) fxmlLoader.getNamespace().get("titleLabel")).setText(videogameBean.getName());
-        ((Label) fxmlLoader.getNamespace().get("platformLabel")).setText(videogameBean.getPlatformBean());
-        ((Label) fxmlLoader.getNamespace().get("copiesLabel")).setText(String.valueOf(videogameBean.getCopiesBean()));
-        ((Button) fxmlLoader.getNamespace().get("showInfoButton")).setOnMouseClicked(event -> {
+        ((Label) hBox.lookup("#titleLabel")).setText(videogameBean.getName());
+        ((Label) hBox.lookup("#platformLabel")).setText(videogameBean.getPlatformBean());
+        ((Label) hBox.lookup("#copiesLabel")).setText(String.valueOf(videogameBean.getCopiesBean()));
+        (hBox.lookup("#showInfoButton")).setOnMouseClicked(event -> {
             try {
-                SellingGameInfoPageController.start(this.stage, SellingGameCataloguePageController.sellerBoundary);
+                for(VideogameBean gameBean: SellingGameCataloguePageController.sellerBoundary.getSellingGamesCatalogueBean().getSellingGamesBean()) {
+                    if (gameBean.getName().equals(((Label) hBox.lookup("#titleLabel")).getText()) && gameBean.getPlatformBean().equals(((Label) hBox.lookup("#platformLabel")).getText())) {
+                        SellingGameInfoPageController.start(this.stage, SellingGameCataloguePageController.sellerBoundary, gameBean);
+                    }
+                }
             } catch (IOException e) {
                 ErrorPageController.displayErrorWindow("Couldn't show the videogame");
             }
         });
         return hBox;
-    }
-}
-class InfoCell extends ListCell<HBox>{
-    @Override
-    protected void updateItem(HBox hBox, boolean b) {
-        super.updateItem(hBox, b);
-
-        if(hBox == null || b){
-            setGraphic(null);
-        }
-        if(hBox != null){
-            setGraphic(hBox);
-        }
     }
 }
 

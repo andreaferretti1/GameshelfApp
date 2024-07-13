@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
@@ -145,7 +144,7 @@
                   <Insets top="-4.0" />
                </VBox.margin>
                <content>
-                  <ListView fx:id="gameInCatalogue" prefHeight="550.0" prefWidth="1340.0" style="-fx-background-color: #433f3f;" />
+                  <VBox fx:id="gameInCatalogue" prefHeight="550.0" prefWidth="1340.0" style="-fx-background-color: #433f3f;" />
                </content>
             </ScrollPane>
          </children>

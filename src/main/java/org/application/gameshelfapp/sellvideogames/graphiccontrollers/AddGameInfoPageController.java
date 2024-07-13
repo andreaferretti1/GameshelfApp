@@ -37,19 +37,17 @@ public class AddGameInfoPageController implements Initializable {
     private TextField priceField;
     @FXML
     private TextArea descriptionArea;
-    private final String[] category = {"Action", "Adventure", "Arcade", "Simulation", "Sport"};
-    private final String[] platform = {"Playstation 4", "Playstation 5", "Xbox Series X", "Xbox Series S", "Pc"};
-    private SellerAddGamesBoundary sellerBoundary;
+    private static SellerAddGamesBoundary sellerBoundary;
     private Stage stage;
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-    public void setSellerAddGamesBoundary(SellerAddGamesBoundary sellerBoundary){ this.sellerBoundary = sellerBoundary;}
+    public static void setSellerAddGamesBoundary(SellerAddGamesBoundary sellerBoundary){ AddGameInfoPageController.sellerBoundary = sellerBoundary;}
 
     @FXML
     private void goToHomePage(MouseEvent event){
         try{
-            HomePageController.start(this.stage, this.sellerBoundary.getUserBean());
+            HomePageController.start(this.stage, AddGameInfoPageController.sellerBoundary.getUserBean());
         } catch(IOException e){
             System.exit(1);
         }
@@ -65,8 +63,8 @@ public class AddGameInfoPageController implements Initializable {
             gameBean.setCopiesBean(Integer.parseInt(this.copiesField.getText()));
             gameBean.setDescriptionBean(this.descriptionArea.getText());
             gameBean.setPriceBean(Float.parseFloat(this.priceField.getText()));
-            this.sellerBoundary.addSellingGames(gameBean);
-            SellingGameCataloguePageController.start(this.stage, this.sellerBoundary);
+            AddGameInfoPageController.sellerBoundary.addSellingGames(gameBean);
+            SellingGameCataloguePageController.start(this.stage, AddGameInfoPageController.sellerBoundary);
         } catch (PersistencyErrorException | CheckFailedException | InvalidTitleException | NoGameInCatalogueException |
                  GmailException | AlreadyExistingVideogameException | WrongUserTypeException e){
             ErrorPageController.displayErrorWindow(e.getMessage());
@@ -86,12 +84,12 @@ public class AddGameInfoPageController implements Initializable {
 
     public static void start(Stage myStage, SellerAddGamesBoundary sellerBoundary) {
         try{
+            AddGameInfoPageController.setSellerAddGamesBoundary(sellerBoundary);
             FXMLLoader fxmlLoader = new FXMLLoader(SellingGameCataloguePageController.class.getResource("/org/application/gameshelfapp/GUI/Add-GameInfo-Page.fxml"));
             Parent root = fxmlLoader.load();
 
             AddGameInfoPageController controller = fxmlLoader.getController();
             controller.setStage(myStage);
-            controller.setSellerAddGamesBoundary(sellerBoundary);
             Scene scene = new Scene(root,1440,768);
             myStage.setScene(scene);
             myStage.show();
@@ -102,7 +100,11 @@ public class AddGameInfoPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-        this.categoryChoiceBox.getItems().setAll(this.category);
-        this.platformChoiceBox.getItems().setAll(this.platform);
+        try {
+            this.categoryChoiceBox.getItems().setAll(AddGameInfoPageController.sellerBoundary.getCategories());
+            this.platformChoiceBox.getItems().setAll(AddGameInfoPageController.sellerBoundary.getConsoles());
+        } catch (PersistencyErrorException e){
+            System.exit(1);
+        }
     }
 }

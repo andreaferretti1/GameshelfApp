@@ -113,7 +113,7 @@ public class SearchPageController implements Initializable{
             HBox hBox = fxmlLoader.load();
             ((Label) hBox.lookup("#gameName")).setText(videogameBean.getName());
             ((Label) hBox.lookup("#platform")).setText(videogameBean.getPlatformBean());
-            ((Label) hBox.lookup("#price")).setText(String.valueOf(videogameBean.getPriceBean()) + " €");
+            ((Label) hBox.lookup("#price")).setText(videogameBean.getPriceBean() + " €");
             (hBox.lookup("#seeGame")).setOnMouseClicked(event -> this.seeGameInfo(event));
             hBox.prefWidthProperty().bind(this.gamesInCatalogue.widthProperty());
             this.gamesInCatalogue.getChildren().add(hBox);

@@ -1,6 +1,9 @@
 package org.application.gameshelfapp.buyvideogames.entities;
 
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
+import org.application.gameshelfapp.login.exception.CheckFailedException;
+
+import java.util.List;
 
 public class Videogame {
 
@@ -18,6 +21,8 @@ public class Videogame {
         this.platform = platform;
         this.category = category;
     }
+
+    public Videogame(){}
     public void setName(String name) {
         this.name = name;
     }
@@ -57,5 +62,27 @@ public class Videogame {
     public void buyVideogame(int copiesToBuy, float price) throws GameSoldOutException {
         if(copiesToBuy < 0 || this.copies < copiesToBuy || this.price != price) throw new GameSoldOutException("Price or copies are not correct");
         this.copies = copiesToBuy;
+    }
+
+    public void updateVideogame(int copiesToAdd, float newPrice, String newDescription){
+        if(copiesToAdd >= 0 && newPrice >0 && newDescription != null){
+            this.copies = copiesToAdd + this.copies;
+            this.price = newPrice;
+            this.description = newDescription;
+        }
+    }
+
+    public void removeVideogame(int copiesToRemove){
+        if(copiesToRemove > 0 && copiesToRemove < this.copies){ this.copies = this.copies - copiesToRemove; }
+    }
+
+    public void addVideogame(String gameName, String console, String category, String description, int copies, float price, List<String> categories, List<String> consoles) throws CheckFailedException{
+        if (gameName == null || !consoles.contains(console) || !categories.contains(category) || description == null || copies < 0 || price <= 0) throw new CheckFailedException("Invalid informations");
+        this.name = gameName;
+        this.platform = console;
+        this.category = category;
+        this.description =description;
+        this.copies = copies;
+        this.price = price;
     }
 }

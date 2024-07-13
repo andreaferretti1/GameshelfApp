@@ -17,7 +17,7 @@ public class RemoveVideogameController {
         Filters filters = new Filters(videogameBean.getName(), videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
 
         List<Videogame> selling = itemDAO.getVideogamesFiltered(filters);
-        selling.getFirst().setCopies(videogameBean.getCopiesBean());
+        selling.getFirst().removeVideogame(videogameBean.getCopiesBean());
         itemDAO.removeGameForSale(selling.getFirst());
     }
 }

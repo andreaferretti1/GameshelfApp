@@ -2,6 +2,7 @@ package org.application.gameshelfapp.sellvideogames.graphiccontrollers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -19,8 +20,10 @@ import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueEx
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class SellingGameInfoPageController {
+public class SellingGameInfoPageController implements Initializable {
 
     @FXML
     private Label titleLabel;
@@ -37,11 +40,15 @@ public class SellingGameInfoPageController {
     @FXML
     private TextField copiesNumberField;
     private SellerAddGamesBoundary sellerBoundary;
+
+    private static VideogameBean gameBean;
     private Stage stage;
     public void setStage(Stage stage) {
         this.stage = stage;
     }
     public void setSellerAddGamesBoundary(SellerAddGamesBoundary sellerBoundary){this.sellerBoundary = sellerBoundary;}
+
+    public static void setGameBean(VideogameBean bean){ SellingGameInfoPageController.gameBean = bean; }
     @FXML
     private void goToHomePage(MouseEvent event){
         try{
@@ -101,7 +108,8 @@ public class SellingGameInfoPageController {
         }
     }
 
-    public static void start(Stage myStage, SellerAddGamesBoundary sellerBoundary) throws IOException{
+    public static void start(Stage myStage, SellerAddGamesBoundary sellerBoundary, VideogameBean videogameBean) throws IOException{
+        SellingGameInfoPageController.setGameBean(videogameBean);
         FXMLLoader fxmlLoader = new FXMLLoader(SellingGameCataloguePageController.class.getResource("/org/application/gameshelfapp/GUI/Selling-Game-Info-Page.fxml"));
         Parent root = fxmlLoader.load();
 
@@ -113,4 +121,13 @@ public class SellingGameInfoPageController {
         myStage.show();
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.titleLabel.setText(SellingGameInfoPageController.gameBean.getName());
+        this.categoryLabel.setText(SellingGameInfoPageController.gameBean.getCategoryBean());
+        this.platformLabel.setText(SellingGameInfoPageController.gameBean.getPlatformBean());
+        this.descriptionArea.setText(SellingGameInfoPageController.gameBean.getDescriptionBean());
+        this.copiesTextField.setText(String.valueOf(SellingGameInfoPageController.gameBean.getCopiesBean()));
+        this.priceTextField.setText(SellingGameInfoPageController.gameBean.getPriceBean() + " €");
+    }
 }
