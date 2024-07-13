@@ -8,7 +8,7 @@ import java.util.List;
 public class SingletonSalesToConfirm {
 
     private static SingletonSalesToConfirm salesToConfirm = null;
-    private List<Sale> sales;
+    private final List<Sale> sales;
     private boolean initialized;
 
     protected SingletonSalesToConfirm(){
@@ -24,7 +24,9 @@ public class SingletonSalesToConfirm {
 
     public void setSales(List<Sale> sales){
         if(!initialized){
-            this.sales = sales;
+            for(Sale sale: sales) {
+                this.addSaleToConfirm(sale);
+            }
             this.initialized = true;
         }
     }
@@ -32,7 +34,9 @@ public class SingletonSalesToConfirm {
         return this.sales;
     }
     public void addSaleToConfirm(Sale sale){
-        this.sales.add(sale);
+        if(sale.getState().equals(Sale.TO_CONFIRM)) {
+            this.sales.add(sale);
+        }
     }
     public Sale confirmSale(long id) throws WrongSaleException{
         Sale saleConfirmed;

@@ -11,7 +11,6 @@ import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueEx
 import java.util.List;
 
 public interface ItemDAO {
-
      void checkVideogameExistence(Filters filters) throws PersistencyErrorException, AlreadyExistingVideogameException;
      List<Videogame> getVideogamesFiltered(Filters filters) throws PersistencyErrorException, NoGameInCatalogueException;
      void addGameForSale(Videogame game) throws PersistencyErrorException;
