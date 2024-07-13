@@ -73,7 +73,7 @@ class SellVideogamesControllerTest {
             userBean.setTypeOfUser("Seller");
             SellVideogamesController test = new SellVideogamesController(userBean);
             assertNotNull(test.obtainCategories());
-        } catch (PersistencyErrorException | WrongUserTypeException e){
+        } catch (WrongUserTypeException e){
             fail();
         }
     }
@@ -85,7 +85,7 @@ class SellVideogamesControllerTest {
             userBean.setTypeOfUser("Seller");
             SellVideogamesController test = new SellVideogamesController(userBean);
             assertNotNull(test.obtainConsoles());
-        } catch (PersistencyErrorException | WrongUserTypeException e){
+        } catch (WrongUserTypeException e){
             fail();
         }
     }

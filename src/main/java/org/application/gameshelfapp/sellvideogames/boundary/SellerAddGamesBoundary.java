@@ -58,7 +58,7 @@ public class SellerAddGamesBoundary {
         return this.userBean;
     }
 
-    public List<String> getCategories() throws PersistencyErrorException { return this.sellVideogamesController.obtainCategories(); }
+    public List<String> getCategories() { return this.sellVideogamesController.obtainCategories(); }
 
-    public List<String> getConsoles() throws PersistencyErrorException { return this.sellVideogamesController.obtainConsoles(); }
+    public List<String> getConsoles() { return this.sellVideogamesController.obtainConsoles(); }
 }

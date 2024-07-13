@@ -171,7 +171,7 @@ class SeeGameCatalogueAdapterTest {
             SeeGameCatalogueAdapter test = new SeeGameCatalogueAdapter(userBean);
             Map<String, String[]> filters = test.getFilters();
             assertNotNull(filters.get("Category"));
-        } catch (PersistencyErrorException | WrongUserTypeException e){
+        } catch (WrongUserTypeException e){
             fail();
         }
     }
@@ -184,7 +184,7 @@ class SeeGameCatalogueAdapterTest {
             SeeGameCatalogueAdapter test = new SeeGameCatalogueAdapter(userBean);
             Map<String, String[]> filters = test.getFilters();
             assertNotNull(filters.get("Console"));
-        } catch (PersistencyErrorException | WrongUserTypeException e){
+        } catch (WrongUserTypeException e){
             fail();
         }
     }

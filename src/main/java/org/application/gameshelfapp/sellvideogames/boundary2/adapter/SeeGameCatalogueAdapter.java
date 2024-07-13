@@ -65,7 +65,7 @@ public class SeeGameCatalogueAdapter implements SeeGameCatalogue {
     public UserBean getUserBean(){return this.boundary.getUserBean();}
 
     @Override
-    public Map<String, String[]> getFilters() throws PersistencyErrorException {
+    public Map<String, String[]> getFilters(){
         Map<String, String[]> filters = new HashMap<>();
         List<String> cat = this.boundary.getCategories();
         filters.put("Category", cat.toArray(cat.toArray(new String[0])));

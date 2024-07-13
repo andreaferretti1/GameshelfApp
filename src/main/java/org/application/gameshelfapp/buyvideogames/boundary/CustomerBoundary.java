@@ -55,11 +55,11 @@ public class CustomerBoundary {
         this.sellingGamesCatalogueBean = null;
     }
 
-    public List<String> getConsoleFilters() throws PersistencyErrorException{
+    public List<String> getConsoleFilters(){
         return this.buyGamesController.getConsoles();
     }
 
-    public List<String> getCategoriesFilters() throws PersistencyErrorException{
+    public List<String> getCategoriesFilters(){
         return this.buyGamesController.getCategories();
     }
 }

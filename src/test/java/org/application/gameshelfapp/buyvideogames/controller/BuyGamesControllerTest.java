@@ -206,4 +206,27 @@ class BuyGamesControllerTest{
             fail();
         }
     }
+
+    @Test
+    void getConsolesTest(){     //look at BeforeEach method
+        try {
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Customer");
+            BuyGamesController buyGamesController = new BuyGamesController(userBean);
+            assertEquals(2, (long) buyGamesController.getConsoles().size());
+        } catch (WrongUserTypeException e) {
+            fail();
+        }
+    }
+    @Test
+    void getCategoriesTest(){     //look at BeforeEach method
+        try {
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Customer");
+            BuyGamesController buyGamesController = new BuyGamesController(userBean);
+            assertEquals(2, (long) buyGamesController.getCategories().size());
+        } catch (WrongUserTypeException e) {
+            fail();
+        }
+    }
 }

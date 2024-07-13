@@ -18,5 +18,5 @@ public interface SeeGameCatalogue {
     SellingGamesCatalogueBean removeSellingGames(String gameTitle, String console, String category, String description, int copies, float price) throws PersistencyErrorException, NoGameInCatalogueException, GameSoldOutException, CheckFailedException;
     SellingGamesCatalogueBean updateSellingGames(String gameTitle, String console, String category, String description, int copies, float price) throws PersistencyErrorException, NoGameInCatalogueException, CheckFailedException;
     UserBean getUserBean();
-    Map<String, String[]> getFilters() throws PersistencyErrorException;
+    Map<String, String[]> getFilters();
 }

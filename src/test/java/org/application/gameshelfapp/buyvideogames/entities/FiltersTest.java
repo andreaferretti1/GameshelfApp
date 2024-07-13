@@ -5,16 +5,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class FiltersTest {
     @BeforeEach
     void setFilters(){
-        Filters.consoles = new ArrayList<>();
-        Filters.categories = new ArrayList<>();
-        Filters.consoles.add("consoleTest");
-        Filters.categories.add("categoryTest");
+        List<String> consoles = new ArrayList<>();
+        List<String> categories = new ArrayList<>();
+        consoles.add("consoleTest");
+        categories.add("categoryTest");
+        Filters.setConsoles(consoles);
+        Filters.setCategories(categories);
     }
 
     @Test

@@ -51,7 +51,7 @@ public class CustomerAdapter implements CustomerBoundaryInterface {
     }
 
     @Override
-    public Map<String, String[]> getFilters() throws PersistencyErrorException{
+    public Map<String, String[]> getFilters(){
         Map<String, String[]> filters = new HashMap<>();
         List<String> cat = this.customerBoundary.getCategoriesFilters();
         filters.put("Category", cat.toArray(cat.toArray(new String[0])));

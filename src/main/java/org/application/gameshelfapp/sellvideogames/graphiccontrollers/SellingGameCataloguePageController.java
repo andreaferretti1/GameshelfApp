@@ -101,13 +101,9 @@ public class SellingGameCataloguePageController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
+        this.categoryChoiceBox.getItems().setAll(SellingGameCataloguePageController.sellerBoundary.getCategories());
+        this.platformChoiceBox.getItems().setAll(SellingGameCataloguePageController.sellerBoundary.getConsoles());
 
-        try {
-            this.categoryChoiceBox.getItems().setAll(SellingGameCataloguePageController.sellerBoundary.getCategories());
-            this.platformChoiceBox.getItems().setAll(SellingGameCataloguePageController.sellerBoundary.getConsoles());
-        } catch (PersistencyErrorException e) {
-            System.exit(1);
-        }
         this.fillCatalogue();
     }
 

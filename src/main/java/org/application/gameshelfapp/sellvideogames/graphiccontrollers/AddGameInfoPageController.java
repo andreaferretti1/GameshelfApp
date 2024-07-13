@@ -100,11 +100,7 @@ public class AddGameInfoPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-        try {
             this.categoryChoiceBox.getItems().setAll(AddGameInfoPageController.sellerBoundary.getCategories());
             this.platformChoiceBox.getItems().setAll(AddGameInfoPageController.sellerBoundary.getConsoles());
-        } catch (PersistencyErrorException e){
-            System.exit(1);
-        }
     }
 }

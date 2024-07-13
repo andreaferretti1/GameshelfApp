@@ -103,7 +103,7 @@ public class SearchPageController implements Initializable{
             this.platformChoiceBox.getItems().setAll(SearchPageController.customerBoundary.getConsoleFilters());
             SellingGamesCatalogueBean sellingGamesCatalogueBean = SearchPageController.customerBoundary.getSellingGamesCatalogueBean();
             if(sellingGamesCatalogueBean != null) this.showGamesFound(sellingGamesCatalogueBean.getSellingGamesBean());
-        } catch(PersistencyErrorException | IOException e){
+        } catch(IOException e){
             System.exit(1);
         }
     }

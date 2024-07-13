@@ -41,12 +41,12 @@ public class BuyGamesController {
         return seeGameCatalogueController.displaySellingGamesCatalogue(filtersBean);
     }
 
-    public List<String> getCategories() throws PersistencyErrorException{
+    public List<String> getCategories(){
         SeeGameCatalogueController controller = new SeeGameCatalogueController();
         return controller.getCategoriesValue();
     }
 
-    public List<String> getConsoles() throws PersistencyErrorException{
+    public List<String> getConsoles(){
         SeeGameCatalogueController controller = new SeeGameCatalogueController();
         return controller.getConsolesValue();
     }

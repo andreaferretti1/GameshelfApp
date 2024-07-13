@@ -240,7 +240,7 @@ class SellerAddGamesBoundaryTest {
             userBean.setTypeOfUser("Seller");
             SellerAddGamesBoundary test = new SellerAddGamesBoundary(userBean);
             assertNotNull(test.getCategories());
-        } catch (PersistencyErrorException | WrongUserTypeException e){
+        } catch (WrongUserTypeException e){
             fail();
         }
     }
@@ -252,7 +252,7 @@ class SellerAddGamesBoundaryTest {
             userBean.setTypeOfUser("Seller");
             SellerAddGamesBoundary test = new SellerAddGamesBoundary(userBean);
             assertNotNull(test.getConsoles());
-        } catch (PersistencyErrorException | WrongUserTypeException e){
+        } catch (WrongUserTypeException e){
             fail();
         }
     }

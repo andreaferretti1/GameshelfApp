@@ -144,4 +144,27 @@ class CustomerBoundaryTest {
             fail();
         }
     }
+
+    @Test
+    void getCategoriestest(){       //look at BeforeEach method
+        try{
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Customer");
+            CustomerBoundary customerBoundary = new CustomerBoundary(userBean);
+            assertEquals(1, (long) customerBoundary.getCategoriesFilters().size());
+        } catch(WrongUserTypeException e){
+            fail();
+        }
+    }
+    @Test
+    void getConsolestest(){       //look at BeforeEach method
+        try{
+            UserBean userBean = new UserBean();
+            userBean.setTypeOfUser("Customer");
+            CustomerBoundary customerBoundary = new CustomerBoundary(userBean);
+            assertEquals(1, (long) customerBoundary.getConsoleFilters().size());
+        } catch(WrongUserTypeException e){
+            fail();
+        }
+    }
 }

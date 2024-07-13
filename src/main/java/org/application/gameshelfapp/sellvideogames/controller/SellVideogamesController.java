@@ -38,12 +38,12 @@ public class SellVideogamesController {
         return catController.displaySellingGamesCatalogue(filtersBean);
     }
 
-    public List<String> obtainCategories() throws PersistencyErrorException {
+    public List<String> obtainCategories(){
         SeeGameCatalogueController catController = new SeeGameCatalogueController();
         return catController.getCategoriesValue();
     }
 
-    public List<String> obtainConsoles() throws PersistencyErrorException {
+    public List<String> obtainConsoles(){
         SeeGameCatalogueController catController = new SeeGameCatalogueController();
         return catController.getConsolesValue();
     }

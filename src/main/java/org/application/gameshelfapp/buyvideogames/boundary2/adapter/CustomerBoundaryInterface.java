@@ -19,5 +19,5 @@ public interface CustomerBoundaryInterface{
     SellingGamesCatalogueBean searchVideogame(String gameNameBean, String consoleBean, String categoryBean) throws PersistencyErrorException, NoGameInCatalogueException, CheckFailedException;
     void chooseGameToBuy(String gameNameBean, String consoleBean, String categoryBean, int copiesBean, float priceBean);
     void pay(String nameBean, String typeOfCardBean, String paymentKeyBean, String streetBean, String regionBean, String countryBean) throws PersistencyErrorException, RefundException, NoGameInCatalogueException, GameSoldOutException, SyntaxErrorException, InvalidAddressException, GmailException, CheckFailedException;
-    Map<String, String[]> getFilters() throws PersistencyErrorException;
+    Map<String, String[]> getFilters();
 }
