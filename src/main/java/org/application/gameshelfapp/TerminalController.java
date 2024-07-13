@@ -22,7 +22,6 @@ import org.application.gameshelfapp.login.exception.*;
 import org.application.gameshelfapp.registration.boundary2.TerminalRegistrationBoundary;
 import org.application.gameshelfapp.sellvideogames.boundary2.TerminalSellerAddGamesBoundary;
 import org.application.gameshelfapp.sellvideogames.exception.*;
-import org.application.gameshelfapp.signemployee.boundary2.TerminalAdminBoundary;
 
 import java.io.IOException;
 import java.net.URL;
@@ -62,10 +61,7 @@ public class TerminalController extends Application implements Initializable{
                         this.boundary = new TerminalSellerAddGamesBoundary(this.boundary.getUserBean());
                         this.textArea.appendText(this.boundary.executeCommand(this.command));
                     }
-                    case "sign employee" -> {
-                        this.boundary = new TerminalAdminBoundary(this.boundary.getUserBean());
-                        this.textArea.appendText(this.boundary.executeCommand(this.command));
-                    }
+
                     default -> this.textArea.appendText(this.boundary.executeCommand(this.command));
                     }
                 }
@@ -77,7 +73,7 @@ public class TerminalController extends Application implements Initializable{
             } catch (ArrayIndexOutOfBoundsException e) {
                 this.textArea.appendText("You should insert the right number of parameters");
             } catch(NullPointerException e){
-            this.textArea.appendText(String.join(" or ", TerminalUserLogInBoundary.START_COMMAND, TerminalRegistrationBoundary.START_COMMAND, TerminalCustomerBoundary.START_COMMAND, TerminalSellerBoundary.START_COMMAND, TerminalSellerAddGamesBoundary.START_COMMAND, TerminalAdminBoundary.START_COMMAND));
+            this.textArea.appendText(String.join(" or ", TerminalUserLogInBoundary.START_COMMAND, TerminalRegistrationBoundary.START_COMMAND, TerminalCustomerBoundary.START_COMMAND, TerminalSellerBoundary.START_COMMAND, TerminalSellerAddGamesBoundary.START_COMMAND));
         }
     }
 

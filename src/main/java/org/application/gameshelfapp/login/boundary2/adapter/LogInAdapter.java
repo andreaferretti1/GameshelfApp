@@ -10,7 +10,6 @@ import org.application.gameshelfapp.login.exception.NullPasswordException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.sellvideogames.boundary2.TerminalSellerAddGamesBoundary;
-import org.application.gameshelfapp.signemployee.boundary2.TerminalAdminBoundary;
 
 public class LogInAdapter implements LogIn {
 
@@ -33,11 +32,8 @@ public class LogInAdapter implements LogIn {
             case "Customer" -> {
                 return TerminalCustomerBoundary.START_COMMAND;
             }
-            case "Seller" -> {
+            case "Seller", "Admin" -> {
                 return TerminalSellerAddGamesBoundary.START_COMMAND + TerminalSellerBoundary.START_COMMAND;
-            }
-            case "Admin" -> {
-                return TerminalSellerAddGamesBoundary.START_COMMAND + TerminalSellerBoundary.START_COMMAND + TerminalAdminBoundary.START_COMMAND;
             }
             default -> {
                 return "\nWrong user type\n\n";

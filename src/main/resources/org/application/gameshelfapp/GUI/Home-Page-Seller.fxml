@@ -57,7 +57,22 @@
                         <Font size="30.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="352.0" />
+                        <Insets left="213.5" />
+                     </HBox.margin>
+                  </Button>
+                  <Button contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#goToSalePage" style="-fx-background-color: #433f3f;" text="Control Sale" textFill="#2e60e1">
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/sold_fill_icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="213.5" />
                      </HBox.margin>
                   </Button>
                   <Button contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#logout" style="-fx-background-color: #433f3f;" text="Logout" textFill="#2e60e1">
@@ -72,7 +87,7 @@
                         <Font size="30.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="352.0" />
+                        <Insets left="213.5" />
                      </HBox.margin>
                   </Button>
                </children>
