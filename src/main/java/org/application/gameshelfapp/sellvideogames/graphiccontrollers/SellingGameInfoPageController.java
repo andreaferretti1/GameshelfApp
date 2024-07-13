@@ -32,7 +32,7 @@ public class SellingGameInfoPageController implements Initializable {
     @FXML
     private Label categoryLabel;
     @FXML
-    private TextField copiesTextField;
+    private Label copiesLabel;
     @FXML
     private TextField priceTextField;
     @FXML
@@ -55,7 +55,7 @@ public class SellingGameInfoPageController implements Initializable {
         videogameBean.setName(this.titleLabel.getText());
         videogameBean.setCategoryBean(this.categoryLabel.getText());
         videogameBean.setPlatformBean(this.platformLabel.getText());
-        videogameBean.setCopiesBean(Integer.parseInt(this.copiesTextField.getText()));
+        videogameBean.setCopiesBean(Integer.parseInt(this.copiesNumberField.getText()));
         videogameBean.setPriceBean(Float.parseFloat(this.priceTextField.getText()));
         videogameBean.setDescriptionBean(this.descriptionArea.getText());
         return videogameBean;
@@ -126,7 +126,7 @@ public class SellingGameInfoPageController implements Initializable {
         this.categoryLabel.setText(SellingGameInfoPageController.gameBean.getCategoryBean());
         this.platformLabel.setText(SellingGameInfoPageController.gameBean.getPlatformBean());
         this.descriptionArea.setText(SellingGameInfoPageController.gameBean.getDescriptionBean());
-        this.copiesTextField.setText(String.valueOf(SellingGameInfoPageController.gameBean.getCopiesBean()));
+        this.copiesLabel.setText(String.valueOf(SellingGameInfoPageController.gameBean.getCopiesBean()));
         this.priceTextField.setText(String.valueOf(SellingGameInfoPageController.gameBean.getPriceBean()));
     }
 }

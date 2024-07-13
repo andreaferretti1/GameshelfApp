@@ -88,6 +88,7 @@ public class SellingGameCataloguePageController implements Initializable{
     private void fillCatalogue(){
         if (SellingGameCataloguePageController.sellerBoundary.getSellingGamesCatalogueBean() == null) return;
         try {
+            this.gameInCatalogue.getChildren().clear();
             List<VideogameBean> catalogue = SellingGameCataloguePageController.sellerBoundary.getSellingGamesCatalogueBean().getSellingGamesBean();
             for (VideogameBean gameBean : catalogue) {
                 this.gameInCatalogue.getChildren().add(this.createHBox(gameBean));

@@ -65,14 +65,14 @@ public class Videogame {
 
     public void updateVideogame(int copiesToAdd, float newPrice, String newDescription){
         if(copiesToAdd >= 0 && newPrice >0 && newDescription != null){
-            this.copies = copiesToAdd + this.copies;
+            this.copies = copiesToAdd;
             this.price = newPrice;
             this.description = newDescription;
         }
     }
 
     public void removeVideogame(int copiesToRemove){
-        if(copiesToRemove > 0 && copiesToRemove < this.copies){ this.copies = this.copies - copiesToRemove; }
+        if(copiesToRemove > 0 && copiesToRemove <= this.copies){ this.copies = copiesToRemove; }
     }
 
     public void checkAddedVideogameData(List<String> categories, List<String> consoles) throws CheckFailedException{

@@ -32,23 +32,23 @@ public class ItemDAOCSV implements ItemDAO {
 
     private List<Videogame> getVideogamesForSale(Filters filters) throws PersistencyErrorException {
 
-         List<Videogame> gamesFound = new ArrayList<>();
-         String[] myRecord;
+        List<Videogame> gamesFound = new ArrayList<>();
+        String[] myRecord;
 
-         String gameName = filters.getName();
-         String console = filters.getConsole();
-         String category = filters.getCategory();
+        String gameName = filters.getName();
+        String console = filters.getConsole();
+        String category = filters.getCategory();
 
-         try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fdGamesForSale)))){
+        try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fdGamesForSale)))){
             while((myRecord = csvReader.readNext()) != null){
                 if((gameName == null || myRecord[VideogamesOnSaleAttributes.GAMENAME.ordinal()].equals(gameName)) && (console == null || myRecord[VideogamesOnSaleAttributes.CONSOLE.ordinal()].equals(console)) && (category == null || myRecord[VideogamesOnSaleAttributes.CATEGORY.ordinal()].equals(category))){
-                        Videogame game = new Videogame(myRecord[VideogamesOnSaleAttributes.GAMENAME.ordinal()], Integer.parseInt(myRecord[VideogamesOnSaleAttributes.COPIES.ordinal()]), Float.parseFloat(myRecord[VideogamesOnSaleAttributes.PRICE.ordinal()]), myRecord[VideogamesOnSaleAttributes.DESCRIPTION.ordinal()], console, category);
-                        gamesFound.add(game);
+                    Videogame game = new Videogame(myRecord[VideogamesOnSaleAttributes.GAMENAME.ordinal()], Integer.parseInt(myRecord[VideogamesOnSaleAttributes.COPIES.ordinal()]), Float.parseFloat(myRecord[VideogamesOnSaleAttributes.PRICE.ordinal()]), myRecord[VideogamesOnSaleAttributes.DESCRIPTION.ordinal()], console, category);
+                    gamesFound.add(game);
                 }
             }
-         } catch (IOException | CsvValidationException e) {
-             throw new PersistencyErrorException("Couldn't retrieve videogames");
-         }
+        } catch (IOException | CsvValidationException e) {
+            throw new PersistencyErrorException("Couldn't retrieve videogames");
+        }
         return gamesFound;
     }
     @Override

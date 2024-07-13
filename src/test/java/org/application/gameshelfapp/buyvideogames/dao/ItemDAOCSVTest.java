@@ -1,3 +1,4 @@
+
 package org.application.gameshelfapp.buyvideogames.dao;
 
 import org.application.gameshelfapp.buyvideogames.entities.Filters;
@@ -55,7 +56,7 @@ class ItemDAOCSVTest {
             assertEquals(10, gameForSale.getPrice());
         } catch(PersistencyErrorException | NoGameInCatalogueException e){
             fail();
-            }
+        }
     }
 
     @Test

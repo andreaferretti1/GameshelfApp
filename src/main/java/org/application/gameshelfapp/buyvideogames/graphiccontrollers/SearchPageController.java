@@ -108,6 +108,7 @@ public class SearchPageController implements Initializable{
     }
 
     private void showGamesFound(List<VideogameBean> games) throws IOException{
+        this.gamesInCatalogue.getChildren().clear();
         for(VideogameBean videogameBean: games){
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/application/gameshelfapp/GUI/Hbox-gameOnSale.fxml"));
             HBox hBox = fxmlLoader.load();

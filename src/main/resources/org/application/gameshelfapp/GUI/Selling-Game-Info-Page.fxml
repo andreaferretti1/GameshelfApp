@@ -126,14 +126,14 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="copiesTextField" promptText="Add New Copies" style="-fx-prompt-text-fill: #2e60e1; -fx-text-fill: #2e60e1; -fx-background-radius: 60;">
+                  <Label fx:id="copiesLabel" text="Copies" textFill="WHITE">
                      <font>
-                        <Font name="System Italic" size="21.0" />
+                        <Font size="34.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="5.0" top="4.0" />
+                        <Insets left="5.0" />
                      </HBox.margin>
-                  </TextField>
+                  </Label>
                </children>
                <VBox.margin>
                   <Insets top="27.0" />
@@ -191,12 +191,12 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Label text="Copies To Remove:" textFill="#2e60e1">
+                  <Label text="Copies To Add/Remove:" textFill="#2e60e1">
                      <font>
                         <Font name="System Italic" size="24.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="600.0" />
+                        <Insets left="550.0" />
                      </HBox.margin>
                   </Label>
                   <TextField fx:id="copiesNumberField" promptText="Number of Copies" style="-fx-background-radius: 60; -fx-prompt-text-fill: #2e60e1; -fx-text-fill: #2e60e1;">
