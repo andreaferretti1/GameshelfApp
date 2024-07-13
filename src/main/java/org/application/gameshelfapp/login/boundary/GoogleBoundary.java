@@ -73,7 +73,7 @@ public class GoogleBoundary {
         Session session = Session.getDefaultInstance(props, null);
         MimeMessage mimeMessage = new MimeMessage(session);
         try {
-            mimeMessage.setFrom(new InternetAddress("fer.andrea35@gmail.com"));
+            mimeMessage.setFrom(new InternetAddress("gameshelfApp2024@gmail.com"));
             mimeMessage.addRecipient(javax.mail.Message.RecipientType.TO,
                     new InternetAddress(this.email));
             mimeMessage.setSubject(this.subject);

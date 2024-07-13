@@ -157,12 +157,12 @@
                   <Insets top="27.0" />
                </VBox.margin>
             </HBox>
-            <Label text="Description" textFill="#2e60e1">
+            <Label alignment="TOP_CENTER" prefWidth="1340.0" text="Description" textAlignment="CENTER" textFill="#2e60e1">
                <font>
                   <Font size="34.0" />
                </font>
                <VBox.margin>
-                  <Insets left="634.5" top="27.0" />
+                  <Insets top="27.0" />
                </VBox.margin>
             </Label>
             <TextArea fx:id="descriptionArea" prefHeight="200.0" prefWidth="200.0" promptText="Write Description There" style="-fx-control-inner-background: #433f3f; -fx-prompt-text-fill: #ffffff; -fx-text-fill: #ffffff;">

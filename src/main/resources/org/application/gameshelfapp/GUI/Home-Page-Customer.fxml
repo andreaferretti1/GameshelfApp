@@ -11,16 +11,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gameshelfapp.login.graphiccontrollers.HomePageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.gameshelfapp.login.graphiccontrollers.HomePageController">
    <Region prefHeight="27.0" prefWidth="1440.0" style="-fx-background-color: #2E60E1;" />
    <VBox prefHeight="741.0" prefWidth="1440.0" style="-fx-background-color: #433f3f;" AnchorPane.topAnchor="27.0">
       <children>
-         <Label fx:id="accountName" text="AccountName" textFill="#2e60e1">
+         <Label fx:id="accountName" alignment="TOP_CENTER" prefWidth="1440.0" text="AccountName" textAlignment="CENTER" textFill="#2e60e1">
             <font>
                <Font size="50.0" />
             </font>
             <VBox.margin>
-               <Insets left="563.5" top="27.0" />
+               <Insets top="27.0" />
             </VBox.margin>
          </Label>
          <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
