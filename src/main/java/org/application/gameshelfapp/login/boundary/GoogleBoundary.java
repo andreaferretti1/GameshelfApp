@@ -100,7 +100,7 @@ public class GoogleBoundary {
     public void sendNewSaleMessage(String userEmail, String gameName, int quantity, float totalPrice) throws GmailException{
         this.messageToSend = userEmail + " bought " + quantity + " of " + gameName + " for " + totalPrice;
         this.subject = "Videogame bought";
-        this.email = "fer.andrea35@gmail.com";
+        this.email = "gameshelfApp2024@gmail.com";
         this.sendMail();
     }
 
