@@ -52,18 +52,17 @@ public class SellVideogamesController {
 
     public SellingGamesCatalogueBean addGameToCatalogue (VideogameBean videogameBean) throws PersistencyErrorException, InvalidTitleException, CheckFailedException, NoGameInCatalogueException, GmailException, AlreadyExistingVideogameException {
         ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
-        Videogame videogame = new Videogame();
-
-        MobyGames mobyGames = new MobyGames();
-        mobyGames.verifyVideogame(videogameBean.getName());
-
+        Videogame videogame = new Videogame(videogameBean.getName(), videogameBean.getCopiesBean(), videogameBean.getPriceBean(), videogameBean.getDescriptionBean(), videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
         CategoryDAO categoryDAO = PersistencyAbstractFactory.getFactory().createCategoryDAO();
         ConsoleDAO consoleDAO = PersistencyAbstractFactory.getFactory().createConsoleDAO();
         List<String> actualCat = categoryDAO.getCategories();
         List<String> actualCon = consoleDAO.getConsoles();
+        videogame.checkAddedVideogameData(actualCat, actualCon);
+
+        MobyGames mobyGames = new MobyGames();
+        mobyGames.verifyVideogame(videogameBean.getName());
 
         itemDAO.checkVideogameExistence(new Filters(videogameBean.getName(), videogameBean.getPlatformBean(), videogameBean.getCategoryBean()));
-        videogame.addVideogame(videogameBean.getName(), videogameBean.getPlatformBean(), videogameBean.getCategoryBean(), videogameBean.getDescriptionBean(), videogameBean.getCopiesBean(), videogameBean.getPriceBean(), actualCat, actualCon);
         itemDAO.addGameForSale(videogame);
 
         AccessDAO accessDAO = PersistencyAbstractFactory.getFactory().createAccessDAO();

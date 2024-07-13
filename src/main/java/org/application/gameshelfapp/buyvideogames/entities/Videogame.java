@@ -22,7 +22,6 @@ public class Videogame {
         this.category = category;
     }
 
-    public Videogame(){}
     public void setName(String name) {
         this.name = name;
     }
@@ -76,13 +75,7 @@ public class Videogame {
         if(copiesToRemove > 0 && copiesToRemove < this.copies){ this.copies = this.copies - copiesToRemove; }
     }
 
-    public void addVideogame(String gameName, String console, String category, String description, int copies, float price, List<String> categories, List<String> consoles) throws CheckFailedException{
-        if (gameName == null || !consoles.contains(console) || !categories.contains(category) || description == null || copies < 0 || price <= 0) throw new CheckFailedException("Invalid informations");
-        this.name = gameName;
-        this.platform = console;
-        this.category = category;
-        this.description =description;
-        this.copies = copies;
-        this.price = price;
+    public void checkAddedVideogameData(List<String> categories, List<String> consoles) throws CheckFailedException{
+        if (this.name == null || !consoles.contains(this.platform) || !categories.contains(this.category) || this.description == null || this.copies < 0 || this.price <= 0) throw new CheckFailedException("Invalid informations");
     }
 }
