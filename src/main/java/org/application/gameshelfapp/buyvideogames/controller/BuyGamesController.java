@@ -16,7 +16,6 @@ import org.application.gameshelfapp.confirmsale.bean.SaleBean;
 import org.application.gameshelfapp.confirmsale.controller.ConfirmSaleController;
 import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
 import org.application.gameshelfapp.confirmsale.entities.Sale;
-import org.application.gameshelfapp.confirmsale.entities.SingletonSalesToConfirm;
 import org.application.gameshelfapp.confirmsale.exceptions.ConfirmDeliveryException;
 import org.application.gameshelfapp.confirmsale.exceptions.WrongSaleException;
 import org.application.gameshelfapp.login.bean.UserBean;
@@ -76,7 +75,6 @@ public class BuyGamesController {
 
                 Sale sale = new Sale(game,  credentials, Sale.TO_CONFIRM);
                 saleDAO.saveSale(sale);
-                SingletonSalesToConfirm.getInstance().addSaleToConfirm(sale);
 
                 int quantity = game.getCopies();
                 float amountToPay = game.getPrice() * quantity;

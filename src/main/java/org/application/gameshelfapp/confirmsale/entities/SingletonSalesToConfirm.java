@@ -9,32 +9,27 @@ public class SingletonSalesToConfirm {
 
     private static SingletonSalesToConfirm salesToConfirm = null;
     private final List<Sale> sales;
-    private boolean initialized;
 
     protected SingletonSalesToConfirm(){
-        sales = new ArrayList<>();
-        initialized = false;
+        this.sales = new ArrayList<>();
     }
     public static SingletonSalesToConfirm getInstance(){
-        if(salesToConfirm == null){
-            salesToConfirm = new SingletonSalesToConfirm();
+        if(SingletonSalesToConfirm.salesToConfirm == null){
+            SingletonSalesToConfirm.salesToConfirm = new SingletonSalesToConfirm();
         }
         return salesToConfirm;
     }
 
     public void setSales(List<Sale> sales){
-        if(!initialized){
             for(Sale sale: sales) {
                 this.addSaleToConfirm(sale);
             }
-            this.initialized = true;
-        }
     }
     public List<Sale> getSales(){
         return this.sales;
     }
     public void addSaleToConfirm(Sale sale){
-        if(sale.getState().equals(Sale.TO_CONFIRM)) {
+        if(sale.getState().equals(Sale.TO_CONFIRM) && !this.sales.contains(sale)) {
             this.sales.add(sale);
         }
     }
