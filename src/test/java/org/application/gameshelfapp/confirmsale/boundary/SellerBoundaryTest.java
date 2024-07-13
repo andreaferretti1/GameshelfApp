@@ -18,7 +18,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SellerBoundaryTest {
-
+//test written by Andrea Ferretti
     @Test
     void setAndGetSalesBeanTest(){
         try {
@@ -34,10 +34,10 @@ class SellerBoundaryTest {
 
     @Test
     void getUserBeanTest(){
-        try {
+        try{
             SellerBoundary sellerBoundary = new SellerBoundary(new UserBean());
             assertNotNull(sellerBoundary.getUserBean());
-        } catch (WrongUserTypeException e){
+        }catch (WrongUserTypeException e){
             fail();
         }
     }

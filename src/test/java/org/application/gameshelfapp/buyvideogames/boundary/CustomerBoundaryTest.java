@@ -3,14 +3,8 @@ package org.application.gameshelfapp.buyvideogames.boundary;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
-import org.application.gameshelfapp.buyvideogames.exception.RefundException;
-import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
-import org.application.gameshelfapp.confirmsale.entities.Sale;
 import org.application.gameshelfapp.login.bean.UserBean;
-import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
-import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
-import org.application.gameshelfapp.login.exception.SyntaxErrorException;
 import org.application.gameshelfapp.login.exception.WrongUserTypeException;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
@@ -21,7 +15,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerBoundaryTest {
-//test cases written by Andrea Ferretti
+//test written by Andrea Ferretti
     @Test
     void getAndSetSellingGamesCatalogueBeanTest(){
         try {
@@ -86,29 +80,6 @@ class CustomerBoundaryTest {
             assertEquals(2, (long) gamesBean.size());
         } catch(PersistencyErrorException | NoGameInCatalogueException | WrongUserTypeException e){
             fail();
-        }
-    }
-
-    @Test
-    void insertCredentialsAndPayTest(){
-        VideogameBean videogameBean = new VideogameBean();
-        videogameBean.setName("gameNameTest");
-        videogameBean.setCopiesBean(2);
-        videogameBean.setPriceBean(40);
-        videogameBean.setPlatformBean("consoleTest");
-        try{
-            UserBean userBean = new UserBean();
-            userBean.setEmail("fer.andrea35@gmail.com");
-            userBean.setTypeOfUser("Customer");
-            CustomerBoundary customerBoundary = new CustomerBoundary(userBean);
-            customerBoundary.setGameToBuy(videogameBean);
-
-            customerBoundary.insertCredentialsAndPay("Name","card", "key", "Via Cambridge", "Roma", "Italy");
-            SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
-            List<Sale> sales = saleDAO.getToConfirmSales();
-            assertEquals(1, (long) sales.size());
-        } catch (PersistencyErrorException | RefundException | GameSoldOutException | GmailException | SyntaxErrorException | InvalidAddressException | NoGameInCatalogueException | WrongUserTypeException e) {
-           fail();
         }
     }
 

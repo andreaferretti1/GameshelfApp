@@ -83,7 +83,7 @@ public class BuyGamesController {
                 googleBoundary.sendReceiptMessage(game.getName(), quantity, amountToPay, credentials.getEmail());
                 googleBoundary.sendNewSaleMessage(credentialsBean.getEmailBean(), game.getName(), quantity, amountToPay);
             }catch(PersistencyErrorException | GameSoldOutException e){
-                game.setCopies(game.getCopies() + videogameBean.getCopiesBean());
+                game.updateVideogame(videogameBean.getCopiesBean(), game.getPrice(), game.getDescription());
                 itemDAO.updateGameForSale(game);
                 braintree.refund();
                 throw new RefundException("Transaction has been refunded due to problems.");
