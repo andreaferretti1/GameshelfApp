@@ -59,7 +59,7 @@ public class SalePageController implements Initializable {
         }
     }
 
-    public void start(Stage myStage, SellerBoundary boundary) throws IOException {
+    public static void start(Stage myStage, SellerBoundary boundary) throws IOException {
         SalePageController.setSellerBoundary(boundary);
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/org/application/gameshelfapp/GUI/Sale-Page.fxml"));
         Parent root = fxmlLoader.load();
