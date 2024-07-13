@@ -61,7 +61,7 @@ public class SalePageController implements Initializable {
 
     public static void start(Stage myStage, SellerBoundary boundary) throws IOException {
         SalePageController.setSellerBoundary(boundary);
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/org/application/gameshelfapp/GUI/Sale-Page.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(SalePageController.class.getResource("/org/application/gameshelfapp/GUI/Sale-Page.fxml"));
         Parent root = fxmlLoader.load();
 
         SalePageController controller = fxmlLoader.getController();
@@ -95,7 +95,7 @@ public class SalePageController implements Initializable {
         ((Label) hBox.lookup("#gameName")).setText(saleBean.getGameSoldBean().getName());
         ((Label) hBox.lookup("#gamePlatform")).setText(saleBean.getGameSoldBean().getPlatformBean());
         ((Label) hBox.lookup("#copies")).setText(String.valueOf(saleBean.getGameSoldBean().getCopiesBean()));
-        ((Label) hBox.lookup("#price")).setText(String.valueOf(saleBean.getGameSoldBean().getPriceBean()) + " €");
+        ((Label) hBox.lookup("#price")).setText(saleBean.getGameSoldBean().getPriceBean() + " €");
         ((Label) hBox.lookup("#name")).setText(saleBean.getCredentialsBean().getNameBean());
         ((Label) hBox.lookup("#address")).setText(saleBean.getCredentialsBean().getAddressBean());
         ((Label) hBox.lookup("#email")).setText(saleBean.getCredentialsBean().getEmailBean());
