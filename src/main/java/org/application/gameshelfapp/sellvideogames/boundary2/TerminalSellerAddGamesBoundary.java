@@ -16,7 +16,7 @@ import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVide
 import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
 
-public class TerminalSellerAddGamesBoundary implements TerminalBoundary {
+public class TerminalSellerAddGamesBoundary implements TerminalBoundary{
 
     SeeGameCatalogue seeGameCatalogueAdapter;
 

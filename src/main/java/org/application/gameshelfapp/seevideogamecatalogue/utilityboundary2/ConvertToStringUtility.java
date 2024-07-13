@@ -11,7 +11,7 @@ public class ConvertToStringUtility {
     public static String catalogueBeanToString(SellingGamesCatalogueBean catalogueBean){
         StringBuilder game = new StringBuilder();
         for(VideogameBean gameBean: catalogueBean.getSellingGamesBean()){
-            game.append(String.format("name: %s, console: %s, category: %s, copies: %d, price: %f€, description: %s%n", gameBean.getName(), gameBean.getPlatformBean(), gameBean.getCategoryBean(), gameBean.getCopiesBean(), gameBean.getPriceBean(), gameBean.getDescriptionBean())) ;
+            game.append(String.format("name: %s, console: %s, category: %s, copies: %d, price: %.2f€, description: %s%n", gameBean.getName(), gameBean.getPlatformBean(), gameBean.getCategoryBean(), gameBean.getCopiesBean(), gameBean.getPriceBean(), gameBean.getDescriptionBean())) ;
         }
         return String.valueOf(game);
     }

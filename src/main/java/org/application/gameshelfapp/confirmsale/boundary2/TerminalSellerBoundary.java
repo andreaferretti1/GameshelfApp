@@ -15,7 +15,7 @@ import java.util.List;
 
 public class TerminalSellerBoundary implements TerminalBoundary {
     private final SellerBoundaryInterface adapter;
-    public static final String START_COMMAND = "\nType <see sales>\n";
+    public static final String START_COMMAND = "Type <see sales>";
     public TerminalSellerBoundary(UserBean userBean) throws WrongUserTypeException {
         this.adapter = new SellerAdapter(userBean);
     }
@@ -33,7 +33,7 @@ public class TerminalSellerBoundary implements TerminalBoundary {
             }
             case "confirm" -> {
                 this.adapter.confirmSale(command[1]);
-                return "Game sent";
+                return this.showSalesToConfirm((this.adapter.getSalesToConfirm()));
             }
             default -> {
                 return "You inserted the wrong command";
@@ -46,8 +46,8 @@ public class TerminalSellerBoundary implements TerminalBoundary {
         StringBuilder stringSales = new StringBuilder();
         for(SaleBean saleBean: sales){
             saleBean.getInformationFromModel();
-            stringSales.append(String.format("Id: %d, game name: %s, platform: %s copies: %d, price: %f€, user name: %s, user email: %s, delivery address: %s%n", saleBean.getIdBean(), saleBean.getGameSoldBean().getName(), saleBean.getGameSoldBean().getPlatformBean(), saleBean.getGameSoldBean().getCopiesBean(), saleBean.getGameSoldBean().getPriceBean(), saleBean.getCredentialsBean().getNameBean(), saleBean.getCredentialsBean().getEmailBean(), saleBean.getCredentialsBean().getAddressBean()));
+            stringSales.append(String.format("%nId: %d, game name: %s, platform: %s copies: %d, price: %f€, user name: %s, user email: %s, delivery address: %s%n", saleBean.getIdBean(), saleBean.getGameSoldBean().getName(), saleBean.getGameSoldBean().getPlatformBean(), saleBean.getGameSoldBean().getCopiesBean(), saleBean.getGameSoldBean().getPriceBean(), saleBean.getCredentialsBean().getNameBean(), saleBean.getCredentialsBean().getEmailBean(), saleBean.getCredentialsBean().getAddressBean()));
         }
-        return  stringSales + "\n\n<Type confirm gameId>\n";
+        return  stringSales + "\n\n<Type confirm, gameId>\n";
     }
 }

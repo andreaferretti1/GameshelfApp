@@ -18,7 +18,7 @@ import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueEx
 public class TerminalCustomerBoundary implements TerminalBoundary {
 
     private final CustomerBoundaryInterface customer;
-    public static final String START_COMMAND = "\nType <see catalogue, gameName/null, console/null, category/null\n>";
+    public static final String START_COMMAND = "\nType <see catalogue>\n";
 
     public TerminalCustomerBoundary(UserBean userBean) throws WrongUserTypeException {
         this.customer = new CustomerAdapter(userBean);

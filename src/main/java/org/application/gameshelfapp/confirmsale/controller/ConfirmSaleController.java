@@ -28,8 +28,6 @@ public class ConfirmSaleController{
         singletonSalesToConfirm.setSales(sales);
         sales = singletonSalesToConfirm.getSales();
         List<SaleBean> salesBean = new ArrayList<>();
-
-
         for(Sale sale: sales){
             SaleBean saleBean = new SaleBean();
             saleBean.setSale(sale);

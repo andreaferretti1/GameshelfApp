@@ -99,6 +99,7 @@ public class SalePageController implements Initializable {
                 HBox sourceHBox = (HBox) ((Button)event.getSource()).getParent();
                 SalePageController.sellerBoundary.sendGame(Long.parseLong(((Label) sourceHBox.lookup("#id")).getText()));
                 SalePageController.sellerBoundary.getGamesToSend();
+                this.gamesSold.getChildren().clear();
                 this.showSales(SalePageController.sellerBoundary.getSalesBean());
             } catch (ConfirmDeliveryException | GmailException | WrongSaleException | PersistencyErrorException |
                      WrongUserTypeException e) {

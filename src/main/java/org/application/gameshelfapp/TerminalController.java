@@ -57,11 +57,10 @@ public class TerminalController extends Application implements Initializable{
                         this.boundary = new TerminalSellerBoundary(this.boundary.getUserBean());
                         this.textArea.appendText(this.boundary.executeCommand(this.command));
                     }
-                    case "show" -> {
+                    case "filters" -> {
                         this.boundary = new TerminalSellerAddGamesBoundary(this.boundary.getUserBean());
                         this.textArea.appendText(this.boundary.executeCommand(this.command));
                     }
-
                     default -> this.textArea.appendText(this.boundary.executeCommand(this.command));
                     }
                 }
