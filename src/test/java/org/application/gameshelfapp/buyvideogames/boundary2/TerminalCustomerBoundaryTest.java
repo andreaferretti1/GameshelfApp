@@ -1,11 +1,11 @@
 package org.application.gameshelfapp.buyvideogames.boundary2;
 
 import org.application.gameshelfapp.buyvideogames.entities.Filters;
-import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
-import org.application.gameshelfapp.confirmsale.entities.Sale;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.buyvideogames.exception.InvalidAddressException;
 import org.application.gameshelfapp.buyvideogames.exception.RefundException;
+import org.application.gameshelfapp.confirmsale.dao.SaleDAO;
+import org.application.gameshelfapp.confirmsale.entities.Sale;
 import org.application.gameshelfapp.login.bean.UserBean;
 import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
 import org.application.gameshelfapp.login.exception.*;
@@ -22,11 +22,13 @@ class TerminalCustomerBoundaryTest {
 
     @BeforeEach
     void setFilters(){
-        Filters.consoles = new ArrayList<>();
-        Filters.categories = new ArrayList<>();
-        Filters.consoles.add("consoleTest");
-        Filters.consoles.add("consoleTest1");
-        Filters.categories.add("categoryTest");
+        List<String> consoles = new ArrayList<>();
+        List<String> categories = new ArrayList<>();
+        consoles.add("consoleTest");
+        consoles.add("consoleTest1");
+        categories.add("categoryTest");
+        Filters.setConsoles(consoles);
+        Filters.setCategories(categories);
     }
     @Test
     void getUserBeanTest(){

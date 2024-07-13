@@ -9,8 +9,8 @@ public class Filters {
     private String name;
     private String console;
     private String category;
-    public static List<String> consoles;
-    public static List<String> categories;
+    private static List<String> consoles;
+    private static List<String> categories;
 
     public Filters(String console, String category) throws CheckFailedException{
         this(null, console, category);
@@ -19,6 +19,20 @@ public class Filters {
         this.name = name;
         this.setConsole(console);
         this.setCategory(category);
+    }
+
+    public static void setConsoles(List<String> consoles) {
+        Filters.consoles = consoles;
+    }
+
+    public static void setCategories(List<String> categories) {
+        Filters.categories = categories;
+    }
+    public static List<String> getConsoles(){
+        return Filters.consoles;
+    }
+    public static List<String> getCategories(){
+        return Filters.categories;
     }
 
     public String getName() {

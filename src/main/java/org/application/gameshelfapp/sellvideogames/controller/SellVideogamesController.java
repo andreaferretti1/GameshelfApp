@@ -51,7 +51,7 @@ public class SellVideogamesController {
     public SellingGamesCatalogueBean addGameToCatalogue (VideogameBean videogameBean) throws PersistencyErrorException, InvalidTitleException, CheckFailedException, NoGameInCatalogueException, GmailException, AlreadyExistingVideogameException {
         ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
         Videogame videogame = new Videogame(videogameBean.getName(), videogameBean.getCopiesBean(), videogameBean.getPriceBean(), videogameBean.getDescriptionBean(), videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
-        videogame.checkAddedVideogameData(Filters.categories, Filters.consoles);
+        videogame.checkAddedVideogameData(Filters.getCategories(), Filters.getConsoles());
 
         MobyGames mobyGames = new MobyGames();
         mobyGames.verifyVideogame(videogameBean.getName());

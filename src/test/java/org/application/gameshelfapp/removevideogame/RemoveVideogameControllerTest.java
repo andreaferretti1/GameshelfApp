@@ -19,10 +19,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class RemoveVideogameControllerTest {
     @BeforeEach
     void setFilters(){
-        Filters.consoles = new ArrayList<>();
-        Filters.categories = new ArrayList<>();
-        Filters.consoles.add("TestConsole2");
-        Filters.categories.add("TestCategory2");
+        List<String> consoles = new ArrayList<>();
+        List<String> categories = new ArrayList<>();
+        consoles.add("TestConsole2");
+        categories.add("TestCategory2");
+        Filters.setConsoles(consoles);
+        Filters.setCategories(categories);
     }
     @Test
     void removeGameFromCatalogueTest(){          //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)

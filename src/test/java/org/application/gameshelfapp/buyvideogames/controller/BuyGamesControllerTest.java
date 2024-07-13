@@ -29,12 +29,14 @@ class BuyGamesControllerTest{
 
     @BeforeEach
     void setFilters(){
-        Filters.consoles = new ArrayList<>();
-        Filters.categories = new ArrayList<>();
-        Filters.consoles.add("consoleTest");
-        Filters.consoles.add("consoleTest1");
-        Filters.categories.add("categoryTest");
-        Filters.categories.add("TestCategory1");
+        List<String> consoles = new ArrayList<>();
+        List<String> categories = new ArrayList<>();
+        consoles.add("consoleTest");
+        consoles.add("consoleTest1");
+        categories.add("categoryTest");
+        categories.add("TestCategory1");
+        Filters.setConsoles(consoles);
+        Filters.setCategories(categories);
     }
     @Test
     void searchVideogameTest(){     //In the Videogame table there was tuple ('nameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '20')

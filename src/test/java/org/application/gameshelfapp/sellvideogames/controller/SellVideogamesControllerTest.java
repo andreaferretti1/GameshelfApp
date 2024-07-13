@@ -17,17 +17,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 class SellVideogamesControllerTest {
     @BeforeEach
     void setFilters(){
-        Filters.consoles = new ArrayList<>();
-        Filters.categories = new ArrayList<>();
-        Filters.consoles.add("TestConsole2");
-        Filters.consoles.add("TestConsole1");
-        Filters.categories.add("TestCategory2");
-        Filters.categories.add("TestCategory1");
+        List<String> consoles = new ArrayList<>();
+        List<String> categories = new ArrayList<>();
+        consoles.add("TestConsole2");
+        consoles.add("TestConsole1");
+        categories.add("TestCategory2");
+        categories.add("TestCategory1");
+        Filters.setConsoles(consoles);
+        Filters.setCategories(categories);
     }
     @Test
     void showSellingGameCatalogueTest(){            //Videogame(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)

@@ -10,16 +10,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SeeGameCatalogueControllerTest {
     @BeforeEach
     void setFilters(){
-        Filters.consoles = new ArrayList<>();
-        Filters.categories = new ArrayList<>();
-        Filters.consoles.add("TestConsole2");
-        Filters.categories.add("TestCategory2");
+        List<String> consoles = new ArrayList<>();
+        List<String> categories = new ArrayList<>();
+        consoles.add("TestConsole2");
+        categories.add("TestCategory2");
+        Filters.setConsoles(consoles);
+        Filters.setCategories(categories);
     }
     @Test
     void displaySellingGamesCatalogueTest(){        //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
@@ -55,21 +58,13 @@ class SeeGameCatalogueControllerTest {
 
     @Test
     void getCategoriesValueTest(){
-        try {
-            SeeGameCatalogueController test = new SeeGameCatalogueController();
-            assertNotNull(test.getCategoriesValue());
-        } catch (PersistencyErrorException e){
-            fail();
-        }
+        SeeGameCatalogueController test = new SeeGameCatalogueController();
+        assertNotNull(test.getCategoriesValue());
     }
 
     @Test
     void getConsolesValueTest(){
-        try {
-            SeeGameCatalogueController test = new SeeGameCatalogueController();
-            assertNotNull(test.getConsolesValue());
-        } catch (PersistencyErrorException e){
-            fail();
-        }
+        SeeGameCatalogueController test = new SeeGameCatalogueController();
+        assertNotNull(test.getConsolesValue());
     }
 }

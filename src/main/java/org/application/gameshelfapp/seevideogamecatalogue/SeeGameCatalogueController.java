@@ -29,10 +29,10 @@ public class SeeGameCatalogueController {
 
         return sellingGamesCatalogueBean;
     }
-    public List<String> getCategoriesValue() throws PersistencyErrorException {
-        return Filters.categories;
+    public List<String> getCategoriesValue(){
+        return Filters.getCategories();
     }
-    public List<String> getConsolesValue() throws PersistencyErrorException {
-        return Filters.consoles;
+    public List<String> getConsolesValue(){
+        return Filters.getConsoles();
     }
 }

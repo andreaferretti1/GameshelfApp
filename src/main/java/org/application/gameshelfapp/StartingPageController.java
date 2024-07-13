@@ -82,8 +82,8 @@ public class StartingPageController extends Application {
 
     public static void main(String[] args){
         try {
-            Filters.consoles = PersistencyAbstractFactory.getFactory().createConsoleDAO().getConsoles();
-            Filters.categories = PersistencyAbstractFactory.getFactory().createCategoryDAO().getCategories();
+            Filters.setConsoles(PersistencyAbstractFactory.getFactory().createConsoleDAO().getConsoles());
+            Filters.setCategories(PersistencyAbstractFactory.getFactory().createCategoryDAO().getCategories());
             launch();
         } catch (PersistencyErrorException e){
             System.exit(1);

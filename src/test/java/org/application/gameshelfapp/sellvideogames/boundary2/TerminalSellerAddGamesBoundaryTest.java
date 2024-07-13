@@ -14,17 +14,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TerminalSellerAddGamesBoundaryTest {
     @BeforeEach
     void setFilters(){
-        Filters.consoles = new ArrayList<>();
-        Filters.categories = new ArrayList<>();
-        Filters.consoles.add("TestConsole2");
-        Filters.categories.add("TestCategory2");
+        List<String> consoles = new ArrayList<>();
+        List<String> categories = new ArrayList<>();
+        consoles.add("TestConsole2");
+        categories.add("TestCategory2");
+        Filters.setConsoles(consoles);
+        Filters.setCategories(categories);
     }
     @Test
     void executeCommandGetFiltersTest(){

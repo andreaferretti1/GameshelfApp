@@ -21,17 +21,19 @@ class ItemDAOCSVTest {
 
     @BeforeEach
     void setFilters(){
-        Filters.consoles = new ArrayList<>();
-        Filters.categories = new ArrayList<>();
-        Filters.consoles.add("consoleTest");
-        Filters.consoles.add("consoleTest1");
-        Filters.consoles.add("consoleTest2");
-        Filters.consoles.add("platformTest");
-        Filters.consoles.add("TestConsole");
-        Filters.consoles.add("Test Console");
-        Filters.categories.add("categoryTest");
-        Filters.categories.add("TestCategory");
-        Filters.categories.add("Test Category");
+        List<String> consoles = new ArrayList<>();
+        List<String> categories = new ArrayList<>();
+        consoles.add("consoleTest");
+        consoles.add("consoleTest1");
+        consoles.add("consoleTest2");
+        consoles.add("platformTest");
+        consoles.add("TestConsole");
+        consoles.add("Test Console");
+        categories.add("categoryTest");
+        categories.add("TestCategory");
+        categories.add("Test Category");
+        Filters.setConsoles(consoles);
+        Filters.setCategories(categories);
     }
     @Test
     void getVideogamesForSaleGameNameTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
