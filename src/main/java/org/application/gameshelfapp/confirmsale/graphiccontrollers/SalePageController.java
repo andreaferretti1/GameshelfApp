@@ -77,14 +77,9 @@ public class SalePageController implements Initializable {
         try {
             SalePageController.sellerBoundary.getGamesToSend();
             List<SaleBean> gamesSoldBean = SalePageController.sellerBoundary.getSalesBean();
-            for (SaleBean saleBean : gamesSoldBean) {
-                saleBean.getInformationFromModel();
-                this.gamesSold.getChildren().add(this.createHBox(saleBean));
-            }
+            this.showSales(gamesSoldBean);
         } catch (PersistencyErrorException | WrongUserTypeException e) {
             ErrorPageController.displayErrorWindow(e.getMessage());
-        } catch (IOException e) {
-            ErrorPageController.displayErrorWindow("Couldn't show sales.");
         }
     }
 
@@ -103,11 +98,24 @@ public class SalePageController implements Initializable {
             try {
                 HBox sourceHBox = (HBox) ((Button)event.getSource()).getParent();
                 SalePageController.sellerBoundary.sendGame(Long.parseLong(((Label) sourceHBox.lookup("#id")).getText()));
+                SalePageController.sellerBoundary.getGamesToSend();
+                this.showSales(SalePageController.sellerBoundary.getSalesBean());
             } catch (ConfirmDeliveryException | GmailException | WrongSaleException | PersistencyErrorException |
                      WrongUserTypeException e) {
                 ErrorPageController.displayErrorWindow(e.getMessage());
             }
         });
         return hBox;
+    }
+
+    private void showSales(List<SaleBean> sales){
+        try {
+            for (SaleBean saleBean : sales) {
+                saleBean.getInformationFromModel();
+                this.gamesSold.getChildren().add(this.createHBox(saleBean));
+            }
+        } catch (IOException e) {
+            ErrorPageController.displayErrorWindow("Couldn't show sales.");
+        }
     }
 }
