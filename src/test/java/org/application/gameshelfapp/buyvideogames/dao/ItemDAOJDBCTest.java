@@ -18,6 +18,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ItemDAOJDBCTest {
+//test written by Alessandro Zunica
 
     @BeforeEach
     void setFilters(){

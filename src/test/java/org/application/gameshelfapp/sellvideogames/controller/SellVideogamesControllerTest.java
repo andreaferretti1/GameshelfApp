@@ -21,6 +21,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 class SellVideogamesControllerTest {
+//test written by Alessandro Zunica
     @BeforeEach
     void setFilters(){
         List<String> consoles = new ArrayList<>();
