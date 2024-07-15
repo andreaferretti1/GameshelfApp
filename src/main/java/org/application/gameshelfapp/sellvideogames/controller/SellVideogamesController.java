@@ -15,14 +15,12 @@ import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.login.exception.WrongUserTypeException;
-import org.application.gameshelfapp.removevideogame.RemoveVideogameController;
 import org.application.gameshelfapp.seevideogamecatalogue.SeeGameCatalogueController;
 import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBean;
 import org.application.gameshelfapp.sellvideogames.boundary.MobyGames;
 import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVideogameException;
 import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
-import org.application.gameshelfapp.updatevideogame.UpdateVideogameController;
 
 import java.util.List;
 
@@ -75,8 +73,13 @@ public class SellVideogamesController {
     }
 
     public SellingGamesCatalogueBean cancelGameFromCatalogue(VideogameBean videogameBean) throws PersistencyErrorException, NoGameInCatalogueException, GameSoldOutException, CheckFailedException {
-        RemoveVideogameController remController = new RemoveVideogameController();
-        remController.removeGameFromCatalogue(videogameBean);
+        ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+        Filters filters = new Filters( videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
+        filters.setName(videogameBean.getName());
+
+        Videogame game = itemDAO.getVideogame(filters);
+        game.removeVideogame(videogameBean.getCopiesBean());
+        itemDAO.removeGameForSale(game);
 
         FiltersBean filtersBean = new FiltersBean();
         filtersBean.setCategoryBean(videogameBean.getCategoryBean());
@@ -87,8 +90,13 @@ public class SellVideogamesController {
     }
 
     public SellingGamesCatalogueBean modifyGameInCatalogue(VideogameBean videogameBean) throws PersistencyErrorException, NoGameInCatalogueException, CheckFailedException {
-        UpdateVideogameController upController = new UpdateVideogameController();
-        upController.updateGameInCatalogue(videogameBean);
+        ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+        Filters filters = new Filters(videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
+        filters.setName(videogameBean.getName());
+
+        Videogame game = itemDAO.getVideogame(filters);
+        game.updateVideogame(videogameBean.getCopiesBean(), videogameBean.getPriceBean(), videogameBean.getDescriptionBean());
+        itemDAO.updateGameForSale(game);
 
         FiltersBean filtersBean = new FiltersBean();
         filtersBean.setCategoryBean(videogameBean.getCategoryBean());
