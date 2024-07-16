@@ -27,7 +27,7 @@ public class SaleDAOCSV implements SaleDAO {
     private long id;
     public SaleDAOCSV(File fd) throws PersistencyErrorException{
         this.lock = new ReentrantLock();
-        this.id = this.getId();
+        this.getId();
         this.fd = fd;
     }
     @Override
@@ -88,11 +88,11 @@ public class SaleDAOCSV implements SaleDAO {
             throw new PersistencyErrorException("Couldn't confirm delivery");
         }
     }
-    private long getId() throws PersistencyErrorException{
+    private void getId() throws PersistencyErrorException{
         try(FileInputStream in = new FileInputStream(CSVFactory.PROPERTIES)){
             Properties properties = new Properties();
             properties.load(in);
-            return Long.parseLong(properties.getProperty("ID"));
+            this.id = Long.parseLong(properties.getProperty("ID"));
         } catch (IOException e){
             throw new PersistencyErrorException("Couldn't access to sales.");
         }

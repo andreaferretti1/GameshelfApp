@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.MessageDigest;
 import java.util.Arrays;
 
-public class SHA256Encoder implements Encoder{
+public class SHA256Encoder{
 
     private String passwordToCrypt;
     private String encryptedPassword;
@@ -15,7 +15,6 @@ public class SHA256Encoder implements Encoder{
         this.passwordToCrypt = password;
     }
 
-    @Override
     public void cryptPassword() throws NullPasswordException {
         if(this.passwordToCrypt == null) throw new NullPasswordException("You should enter a password");
         try{
@@ -33,7 +32,6 @@ public class SHA256Encoder implements Encoder{
         }
     }
 
-    @Override
     public String getEncryptedPassword(){
         return this.encryptedPassword;
     }
@@ -42,7 +40,6 @@ public class SHA256Encoder implements Encoder{
         return this.passwordToCrypt;
     }
 
-    @Override
     public void removePasswordToCrypt(){
         Arrays.fill(this.passwordToCrypt.toCharArray(), '\0');
         this.passwordToCrypt = null;

@@ -42,6 +42,7 @@ public class ConfirmSaleController{
 
         SaleDAO saleDAO = PersistencyAbstractFactory.getFactory().createSaleDAO();
         SingletonSalesToConfirm salesToConfirm = SingletonSalesToConfirm.getInstance();
+        salesToConfirm.setSales(saleDAO.getToConfirmSales());
         Sale saleConfirmed = salesToConfirm.confirmSale(id);
         try{
             saleDAO.updateSale(id);
