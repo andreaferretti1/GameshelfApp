@@ -24,7 +24,6 @@ public class SaleDAOCSV implements SaleDAO {
     private final Lock lock;
     public static final String TEMP_FILE = "items_sold.csv";
     private final File fd;
-    private long id;
     public SaleDAOCSV(File fd) throws PersistencyErrorException{
         this.lock = new ReentrantLock();
         this.getId();
@@ -61,13 +60,13 @@ public class SaleDAOCSV implements SaleDAO {
             }
 
             if(!saved){
-                this.id++;
-                gameSold[VideogamesSoldAttributes.GAME_ID.ordinal()] = String.valueOf(this.id);
+                long id = this.getId();
+                id++;
+                gameSold[VideogamesSoldAttributes.GAME_ID.ordinal()] = String.valueOf(id);
                 csvWriter.writeNext(gameSold);
-                this.saveId();
+                this.saveId(id);
             }
         }catch(IOException | CsvValidationException e){
-            this.saveId();
             throw new PersistencyErrorException("Couldn't save sale");
         } finally{
             this.lock.unlock();
@@ -89,24 +88,24 @@ public class SaleDAOCSV implements SaleDAO {
         return this.getSalesByState(Sale.TO_CONFIRM);
     }
 
-    private void getId() throws PersistencyErrorException{
+    private long getId() throws PersistencyErrorException{
         try(FileInputStream in = new FileInputStream(CSVFactory.PROPERTIES)){
             Properties properties = new Properties();
             properties.load(in);
-            this.id = Long.parseLong(properties.getProperty("ID"));
+            return Long.parseLong(properties.getProperty("ID"));
         } catch (IOException e){
             throw new PersistencyErrorException("Couldn't access to sales.");
         }
     }
 
-    private void saveId() throws PersistencyErrorException{
+    private void saveId(long id) throws PersistencyErrorException{
         Properties properties = new Properties();
         try(FileInputStream in = new FileInputStream(CSVFactory.PROPERTIES)){
             properties.load(in);
         } catch (IOException e){
             throw new PersistencyErrorException("Couldn't access to sales.");
         }
-        properties.setProperty("ID", Long.toString(this.id));
+        properties.setProperty("ID", Long.toString(id));
         try(FileOutputStream out = new FileOutputStream(CSVFactory.PROPERTIES)){
             properties.store(out, null);
         } catch(IOException e){
