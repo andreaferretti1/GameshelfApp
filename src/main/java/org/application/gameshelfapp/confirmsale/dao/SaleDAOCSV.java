@@ -32,11 +32,11 @@ public class SaleDAOCSV implements SaleDAO {
     }
     @Override
     public void saveSale(Sale sale) throws PersistencyErrorException {
-        this.id++;
-        this.saveId();
+        this.lock.lock();
+        File tempFile = new File(TEMP_FILE);
+        boolean saved = false;
         String[] gameSold = new String[9];
 
-        gameSold[VideogamesSoldAttributes.GAME_ID.ordinal()] = String.valueOf(this.id);
         gameSold[VideogamesSoldAttributes.CUSTOMER_NAME.ordinal()] = sale.getCredentials().getName();
         gameSold[VideogamesSoldAttributes.GAME_NAME.ordinal()] = sale.getVideogameSold().getName();
         gameSold[VideogamesSoldAttributes.COPIES.ordinal()] = String.valueOf(sale.getVideogameSold().getCopies());
@@ -46,11 +46,36 @@ public class SaleDAOCSV implements SaleDAO {
         gameSold[VideogamesSoldAttributes.CUSTOMER_ADDRESS.ordinal()] = sale.getCredentials().getAddress();
         gameSold[VideogamesSoldAttributes.CUSTOMER_EMAIL.ordinal()] = sale.getCredentials().getEmail();
 
-        try(CSVWriter cvsWriter = new CSVWriter(new BufferedWriter(new FileWriter(this.fd, true)))){
-            cvsWriter.writeNext(gameSold);
-        }catch(IOException e){
-            this.id--;
+        try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)));
+            CSVWriter csvWriter= new CSVWriter(new BufferedWriter(new FileWriter(tempFile)))
+        ){
+            String[] myRecord;
+            while((myRecord = csvReader.readNext()) != null){
+                if(myRecord[VideogamesSoldAttributes.GAME_ID.ordinal()].equals(String.valueOf(sale.getId()))){
+                    gameSold[VideogamesSoldAttributes.GAME_ID.ordinal()] = String.valueOf(sale.getId());
+                    csvWriter.writeNext(gameSold);
+                    saved = true;
+                    continue;
+                }
+                csvWriter.writeNext(myRecord);
+            }
+
+            if(!saved){
+                this.id++;
+                gameSold[VideogamesSoldAttributes.GAME_ID.ordinal()] = String.valueOf(this.id);
+                csvWriter.writeNext(gameSold);
+                this.saveId();
+            }
+        }catch(IOException | CsvValidationException e){
             this.saveId();
+            throw new PersistencyErrorException("Couldn't save sale");
+        } finally{
+            this.lock.unlock();
+        }
+
+        try{
+            Files.move(tempFile.toPath(), this.fd.toPath(), REPLACE_EXISTING);
+        } catch (IOException e){
             throw new PersistencyErrorException("Couldn't save sale");
         }
     }
@@ -64,30 +89,6 @@ public class SaleDAOCSV implements SaleDAO {
         return this.getSalesByState(Sale.TO_CONFIRM);
     }
 
-    @Override
-    public void updateSale(long id) throws PersistencyErrorException {
-        File tempFile = new File(TEMP_FILE);
-        this.lock.lock();
-
-        try(CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(this.fd)));
-            CSVWriter csvWriter= new CSVWriter(new BufferedWriter(new FileWriter(tempFile)))
-        ){
-            String[] myRecord;
-            while((myRecord = csvReader.readNext()) != null){
-                if(myRecord[VideogamesSoldAttributes.GAME_ID.ordinal()].equals(String.valueOf(id))){
-                    myRecord[VideogamesSoldAttributes.STATE_OF_DELIVERY.ordinal()] = Sale.CONFIRMED;
-                }
-                csvWriter.writeNext(myRecord);
-            }
-        } catch(IOException | CsvValidationException e){
-            throw new PersistencyErrorException("Couldn't confirm delivery");
-        }
-        try{
-            Files.move(tempFile.toPath(), this.fd.toPath(), REPLACE_EXISTING);
-        } catch (IOException e){
-            throw new PersistencyErrorException("Couldn't confirm delivery");
-        }
-    }
     private void getId() throws PersistencyErrorException{
         try(FileInputStream in = new FileInputStream(CSVFactory.PROPERTIES)){
             Properties properties = new Properties();

@@ -11,7 +11,7 @@ public class SaleDAOQueries {
 
     private SaleDAOQueries(){}
     public static void saveSaleQuery(Connection conn, Sale sale) throws SQLException{
-        String query = "INSERT INTO Sale (Copies, Price, State, GameName, Platform, Name, UserEmail, UserAddress) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        String query = "INSERT INTO Sale (Copies, Price, State, GameName, Platform, Name, UserEmail, UserAddress) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE State = VALUES(State);";
 
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setInt(1, sale.getVideogameSold().getCopies());
@@ -33,13 +33,5 @@ public class SaleDAOQueries {
         pstmt.setString(1, state);
         pstmt.execute();
         return pstmt.getResultSet();
-    }
-
-    public static void updateSaleQuery(Connection conn, long id) throws SQLException{
-        String query = "UPDATE Sale SET State = 'Confirmed' WHERE Id = ?;";
-
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setLong(1, id);
-        pstmt.execute();
     }
 }

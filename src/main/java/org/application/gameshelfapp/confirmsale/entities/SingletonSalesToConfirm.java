@@ -38,6 +38,7 @@ public class SingletonSalesToConfirm {
         for(Sale sale: sales){
             if(sale.getId() == id){
                 saleConfirmed = sale;
+                sale.confirm();
                 this.sales.remove(sale);
                 return saleConfirmed;
             }

@@ -40,6 +40,9 @@ public class Sale {
     public Credentials getCredentials() {
         return this.credentials;
     }
+    public void confirm(){
+        this.state = Sale.CONFIRMED;
+    }
 
     public void setCredentials(Credentials credentials) {
         this.credentials = credentials;

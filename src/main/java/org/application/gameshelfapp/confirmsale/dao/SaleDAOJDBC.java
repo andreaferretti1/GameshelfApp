@@ -23,16 +23,6 @@ public class SaleDAOJDBC implements SaleDAO {
             throw new PersistencyErrorException("Couldn't save sale");
         }
     }
-    @Override
-    public void updateSale(long id) throws PersistencyErrorException {
-        try{
-            Connection conn = SingletonConnectionPool.getInstance().getConnection();
-            SaleDAOQueries.updateSaleQuery(conn, id);
-            SingletonConnectionPool.getInstance().releaseConnection(conn);
-        } catch(SQLException e){
-            throw new PersistencyErrorException("Couldn't update sale.");
-        }
-    }
 
     @Override
     public List<Sale> getConfirmedSales() throws PersistencyErrorException{

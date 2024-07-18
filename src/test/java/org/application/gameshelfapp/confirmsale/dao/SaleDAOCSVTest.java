@@ -338,15 +338,17 @@ class SaleDAOCSVTest {
     }
 
     @Test
-    void updateSaleTest(){      //In the database there was tuple ('1', 'nameTest', 'gameNameTest', '3', '10', 'consoleTest', 'To confirm', 'addressTest', 'emailTest')
+    void saveSaleConfirmedTest(){      //In the database there was tuple ('1', 'nameTest', 'gameNameTest', '3', '10', 'consoleTest', 'To confirm', 'addressTest', 'emailTest')
         try{
             CSVFactory csvFactory = new CSVFactory();
             SaleDAO saleDAO = csvFactory.createSaleDAO();
             List<Sale> sales = saleDAO.getToConfirmSales();
-            saleDAO.updateSale(sales.getFirst().getId());
+            Sale sale = sales.getFirst();
+            sale.confirm();
+            saleDAO.saveSale(sale);
 
             sales = saleDAO.getConfirmedSales();
-            Sale sale = sales.getFirst();
+            sale = sales.getFirst();
             assertEquals("Confirmed", sale.getState());
         } catch(PersistencyErrorException e){
             fail();

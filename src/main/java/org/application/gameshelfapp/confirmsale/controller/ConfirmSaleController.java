@@ -45,7 +45,7 @@ public class ConfirmSaleController{
         salesToConfirm.setSales(saleDAO.getToConfirmSales());
         Sale saleConfirmed = salesToConfirm.confirmSale(id);
         try{
-            saleDAO.updateSale(id);
+            saleDAO.saveSale(saleConfirmed);
             shipmentCompany.confirmDelivery(saleConfirmed.getCredentials().getAddress());
 
             googleBoundary.sendSaleConfirmationMessage(saleConfirmed.getCredentials().getEmail(), saleConfirmed.getVideogameSold().getName());
