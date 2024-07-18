@@ -59,8 +59,7 @@ public class BuyGamesController {
         ItemDAO itemDAO = factory.createItemDAO();
         SaleDAO saleDAO = factory.createSaleDAO();
 
-        Filters filters = new Filters(videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
-        filters.setName(videogameBean.getName());
+        Filters filters = new Filters(videogameBean.getName(),videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
 
         Videogame game = itemDAO.getVideogame(filters);
         game.buyVideogame(videogameBean.getCopiesBean(), videogameBean.getPriceBean());

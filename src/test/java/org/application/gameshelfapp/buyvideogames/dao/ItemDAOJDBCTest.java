@@ -5,20 +5,26 @@ import org.application.gameshelfapp.buyvideogames.entities.Filters;
 import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.login.dao.JDBCFactory;
+import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
+import org.application.gameshelfapp.login.dao.SingletonConnectionPool;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
 import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVideogameException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ItemDAOJDBCTest {
-//test written by Alessandro Zunica
+//test written by Alessandro Zunica. Tests were executed using JDBC DAO. To run these tests, 'PERSISTENCE' key in resources/configuration/configuration.properties file was set to 'JDBC' value
 
     @BeforeEach
     void setFilters(){
@@ -37,12 +43,25 @@ class ItemDAOJDBCTest {
         Filters.setCategories(categories);
     }
 
+    @AfterEach
+    void cleanUp(){
+        try {
+            String query2 = "TRUNCATE TABLE ObjectOnSale;";
+            Connection connection = SingletonConnectionPool.getInstance().getConnection();
+            Statement statement = connection.createStatement();
+            statement.execute(query2);
+        } catch(PersistencyErrorException | SQLException e){
+            fail();
+        }
+    }
+
     @Test
     void getVideogamesForSaleGameNameTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
         try{
+            Videogame videogame = new Videogame("gameTest", 2, 10, "descriptionTest", "consoleTest", "categoryTest");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame);
             Filters filters = new Filters("gameTest", "consoleTest", "categoryTest");
-            JDBCFactory jdbcFactory = new JDBCFactory();
-            ItemDAO itemDAO = jdbcFactory.createItemDAO();
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             Videogame gameForSale = games.getFirst();
             assertEquals("gameTest", gameForSale.getName());
@@ -54,9 +73,10 @@ class ItemDAOJDBCTest {
     @Test
     void getVideogamesForSaleCopiesTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
         try{
+            Videogame videogame = new Videogame("gameTest", 2, 10, "descriptionTest", "consoleTest", "categoryTest");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame);
             Filters filters = new Filters("gameTest", "consoleTest", "categoryTest");
-            JDBCFactory jdbcFactory = new JDBCFactory();
-            ItemDAO itemDAO = jdbcFactory.createItemDAO();
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             Videogame gameForSale = games.getFirst();
             assertEquals(2, gameForSale.getCopies());
@@ -68,9 +88,10 @@ class ItemDAOJDBCTest {
     @Test
     void getVideogamesForSalePriceTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
         try{
+            Videogame videogame = new Videogame("gameTest", 2, 10, "descriptionTest", "consoleTest", "categoryTest");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame);
             Filters filters = new Filters("gameTest", "consoleTest", "categoryTest");
-            JDBCFactory jdbcFactory = new JDBCFactory();
-            ItemDAO itemDAO = jdbcFactory.createItemDAO();
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             Videogame gameForSale = games.getFirst();
             assertEquals(10, gameForSale.getPrice());
@@ -82,9 +103,10 @@ class ItemDAOJDBCTest {
     @Test
     void getVideogamesForSaleDescriptionTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
         try{
+            Videogame videogame = new Videogame("gameTest", 2, 10, "descriptionTest", "consoleTest", "categoryTest");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame);
             Filters filters = new Filters("gameTest", "consoleTest", "categoryTest");
-            JDBCFactory jdbcFactory = new JDBCFactory();
-            ItemDAO itemDAO = jdbcFactory.createItemDAO();
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             Videogame gameForSale = games.getFirst();
             assertEquals("descriptionTest", gameForSale.getDescription());
@@ -96,9 +118,10 @@ class ItemDAOJDBCTest {
     @Test
     void getVideogamesForSalePlatformTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
         try{
+            Videogame videogame = new Videogame("gameTest", 2, 10, "descriptionTest", "consoleTest", "categoryTest");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame);
             Filters filters = new Filters("gameTest", "consoleTest", "categoryTest");
-            JDBCFactory jdbcFactory = new JDBCFactory();
-            ItemDAO itemDAO = jdbcFactory.createItemDAO();
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             Videogame gameForSale = games.getFirst();
             assertEquals("consoleTest", gameForSale.getPlatform());
@@ -111,9 +134,10 @@ class ItemDAOJDBCTest {
     @Test
     void getVideogamesForSaleCategoryTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '2', '10')
         try{
+            Videogame videogame = new Videogame("gameTest", 2, 10, "descriptionTest", "consoleTest", "categoryTest");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame);
             Filters filters = new Filters("gameTest", "consoleTest", "categoryTest");
-            JDBCFactory jdbcFactory = new JDBCFactory();
-            ItemDAO itemDAO = jdbcFactory.createItemDAO();
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             Videogame gameForSale = games.getFirst();
             assertEquals("categoryTest", gameForSale.getCategory());
@@ -125,9 +149,14 @@ class ItemDAOJDBCTest {
     @Test
     void getVideogameForSaleWithoutNameTest(){       //to run this test were added games ('gameTest1', 'consoleTest1', 'categoryTest1', 'descriptionTest1', '2', '10'), ('gameTest2', 'consoleTest1', 'categoryTest1', 'descriptionTest2', '3', '10'), ('gameTest3', 'consoleTest2', 'categoryTest2', 'descriptionTest3', '4', '9')
         try{
-            Filters filters = new Filters(null, "consoleTest1", "categoryTest1");
-            JDBCFactory jdbcFactory = new JDBCFactory();
-            ItemDAO itemDAO = jdbcFactory.createItemDAO();
+            Videogame videogame1 = new Videogame("gameTest1", 2, 10, "descriptionTest1", "consoleTest1", "categoryTest");
+            Videogame videogame2 = new Videogame("gameTest2", 3, 10, "descriptionTest2", "consoleTest1", "categoryTest");
+            Videogame videogame3 = new Videogame("gameTest3", 4, 9, "descriptionTest3", "consoleTest2", "TestCategory");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame1);
+            itemDAO.addGameForSale(videogame2);
+            itemDAO.addGameForSale(videogame3);
+            Filters filters = new Filters(null, "consoleTest1", "categoryTest");
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             assertEquals(2, (long) games.size());
         } catch(PersistencyErrorException | NoGameInCatalogueException | CheckFailedException e){
@@ -138,9 +167,10 @@ class ItemDAOJDBCTest {
     @Test
     void getVideogamesForSaleZeroCopiesTest(){      //to run this test was added game ('gameTest', 'consoleTest', 'categoryTest', 'descriptionTest', '0', '10')
         try{
+            Videogame videogame = new Videogame("gameTest", 0, 10, "descriptionTest", "consoleTest", "categoryTest");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame);
             Filters filters = new Filters("gameTest", "consoleTest", "categoryTest");
-            JDBCFactory jdbcFactory = new JDBCFactory();
-            ItemDAO itemDAO = jdbcFactory.createItemDAO();
             List<Videogame> games = itemDAO.getVideogamesFiltered(filters);
             assertEquals(1, (long) games.size());
         } catch(PersistencyErrorException | NoGameInCatalogueException | CheckFailedException e){
@@ -186,9 +216,10 @@ class ItemDAOJDBCTest {
     @Test
     void removeGameForSaleTest(){       //In the database there was tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
         try{
+            Videogame videogame = new Videogame("nameTest", 2, 10, "descriptionTest", "consoleTest", "categoryTest");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame);
             Videogame game = new Videogame("nameTest", 1, 10, "descriptionTest", "consoleTest", "categoryTest");
-            JDBCFactory jdbcFactory = new JDBCFactory();
-            ItemDAO itemDAO = jdbcFactory.createItemDAO();
             itemDAO.removeGameForSale(game);
 
             Filters filters = new Filters("nameTest", "consoleTest", "categoryTest");
@@ -203,9 +234,10 @@ class ItemDAOJDBCTest {
     @Test
     void removGameForSaleSamePriceTest() {        //In the database there was tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
         try {
+            Videogame videogame = new Videogame("nameTest", 2, 10, "descriptionTest", "consoleTest", "categoryTest");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame);
             Videogame game = new Videogame("nameTest", 1, 10, "descriptionTest", "consoleTest", "categoryTest");
-            JDBCFactory jdbcFactory = new JDBCFactory();
-            ItemDAO itemDAO = jdbcFactory.createItemDAO();
             itemDAO.removeGameForSale(game);
 
             Filters filters = new Filters("nameTest", "consoleTest", "categoryTest");
@@ -220,9 +252,10 @@ class ItemDAOJDBCTest {
     @Test
     void removGameForSaleSameDescriptionTest() {        //In the database there was tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
         try {
+            Videogame videogame = new Videogame("nameTest", 2, 10, "descriptionTest", "consoleTest", "categoryTest");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame);
             Videogame game = new Videogame("nameTest", 1, 10, "descriptionTest", "consoleTest", "categoryTest");
-            JDBCFactory jdbcFactory = new JDBCFactory();
-            ItemDAO itemDAO = jdbcFactory.createItemDAO();
             itemDAO.removeGameForSale(game);
 
             Filters filters = new Filters("nameTest", "consoleTest", "categoryTest");
@@ -236,17 +269,25 @@ class ItemDAOJDBCTest {
 
     @Test
     void removeGameForSaleSoldOutTest(){    //In the database there was tuple ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest')
-        Videogame game = new Videogame("nameTest", 4, 10, "descriptionTest", "consoleTest", "categoryTest");
-        JDBCFactory jdbcFactory = new JDBCFactory();
-        ItemDAO itemDAO = jdbcFactory.createItemDAO();
-        assertThrows(GameSoldOutException.class, () -> itemDAO.removeGameForSale(game));
+        try {
+            Videogame videogame = new Videogame("nameTest", 2, 10, "descriptionTest", "consoleTest", "categoryTest");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame);
+            Videogame game = new Videogame("nameTest", 4, 10, "descriptionTest", "consoleTest", "categoryTest");
+            assertThrows(GameSoldOutException.class, () -> itemDAO.removeGameForSale(game));
+        } catch (PersistencyErrorException e){
+            fail();
+        }
     }
     @Test
     void removeGameForSaleDiffConsoleTest(){        //In the database there were tuples ('nameTest', 'consoleTest', 'categoryTest', '2', '10', 'descriptionTest') and ('nameTest', 'consoleTest1', 'categoryTest', '3', '12', 'descriptionTest')
         try{
+            Videogame videogame1 = new Videogame("nameTest", 2, 10, "descriptionTest", "consoleTest", "categoryTest");
+            Videogame videogame2 = new Videogame("nameTest", 3, 12, "descriptionTest", "consoleTest1", "categoryTest");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame1);
+            itemDAO.addGameForSale(videogame2);
             Videogame game = new Videogame("nameTest", 2, 10, "descriptionTest", "consoleTest", "categoryTest");
-            JDBCFactory jdbcFactory = new JDBCFactory();
-            ItemDAO itemDAO = jdbcFactory.createItemDAO();
             itemDAO.removeGameForSale(game);
 
             Filters filters = new Filters("nameTest", "consoleTest", "categoryTest");
@@ -260,7 +301,7 @@ class ItemDAOJDBCTest {
 
     @Test
     void checkVideogameExistenceTest(){
-        try {
+        try{
             Filters testFilters = new Filters("Test1", "TestConsole", "TestCategory");
             JDBCFactory jdbcFactory = new JDBCFactory();
             ItemDAO itemDAO = jdbcFactory.createItemDAO();
@@ -272,12 +313,13 @@ class ItemDAOJDBCTest {
 
     @Test
     void checkVideogameExistenceExceptionLaunchedTest(){                //In the database there exist tuple('Test1', 1, 1, 'TestConsole', 'TestCategory', 'Description Test')
-        try {
+        try{
+            Videogame videogame = new Videogame("Test1", 1, 1, "Description Test", "TestConsole", "TestCategory");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame);
             Filters testFilters = new Filters("Test1", "TestConsole", "TestCategory");
-            JDBCFactory jdbcFactory = new JDBCFactory();
-            ItemDAO itemDAO = jdbcFactory.createItemDAO();
             assertThrows(AlreadyExistingVideogameException.class, () -> itemDAO.checkVideogameExistence(testFilters));
-        } catch (CheckFailedException e){
+        } catch (CheckFailedException | PersistencyErrorException e){
             fail();
         }
     }
@@ -285,9 +327,10 @@ class ItemDAOJDBCTest {
     @Test
     void updateGameForSaleTest(){           //In the database there exist tuple('Test', 1, 1, 'This is a description', 'TestConsole', 'TestCategory')
         try{
+            Videogame videogame = new Videogame("Test", 1, 1, "This is a description", "TestConsole", "TestCategory");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame);
             Videogame testGame = new Videogame("Test", 2, 5,"Description Test", "TestConsole", "TestCategory");
-            JDBCFactory jdbcFactory = new JDBCFactory();
-            ItemDAO itemDAO = jdbcFactory.createItemDAO();
             itemDAO.updateGameForSale(testGame);
             Filters testFilters = new Filters(testGame.getName(), testGame.getPlatform(), testGame.getCategory());
             List<Videogame> gameListTest = itemDAO.getVideogamesFiltered(testFilters);
@@ -303,8 +346,9 @@ class ItemDAOJDBCTest {
     @Test
     void getVideogameTest(){        //In the database there was tuple('nameTest', 'consoleTest', 'categoryTest', '1', '10', 'description')
         try{
-            JDBCFactory jdbcFactory = new JDBCFactory();
-            ItemDAO itemDAO = jdbcFactory.createItemDAO();
+            Videogame videogame = new Videogame("nameTest", 1, 10, "description", "consoleTest", "categoryTest");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame);
             Filters filters = new Filters("nameTest", "consoleTest", "categoryTest");
             assertNotNull(itemDAO.getVideogame(filters));
         } catch(PersistencyErrorException | NoGameInCatalogueException | CheckFailedException e){

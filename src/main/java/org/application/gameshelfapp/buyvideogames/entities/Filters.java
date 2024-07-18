@@ -12,9 +12,6 @@ public class Filters {
     private static List<String> consoles;
     private static List<String> categories;
 
-    public Filters(String console, String category) throws CheckFailedException{
-        this(null, console, category);
-    }
     public Filters(String name, String console, String category) throws CheckFailedException{
         this.name = name;
         this.setConsole(console);
@@ -47,8 +44,7 @@ public class Filters {
         return this.category;
     }
 
-    public void setName(String name) throws CheckFailedException{
-        if(name == null) throw new CheckFailedException("You should specify videogame name");
+    public void setName(String name){
         this.name = name;
     }
 

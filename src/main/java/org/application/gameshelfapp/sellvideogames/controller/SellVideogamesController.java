@@ -74,8 +74,7 @@ public class SellVideogamesController {
 
     public SellingGamesCatalogueBean cancelGameFromCatalogue(VideogameBean videogameBean) throws PersistencyErrorException, NoGameInCatalogueException, GameSoldOutException, CheckFailedException {
         ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
-        Filters filters = new Filters( videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
-        filters.setName(videogameBean.getName());
+        Filters filters = new Filters(videogameBean.getName(),videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
 
         Videogame game = itemDAO.getVideogame(filters);
         game.removeVideogame(videogameBean.getCopiesBean());
@@ -91,8 +90,7 @@ public class SellVideogamesController {
 
     public SellingGamesCatalogueBean modifyGameInCatalogue(VideogameBean videogameBean) throws PersistencyErrorException, NoGameInCatalogueException, CheckFailedException {
         ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
-        Filters filters = new Filters(videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
-        filters.setName(videogameBean.getName());
+        Filters filters = new Filters(videogameBean.getName(),videogameBean.getPlatformBean(), videogameBean.getCategoryBean());
 
         Videogame game = itemDAO.getVideogame(filters);
         game.updateVideogame(videogameBean.getCopiesBean(), videogameBean.getPriceBean(), videogameBean.getDescriptionBean());

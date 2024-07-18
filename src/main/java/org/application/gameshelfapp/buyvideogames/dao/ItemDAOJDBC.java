@@ -71,7 +71,7 @@ public class ItemDAOJDBC implements ItemDAO {
             rs.close();
             SingletonConnectionPool.getInstance().releaseConnection(conn);
             if(copies < game.getCopies()) throw new GameSoldOutException("Game is sold out");
-           ItemDAOQueries.removeGameForSaleQuery(conn, game);
+            ItemDAOQueries.removeGameForSaleQuery(conn, game);
         } catch(SQLException e){
             throw new PersistencyErrorException("Couldn't remove game for sale");
         }

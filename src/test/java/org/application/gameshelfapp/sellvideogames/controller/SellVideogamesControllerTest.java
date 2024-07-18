@@ -2,9 +2,13 @@ package org.application.gameshelfapp.sellvideogames.controller;
 
 import org.application.gameshelfapp.buyvideogames.bean.FiltersBean;
 import org.application.gameshelfapp.buyvideogames.bean.VideogameBean;
+import org.application.gameshelfapp.buyvideogames.dao.ItemDAO;
 import org.application.gameshelfapp.buyvideogames.entities.Filters;
+import org.application.gameshelfapp.buyvideogames.entities.Videogame;
 import org.application.gameshelfapp.buyvideogames.exception.GameSoldOutException;
 import org.application.gameshelfapp.login.bean.UserBean;
+import org.application.gameshelfapp.login.dao.PersistencyAbstractFactory;
+import org.application.gameshelfapp.login.dao.SingletonConnectionPool;
 import org.application.gameshelfapp.login.exception.CheckFailedException;
 import org.application.gameshelfapp.login.exception.GmailException;
 import org.application.gameshelfapp.login.exception.PersistencyErrorException;
@@ -13,15 +17,19 @@ import org.application.gameshelfapp.sellvideogames.bean.SellingGamesCatalogueBea
 import org.application.gameshelfapp.sellvideogames.exception.AlreadyExistingVideogameException;
 import org.application.gameshelfapp.sellvideogames.exception.InvalidTitleException;
 import org.application.gameshelfapp.sellvideogames.exception.NoGameInCatalogueException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 class SellVideogamesControllerTest {
-//test written by Alessandro Zunica
+//test written by Alessandro Zunica. Tests were executed using JDBC DAO. To run these tests, 'PERSISTENCE' key in resources/configuration/configuration.properties file was set to 'JDBC' value
     @BeforeEach
     void setFilters(){
         List<String> consoles = new ArrayList<>();
@@ -33,9 +41,24 @@ class SellVideogamesControllerTest {
         Filters.setConsoles(consoles);
         Filters.setCategories(categories);
     }
+
+    @AfterEach
+    void cleanUp(){
+        try {
+            String query2 = "TRUNCATE TABLE ObjectOnSale;";
+            Connection connection = SingletonConnectionPool.getInstance().getConnection();
+            Statement statement = connection.createStatement();
+            statement.execute(query2);
+        } catch(PersistencyErrorException | SQLException e){
+            fail();
+        }
+    }
     @Test
     void showSellingGameCatalogueTest(){            //Videogame(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
         try{
+            Videogame videogame = new Videogame("Dark Souls", 1, 10, "This is another test", "TestConsole2", "TestCategory2");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame);
             UserBean userBean = new UserBean();
             userBean.setTypeOfUser("Seller");
             SellVideogamesController test = new SellVideogamesController(userBean);
@@ -115,6 +138,9 @@ class SellVideogamesControllerTest {
     @Test
     void addGameToCatalogueAlreadyExistingVideogameExceptionLaunchedTest(){         //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
         try {
+            Videogame videogame = new Videogame("Dark Souls", 1, 10, "This is another test", "TestConsole2", "TestCategory2");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame);
             UserBean userBean = new UserBean();
             userBean.setTypeOfUser("Seller");
             SellVideogamesController test = new SellVideogamesController(userBean);
@@ -126,7 +152,7 @@ class SellVideogamesControllerTest {
             gameBeanTest.setCategoryBean("TestCategory2");
             gameBeanTest.setDescriptionBean("This is another test");
             assertThrows(AlreadyExistingVideogameException.class, () -> test.addGameToCatalogue(gameBeanTest));
-        }catch (WrongUserTypeException e){
+        }catch (WrongUserTypeException | PersistencyErrorException e){
             fail();
         }
     }
@@ -134,6 +160,9 @@ class SellVideogamesControllerTest {
     @Test
     void cancelGameFromCatalogueTest(){          //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
         try{
+            Videogame videogame = new Videogame("Dark Souls", 1, 10, "This is another test", "TestConsole2", "TestCategory2");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame);
             UserBean userBean = new UserBean();
             userBean.setTypeOfUser("Seller");
             SellVideogamesController test = new SellVideogamesController(userBean);
@@ -156,6 +185,9 @@ class SellVideogamesControllerTest {
     @Test
     void cancelGameFromCatalogueGameSoldOutExceptionLaunchedTest(){     //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
         try {
+            Videogame videogame = new Videogame("Dark Souls", 1, 10, "This is another test", "TestConsole2", "TestCategory2");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame);
             UserBean userBean = new UserBean();
             userBean.setTypeOfUser("Seller");
             SellVideogamesController test = new SellVideogamesController(userBean);
@@ -167,7 +199,7 @@ class SellVideogamesControllerTest {
             gameBeanTest.setCategoryBean("TestCategory2");
             gameBeanTest.setDescriptionBean("This is another test");
             assertThrows(GameSoldOutException.class, () -> test.cancelGameFromCatalogue(gameBeanTest));
-        } catch (WrongUserTypeException e){
+        } catch (WrongUserTypeException | PersistencyErrorException e){
             fail();
         }
     }
@@ -194,6 +226,9 @@ class SellVideogamesControllerTest {
     @Test
     void modifyGameInCatalogueTest(){           //In the database there exist tuple(Dark Souls,TestConsole2,TestCategory2,This is another test,1,10)
         try {
+            Videogame videogame = new Videogame("Dark Souls", 1, 10, "This is another test", "TestConsole2", "TestCategory2");
+            ItemDAO itemDAO = PersistencyAbstractFactory.getFactory().createItemDAO();
+            itemDAO.addGameForSale(videogame);
             UserBean userBean = new UserBean();
             userBean.setTypeOfUser("Seller");
             SellVideogamesController test = new SellVideogamesController(userBean);

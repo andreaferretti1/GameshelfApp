@@ -72,7 +72,8 @@ public class Videogame {
     }
 
     public void removeVideogame(int copiesToRemove){
-        if(copiesToRemove > 0 && copiesToRemove <= this.copies){ this.copies = copiesToRemove; }
+        if (copiesToRemove > 0) { this.copies = copiesToRemove; }
+        else this.copies = 0;
     }
 
     public void checkAddedVideogameData(List<String> categories, List<String> consoles) throws CheckFailedException{
